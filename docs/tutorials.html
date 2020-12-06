@@ -88,12 +88,11 @@
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorials</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#getting-started-with-python-windows">Getting started with Python (Windows)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#getting-started-with-python-mac">Getting started with Python (Mac)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#installing-pywitness">Installing pyWitness</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#loading-raw-experimental-data">Loading raw experimental data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#transforming-data-into-common-format">Transforming data into common format</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#processing-raw-experimental-data">Processing raw experimental data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#fitting-signal-detection-models-to-data">Fitting signal detection models to data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#generating-data-from-signal-detection-model">Generating data from signal detection model</a></li>
 </ul>
 </li>
 </ul>
@@ -162,23 +161,49 @@
             
   <div class="section" id="tutorials">
 <h1>Tutorials<a class="headerlink" href="#tutorials" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="getting-started-with-python-windows">
-<h2>Getting started with Python (Windows)<a class="headerlink" href="#getting-started-with-python-windows" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="getting-started-with-python-mac">
-<h2>Getting started with Python (Mac)<a class="headerlink" href="#getting-started-with-python-mac" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="installing-pywitness">
-<h2>Installing pyWitness<a class="headerlink" href="#installing-pywitness" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The data files used in this tutorial are stored in <code class="docutils literal notranslate"><span class="pre">pyWitness/data/tutorial</span></code></p>
 </div>
 <div class="section" id="loading-raw-experimental-data">
 <h2>Loading raw experimental data<a class="headerlink" href="#loading-raw-experimental-data" title="Permalink to this headline">¶</a></h2>
+<p>A single Python class <code class="docutils literal notranslate"><span class="pre">pyWitness.DataRaw</span></code> is used to load raw data in either <code class="docutils literal notranslate"><span class="pre">csv</span></code> or <code class="docutils literal notranslate"><span class="pre">excel</span></code> format. The format of <code class="docutils literal notranslate"><span class="pre">test.csv</span></code>
+is the same as that described in the introduction.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
+<span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test1.csv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If the file is in <code class="docutils literal notranslate"><span class="pre">excel</span></code> format you will need to specify which sheet the raw data is stored in</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
+<span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test2.xlsx&quot;</span><span class="p">,</span><span class="n">excelSheet</span> <span class="o">=</span> <span class="s2">&quot;raw data&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="transforming-data-into-common-format">
+<h2>Transforming data into common format<a class="headerlink" href="#transforming-data-into-common-format" title="Permalink to this headline">¶</a></h2>
+<p>The raw experimental data does not have to be in the internal format used by pyWitness. As the data is loaded is it possible to replace
+the name of the data columns and the values stored.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
+<span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test2.csv&quot;</span><span class="p">,</span> <span class="n">dataMapping</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;lineupSize&quot;</span><span class="p">:</span><span class="s2">&quot;lineup_size&quot;</span><span class="p">,</span>
+                                                  <span class="s2">&quot;targetLineup&quot;</span><span class="p">:</span><span class="s2">&quot;culprit_present&quot;</span><span class="p">,</span>
+                                                  <span class="s2">&quot;targetPresent&quot;</span><span class="p">:</span><span class="s2">&quot;present&quot;</span><span class="p">,</span>
+                                                  <span class="s2">&quot;targetAbsent&quot;</span><span class="p">:</span><span class="s2">&quot;absent&quot;</span><span class="p">,</span>
+                                                  <span class="s2">&quot;responseType&quot;</span><span class="p">:</span><span class="s2">&quot;id_type&quot;</span><span class="p">,</span>
+                                                  <span class="s2">&quot;suspectId&quot;</span><span class="p">:</span><span class="s2">&quot;suspect&quot;</span><span class="p">,</span>
+                                                  <span class="s2">&quot;fillerId&quot;</span><span class="p">:</span><span class="s2">&quot;filler&quot;</span><span class="p">,</span>
+                                                  <span class="s2">&quot;rejectId&quot;</span><span class="p">:</span><span class="s2">&quot;reject&quot;</span><span class="p">,</span>
+                                                  <span class="s2">&quot;confidence&quot;</span><span class="p">:</span><span class="s2">&quot;conf_level&quot;</span><span class="p">}))</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="processing-raw-experimental-data">
 <h2>Processing raw experimental data<a class="headerlink" href="#processing-raw-experimental-data" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="fitting-signal-detection-models-to-data">
 <h2>Fitting signal detection models to data<a class="headerlink" href="#fitting-signal-detection-models-to-data" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="generating-data-from-signal-detection-model">
+<h2>Generating data from signal detection model<a class="headerlink" href="#generating-data-from-signal-detection-model" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 

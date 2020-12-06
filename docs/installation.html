@@ -88,7 +88,13 @@
 <li class="toctree-l1"><a class="reference internal" href="authorship.html">Authorship</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id1">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installation-python">Installation (PYTHON)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installation-pywitness">Installation (pyWitness)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#download-zip-file">Download ZIP file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#clone-git-repository">Clone GIT repository</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#testing-it-works">Testing it works</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
@@ -161,14 +167,109 @@
 <h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="requirements">
 <h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
+<p>pyWitness is developed exclusively for Python 3, the numpy/scipy/matplotlib ecosystem are used for data analysis.
+These packages are required</p>
 <blockquote>
 <div><ul class="simple">
-<li>pyWitenss is developed exclusively for Python 3</li>
+<li>python &gt; 3.7</li>
+<li>ipython</li>
+<li>matplotlib</li>
+<li>numpy</li>
+<li>scipy</li>
+<li>pandas</li>
+</ul>
+</div></blockquote>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You will have to use a Terminal of some kind for input of commands. On MacOS the program is called <code class="docutils literal notranslate"><span class="pre">Terminal</span></code> and on Windows it
+is called <code class="docutils literal notranslate"><span class="pre">PowerShell</span></code>.</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This tutorial assumes python is interactive python 3, with numpy and matplotlib, so the command <code class="docutils literal notranslate"><span class="pre">ipython3</span> <span class="pre">--pylab</span></code> if you are
+familary with python and have an installation replace <code class="docutils literal notranslate"><span class="pre">ipython3</span> <span class="pre">--pylab</span></code> with your own command to start python</p>
+</div>
+</div>
+<div class="section" id="installation-python">
+<h2>Installation (PYTHON)<a class="headerlink" href="#installation-python" title="Permalink to this headline">¶</a></h2>
+<p>First you will need a suitable python environment. If you already have anaconda or miniconda installed you can skip this part</p>
+<blockquote>
+<div><ul class="simple">
+<li>Install <a class="reference external" href="https://docs.conda.io/en/latest/miniconda.html">miniconda</a></li>
+<li>Open a Terminal (MacOS) or PowerShell (Windows)</li>
+<li><dl class="first docutils">
+<dt>Install (ipython, numpy, scipy, pandas, matplotlib) by typing the following into your Terminal/PowerShell</dt>
+<dd><ul class="first last">
+<li><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">ipython</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">numpy</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">scipy</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">pandas</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">matplotlib</span></code></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Start up python to test</dt>
+<dd><ul class="first last">
+<li><code class="docutils literal notranslate"><span class="pre">ipython3</span> <span class="pre">--pylab</span></code></li>
+<li><dl class="first docutils">
+<dt>Python should start up and input <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">numpy</span></code></dt>
+<dd><ul class="first last">
+<li>Provided there are no errors <code class="docutils literal notranslate"><span class="pre">numpy</span></code> has been installed, you can try this with the other packages installed with <code class="docutils literal notranslate"><span class="pre">conda</span></code></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
 </ul>
 </div></blockquote>
 </div>
-<div class="section" id="id1">
-<h2>Installation<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="installation-pywitness">
+<h2>Installation (pyWitness)<a class="headerlink" href="#installation-pywitness" title="Permalink to this headline">¶</a></h2>
+<p>Here are two ways to do this, one is by downloading a ZIP file and another by cloning the GIT repository. If you are not comfortable
+with GIT (or don’t have it installed on your computer) please use the first method.</p>
+<div class="section" id="download-zip-file">
+<h3>Download ZIP file<a class="headerlink" href="#download-zip-file" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>Download <a class="reference external" href="https://github.com/lmickes/pyWitness">pyWitness</a> (click on green code button -&gt; Download ZIP)</li>
+<li>Unpack ZIP file to a location of your choosing</li>
+<li><dl class="first docutils">
+<dt>Add pyWitness directory to the PYTHONPATH</dt>
+<dd><ul class="first last">
+<li>MacOS <code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">PYTHONPATH=/Users/user/pyWitness/</span></code></li>
+<li>Windows <code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">PYTHONPATH=c:\xxx\yyy\pyWitness</span></code></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="clone-git-repository">
+<h3>Clone GIT repository<a class="headerlink" href="#clone-git-repository" title="Permalink to this headline">¶</a></h3>
+<p>Open a terminal (linux in bash) and move to a suitable work directory</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/lmickes/pyWitness.git
+<span class="nb">cd</span> pyWitness
+<span class="nb">export</span> <span class="nv">PYTHONPATH</span><span class="o">=</span><span class="nv">$PYTHONPATH</span>:<span class="sb">`</span><span class="nb">pwd</span><span class="sb">`</span>
+<span class="nb">cd</span>
+ipython3 --pylab
+import pyWitness
+</pre></div>
+</div>
+</div>
+<div class="section" id="testing-it-works">
+<h3>Testing it works<a class="headerlink" href="#testing-it-works" title="Permalink to this headline">¶</a></h3>
+<p>Start your python interpreter (<code class="docutils literal notranslate"><span class="pre">ipython3</span> <span class="pre">--pylab</span></code> on the Terminal/PowerShell) and import pyWitness</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
+</pre></div>
+</div>
+<p>If this does not give you an error your installation is working and you can proceed to the tutorials.</p>
+</div>
 </div>
 </div>
 
