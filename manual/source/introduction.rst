@@ -6,10 +6,10 @@ Introduction
    All plots and diagrams are made using pyWitness. The scripts used to make the plots are located in 
    ``pyWitness/manual/source/figures/``
 
-Eye witness memory research
+Eyewitness memory research
 ---------------------------
 
-Reciever operator characteristic (ROC)
+Receiver operator characteristic (ROC)
 --------------------------------------
 
 There are pacakges in R and Matlab to calculating pAUCs, smoothing ROCS, statistically comparing ROCs,etc. 
