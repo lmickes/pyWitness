@@ -22,12 +22,12 @@ These packages are required
 
 .. warning :: 
    This tutorial assumes python is interactive python 3, with numpy and matplotlib, so the command ``ipython3 --pylab`` if you are 
-   familary with python and have an installation replace ``ipython3 --pylab`` with your own command to start python
+   familiar with python and have an installation replace ``ipython3 --pylab`` with your own command to start python
 
 Installation (PYTHON) 
 ---------------------
 
-First you will need a suitable python environment. If you already have anaconda or miniconda installed you can skip this part
+First you will need a suitable python environment. If you already have anaconda or miniconda installed, you can skip this part
 
   * Install `miniconda <https://docs.conda.io/en/latest/miniconda.html>`_ 
   * Open a terminal (MacOS) or PowerShell (Windows)
@@ -46,8 +46,8 @@ First you will need a suitable python environment. If you already have anaconda 
 Installation (pyWitness)
 ------------------------
 
-Here are two ways to do this, one is by downloading a ZIP file and another by cloning the GIT repository. If you are not comfortable 
-with GIT (or don't have it installed on your computer) please use the first method. 
+There are two ways to install pyWitness: Download the ZIP file or clone the GIT repository. If you are not comfortable 
+with GIT (or don't have it installed on your computer), download the ZIP file. 
 
 Download ZIP file
 ^^^^^^^^^^^^^^^^^
@@ -71,12 +71,12 @@ Open a terminal (linux in bash) and move to a suitable work directory
 Testing it works
 ^^^^^^^^^^^^^^^^
 
-Start your python interpreter (``ipython3 --pylab`` on the terminal/PowerShell) and import pyWitness
+Open a new terminal. Start your python interpreter (``ipython3 --pylab`` on the terminal/PowerShell) and import pyWitness
 
 .. code-block :: python
 
    import pyWitness
    
-If this does not give you an error your installation is working and you can proceed to the tutorials.
+If you get "pyWitness v0.1", it's installed and you can proceed to the tutorials.
       
 
