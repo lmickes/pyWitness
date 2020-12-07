@@ -181,7 +181,7 @@ These packages are required</p>
 </div></blockquote>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">You will have to use a Terminal of some kind for input of commands. On MacOS the program is called <code class="docutils literal notranslate"><span class="pre">Terminal</span></code> and on Windows it
+<p class="last">You will have to use a terminal of some kind for input of commands. On MacOS the program is called <code class="docutils literal notranslate"><span class="pre">terminal</span></code> and on Windows it
 is called <code class="docutils literal notranslate"><span class="pre">PowerShell</span></code>.</p>
 </div>
 <div class="admonition warning">
@@ -196,9 +196,9 @@ familary with python and have an installation replace <code class="docutils lite
 <blockquote>
 <div><ul class="simple">
 <li>Install <a class="reference external" href="https://docs.conda.io/en/latest/miniconda.html">miniconda</a></li>
-<li>Open a Terminal (MacOS) or PowerShell (Windows)</li>
+<li>Open a terminal (MacOS) or PowerShell (Windows)</li>
 <li><dl class="first docutils">
-<dt>Install (ipython, numpy, scipy, pandas, matplotlib) by typing the following into your Terminal/PowerShell</dt>
+<dt>Install (ipython, numpy, scipy, pandas, matplotlib) by typing the following into your terminal/PowerShell</dt>
 <dd><ul class="first last">
 <li><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">ipython</span></code></li>
 <li><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">numpy</span></code></li>
@@ -238,15 +238,8 @@ with GIT (or don’t have it installed on your computer) please use the first me
 <div><ul class="simple">
 <li>Download <a class="reference external" href="https://github.com/lmickes/pyWitness">pyWitness</a> (click on green code button -&gt; Download ZIP)</li>
 <li>Unpack ZIP file to a location of your choosing</li>
-<li><dl class="first docutils">
-<dt>Add pyWitness directory to the PYTHONPATH</dt>
-<dd><ul class="first last">
-<li>MacOS <code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">PYTHONPATH=/Users/user/pyWitness/</span></code></li>
-<li>Windows <code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">PYTHONPATH=c:\xxx\yyy\pyWitness</span></code></li>
-</ul>
-</dd>
-</dl>
-</li>
+<li>In a terminal/shell change directory to the pyWitness directory</li>
+<li><code class="docutils literal notranslate"><span class="pre">pip3</span> <span class="pre">install</span> <span class="pre">--editable</span> <span class="pre">.</span> <span class="pre">--user</span></code></li>
 </ul>
 </div></blockquote>
 </div>
@@ -255,16 +248,13 @@ with GIT (or don’t have it installed on your computer) please use the first me
 <p>Open a terminal (linux in bash) and move to a suitable work directory</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/lmickes/pyWitness.git
 <span class="nb">cd</span> pyWitness
-<span class="nb">export</span> <span class="nv">PYTHONPATH</span><span class="o">=</span><span class="nv">$PYTHONPATH</span>:<span class="sb">`</span><span class="nb">pwd</span><span class="sb">`</span>
-<span class="nb">cd</span>
-ipython3 --pylab
-import pyWitness
+pip3 install --editable . --user
 </pre></div>
 </div>
 </div>
 <div class="section" id="testing-it-works">
 <h3>Testing it works<a class="headerlink" href="#testing-it-works" title="Permalink to this headline">¶</a></h3>
-<p>Start your python interpreter (<code class="docutils literal notranslate"><span class="pre">ipython3</span> <span class="pre">--pylab</span></code> on the Terminal/PowerShell) and import pyWitness</p>
+<p>Start your python interpreter (<code class="docutils literal notranslate"><span class="pre">ipython3</span> <span class="pre">--pylab</span></code> on the terminal/PowerShell) and import pyWitness</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
 </pre></div>
 </div>
@@ -294,7 +284,7 @@ import pyWitness
   <div role="contentinfo">
     <p>
         &copy; Copyright Royal Holloway, University of London 2020 and University of Bristol 2020
-      Last updated on Dec 06, 2020.
+      Last updated on Dec 07, 2020.
 
     </p>
   </div>

@@ -4,13 +4,15 @@ Introduction
 
 .. note:: 
    All plots and diagrams are made using pyWitness. The scripts used to make the plots are located in 
-   pyWitness/manual/figures/
+   ``pyWitness/manual/source/figures/``
 
 Eye witness memory research
 ---------------------------
 
 Reciever operator characteristic (ROC)
 --------------------------------------
+
+There are pacakges in R and Matlab to calculating pAUCs, smoothing ROCS, statistically comparing ROCs,etc. 
 
    * pROC: an open-source package for R and S+ to analyze and compare ROC curves
    * The ROC Toolbox: A toolbox for analyzing receiver-operating characteristics derived from confidence ratings

@@ -17,7 +17,7 @@ These packages are required
   * pandas
 
 .. note :: 
-   You will have to use a Terminal of some kind for input of commands. On MacOS the program is called ``Terminal`` and on Windows it
+   You will have to use a terminal of some kind for input of commands. On MacOS the program is called ``terminal`` and on Windows it
    is called ``PowerShell``.
 
 .. warning :: 
@@ -30,8 +30,8 @@ Installation (PYTHON)
 First you will need a suitable python environment. If you already have anaconda or miniconda installed you can skip this part
 
   * Install `miniconda <https://docs.conda.io/en/latest/miniconda.html>`_ 
-  * Open a Terminal (MacOS) or PowerShell (Windows)
-  * Install (ipython, numpy, scipy, pandas, matplotlib) by typing the following into your Terminal/PowerShell
+  * Open a terminal (MacOS) or PowerShell (Windows)
+  * Install (ipython, numpy, scipy, pandas, matplotlib) by typing the following into your terminal/PowerShell
      * ``conda install ipython``
      * ``conda install numpy``
      * ``conda install scipy``
@@ -54,9 +54,8 @@ Download ZIP file
 
   * Download `pyWitness <https://github.com/lmickes/pyWitness>`_ (click on green code button -> Download ZIP)
   * Unpack ZIP file to a location of your choosing  
-  * Add pyWitness directory to the PYTHONPATH
-     * MacOS ``export PYTHONPATH=/Users/user/pyWitness/``
-     * Windows ``set PYTHONPATH=c:\xxx\yyy\pyWitness``
+  * In a terminal/shell change directory to the pyWitness directory
+  * ``pip3 install --editable . --user``
 
 Clone GIT repository
 ^^^^^^^^^^^^^^^^^^^^
@@ -67,15 +66,12 @@ Open a terminal (linux in bash) and move to a suitable work directory
    
    git clone https://github.com/lmickes/pyWitness.git
    cd pyWitness   
-   export PYTHONPATH=$PYTHONPATH:`pwd`
-   cd
-   ipython3 --pylab
-   import pyWitness
+   pip3 install --editable . --user
 
 Testing it works
 ^^^^^^^^^^^^^^^^
 
-Start your python interpreter (``ipython3 --pylab`` on the Terminal/PowerShell) and import pyWitness
+Start your python interpreter (``ipython3 --pylab`` on the terminal/PowerShell) and import pyWitness
 
 .. code-block :: python
 
