@@ -2,7 +2,8 @@ Tutorials
 =========
 
 .. note::
-   The data files used in this tutorial are stored in ``pyWitness/data/tutorial``
+   The data files used in this tutorial are stored in ``pyWitness/data/tutorial``. It is a good idea to copy these files to your working 
+   directory
 
 Loading raw experimental data
 -----------------------------

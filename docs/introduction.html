@@ -91,7 +91,11 @@
 <li class="toctree-l2"><a class="reference internal" href="#eye-witness-memory-research">Eye witness memory research</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#reciever-operator-characteristic-roc">Reciever operator characteristic (ROC)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#signal-detection-theory">Signal Detection Theory</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#background-to-the-pywitness-and-the-code">Background to the pyWitness and the code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#background-to-the-pywitness-and-the-code">Background to the pyWitness and the code</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#internal-data-format">Internal data format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#transforming-data-structures">Transforming data structures</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
@@ -171,12 +175,150 @@ pyWitness/manual/figures/</p>
 </div>
 <div class="section" id="reciever-operator-characteristic-roc">
 <h2>Reciever operator characteristic (ROC)<a class="headerlink" href="#reciever-operator-characteristic-roc" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li>pROC: an open-source package for R and S+ to analyze and compare ROC curves</li>
+<li>The ROC Toolbox: A toolbox for analyzing receiver-operating characteristics derived from confidence ratings</li>
+</ul>
+</div></blockquote>
 </div>
 <div class="section" id="signal-detection-theory">
 <h2>Signal Detection Theory<a class="headerlink" href="#signal-detection-theory" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="background-to-the-pywitness-and-the-code">
 <h2>Background to the pyWitness and the code<a class="headerlink" href="#background-to-the-pywitness-and-the-code" title="Permalink to this headline">¶</a></h2>
+<p>To keep a consistent set of analysis tools for eyewitness data it is important to keep a flexible
+internal data format.</p>
+<div class="section" id="internal-data-format">
+<h3>Internal data format<a class="headerlink" href="#internal-data-format" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="colwidths-given docutils" id="id1">
+<caption><span class="caption-text">Data columns and allowed values</span><a class="headerlink" href="#id1" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">lineupSize</th>
+<th class="head">targetLineup</th>
+<th class="head">responseType</th>
+<th class="head">confidence</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>integer</td>
+<td>“targetPresent”</td>
+<td>“suspectId”</td>
+<td>integer/float</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td>“targetAbsent”</td>
+<td>“fillerId”</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>&#160;</td>
+<td>“rejectId”</td>
+<td>&#160;</td>
+</tr>
+</tbody>
+</table>
+<p>Minimal example data file for an experiment</p>
+<table border="1" class="colwidths-given docutils" id="id2">
+<caption><span class="caption-text">Example data file</span><a class="headerlink" href="#id2" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">participantNumber</th>
+<th class="head">lineupSize</th>
+<th class="head">targetLineup</th>
+<th class="head">responseType</th>
+<th class="head">confidence</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>1</td>
+<td>6</td>
+<td>targetPesent</td>
+<td>suspectId</td>
+<td>6</td>
+</tr>
+<tr class="row-odd"><td>2</td>
+<td>6</td>
+<td>targetAbsent</td>
+<td>rejectId</td>
+<td>9</td>
+</tr>
+<tr class="row-even"><td>3</td>
+<td>6</td>
+<td>targetPresent</td>
+<td>rejectId</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Of course other columns can present in the data file, for examples labels for other experimental conditions
+or data, demographic data or personal differenes.</p>
+</div>
+</div>
+<div class="section" id="transforming-data-structures">
+<h3>Transforming data structures<a class="headerlink" href="#transforming-data-structures" title="Permalink to this headline">¶</a></h3>
+<p>Transforming data into pyWitness format can be time consuming and error prone.</p>
+<table border="1" class="colwidths-given docutils" id="id3">
+<caption><span class="caption-text">Example data file transformation (sdtlu)</span><a class="headerlink" href="#id3" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">pyWitness</th>
+<th class="head">sdtlu</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>lineupSize</td>
+<td>lineup_size</td>
+</tr>
+<tr class="row-odd"><td>targetLineup</td>
+<td>culprit_present</td>
+</tr>
+<tr class="row-even"><td>targetPresent</td>
+<td>present</td>
+</tr>
+<tr class="row-odd"><td>targetAbsent</td>
+<td>absent</td>
+</tr>
+<tr class="row-even"><td>responseType</td>
+<td>id_type</td>
+</tr>
+<tr class="row-odd"><td>suspectId</td>
+<td>suspect</td>
+</tr>
+<tr class="row-even"><td>fillerId</td>
+<td>filler</td>
+</tr>
+<tr class="row-odd"><td>rejectId</td>
+<td>reject</td>
+</tr>
+<tr class="row-even"><td>confidence</td>
+<td>conf_level</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Confidence can catagoral and so needs to be mapped to a number, so for example confidence could be low (1),
+medium (2) or high (2).</p>
+</div>
+</div>
 </div>
 </div>
 
