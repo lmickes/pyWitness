@@ -8,7 +8,7 @@ setup(
     install_requires=["matplotlib",
                       "numpy",
                       "scipy",
-                      "pandas"]
+                      "pandas"],
     setup_requires=["pytest-runner"],
     tests_require=["pytest"],
     python_requires=">=3.7.*",
@@ -17,5 +17,5 @@ setup(
     author_email='laura.mickes@rhul.ac.uk',
     description=("Python utilities for eyewitness research"),
     license="GPL3",
-    url='https'
+    url='https://github.com/lmickes/pyWitness'
 )
