@@ -6,19 +6,27 @@ Introduction
    All plots and diagrams are made using pyWitness. The scripts used to make the plots are located in 
    ``pyWitness/manual/source/figures/``
 
-Eyewitness memory research
----------------------------
+Eyewitness identification research
+----------------------------------
+
+Eyewitnesses to crimes may try to identify the perpetrator from an identification procedure. One commonly used procedure is a lineup (identity parade in the UK). A lineup comprises the police suspect and fillers. A lineup with an innocent suspect is a target-absent lineup and a lineupw with a guilty suspect is a target-present lineup. Eyewitness can make filler IDs from either lineup, identify the innocent suspect (from a target-absent lineup) or guilty suspect (from a target-present lineup).
+
+Receiver operating characteristic (ROC) analysis measures discriminability (the ability to distinguish innocent from guilty suspects), confidence accuracy characteristic (CAC) and response-time accuracy characteristic (RAC) analysis measure positive predictive value (the likelihood the identified suspect is guilty). pyWitness allows researchers to run these analyses. 
+
+Theories about eyewitness identification have thus far been signal detection-based. pyWitness allows researchers to compare signal detection-based model fits. 
 
 Receiver operator characteristic (ROC)
 --------------------------------------
 
-There are pacakges in R and Matlab to calculating pAUCs, smoothing ROCS, statistically comparing ROCs,etc. 
+There are pacakges in R and MATLAB that calculate pAUCs, smooth ROCS, and statistically comparing pAUCs. 
 
    * pROC: an open-source package for R and S+ to analyze and compare ROC curves
-   * The ROC Toolbox: A toolbox for analyzing receiver-operating characteristics derived from confidence ratings
+   * The ROC Toolbox: A MATLAB toolbox for analyzing ROCs derived from confidence ratings
 
 Signal Detection Theory 
 -----------------------
+
+   * sdtlu: an open-source package for R to run signal detection model fits on lineup data
 
 Background to the pyWitness and the code
 ----------------------------------------
