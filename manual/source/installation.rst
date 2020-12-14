@@ -17,7 +17,7 @@ These packages are required
   * pandas
 
 .. note :: 
-   You will have to use a terminal of some kind for input of commands. On MacOS the program is called ``terminal`` and on Windows it
+   You will have to use a terminal for inputting commands. On MacOS the program is called ``terminal`` and on Windows it
    is called ``PowerShell``.
 
 .. warning :: 
@@ -46,13 +46,13 @@ Installing pyWitness
 ------------------------
 
 There are two ways to install pyWitness: Download the ZIP file or clone the GIT repository. If you are not comfortable 
-with GIT (or don't have it installed on your computer), download the ZIP file. 
+with GIT or do not have it installed on your computer, download the ZIP file. 
 
 Download ZIP file
 ^^^^^^^^^^^^^^^^^
 
 1. Download `pyWitness <https://github.com/lmickes/pyWitness>`_ (click on green code button -> Download ZIP)
-2. Unpack ZIP file to a location of your choosing  
+2. Unpack ZIP file to a directory of your choosing  
 3. In a terminal or shell change directory to the pyWitness directory
   * ``pip3 install --editable . --user``
 
