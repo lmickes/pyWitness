@@ -79,6 +79,6 @@ Testing it works
 
    import pyWitness
    
-If you get "pyWitness v0.1", it's installed and you can proceed to the tutorials.
+If you get "pyWitness v0.1" it's installed and you can proceed to the tutorials.
       
 
