@@ -31,8 +31,7 @@ Signal Detection Theory
 Background to the pyWitness and the code
 ----------------------------------------
 
-To keep a consistent set of analysis tools for eyewitness data it is important to keep a flexible 
-internal data format.
+Our goal with pyWitness is to create a consistent set of analysis tools for any eyewitness memory researcher to use for lineup data. Importantly, there is a flexible internal data format.
 
 Internal data format 
 ^^^^^^^^^^^^^^^^^^^^
@@ -120,6 +119,6 @@ Transforming data into pyWitness format can be time consuming and error prone.
      - conf_level
 
 .. note::
-   Confidence can catagoral and so needs to be mapped to a number, so for example confidence could be low (1), 
-   medium (2) or high (2).
+   Confidence can verbal and so needs to be mapped to a number. For example, confidence could be low (1), 
+   medium (2) or high (3).
 
