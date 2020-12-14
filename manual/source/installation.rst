@@ -24,26 +24,26 @@ These packages are required
    This tutorial assumes python is interactive python 3, with numpy and matplotlib, so the command ``ipython3 --pylab`` if you are 
    familiar with python and have an installation replace ``ipython3 --pylab`` with your own command to start python
 
-Installation (PYTHON) 
+Installing the PYTHON environment  
 ---------------------
 
-First you will need a suitable python environment. If you already have anaconda or miniconda installed, you can skip this part
+You will need a suitable python environment. 
 
-  * Install `miniconda <https://docs.conda.io/en/latest/miniconda.html>`_ 
-  * Open a terminal (MacOS) or PowerShell (Windows)
-  * Install (ipython, numpy, scipy, pandas, matplotlib) by typing the following into your terminal/PowerShell
+1. Install `miniconda <https://docs.conda.io/en/latest/miniconda.html>`_ 
+2. Open a terminal (MacOS) or PowerShell (Windows)
+3. Install ipython, numpy, scipy, pandas, and matplotlib by typing each code line (or copy and paste) into your terminal or shell 
      * ``conda install ipython``
      * ``conda install numpy``
      * ``conda install scipy``
      * ``conda install pandas``
      * ``conda install matplotlib``
-  * Start up python to test 
+4. Start up python to test 
      * ``ipython3 --pylab``
      * Python should start up and input ``import numpy``
         * Provided there are no errors ``numpy`` has been installed, you can try this with the other packages installed with ``conda``
      
 
-Installation (pyWitness)
+Installing pyWitness
 ------------------------
 
 There are two ways to install pyWitness: Download the ZIP file or clone the GIT repository. If you are not comfortable 
@@ -52,9 +52,9 @@ with GIT (or don't have it installed on your computer), download the ZIP file.
 Download ZIP file
 ^^^^^^^^^^^^^^^^^
 
-  * Download `pyWitness <https://github.com/lmickes/pyWitness>`_ (click on green code button -> Download ZIP)
-  * Unpack ZIP file to a location of your choosing  
-  * In a terminal/shell change directory to the pyWitness directory
+1. Download `pyWitness <https://github.com/lmickes/pyWitness>`_ (click on green code button -> Download ZIP)
+2. Unpack ZIP file to a location of your choosing  
+3. In a terminal or shell change directory to the pyWitness directory
   * ``pip3 install --editable . --user``
 
 Clone GIT repository
@@ -71,7 +71,9 @@ Open a terminal (linux in bash) and move to a suitable work directory
 Testing it works
 ^^^^^^^^^^^^^^^^
 
-Open a new terminal. Start your python interpreter (``ipython3 --pylab`` on the terminal/PowerShell) and import pyWitness
+1. Open a new terminal 
+2. Start your python interpreter (``ipython3 --pylab`` on the terminal or shell)
+3. Import pyWitness by typing this code line (or copy and paste) into your terminal or shell
 
 .. code-block :: python
 
