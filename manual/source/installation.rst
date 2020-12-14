@@ -30,8 +30,7 @@ Installing the PYTHON environment
 You will need a suitable python environment. 
 
 1. Install `miniconda <https://docs.conda.io/en/latest/miniconda.html>`_ 
-2. Open a terminal (MacOS) or PowerShell (Windows)
-3. Install ipython, numpy, scipy, pandas, and matplotlib by typing each code line (or copy and paste) into your terminal or shell 
+2. Open a terminal (MacOS) or PowerShell (Windows) and install ipython, numpy, scipy, pandas, and matplotlib by typing each code line (or copy and paste) into your terminal or shell 
      * ``conda install ipython``
      * ``conda install numpy``
      * ``conda install scipy``
