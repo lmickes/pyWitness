@@ -36,7 +36,7 @@ You will need a suitable python environment.
      * ``conda install scipy``
      * ``conda install pandas``
      * ``conda install matplotlib``
-4. Start up python to test 
+3. Start up python to test 
      * ``ipython3 --pylab``
      * Python should start up and input ``import numpy``
         * Provided there are no errors ``numpy`` has been installed, you can try this with the other packages installed with ``conda``
