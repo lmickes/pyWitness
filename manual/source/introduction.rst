@@ -28,6 +28,17 @@ Signal Detection Theory
 
    * sdtlu: an open-source package for R to run signal detection model fits on lineup data
 
+Goals of pyWitness
+------------------
+
+   * Bin and pivot raw data to rates (process raw data)
+   * Plot and compare ROC, CAC and RAC curves
+   * Calculate pAUC and compute statistial tests
+   * Perform statistical tests on CAC/RAC curves
+   * Fit signal detection models to the processed data
+   * Monte Carlo simulation of raw data
+   * Teaching aid to create signal detection model plots
+
 Background to the pyWitness and the code
 ----------------------------------------
 

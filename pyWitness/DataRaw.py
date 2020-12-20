@@ -2,19 +2,23 @@ import pandas as _pandas
 
 from .DataProcessed import DataProcessed as _DataProcessed
 
+dataMapSdtlu =  {"lineupSize":"lineup_size",
+                 "targetLineup":"culprit_present",
+                 "targetPresent":"present",
+                 "targetAbsent":"absent",
+                 "responseType":"id_type",
+                 "suspectId":"suspect",
+                 "fillerId":"filler",
+                 "rejectId":"reject",
+                 "confidence":"conf_level"}
+
+dataMapPyWitness = None
+
 class DataRaw :
     def __init__(self,
                  fileName, 
                  excelSheet = "data used",
-                 dataMapping = {"lineupSize":"lineup_size",
-                                "targetLineup":"culprit_present",
-                                "targetPresent":"present",
-                                "targetAbsent":"absent",
-                                "responseType":"id_type",
-                                "suspectId":"suspect",
-                                "fillerId":"filler",
-                                "rejectId":"reject",
-                                "confidence":"conf_level"}) :
+                 dataMapping = dataMapPyWitness) :
         self.fileName = fileName
         self.dataMapping = dataMapping
 
@@ -23,19 +27,9 @@ class DataRaw :
         elif self.fileName.find("xlsx") != -1 : 
             self.data     = _pandas.read_excel(fileName,excelSheet)
         
-        #self.dataMapping = {"lineupSize":"lineup_size",
-        #                    "targetLineup":"culprit_present",
-        #                    "targetPresent":"Target-present",
-        #                    "targetAbsent":"Target-absent",
-        #                    "responseType":"id_type",
-        #                    "suspectId":"suspect",
-        #                    "fillerId":"filler",
-        #                    "rejectId":"reject",
-        #                    "confidence":"conf_level"}
-
         self.dataAggFunc = ["confidence"]
 
-        # self.renameRawData()
+        self.renameRawData()
                  
     def makeConfidenceBins(self,column = "confidence", nBins = 5) :
         minConf = self.data[column].min()
@@ -71,7 +65,10 @@ class DataRaw :
         pass
 
     def renameRawData(self) :
-        
+
+        if self.dataMapping == None:
+            return 
+
         # column names 
         self.data.rename(columns={self.dataMapping['lineupSize']:'lineupSize',
                                   self.dataMapping['targetLineup']:'targetLineup',
@@ -88,7 +85,9 @@ class DataRaw :
                                                                    self.dataMapping['rejectId']:'rejectId'}) 
 
     def process(self, reverseConfidence = False) :
-        self._data_processed = _DataProcessed(_pandas.pivot_table(self.data, columns='confidence', index=['targetLineup','responseType'], aggfunc={'confidence':'count'}),
+        self._data_processed = _DataProcessed(_pandas.pivot_table(self.data, columns='confidence', 
+                                                                  index=['targetLineup','responseType'], 
+                                                                  aggfunc={'confidence':'count'}),
                                               reverseConfidence = reverseConfidence,
-                                              lineupSize        = self.data['lineupSize'][0])
+                                              lineupSize        = self.data['lineupSize'][0])            
         return self._data_processed

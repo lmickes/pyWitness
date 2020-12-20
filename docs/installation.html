@@ -88,8 +88,8 @@
 <li class="toctree-l1"><a class="reference internal" href="authorship.html">Authorship</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#installation-python">Installation (PYTHON)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#installation-pywitness">Installation (pyWitness)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#installing-the-python-environment">Installing the PYTHON environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installing-pywitness">Installing pyWitness</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#download-zip-file">Download ZIP file</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#clone-git-repository">Clone GIT repository</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#testing-it-works">Testing it works</a></li>
@@ -181,24 +181,22 @@ These packages are required</p>
 </div></blockquote>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">You will have to use a terminal of some kind for input of commands. On MacOS the program is called <code class="docutils literal notranslate"><span class="pre">terminal</span></code> and on Windows it
+<p class="last">You will have to use a terminal for inputting commands. On MacOS the program is called <code class="docutils literal notranslate"><span class="pre">terminal</span></code> and on Windows it
 is called <code class="docutils literal notranslate"><span class="pre">PowerShell</span></code>.</p>
 </div>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p class="last">This tutorial assumes python is interactive python 3, with numpy and matplotlib, so the command <code class="docutils literal notranslate"><span class="pre">ipython3</span> <span class="pre">--pylab</span></code> if you are
-familary with python and have an installation replace <code class="docutils literal notranslate"><span class="pre">ipython3</span> <span class="pre">--pylab</span></code> with your own command to start python</p>
+familiar with python and have an installation replace <code class="docutils literal notranslate"><span class="pre">ipython3</span> <span class="pre">--pylab</span></code> with your own command to start python</p>
 </div>
 </div>
-<div class="section" id="installation-python">
-<h2>Installation (PYTHON)<a class="headerlink" href="#installation-python" title="Permalink to this headline">¶</a></h2>
-<p>First you will need a suitable python environment. If you already have anaconda or miniconda installed you can skip this part</p>
-<blockquote>
-<div><ul class="simple">
+<div class="section" id="installing-the-python-environment">
+<h2>Installing the PYTHON environment<a class="headerlink" href="#installing-the-python-environment" title="Permalink to this headline">¶</a></h2>
+<p>You will need a suitable python environment.</p>
+<ol class="arabic simple">
 <li>Install <a class="reference external" href="https://docs.conda.io/en/latest/miniconda.html">miniconda</a></li>
-<li>Open a terminal (MacOS) or PowerShell (Windows)</li>
 <li><dl class="first docutils">
-<dt>Install (ipython, numpy, scipy, pandas, matplotlib) by typing the following into your terminal/PowerShell</dt>
+<dt>Open a terminal (MacOS) or PowerShell (Windows) and install ipython, numpy, scipy, pandas, and matplotlib by typing each code line (or copy and paste) into your terminal or shell</dt>
 <dd><ul class="first last">
 <li><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">ipython</span></code></li>
 <li><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">numpy</span></code></li>
@@ -225,20 +223,21 @@ familary with python and have an installation replace <code class="docutils lite
 </dd>
 </dl>
 </li>
-</ul>
-</div></blockquote>
+</ol>
 </div>
-<div class="section" id="installation-pywitness">
-<h2>Installation (pyWitness)<a class="headerlink" href="#installation-pywitness" title="Permalink to this headline">¶</a></h2>
-<p>Here are two ways to do this, one is by downloading a ZIP file and another by cloning the GIT repository. If you are not comfortable
-with GIT (or don’t have it installed on your computer) please use the first method.</p>
+<div class="section" id="installing-pywitness">
+<h2>Installing pyWitness<a class="headerlink" href="#installing-pywitness" title="Permalink to this headline">¶</a></h2>
+<p>There are two ways to install pyWitness: Download the ZIP file or clone the GIT repository. If you are not comfortable
+with GIT or do not have it installed on your computer, download the ZIP file.</p>
 <div class="section" id="download-zip-file">
 <h3>Download ZIP file<a class="headerlink" href="#download-zip-file" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>Download <a class="reference external" href="https://github.com/lmickes/pyWitness">pyWitness</a> (click on green code button -&gt; Download ZIP)</li>
+<li>Unpack ZIP file to a directory of your choosing</li>
+<li>In a terminal or shell change directory to the pyWitness directory</li>
+</ol>
 <blockquote>
 <div><ul class="simple">
-<li>Download <a class="reference external" href="https://github.com/lmickes/pyWitness">pyWitness</a> (click on green code button -&gt; Download ZIP)</li>
-<li>Unpack ZIP file to a location of your choosing</li>
-<li>In a terminal/shell change directory to the pyWitness directory</li>
 <li><code class="docutils literal notranslate"><span class="pre">pip3</span> <span class="pre">install</span> <span class="pre">--editable</span> <span class="pre">.</span> <span class="pre">--user</span></code></li>
 </ul>
 </div></blockquote>
@@ -254,11 +253,15 @@ pip3 install --editable . --user
 </div>
 <div class="section" id="testing-it-works">
 <h3>Testing it works<a class="headerlink" href="#testing-it-works" title="Permalink to this headline">¶</a></h3>
-<p>Start your python interpreter (<code class="docutils literal notranslate"><span class="pre">ipython3</span> <span class="pre">--pylab</span></code> on the terminal/PowerShell) and import pyWitness</p>
+<ol class="arabic simple">
+<li>Open a new terminal</li>
+<li>Start your python interpreter (<code class="docutils literal notranslate"><span class="pre">ipython3</span> <span class="pre">--pylab</span></code> on the terminal or shell)</li>
+<li>Import pyWitness by typing this code line (or copy and paste) into your terminal or shell</li>
+</ol>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
 </pre></div>
 </div>
-<p>If this does not give you an error your installation is working and you can proceed to the tutorials.</p>
+<p>If you get “pyWitness v0.1” it’s installed and you can proceed to the tutorials.</p>
 </div>
 </div>
 </div>
@@ -284,7 +287,7 @@ pip3 install --editable . --user
   <div role="contentinfo">
     <p>
         &copy; Copyright Royal Holloway, University of London 2020 and University of Bristol 2020
-      Last updated on Dec 07, 2020.
+      Last updated on Dec 20, 2020.
 
     </p>
   </div>

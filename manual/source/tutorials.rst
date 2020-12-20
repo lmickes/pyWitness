@@ -5,6 +5,9 @@ Tutorials
    The data files used in this tutorial are stored in ``pyWitness/data/``. It is a good idea to copy these files to your working 
    directory
 
+.. warning::
+   error bars, collapse confidence
+
 Loading raw experimental data
 -----------------------------
 
@@ -45,6 +48,55 @@ the name of the data columns and the values stored.
 
 Processing raw experimental data
 --------------------------------
+To process the raw data the function ``process`` needs to be called on a raw data object. 
+
+.. code-block :: python 
+   :linenos:
+   :emphasize-lines: 3
+
+   import pyWitness
+   dr = pyWitness.DataRaw("test1.csv")
+   dp = dr.process()
+
+Once ``process`` is called two ``DataFrames`` are created one which contains a pivot table and another that contains rates
+
+.. code-block :: python 
+   :linenos:
+   :emphasize-lines: 4-5
+
+   import pyWitness
+   dr = pyWitness.DataRaw("test1.csv")
+   dp = dr.process()
+   dp.printPivot()
+   dp.printRates()
+
+Plotting ROC curves
+-------------------
+
+.. code-block :: python 
+   :linenos:
+   :emphasize-lines: 4
+
+   import pyWitness
+   dr = pyWitness.DataRaw("test1.csv")
+   dp = dr.process()
+   dp.plotROC()
+
+Plotting CAC curves 
+-------------------
+
+.. code-block :: python 
+   :linenos:
+   :emphasize-lines: 4
+
+   import pyWitness
+   dr = pyWitness.DataRaw("test1.csv")
+   dp = dr.process()
+   dp.plotCAC()
+
+
+Plotting RAC curves
+-------------------
 
 Fitting signal detection models to data
 ---------------------------------------

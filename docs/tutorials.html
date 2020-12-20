@@ -91,6 +91,9 @@
 <li class="toctree-l2"><a class="reference internal" href="#loading-raw-experimental-data">Loading raw experimental data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#transforming-data-into-common-format">Transforming data into common format</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#processing-raw-experimental-data">Processing raw experimental data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#plotting-roc-curves">Plotting ROC curves</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#plotting-cac-curves">Plotting CAC curves</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#plotting-rac-curves">Plotting RAC curves</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#fitting-signal-detection-models-to-data">Fitting signal detection models to data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#generating-data-from-signal-detection-model">Generating data from signal detection model</a></li>
 </ul>
@@ -163,8 +166,12 @@
 <h1>Tutorials<a class="headerlink" href="#tutorials" title="Permalink to this headline">¶</a></h1>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">The data files used in this tutorial are stored in <code class="docutils literal notranslate"><span class="pre">pyWitness/data/tutorial</span></code>. It is a good idea to copy these files to your working
+<p class="last">The data files used in this tutorial are stored in <code class="docutils literal notranslate"><span class="pre">pyWitness/data/</span></code>. It is a good idea to copy these files to your working
 directory</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">error bars, collapse confidence</p>
 </div>
 <div class="section" id="loading-raw-experimental-data">
 <h2>Loading raw experimental data<a class="headerlink" href="#loading-raw-experimental-data" title="Permalink to this headline">¶</a></h2>
@@ -199,6 +206,53 @@ the name of the data columns and the values stored.</p>
 </div>
 <div class="section" id="processing-raw-experimental-data">
 <h2>Processing raw experimental data<a class="headerlink" href="#processing-raw-experimental-data" title="Permalink to this headline">¶</a></h2>
+<p>To process the raw data the function <code class="docutils literal notranslate"><span class="pre">process</span></code> needs to be called on a raw data object.</p>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
+<span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test1.csv&quot;</span><span class="p">)</span>
+<span class="hll"><span class="n">dp</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
+</span></pre></div>
+</td></tr></table></div>
+<p>Once <code class="docutils literal notranslate"><span class="pre">process</span></code> is called two <code class="docutils literal notranslate"><span class="pre">DataFrames</span></code> are created one which contains a pivot table and another that contains rates</p>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
+<span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test1.csv&quot;</span><span class="p">)</span>
+<span class="n">dp</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
+<span class="hll"><span class="n">dp</span><span class="o">.</span><span class="n">printPivot</span><span class="p">()</span>
+</span><span class="hll"><span class="n">dp</span><span class="o">.</span><span class="n">printRates</span><span class="p">()</span>
+</span></pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="plotting-roc-curves">
+<h2>Plotting ROC curves<a class="headerlink" href="#plotting-roc-curves" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
+<span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test1.csv&quot;</span><span class="p">)</span>
+<span class="n">dp</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
+<span class="hll"><span class="n">dp</span><span class="o">.</span><span class="n">plotROC</span><span class="p">()</span>
+</span></pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="plotting-cac-curves">
+<h2>Plotting CAC curves<a class="headerlink" href="#plotting-cac-curves" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
+<span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test1.csv&quot;</span><span class="p">)</span>
+<span class="n">dp</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
+<span class="hll"><span class="n">dp</span><span class="o">.</span><span class="n">plotCAC</span><span class="p">()</span>
+</span></pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="plotting-rac-curves">
+<h2>Plotting RAC curves<a class="headerlink" href="#plotting-rac-curves" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="fitting-signal-detection-models-to-data">
 <h2>Fitting signal detection models to data<a class="headerlink" href="#fitting-signal-detection-models-to-data" title="Permalink to this headline">¶</a></h2>
@@ -227,7 +281,7 @@ the name of the data columns and the values stored.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright Royal Holloway, University of London 2020 and University of Bristol 2020
-      Last updated on Dec 06, 2020.
+      Last updated on Dec 20, 2020.
 
     </p>
   </div>

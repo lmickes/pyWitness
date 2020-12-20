@@ -88,9 +88,10 @@
 <li class="toctree-l1"><a class="reference internal" href="authorship.html">Authorship</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Introduction</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#eye-witness-memory-research">Eye witness memory research</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#reciever-operator-characteristic-roc">Reciever operator characteristic (ROC)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#eyewitness-identification-research">Eyewitness identification research</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#receiver-operator-characteristic-roc">Receiver operator characteristic (ROC)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#signal-detection-theory">Signal Detection Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#goals-of-pywitness">Goals of pyWitness</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#background-to-the-pywitness-and-the-code">Background to the pyWitness and the code</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#internal-data-format">Internal data format</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#transforming-data-structures">Transforming data structures</a></li>
@@ -170,26 +171,47 @@
 <p class="last">All plots and diagrams are made using pyWitness. The scripts used to make the plots are located in
 <code class="docutils literal notranslate"><span class="pre">pyWitness/manual/source/figures/</span></code></p>
 </div>
-<div class="section" id="eye-witness-memory-research">
-<h2>Eye witness memory research<a class="headerlink" href="#eye-witness-memory-research" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="eyewitness-identification-research">
+<h2>Eyewitness identification research<a class="headerlink" href="#eyewitness-identification-research" title="Permalink to this headline">¶</a></h2>
+<p>Eyewitnesses to crimes may try to identify the perpetrator from an identification procedure. One commonly used procedure is a lineup (identity parade in the UK). A lineup comprises the police suspect and fillers. A lineup with an innocent suspect is a target-absent lineup and a lineupw with a guilty suspect is a target-present lineup. Eyewitness can make filler IDs from either lineup, identify the innocent suspect (from a target-absent lineup) or guilty suspect (from a target-present lineup).</p>
+<p>Receiver operating characteristic (ROC) analysis measures discriminability (the ability to distinguish innocent from guilty suspects), confidence accuracy characteristic (CAC) and response-time accuracy characteristic (RAC) analysis measure positive predictive value (the likelihood the identified suspect is guilty). pyWitness allows researchers to run these analyses.</p>
+<p>Theories about eyewitness identification have thus far been signal detection-based. pyWitness allows researchers to compare signal detection-based model fits.</p>
 </div>
-<div class="section" id="reciever-operator-characteristic-roc">
-<h2>Reciever operator characteristic (ROC)<a class="headerlink" href="#reciever-operator-characteristic-roc" title="Permalink to this headline">¶</a></h2>
-<p>There are pacakges in R and Matlab to calculating pAUCs, smoothing ROCS, statistically comparing ROCs,etc.</p>
+<div class="section" id="receiver-operator-characteristic-roc">
+<h2>Receiver operator characteristic (ROC)<a class="headerlink" href="#receiver-operator-characteristic-roc" title="Permalink to this headline">¶</a></h2>
+<p>There are pacakges in R and MATLAB that calculate pAUCs, smooth ROCS, and statistically comparing pAUCs.</p>
 <blockquote>
 <div><ul class="simple">
 <li>pROC: an open-source package for R and S+ to analyze and compare ROC curves</li>
-<li>The ROC Toolbox: A toolbox for analyzing receiver-operating characteristics derived from confidence ratings</li>
+<li>The ROC Toolbox: A MATLAB toolbox for analyzing ROCs derived from confidence ratings</li>
 </ul>
 </div></blockquote>
 </div>
 <div class="section" id="signal-detection-theory">
 <h2>Signal Detection Theory<a class="headerlink" href="#signal-detection-theory" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li>sdtlu: an open-source package for R to run signal detection model fits on lineup data</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="goals-of-pywitness">
+<h2>Goals of pyWitness<a class="headerlink" href="#goals-of-pywitness" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li>Bin and pivot raw data to rates (process raw data)</li>
+<li>Plot and compare ROC, CAC and RAC curves</li>
+<li>Calculate pAUC and compute statistial tests</li>
+<li>Perform statistical tests on CAC/RAC curves</li>
+<li>Fit signal detection models to the processed data</li>
+<li>Monte Carlo simulation of raw data</li>
+<li>Teaching aid to create signal detection model plots</li>
+</ul>
+</div></blockquote>
 </div>
 <div class="section" id="background-to-the-pywitness-and-the-code">
 <h2>Background to the pyWitness and the code<a class="headerlink" href="#background-to-the-pywitness-and-the-code" title="Permalink to this headline">¶</a></h2>
-<p>To keep a consistent set of analysis tools for eyewitness data it is important to keep a flexible
-internal data format.</p>
+<p>Our goal with pyWitness is to create a consistent set of analysis tools for any eyewitness memory researcher to use for lineup data. Importantly, there is a flexible internal data format.</p>
 <div class="section" id="internal-data-format">
 <h3>Internal data format<a class="headerlink" href="#internal-data-format" title="Permalink to this headline">¶</a></h3>
 <table border="1" class="colwidths-given docutils" id="id1">
@@ -316,8 +338,8 @@ or data, demographic data or personal differenes.</p>
 </table>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Confidence can catagoral and so needs to be mapped to a number, so for example confidence could be low (1),
-medium (2) or high (2).</p>
+<p class="last">Confidence can verbal and so needs to be mapped to a number. For example, confidence could be low (1),
+medium (2) or high (3).</p>
 </div>
 </div>
 </div>
@@ -344,7 +366,7 @@ medium (2) or high (2).</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright Royal Holloway, University of London 2020 and University of Bristol 2020
-      Last updated on Dec 07, 2020.
+      Last updated on Dec 20, 2020.
 
     </p>
   </div>

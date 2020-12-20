@@ -25,7 +25,7 @@ These packages are required
    familiar with python and have an installation replace ``ipython3 --pylab`` with your own command to start python
 
 Installing the PYTHON environment  
----------------------
+---------------------------------
 
 You will need a suitable python environment. 
 
@@ -43,7 +43,7 @@ You will need a suitable python environment.
      
 
 Installing pyWitness
-------------------------
+--------------------
 
 There are two ways to install pyWitness: Download the ZIP file or clone the GIT repository. If you are not comfortable 
 with GIT or do not have it installed on your computer, download the ZIP file. 
