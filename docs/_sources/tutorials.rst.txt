@@ -82,6 +82,10 @@ Plotting ROC curves
    dp = dr.process()
    dp.plotROC()
 
+.. figure:: images/test1_roc.png
+   :alt: ROC for test1.csv
+
+
 Plotting CAC curves 
 -------------------
 
@@ -94,9 +98,17 @@ Plotting CAC curves
    dp = dr.process()
    dp.plotCAC()
 
+.. figure:: images/test1_cac.png
+   :alt: CAC for test1.csv
+
+
 
 Plotting RAC curves
 -------------------
+
+Collapsing the confidence binning
+---------------------------------
+
 
 Fitting signal detection models to data
 ---------------------------------------
