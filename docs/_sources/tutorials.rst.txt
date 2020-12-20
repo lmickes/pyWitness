@@ -82,7 +82,7 @@ Plotting ROC curves
    dp = dr.process()
    dp.plotROC()
 
-.. figure:: images/test1_roc.png
+.. figure:: images/test1_roc.jpg
    :alt: ROC for test1.csv
 
 
@@ -98,7 +98,7 @@ Plotting CAC curves
    dp = dr.process()
    dp.plotCAC()
 
-.. figure:: images/test1_cac.png
+.. figure:: images/test1_cac.jpg
    :alt: CAC for test1.csv
 
 
