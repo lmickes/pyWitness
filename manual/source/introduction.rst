@@ -31,6 +31,7 @@ Signal Detection Theory
 Goals of pyWitness
 ------------------
 
+   * Place to store all relevant algorithms, fits and methods in a reproducible and documented way
    * Bin and pivot raw data to rates (process raw data)
    * Plot and compare ROC, CAC and RAC curves
    * Calculate pAUC and compute statistial tests
@@ -128,6 +129,8 @@ Transforming data into pyWitness format can be time consuming and error prone.
      - reject
    * - confidence
      - conf_level
+
+
 
 .. note::
    Confidence can verbal and so needs to be mapped to a number. For example, confidence could be low (1), 

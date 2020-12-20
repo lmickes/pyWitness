@@ -70,6 +70,38 @@ Once ``process`` is called two ``DataFrames`` are created one which contains a p
    dp.printPivot()
    dp.printRates()
 
+Here is the output of the ``dp.printPivot()``
+
+.. code-block :: console
+
+                              confidence                                                          
+   confidence                        0    10   20    30    40    50    60    70    80    90    100
+   targetLineup  responseType                                                                     
+   targetAbsent  fillerId            3.0  7.0  7.0  11.0  16.0  26.0  30.0  31.0  19.0  13.0  10.0
+                 rejectId            4.0  5.0  5.0   6.0  11.0  28.0  39.0  57.0  75.0  46.0  66.0
+   targetPresent fillerId            2.0  1.0  3.0   4.0  10.0   9.0   9.0  17.0  16.0   6.0   4.0
+                 rejectId            4.0  3.0  NaN   9.0  10.0  23.0  11.0  19.0  25.0  18.0  25.0
+                 suspectId           3.0  1.0  4.0   5.0  11.0  19.0  44.0  77.0  55.0  37.0  47.0
+
+And here is the output of the ``dp.printRates()``
+
+.. code-block :: console
+
+                              confidence                                                                                                    
+   confidence                        100       90        80        70        60        50        40        30        20        10        0  
+   targetLineup  responseType                                                                                                               
+   cac                          0.965753  0.944681  0.945559  0.937120  0.897959  0.814286  0.804878  0.731707  0.774194  0.461538  0.857143 
+   rf                           0.146660  0.118031  0.175289  0.247614  0.147664  0.070316  0.041185  0.020593  0.015570  0.006529  0.010547
+   targetAbsent  fillerId       0.019417  0.044660  0.081553  0.141748  0.200000  0.250485  0.281553  0.302913  0.316505  0.330097  0.335922
+                 rejectId       0.128155  0.217476  0.363107  0.473786  0.549515  0.603883  0.625243  0.636893  0.646602  0.656311  0.664078
+                 suspectId      0.003236  0.007443  0.013592  0.023625  0.033333  0.041748  0.046926  0.050485  0.052751  0.055016  0.055987
+   targetPresent fillerId       0.007533  0.018832  0.048964  0.080979  0.097928  0.114878  0.133710  0.141243  0.146893  0.148776  0.152542
+                 rejectId       0.047081  0.080979  0.128060  0.163842  0.184557  0.227872  0.246704  0.263653       NaN  0.269303  0.276836
+                 suspectId      0.088512  0.158192  0.261770  0.406780  0.489642  0.525424  0.546139  0.555556  0.563089  0.564972  0.570621
+
+.. note::
+   In the example there is no ``suspectId`` for ``targetAbsent`` lineups. Here the ``targetAbsent.suspectId`` is estimated as ``targetAbsent.fillerId/lineupSize`` 
+
 Plotting ROC curves
 -------------------
 
@@ -85,6 +117,8 @@ Plotting ROC curves
 .. figure:: images/test1_roc.jpg
    :alt: ROC for test1.csv
 
+.. note:: 
+   The symbol size is the relative frequency and can be changed by setting ``dp.plotROC(relativeFrequencyScale = 400)``
 
 Plotting CAC curves 
 -------------------
