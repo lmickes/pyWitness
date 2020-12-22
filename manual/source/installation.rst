@@ -36,6 +36,7 @@ You will need a suitable python environment.
      * ``conda install scipy``
      * ``conda install pandas``
      * ``conda install matplotlib``
+     * ``conda install openpyxl``
 3. Start up python to test 
      * ``ipython3 --pylab``
      * Python should start up and input ``import numpy``
@@ -54,7 +55,8 @@ Download ZIP file
 1. Download `pyWitness <https://github.com/lmickes/pyWitness>`_ (click on green code button -> Download ZIP)
 2. Unpack ZIP file to a directory of your choosing  
 3. In a terminal or shell change directory to the pyWitness directory
-  * ``pip3 install --editable . --user``
+
+   * ``pip3 install --editable . --user``
 
 Clone GIT repository
 ^^^^^^^^^^^^^^^^^^^^
