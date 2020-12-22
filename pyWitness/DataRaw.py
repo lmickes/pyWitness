@@ -37,6 +37,9 @@ class DataRaw :
         
         print('Data.makeConfidenceBins>',minConf,maxConf,nBins)
 
+    def rebinConfidence(self, bins = [41, 61, 81, 101]) :
+        pass
+
     def setLineupSize(self,header) :
         self.dataMapping["lineupSize"] = header
     
@@ -83,6 +86,11 @@ class DataRaw :
         self.data['responseType'] = self.data['responseType'].map({self.dataMapping['suspectId']:'suspectId',
                                                                    self.dataMapping['fillerId']:'fillerId',
                                                                    self.dataMapping['rejectId']:'rejectId'}) 
+
+        # 0-60, 70-80, 90-100
+
+    def collapseCatagoricalData(self, column = "confidence", map = {0:30, 10:30, 20:30, 30:30, 40:30, 50:30, 60:30, 70:75, 80:75, 90:95, 100:95}) : 
+        self.data[column] = self.data[column].map(map)
 
     def process(self, reverseConfidence = False) :
         self._data_processed = _DataProcessed(_pandas.pivot_table(self.data, columns='confidence', 
