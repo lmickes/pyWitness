@@ -6,6 +6,8 @@ class DataProcessed :
         self.data_pivot        = data_pivot 
         self.lineupSize        = lineupSize 
         self.reverseConfidence = reverseConfidence
+        self.numberTPLineups   = data_pivot.loc['targetPresent'].sum().sum()
+        self.numberTALineups   = data_pivot.loc['targetAbsent'].sum().sum()
         self.calculateRates(reverseConfidence)
         self.calculateRelativeFrequency()
         self.calculateCAC()
@@ -20,6 +22,7 @@ class DataProcessed :
             columns = columns[::-1]
             self.data_rates = self.data_rates[columns]
 
+        # cumulative rates
         self.data_rates = self.data_rates.cumsum(1)
 
         self.targetAbsentSum   = self.data_pivot.loc['targetAbsent'].sum().sum()
@@ -89,8 +92,6 @@ class DataProcessed :
     def plotROC(self, relativeFrequencyScale = 400) :
         x = _np.linspace(0,1,100)
 
-        # _plt.plot(self.data_rates.loc['targetAbsent', 'suspectId'],
-        #           self.data_rates.loc['targetPresent','suspectId'],"+");
         _plt.plot(x,x,"--",color="black",linewidth=1.0)
         _plt.scatter(self.data_rates.loc['targetAbsent', 'suspectId'],
                      self.data_rates.loc['targetPresent','suspectId'],
@@ -119,3 +120,22 @@ class DataProcessed :
 
     def printRates(self) :
         print(self.data_rates)
+
+    def numberConditions(self) :
+        return self.data_rates.columns.get_level_values('confidence').size
+
+    def writeRatesCsv(self, fileNameStub) : 
+        self.data_rates.to_csv(fileNameStub+"_rates.csv")
+
+    def writeRatesExcel(self, fileNameStub) : 
+        self.data_rates.to_excel(fileNameStub+"_rates.xlsx")        
+
+    def writePivotCsv(self, fileNameStub) : 
+        self.data_pivot.to_csv(fileNameStub+"_pivot.csv")
+
+    def writePivotExcel(self, fileNameStub) : 
+        self.data_pivot.to_excel(fileNameStub+"_pivot.xlsx")
+
+
+        
+    
