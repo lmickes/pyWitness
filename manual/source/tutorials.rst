@@ -6,7 +6,8 @@ Tutorials
    directory. This tutorial builds up! Between each example and previous examples the new lines of code are highlighted in yellow.
 
 .. warning::
-   error bars
+   error bars, Processing raw experimental data for a particular experimental condition, Calculating pAUC and performing statistical tests, 
+   Fitting signal detection models to data
 
 Loading raw experimental data
 -----------------------------
