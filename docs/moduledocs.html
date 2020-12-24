@@ -168,6 +168,11 @@ may be incomplete.</p>
 <em class="property">class </em><code class="descclassname">pyWitness.</code><code class="descname">DataRaw</code><span class="sig-paren">(</span><em>fileName</em>, <em>excelSheet='data used'</em>, <em>dataMapping=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyWitness.DataRaw" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="method">
+<dt id="pyWitness.DataRaw.collapseCatagoricalData">
+<code class="descname">collapseCatagoricalData</code><span class="sig-paren">(</span><em>column='confidence'</em>, <em>map={0: 30</em>, <em>10: 30</em>, <em>20: 30</em>, <em>30: 30</em>, <em>40: 30</em>, <em>50: 30</em>, <em>60: 30</em>, <em>70: 75</em>, <em>80: 75</em>, <em>90: 95</em>, <em>100: 95}</em><span class="sig-paren">)</span><a class="headerlink" href="#pyWitness.DataRaw.collapseCatagoricalData" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
 <dt id="pyWitness.DataRaw.descriptiveStatisticcs">
 <code class="descname">descriptiveStatisticcs</code><span class="sig-paren">(</span><em>column</em><span class="sig-paren">)</span><a class="headerlink" href="#pyWitness.DataRaw.descriptiveStatisticcs" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -180,6 +185,11 @@ may be incomplete.</p>
 <dl class="method">
 <dt id="pyWitness.DataRaw.process">
 <code class="descname">process</code><span class="sig-paren">(</span><em>reverseConfidence=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pyWitness.DataRaw.process" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyWitness.DataRaw.rebinConfidence">
+<code class="descname">rebinConfidence</code><span class="sig-paren">(</span><em>bins=[41, 61, 81, 101]</em><span class="sig-paren">)</span><a class="headerlink" href="#pyWitness.DataRaw.rebinConfidence" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -249,8 +259,13 @@ may be incomplete.</p>
 <dd></dd></dl>
 
 <dl class="method">
+<dt id="pyWitness.DataProcessed.numberConditions">
+<code class="descname">numberConditions</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyWitness.DataProcessed.numberConditions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
 <dt id="pyWitness.DataProcessed.plotCAC">
-<code class="descname">plotCAC</code><span class="sig-paren">(</span><em>relativeFrequencyScale=400</em><span class="sig-paren">)</span><a class="headerlink" href="#pyWitness.DataProcessed.plotCAC" title="Permalink to this definition">¶</a></dt>
+<code class="descname">plotCAC</code><span class="sig-paren">(</span><em>label='CAC'</em>, <em>relativeFrequencyScale=400</em><span class="sig-paren">)</span><a class="headerlink" href="#pyWitness.DataProcessed.plotCAC" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -260,7 +275,7 @@ may be incomplete.</p>
 
 <dl class="method">
 <dt id="pyWitness.DataProcessed.plotROC">
-<code class="descname">plotROC</code><span class="sig-paren">(</span><em>relativeFrequencyScale=400</em><span class="sig-paren">)</span><a class="headerlink" href="#pyWitness.DataProcessed.plotROC" title="Permalink to this definition">¶</a></dt>
+<code class="descname">plotROC</code><span class="sig-paren">(</span><em>label='ROC'</em>, <em>relativeFrequencyScale=400</em><span class="sig-paren">)</span><a class="headerlink" href="#pyWitness.DataProcessed.plotROC" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -271,6 +286,62 @@ may be incomplete.</p>
 <dl class="method">
 <dt id="pyWitness.DataProcessed.printRates">
 <code class="descname">printRates</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyWitness.DataProcessed.printRates" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyWitness.DataProcessed.writePivotCsv">
+<code class="descname">writePivotCsv</code><span class="sig-paren">(</span><em>fileName</em><span class="sig-paren">)</span><a class="headerlink" href="#pyWitness.DataProcessed.writePivotCsv" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyWitness.DataProcessed.writePivotExcel">
+<code class="descname">writePivotExcel</code><span class="sig-paren">(</span><em>fileName</em><span class="sig-paren">)</span><a class="headerlink" href="#pyWitness.DataProcessed.writePivotExcel" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyWitness.DataProcessed.writePivotSimpleCsv">
+<code class="descname">writePivotSimpleCsv</code><span class="sig-paren">(</span><em>fileNameStub</em><span class="sig-paren">)</span><a class="headerlink" href="#pyWitness.DataProcessed.writePivotSimpleCsv" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyWitness.DataProcessed.writeRatesCsv">
+<code class="descname">writeRatesCsv</code><span class="sig-paren">(</span><em>fileName</em><span class="sig-paren">)</span><a class="headerlink" href="#pyWitness.DataProcessed.writeRatesCsv" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyWitness.DataProcessed.writeRatesExcel">
+<code class="descname">writeRatesExcel</code><span class="sig-paren">(</span><em>fileName</em><span class="sig-paren">)</span><a class="headerlink" href="#pyWitness.DataProcessed.writeRatesExcel" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyWitness.ModelFitIndependentObservation">
+<em class="property">class </em><code class="descclassname">pyWitness.</code><code class="descname">ModelFitIndependentObservation</code><span class="sig-paren">(</span><em>processedData</em><span class="sig-paren">)</span><a class="headerlink" href="#pyWitness.ModelFitIndependentObservation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="pyWitness.ModelFitIndependentObservation.calculateRates">
+<code class="descname">calculateRates</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyWitness.ModelFitIndependentObservation.calculateRates" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyWitness.ModelFitIndependentObservation.chiSquared">
+<code class="descname">chiSquared</code><span class="sig-paren">(</span><em>params</em><span class="sig-paren">)</span><a class="headerlink" href="#pyWitness.ModelFitIndependentObservation.chiSquared" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyWitness.ModelFitIndependentObservation.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyWitness.ModelFitIndependentObservation.fit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyWitness.ModelFitIndependentObservation.plotModelThreshold">
+<code class="descname">plotModelThreshold</code><span class="sig-paren">(</span><em>threshold=0</em>, <em>xlow=-5</em>, <em>xhigh=5</em><span class="sig-paren">)</span><a class="headerlink" href="#pyWitness.ModelFitIndependentObservation.plotModelThreshold" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyWitness.ModelFitIndependentObservation.setParameters">
+<code class="descname">setParameters</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyWitness.ModelFitIndependentObservation.setParameters" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -297,7 +368,7 @@ may be incomplete.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright Royal Holloway, University of London 2020 and University of Bristol 2020
-      Last updated on Dec 20, 2020.
+      Last updated on Dec 24, 2020.
 
     </p>
   </div>

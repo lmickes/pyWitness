@@ -17,3 +17,8 @@ Defines and variables
    :members:
    :undoc-members:
    :show-inheritance:
+
+.. autoclass:: pyWitness.ModelFitIndependentObservation
+   :members:
+   :undoc-members:
+   :show-inheritance:

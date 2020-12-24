@@ -3,10 +3,11 @@ Tutorials
 
 .. note::
    The data files used in this tutorial are stored in ``pyWitness/data/``. It is a good idea to copy these files to your working 
-   directory
+   directory. This tutorial builds up! Between each example and previous examples the new lines of code are highlighted in yellow.
 
 .. warning::
-   error bars, collapse confidence
+   error bars, Processing raw experimental data for a particular experimental condition, Calculating pAUC and performing statistical tests, 
+   Fitting signal detection models to data
 
 Loading raw experimental data
 -----------------------------
@@ -48,7 +49,7 @@ the name of the data columns and the values stored.
 
 Processing raw experimental data
 --------------------------------
-To process the raw data the function ``process`` needs to be called on a raw data object. 
+To process the raw data the function ``process`` needs to be called on a raw data object. The calculates the cumulative rates from the raw data. 
 
 .. code-block :: python 
    :linenos:
@@ -135,18 +136,65 @@ Plotting CAC curves
 .. figure:: images/test1_cac.jpg
    :alt: CAC for test1.csv
 
-
-
 Plotting RAC curves
 -------------------
 
 Collapsing the confidence binning
 ---------------------------------
 
+The example in this tutorial as 11 confidence levels (0, 10, 20, 30, 40, 50, 60, 70, 80, 90 and 100). Typically catagorical confidence levels need to be binned or collapsed. This is best performed on the raw data before calling ``process()``. This is done with the ``collapseCatagoricalData`` method of ``DataRaw``. This is shown in example below, where the new bins are (0-60 map to 30, 70-80 to 75 and 90-100 to 95).
+
+.. code-block :: python 
+   :linenos:
+   :emphasize-lines: 3-6
+  
+   import pyWitness
+   dr = pyWitness.DataRaw("test1.csv")
+   dr.collapseCatagoricalData(column='confidence',
+                              map={0: 30, 10: 30, 20: 30, 30: 30, 40: 30, 50: 30, 60: 30, 
+                                   70: 75, 80: 75, 
+                                   90: 95, 100: 95})
+   dp = dr.process()
+   dp.plotCAC()   
+
+.. figure:: images/test1_rebinned.jpg
+   :alt: Rebinned CAC for test1.csv 
+
+Calculating pAUC and performing statistical tests
+-------------------------------------------------
 
 Fitting signal detection models to data
 ---------------------------------------
 
-Generating data from signal detection model
--------------------------------------------
+Writing results to file 
+-----------------------
+
+The internal dataframes can be written to either ``csv`` or ``xlsx`` file format for further analysis. There are four functions belonging to ``DataProcessed``. 
+
+   * ``writePivotExcel`` writes the pivot table to excel
+   * ``writePivotCsv`` writes the pivot table to csv
+   * ``writeRatesExcel`` writes the cummulative rates table to excel
+   * ``writeRatesCsv`` writes the cummulative rates table to csv
+
+The string argument for the functions is the file name. 
+
+.. code-block :: python 
+   :linenos:
+   :emphasize-lines: 4-7
+   
+   import pyWitness
+   dr = pyWitness.DataRaw("test1.csv")
+   dp = dr.process()  
+   dp.writePivotExcel("test1_pivot.xlsx")
+   dp.writePivotCsv("test1_pivot.csv")
+   dp.writeRatesExcel("test1_rates.xlsx")
+   dp.writeRatesCsv("test1_rates.csv")
+
+.. figure:: images/test1_pivot_excel.jpg
+
+.. figure:: images/test1_rates_excel.jpg
+
+Loading binned data 
+-------------------
+
 
