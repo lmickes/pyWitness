@@ -89,21 +89,23 @@ class DataProcessed :
         self.data_rates = self.data_rates.append(cac)
         self.data_rates = self.data_rates.sort_index()      
 
-    def plotROC(self, relativeFrequencyScale = 400) :
+    def plotROC(self, label = "ROC", relativeFrequencyScale = 400) :
         x = _np.linspace(0,1,100)
 
         _plt.plot(x,x,"--",color="black",linewidth=1.0)
         _plt.scatter(self.data_rates.loc['targetAbsent', 'suspectId'],
                      self.data_rates.loc['targetPresent','suspectId'],
-                     s = self.data_rates.loc['rf','']*relativeFrequencyScale)
+                     s = self.data_rates.loc['rf','']*relativeFrequencyScale,
+                     label = label)
         _plt.xlabel("False ID rate")
         _plt.ylabel("Corred ID rate")
         
 
-    def plotCAC(self, relativeFrequencyScale = 400) :
+    def plotCAC(self, label = "CAC", relativeFrequencyScale = 400) :
          _plt.scatter(self.data_rates.columns.get_level_values('confidence'),
                       self.data_rates.loc['cac',''],
-                      s = self.data_rates.loc['rf','']*relativeFrequencyScale)        
+                      s = self.data_rates.loc['rf','']*relativeFrequencyScale,
+                      label = label)        
          _plt.xlabel("Confidence")
          _plt.ylabel("Proportion correct") 
 
@@ -124,17 +126,20 @@ class DataProcessed :
     def numberConditions(self) :
         return self.data_rates.columns.get_level_values('confidence').size
 
-    def writeRatesCsv(self, fileNameStub) : 
-        self.data_rates.to_csv(fileNameStub+"_rates.csv")
+    def writeRatesCsv(self, fileName) : 
+        self.data_rates.to_csv(fileName)
 
-    def writeRatesExcel(self, fileNameStub) : 
-        self.data_rates.to_excel(fileNameStub+"_rates.xlsx")        
+    def writeRatesExcel(self, fileName) : 
+        self.data_rates.to_excel(fileName)        
 
-    def writePivotCsv(self, fileNameStub) : 
-        self.data_pivot.to_csv(fileNameStub+"_pivot.csv")
+    def writePivotCsv(self, fileName) : 
+        self.data_pivot.to_csv(fileName)
 
-    def writePivotExcel(self, fileNameStub) : 
-        self.data_pivot.to_excel(fileNameStub+"_pivot.xlsx")
+    def writePivotSimpleCsv(self, fileNameStub) : 
+        pass
+
+    def writePivotExcel(self, fileName) :
+        self.data_pivot.to_excel(fileName)
 
 
         
