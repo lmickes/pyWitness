@@ -141,7 +141,7 @@ class ModelFitIndependentObservation :
             return self.chiSquared(x)
         print(_optimize.minimize(chiSquared, x0, method='Nelder-Mead'))
 
-    def plotModelThreshold(self, threshold = 0, xlow = -5, xhigh = 5) : 
+    def plotModel(self, xlow = -5, xhigh = 5) : 
         x      = _np.linspace(xlow, xhigh,200) 
         lure   = _norm.pdf(x,self.lureMean, self.lureSigma)
         target = _norm.pdf(x,self.targetMean, self.targetSigma)
