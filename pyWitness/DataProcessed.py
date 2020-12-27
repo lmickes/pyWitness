@@ -1,13 +1,28 @@
+import pandas as _pandas
 import matplotlib.pyplot as _plt
 import numpy as _np
 
 class DataProcessed :
     def __init__(self, data_pivot, reverseConfidence = False, lineupSize = 1) : 
-        self.data_pivot        = data_pivot 
-        self.lineupSize        = lineupSize 
-        self.reverseConfidence = reverseConfidence
-        self.numberTPLineups   = data_pivot.loc['targetPresent'].sum().sum()
-        self.numberTALineups   = data_pivot.loc['targetAbsent'].sum().sum()
+
+        if isinstance(data_pivot, _pandas.DataFrame) :
+            self.data_pivot        = data_pivot 
+            self.lineupSize        = lineupSize 
+            self.reverseConfidence = reverseConfidence
+            self.numberTPLineups   = data_pivot.loc['targetPresent'].sum().sum()
+            self.numberTALineups   = data_pivot.loc['targetAbsent'].sum().sum()
+
+        elif isinstance(data_pivot, str) :
+            # could just load the data frame from csv, but want to have in exactly same format. 
+
+            data_pivot_load = _pandas.read_csv(data_pivot)
+
+            nrows = data_pivot_load.shape[0]
+            
+            # loop over rows
+            for i in range(0,nrows,1) : 
+                print(data_pivot_load.iloc[i])
+
         self.calculateRates(reverseConfidence)
         self.calculateRelativeFrequency()
         self.calculateCAC()
