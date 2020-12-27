@@ -148,7 +148,8 @@ class ModelFitIndependentObservation :
         
         _plt.plot(x,lure)
         _plt.plot(x,target)
-        _plt.axvline(threshold)
+        for t in self.thresholds : 
+            _plt.axvline(t)
 
         _plt.xlabel("Memory strength")
         _plt.ylabel("Probability")
