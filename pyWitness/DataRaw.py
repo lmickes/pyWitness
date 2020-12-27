@@ -1,4 +1,6 @@
 import pandas as _pandas
+import numpy as _np
+import copy as _copy
 
 from .DataProcessed import DataProcessed as _DataProcessed
 
@@ -25,15 +27,16 @@ class DataRaw :
 
         self.dataAggFunc = ["confidence"]
         
-        self.loadData()
-        self.renameRawData()
+        if fileName != '' : 
+            self.loadData()
+            self.renameRawData()
 
     def loadData(self) : 
         if self.fileName.find("csv") != -1 : 
             self.data     = _pandas.read_csv(self.fileName)
         elif self.fileName.find("xlsx") != -1 : 
             self.data     = _pandas.read_excel(self.fileName,self.excelSheet, engine='openpyxl')
-        
+
     def makeConfidenceBins(self,column = "confidence", nBins = 5) :
         minConf = self.data[column].min()
         maxConf = self.data[column].max()
@@ -92,7 +95,7 @@ class DataRaw :
 
         # 0-60, 70-80, 90-100
 
-    def collapseCatagoricalData(self, column = "confidence", map = {0:30, 10:30, 20:30, 30:30, 40:30, 50:30, 60:30, 70:75, 80:75, 90:95, 100:95}, reload=False) : 
+    def collapseCategoricalData(self, column = "confidence", map = {0:30, 10:30, 20:30, 30:30, 40:30, 50:30, 60:30, 70:75, 80:75, 90:95, 100:95}, reload=False) : 
         # if the data need reloading?
         if reload : 
             self.loadData()
@@ -100,6 +103,22 @@ class DataRaw :
         # map column
         self.data[column] = self.data[column].map(map)
 
+    def resampleWithReplacement(self) :
+        data_copy = _copy.deepcopy(self)
+        #data_copy = DataRaw('',self.excelSheet, self.dataMapping)        
+        data_copy.data = _pandas.DataFrame(columns = self.data.columns) 
+
+        nRows = self.data.shape[0]
+
+        rowList = []
+        for i in range(0,nRows,1) : 
+            iRowRand = int(_np.random.rand()*nRows)
+            rowList.append(self.data.iloc[iRowRand])
+        
+        data_copy.data = data_copy.data.append(rowList)
+
+        return data_copy
+        
     def process(self, column = '', condition = '', reverseConfidence = False) :
         if column != '' :
             self.dataSelected = self.data[self.data[column] == condition]
@@ -110,5 +129,5 @@ class DataRaw :
                                                                   index=['targetLineup','responseType'], 
                                                                   aggfunc={'confidence':'count'}),
                                               reverseConfidence = reverseConfidence,
-                                              lineupSize        = self.data['lineupSize'][0])            
+                                              lineupSize        = self.data.iloc[0]['lineupSize'])            
         return self._data_processed
