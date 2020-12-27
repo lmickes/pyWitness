@@ -1,9 +1,10 @@
 Tutorials
 =========
 
-.. note::
-   The data files used in this tutorial are stored in ``pyWitness/data/``. It is a good idea to copy these files to your working 
-   directory. This tutorial builds up! Between each example and previous examples the new lines of code are highlighted in yellow.
+.. warning::
+   The data files used in this tutorial are stored in ``pyWitness/data/tutorial/``. It is a good idea to copy these files to your working 
+   directory change directoy ``cd`` to that directory. This tutorial builds up! Between each example and previous examples the new lines of 
+   code are highlighted in yellow.
 
 .. warning::
    error bars, Processing raw experimental data for a particular experimental condition, Calculating pAUC and performing statistical tests, 
@@ -12,40 +13,13 @@ Tutorials
 Loading raw experimental data
 -----------------------------
 
-A single Python class ``pyWitness.DataRaw`` is used to load raw data in either ``csv`` or ``excel`` format. The format of ``test.csv``
+A single Python class ``pyWitness.DataRaw`` is used to load raw data in either ``csv`` or ``excel`` format. The format of ``test1.csv``
 is the same as that described in the introduction. 
 
 .. code-block :: python 
 
    import pyWitness
    dr = pyWitness.DataRaw("test1.csv")
-
-If the file is in ``excel`` format you will need to specify which sheet the raw data is stored in 
-
-.. code-block :: python 
-      
-   import pyWitness
-   dr = pyWitness.DataRaw("test2.xlsx",excelSheet = "raw data")
-
-Transforming data into common format
-------------------------------------
-
-The raw experimental data does not have to be in the internal format used by pyWitness. As the data is loaded is it possible to replace 
-the name of the data columns and the values stored.
-
-.. code-block :: python 
-
-   import pyWitness
-   dr = pyWitness.DataRaw("test2.csv", dataMapping = {"lineupSize":"lineup_size",
-                                                     "targetLineup":"culprit_present",
-						     "targetPresent":"present",
-						     "targetAbsent":"absent",
-						     "responseType":"id_type",
-						     "suspectId":"suspect",
-						     "fillerId":"filler",
-						     "rejectId":"reject",
-						     "confidence":"conf_level"}))
-
 
 Processing raw experimental data
 --------------------------------
@@ -71,7 +45,7 @@ Once ``process`` is called two ``DataFrames`` are created one which contains a p
    dp.printPivot()
    dp.printRates()
 
-Here is the output of the ``dp.printPivot()``
+You should see  the output of the ``dp.printPivot()``
 
 .. code-block :: console
 
@@ -84,7 +58,7 @@ Here is the output of the ``dp.printPivot()``
                  rejectId            4.0  3.0  NaN   9.0  10.0  23.0  11.0  19.0  25.0  18.0  25.0
                  suspectId           3.0  1.0  4.0   5.0  11.0  19.0  44.0  77.0  55.0  37.0  47.0
 
-And here is the output of the ``dp.printRates()``
+And you should see the following for ``dp.printRates()``
 
 .. code-block :: console
 
@@ -160,11 +134,31 @@ The example in this tutorial as 11 confidence levels (0, 10, 20, 30, 40, 50, 60,
 .. figure:: images/test1_rebinned.jpg
    :alt: Rebinned CAC for test1.csv 
 
+.. note:: 
+   If you mess up the ``collapseCatagoricalData`` the data might be inconsistent. To start with the original data so call ``collapseCatagoricalData`` with ``reload=True``
+
 Calculating pAUC and performing statistical tests
 -------------------------------------------------
 
 Fitting signal detection models to data
 ---------------------------------------
+
+There are many models available in pyWitness. We'll start with the independent observation model. To load and process the data is the same as before
+
+.. code-block :: python  
+   :linenos: 
+   :emphasize-lines: 8-9
+
+   import pyWitness
+   dr = pyWitness.DataRaw("test1.csv")
+   dr.collapseCatagoricalData(column='confidence',
+                              map={0: 30, 10: 30, 20: 30, 30: 30, 40: 30, 50: 30, 60: 30, 
+                                   70: 75, 80: 75, 
+                                   90: 95, 100: 95})
+   dp = dr.process()
+   mf = pyWitness.ModelFitIndependentObservation(dp)					        
+   mf.fit()
+
 
 Writing results to file 
 -----------------------
@@ -194,7 +188,5 @@ The string argument for the functions is the file name.
 
 .. figure:: images/test1_rates_excel.jpg
 
-Loading binned data 
--------------------
 
 
