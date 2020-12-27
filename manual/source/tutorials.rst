@@ -116,7 +116,7 @@ Plotting RAC curves
 Collapsing the confidence binning
 ---------------------------------
 
-The example in this tutorial as 11 confidence levels (0, 10, 20, 30, 40, 50, 60, 70, 80, 90 and 100). Typically catagorical confidence levels need to be binned or collapsed. This is best performed on the raw data before calling ``process()``. This is done with the ``collapseCatagoricalData`` method of ``DataRaw``. This is shown in example below, where the new bins are (0-60 map to 30, 70-80 to 75 and 90-100 to 95).
+The example in this tutorial as 11 confidence levels (0, 10, 20, 30, 40, 50, 60, 70, 80, 90 and 100). Typically categorical confidence levels need to be binned or collapsed. This is best performed on the raw data before calling ``process()``. This is done with the ``collapseCategoricalData`` method of ``DataRaw``. This is shown in example below, where the new bins are (0-60 map to 30, 70-80 to 75 and 90-100 to 95).
 
 .. code-block :: python 
    :linenos:
@@ -124,7 +124,7 @@ The example in this tutorial as 11 confidence levels (0, 10, 20, 30, 40, 50, 60,
   
    import pyWitness
    dr = pyWitness.DataRaw("test1.csv")
-   dr.collapseCatagoricalData(column='confidence',
+   dr.collapseCategoricalData(column='confidence',
                               map={0: 30, 10: 30, 20: 30, 30: 30, 40: 30, 50: 30, 60: 30, 
                                    70: 75, 80: 75, 
                                    90: 95, 100: 95})
@@ -135,7 +135,7 @@ The example in this tutorial as 11 confidence levels (0, 10, 20, 30, 40, 50, 60,
    :alt: Rebinned CAC for test1.csv 
 
 .. note:: 
-   If you mess up the ``collapseCatagoricalData`` the data might be inconsistent. To start with the original data so call ``collapseCatagoricalData`` with ``reload=True``
+   If you mess up the ``collapseCategoricalData`` the data might be inconsistent. To start with the original data so call ``collapseCategoricalData`` with ``reload=True``
 
 Calculating pAUC and performing statistical tests
 -------------------------------------------------
@@ -151,7 +151,7 @@ There are many models available in pyWitness. We'll start with the independent o
 
    import pyWitness
    dr = pyWitness.DataRaw("test1.csv")
-   dr.collapseCatagoricalData(column='confidence',
+   dr.collapseCategoricalData(column='confidence',
                               map={0: 30, 10: 30, 20: 30, 30: 30, 40: 30, 50: 30, 60: 30, 
                                    70: 75, 80: 75, 
                                    90: 95, 100: 95})
