@@ -20,17 +20,20 @@ class DataRaw :
                  excelSheet = "data used",
                  dataMapping = dataMapPyWitness) :
         self.fileName = fileName
+        self.excelSheet = excelSheet
         self.dataMapping = dataMapping
 
-        if self.fileName.find("csv") != -1 : 
-            self.data     = _pandas.read_csv(fileName)
-        elif self.fileName.find("xlsx") != -1 : 
-            self.data     = _pandas.read_excel(fileName,excelSheet)
-        
         self.dataAggFunc = ["confidence"]
-
+        
+        self.loadData()
         self.renameRawData()
-                 
+
+    def loadData(self) : 
+        if self.fileName.find("csv") != -1 : 
+            self.data     = _pandas.read_csv(self.fileName)
+        elif self.fileName.find("xlsx") != -1 : 
+            self.data     = _pandas.read_excel(self.fileName,self.excelSheet, engine='openpyxl')
+        
     def makeConfidenceBins(self,column = "confidence", nBins = 5) :
         minConf = self.data[column].min()
         maxConf = self.data[column].max()
@@ -70,7 +73,7 @@ class DataRaw :
     def renameRawData(self) :
 
         if self.dataMapping == None:
-            return 
+            return
 
         # column names 
         self.data.rename(columns={self.dataMapping['lineupSize']:'lineupSize',
@@ -89,7 +92,12 @@ class DataRaw :
 
         # 0-60, 70-80, 90-100
 
-    def collapseCatagoricalData(self, column = "confidence", map = {0:30, 10:30, 20:30, 30:30, 40:30, 50:30, 60:30, 70:75, 80:75, 90:95, 100:95}) : 
+    def collapseCatagoricalData(self, column = "confidence", map = {0:30, 10:30, 20:30, 30:30, 40:30, 50:30, 60:30, 70:75, 80:75, 90:95, 100:95}, reload=False) : 
+        # if the data need reloading?
+        if reload : 
+            self.loadData()
+
+        # map column
         self.data[column] = self.data[column].map(map)
 
     def process(self, reverseConfidence = False) :
