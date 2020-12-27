@@ -90,6 +90,8 @@
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Advanced tutorials</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#loading-raw-data-excel-format">Loading raw data excel format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#transforming-data-into-common-format">Transforming data into common format</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#loading-processed-data">Loading processed data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#using-instances-of-raw-data-processed-data-and-model-fits">Using instances of raw data, processed data and model fits</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#overlaying-plots">Overlaying plots</a></li>
@@ -163,6 +165,31 @@
             
   <div class="section" id="advanced-tutorials">
 <h1>Advanced tutorials<a class="headerlink" href="#advanced-tutorials" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="loading-raw-data-excel-format">
+<h2>Loading raw data excel format<a class="headerlink" href="#loading-raw-data-excel-format" title="Permalink to this headline">¶</a></h2>
+<p>If the file is in <code class="docutils literal notranslate"><span class="pre">excel</span></code> format you will need to specify which sheet the raw data is stored in</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
+<span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test2.xlsx&quot;</span><span class="p">,</span><span class="n">excelSheet</span> <span class="o">=</span> <span class="s2">&quot;raw data&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="transforming-data-into-common-format">
+<h2>Transforming data into common format<a class="headerlink" href="#transforming-data-into-common-format" title="Permalink to this headline">¶</a></h2>
+<p>The raw experimental data does not have to be in the internal format used by pyWitness. As the data is loaded is it possible to replace
+the name of the data columns and the values stored.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
+<span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test2.csv&quot;</span><span class="p">,</span> <span class="n">dataMapping</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;lineupSize&quot;</span><span class="p">:</span><span class="s2">&quot;lineup_size&quot;</span><span class="p">,</span>
+                                                  <span class="s2">&quot;targetLineup&quot;</span><span class="p">:</span><span class="s2">&quot;culprit_present&quot;</span><span class="p">,</span>
+                                                  <span class="s2">&quot;targetPresent&quot;</span><span class="p">:</span><span class="s2">&quot;present&quot;</span><span class="p">,</span>
+                                                  <span class="s2">&quot;targetAbsent&quot;</span><span class="p">:</span><span class="s2">&quot;absent&quot;</span><span class="p">,</span>
+                                                  <span class="s2">&quot;responseType&quot;</span><span class="p">:</span><span class="s2">&quot;id_type&quot;</span><span class="p">,</span>
+                                                  <span class="s2">&quot;suspectId&quot;</span><span class="p">:</span><span class="s2">&quot;suspect&quot;</span><span class="p">,</span>
+                                                  <span class="s2">&quot;fillerId&quot;</span><span class="p">:</span><span class="s2">&quot;filler&quot;</span><span class="p">,</span>
+                                                  <span class="s2">&quot;rejectId&quot;</span><span class="p">:</span><span class="s2">&quot;reject&quot;</span><span class="p">,</span>
+                                                  <span class="s2">&quot;confidence&quot;</span><span class="p">:</span><span class="s2">&quot;conf_level&quot;</span><span class="p">}))</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="loading-processed-data">
 <h2>Loading processed data<a class="headerlink" href="#loading-processed-data" title="Permalink to this headline">¶</a></h2>
 <p>You might already have processed the raw data. It is possible to load a file to perform model fits etc. The processed data needs
@@ -363,7 +390,7 @@ data file, variations on the processed data and model fits to be manipulated sim
   <div role="contentinfo">
     <p>
         &copy; Copyright Royal Holloway, University of London 2020 and University of Bristol 2020
-      Last updated on Dec 24, 2020.
+      Last updated on Dec 26, 2020.
 
     </p>
   </div>

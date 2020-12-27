@@ -37,6 +37,8 @@ You will need a suitable python environment.
      * ``conda install pandas``
      * ``conda install matplotlib``
      * ``conda install openpyxl``
+     * ``conda install xlrd``
+
 3. Start up python to test 
      * ``ipython3 --pylab``
      * Python should start up and input ``import numpy``
@@ -68,6 +70,13 @@ Open a terminal (linux in bash) and move to a suitable work directory
    git clone https://github.com/lmickes/pyWitness.git
    cd pyWitness   
    pip3 install --editable . --user
+
+To update pyWitness you will have to pull
+
+.. code-block :: shell
+   
+   cd pyWitness
+   git pull
 
 Testing it works
 ^^^^^^^^^^^^^^^^

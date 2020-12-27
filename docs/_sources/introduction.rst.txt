@@ -2,10 +2,6 @@
 Introduction
 ============
 
-.. note:: 
-   All plots and diagrams are made using pyWitness. The scripts used to make the plots are located in 
-   ``pyWitness/manual/source/figures/``
-
 Eyewitness identification research
 ----------------------------------
 
@@ -150,3 +146,5 @@ Transforming data into pyWitness format can be time consuming and error prone.
    Confidence can verbal and so needs to be mapped to a number. For example, confidence could be low (1), 
    medium (2) or high (3).
 
+.. note:: 
+   All plots and diagrams are made using pyWitness.

@@ -90,7 +90,6 @@
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorials</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#loading-raw-experimental-data">Loading raw experimental data</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#transforming-data-into-common-format">Transforming data into common format</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#processing-raw-experimental-data">Processing raw experimental data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#plotting-roc-curves">Plotting ROC curves</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#plotting-cac-curves">Plotting CAC curves</a></li>
@@ -99,7 +98,6 @@
 <li class="toctree-l2"><a class="reference internal" href="#calculating-pauc-and-performing-statistical-tests">Calculating pAUC and performing statistical tests</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#fitting-signal-detection-models-to-data">Fitting signal detection models to data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#writing-results-to-file">Writing results to file</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#loading-binned-data">Loading binned data</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials_adv.html">Advanced tutorials</a></li>
@@ -170,10 +168,11 @@
             
   <div class="section" id="tutorials">
 <h1>Tutorials<a class="headerlink" href="#tutorials" title="Permalink to this headline">¶</a></h1>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The data files used in this tutorial are stored in <code class="docutils literal notranslate"><span class="pre">pyWitness/data/</span></code>. It is a good idea to copy these files to your working
-directory. This tutorial builds up! Between each example and previous examples the new lines of code are highlighted in yellow.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The data files used in this tutorial are stored in <code class="docutils literal notranslate"><span class="pre">pyWitness/data/tutorial/</span></code>. It is a good idea to copy these files to your working
+directory change directoy <code class="docutils literal notranslate"><span class="pre">cd</span></code> to that directory. This tutorial builds up! Between each example and previous examples the new lines of
+code are highlighted in yellow.</p>
 </div>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
@@ -182,32 +181,10 @@ Fitting signal detection models to data</p>
 </div>
 <div class="section" id="loading-raw-experimental-data">
 <h2>Loading raw experimental data<a class="headerlink" href="#loading-raw-experimental-data" title="Permalink to this headline">¶</a></h2>
-<p>A single Python class <code class="docutils literal notranslate"><span class="pre">pyWitness.DataRaw</span></code> is used to load raw data in either <code class="docutils literal notranslate"><span class="pre">csv</span></code> or <code class="docutils literal notranslate"><span class="pre">excel</span></code> format. The format of <code class="docutils literal notranslate"><span class="pre">test.csv</span></code>
+<p>A single Python class <code class="docutils literal notranslate"><span class="pre">pyWitness.DataRaw</span></code> is used to load raw data in either <code class="docutils literal notranslate"><span class="pre">csv</span></code> or <code class="docutils literal notranslate"><span class="pre">excel</span></code> format. The format of <code class="docutils literal notranslate"><span class="pre">test1.csv</span></code>
 is the same as that described in the introduction.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
 <span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test1.csv&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>If the file is in <code class="docutils literal notranslate"><span class="pre">excel</span></code> format you will need to specify which sheet the raw data is stored in</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
-<span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test2.xlsx&quot;</span><span class="p">,</span><span class="n">excelSheet</span> <span class="o">=</span> <span class="s2">&quot;raw data&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="transforming-data-into-common-format">
-<h2>Transforming data into common format<a class="headerlink" href="#transforming-data-into-common-format" title="Permalink to this headline">¶</a></h2>
-<p>The raw experimental data does not have to be in the internal format used by pyWitness. As the data is loaded is it possible to replace
-the name of the data columns and the values stored.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
-<span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test2.csv&quot;</span><span class="p">,</span> <span class="n">dataMapping</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;lineupSize&quot;</span><span class="p">:</span><span class="s2">&quot;lineup_size&quot;</span><span class="p">,</span>
-                                                  <span class="s2">&quot;targetLineup&quot;</span><span class="p">:</span><span class="s2">&quot;culprit_present&quot;</span><span class="p">,</span>
-                                                  <span class="s2">&quot;targetPresent&quot;</span><span class="p">:</span><span class="s2">&quot;present&quot;</span><span class="p">,</span>
-                                                  <span class="s2">&quot;targetAbsent&quot;</span><span class="p">:</span><span class="s2">&quot;absent&quot;</span><span class="p">,</span>
-                                                  <span class="s2">&quot;responseType&quot;</span><span class="p">:</span><span class="s2">&quot;id_type&quot;</span><span class="p">,</span>
-                                                  <span class="s2">&quot;suspectId&quot;</span><span class="p">:</span><span class="s2">&quot;suspect&quot;</span><span class="p">,</span>
-                                                  <span class="s2">&quot;fillerId&quot;</span><span class="p">:</span><span class="s2">&quot;filler&quot;</span><span class="p">,</span>
-                                                  <span class="s2">&quot;rejectId&quot;</span><span class="p">:</span><span class="s2">&quot;reject&quot;</span><span class="p">,</span>
-                                                  <span class="s2">&quot;confidence&quot;</span><span class="p">:</span><span class="s2">&quot;conf_level&quot;</span><span class="p">}))</span>
 </pre></div>
 </div>
 </div>
@@ -233,7 +210,7 @@ the name of the data columns and the values stored.</p>
 </span><span class="hll"><span class="n">dp</span><span class="o">.</span><span class="n">printRates</span><span class="p">()</span>
 </span></pre></div>
 </td></tr></table></div>
-<p>Here is the output of the <code class="docutils literal notranslate"><span class="pre">dp.printPivot()</span></code></p>
+<p>You should see  the output of the <code class="docutils literal notranslate"><span class="pre">dp.printPivot()</span></code></p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">                           confidence</span>
 <span class="go">confidence                        0    10   20    30    40    50    60    70    80    90    100</span>
 <span class="go">targetLineup  responseType</span>
@@ -244,7 +221,7 @@ the name of the data columns and the values stored.</p>
 <span class="go">              suspectId           3.0  1.0  4.0   5.0  11.0  19.0  44.0  77.0  55.0  37.0  47.0</span>
 </pre></div>
 </div>
-<p>And here is the output of the <code class="docutils literal notranslate"><span class="pre">dp.printRates()</span></code></p>
+<p>And you should see the following for <code class="docutils literal notranslate"><span class="pre">dp.printRates()</span></code></p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">                           confidence</span>
 <span class="go">confidence                        100       90        80        70        60        50        40        30        20        10        0</span>
 <span class="go">targetLineup  responseType</span>
@@ -323,12 +300,36 @@ the name of the data columns and the values stored.</p>
 <div class="figure">
 <img alt="Rebinned CAC for test1.csv" src="_images/test1_rebinned.jpg" />
 </div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you mess up the <code class="docutils literal notranslate"><span class="pre">collapseCatagoricalData</span></code> the data might be inconsistent. To start with the original data so call <code class="docutils literal notranslate"><span class="pre">collapseCatagoricalData</span></code> with <code class="docutils literal notranslate"><span class="pre">reload=True</span></code></p>
+</div>
 </div>
 <div class="section" id="calculating-pauc-and-performing-statistical-tests">
 <h2>Calculating pAUC and performing statistical tests<a class="headerlink" href="#calculating-pauc-and-performing-statistical-tests" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="fitting-signal-detection-models-to-data">
 <h2>Fitting signal detection models to data<a class="headerlink" href="#fitting-signal-detection-models-to-data" title="Permalink to this headline">¶</a></h2>
+<p>There are many models available in pyWitness. We’ll start with the independent observation model. To load and process the data is the same as before</p>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
+<span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test1.csv&quot;</span><span class="p">)</span>
+<span class="n">dr</span><span class="o">.</span><span class="n">collapseCatagoricalData</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s1">&#39;confidence&#39;</span><span class="p">,</span>
+                           <span class="nb">map</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">10</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">20</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">30</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">50</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">60</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span>
+                                <span class="mi">70</span><span class="p">:</span> <span class="mi">75</span><span class="p">,</span> <span class="mi">80</span><span class="p">:</span> <span class="mi">75</span><span class="p">,</span>
+                                <span class="mi">90</span><span class="p">:</span> <span class="mi">95</span><span class="p">,</span> <span class="mi">100</span><span class="p">:</span> <span class="mi">95</span><span class="p">})</span>
+<span class="n">dp</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
+<span class="hll"><span class="n">mf</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">ModelFitIndependentObservation</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span>
+</span><span class="hll"><span class="n">mf</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+</span></pre></div>
+</td></tr></table></div>
 </div>
 <div class="section" id="writing-results-to-file">
 <h2>Writing results to file<a class="headerlink" href="#writing-results-to-file" title="Permalink to this headline">¶</a></h2>
@@ -364,9 +365,6 @@ the name of the data columns and the values stored.</p>
 <img alt="_images/test1_rates_excel.jpg" src="_images/test1_rates_excel.jpg" />
 </div>
 </div>
-<div class="section" id="loading-binned-data">
-<h2>Loading binned data<a class="headerlink" href="#loading-binned-data" title="Permalink to this headline">¶</a></h2>
-</div>
 </div>
 
 
@@ -390,7 +388,7 @@ the name of the data columns and the values stored.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright Royal Holloway, University of London 2020 and University of Bristol 2020
-      Last updated on Dec 24, 2020.
+      Last updated on Dec 26, 2020.
 
     </p>
   </div>
