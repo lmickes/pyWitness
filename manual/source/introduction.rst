@@ -94,7 +94,7 @@ Minimal example data file for an experiment
      - confidence
    * - 1
      - 6
-     - targetPesent
+     - targetPresent
      - suspectId
      - 6
    * - 2
