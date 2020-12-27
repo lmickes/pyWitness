@@ -100,8 +100,13 @@ class DataRaw :
         # map column
         self.data[column] = self.data[column].map(map)
 
-    def process(self, reverseConfidence = False) :
-        self._data_processed = _DataProcessed(_pandas.pivot_table(self.data, columns='confidence', 
+    def process(self, column = '', condition = '', reverseConfidence = False) :
+        if column != '' :
+            self.dataSelected = self.data[self.data[column] == condition]
+        else :
+            self.dataSelected = self.data            
+        
+        self._data_processed = _DataProcessed(_pandas.pivot_table(self.dataSelected, columns='confidence', 
                                                                   index=['targetLineup','responseType'], 
                                                                   aggfunc={'confidence':'count'}),
                                               reverseConfidence = reverseConfidence,
