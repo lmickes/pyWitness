@@ -7,7 +7,7 @@ Eyewitness identification research
 
 Eyewitnesses to crimes may try to identify the perpetrator from an identification procedure. One commonly used procedure is a lineup (identity parade in the UK). A lineup comprises the police suspect and fillers, as shown in the illustration below. A lineup with an innocent suspect is a target-absent lineup, and a lineup with a guilty suspect is a target-present lineup. The eyewitness can make a filler ID from either lineup, identify the innocent suspect (from a target-absent lineup) or guilty suspect (from a target-present lineup).
 
-
+.. figure:: images/pyWitness_Lineup.jpg
 
 Receiver operating characteristic (ROC) analysis measures discriminability (the ability to distinguish innocent from guilty suspects), and confidence accuracy characteristic (CAC) and response-time accuracy characteristic (RAC) analysis measure positive predictive value (the likelihood the identified suspect is guilty). pyWitness allows researchers to run these analyses. 
 
