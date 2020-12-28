@@ -104,6 +104,12 @@ class DataRaw :
         self.data[column] = self.data[column].map(map)
 
     def resampleWithReplacement(self) :
+        data_copy = DataRaw('',self.excelSheet, self.dataMapping)        
+        data_copy.data = self.data.sample(n = self.data.shape[0],replace = True)
+        
+        return data_copy
+
+        '''
         data_copy = _copy.deepcopy(self)
         #data_copy = DataRaw('',self.excelSheet, self.dataMapping)        
         data_copy.data = _pandas.DataFrame(columns = self.data.columns) 
@@ -118,16 +124,14 @@ class DataRaw :
         data_copy.data = data_copy.data.append(rowList)
 
         return data_copy
-        
+        '''
     def process(self, column = '', condition = '', reverseConfidence = False) :
         if column != '' :
             self.dataSelected = self.data[self.data[column] == condition]
         else :
             self.dataSelected = self.data            
         
-        self._data_processed = _DataProcessed(_pandas.pivot_table(self.dataSelected, columns='confidence', 
-                                                                  index=['targetLineup','responseType'], 
-                                                                  aggfunc={'confidence':'count'}),
+        self._data_processed = _DataProcessed(dataRaw           = self,
                                               reverseConfidence = reverseConfidence,
-                                              lineupSize        = self.data.iloc[0]['lineupSize'])            
+                                              lineupSize        = self.data.iloc[0]['lineupSize'])
         return self._data_processed
