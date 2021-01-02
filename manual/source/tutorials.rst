@@ -13,8 +13,7 @@ Tutorials
 Loading raw experimental data
 -----------------------------
 
-A single Python class ``pyWitness.DataRaw`` is used to load raw data in either ``csv`` or ``excel`` format. The format of ``test1.csv``
-is the same as that described in the introduction. 
+A single Python class `pyWitness.DataRaw <./moduledocs.html#pyWitness.DataRaw>`_ is used to load raw data in either ``csv`` or ``excel`` format. The format of ``test1.csv`` is the same as that described in the introduction. 
 
 .. code-block :: python 
 
@@ -23,7 +22,7 @@ is the same as that described in the introduction.
 
 Processing raw experimental data
 --------------------------------
-To process the raw data the function ``process`` needs to be called on a raw data object. The calculates the cumulative rates from the raw data. 
+To process the raw data the function `pyWitness.DataRaw.process <./moduledocs.html#pyWitness.DataRaw.process>`_ needs to be called on a raw data object. The calculates the cumulative rates from the raw data. 
 
 .. code-block :: python 
    :linenos:
@@ -33,7 +32,7 @@ To process the raw data the function ``process`` needs to be called on a raw dat
    dr = pyWitness.DataRaw("test1.csv")
    dp = dr.process()
 
-Once ``process`` is called two ``DataFrames`` are created one which contains a pivot table and another that contains rates
+Once `pyWitness.DataRaw.process <./moduledocs.html#pyWitness.DataRaw.process>`_ is called two ``DataFrames`` are created one which contains a pivot table and another that contains rates
 
 .. code-block :: python 
    :linenos:
