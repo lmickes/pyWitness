@@ -1,10 +1,23 @@
 import pandas as _pandas
 import matplotlib.pyplot as _plt
 import numpy as _np
+import scipy.integrate as _integrate 
 
 class DataProcessed :
+    '''
+    Processed data class 
+    
+    :param dataRaw: Instance of raw data class or csv file name with binned data
+    :type dataRaw: str or DataRaw
+    :param reverseConfidence: Flag if confidence decreases with increasing numerical value
+    :type reverseConfidence: bool
+    :param lineupSize: Number of people in the lineup
+    :type lineupSize: int 
+    
+    '''
+    
     def __init__(self, dataRaw, reverseConfidence = False, lineupSize = 1) : 
-
+        
         if isinstance(dataRaw, str) :
             # could just load the data frame from csv, but want to have in exactly same format. 
 
@@ -30,18 +43,34 @@ class DataProcessed :
             self.numberTPLineups   = self.data_pivot.loc['targetPresent'].sum().sum()
             self.numberTALineups   = self.data_pivot.loc['targetAbsent'].sum().sum()
 
-
         self.calculateRates(reverseConfidence)
         self.calculateRelativeFrequency()
         self.calculateCAC()
+        self.calculatePAUC()
+
+        self.bootstrapped = False
 
     def calculatePivot(self) : 
+        ''' 
+        Calculate fequency pivot table against 'confidence'
+
+        :rtype: None
+        '''
+        
         self.data_pivot = _pandas.pivot_table(self.dataRaw.dataSelected, 
                                               columns='confidence', 
-                                             index=['targetLineup','responseType'], 
-                                             aggfunc={'confidence':'count'})
+                                              index=['targetLineup','responseType'], 
+                                              aggfunc={'confidence':'count'})
 
     def calculateRates(self, reverseConfidence = False) :
+        ''' 
+        Calculate cumulative rates from data_pivot. Result stored in data_rates
+        
+        :param reverseConfidence: Flag true if confidence increases with lower values
+        :type reverseConfidence: bool
+        :rtype: None
+        '''
+        
         self.data_rates = self.data_pivot.copy()
 
         # reverse confidence
@@ -94,6 +123,11 @@ class DataProcessed :
             self.data_rates = self.data_rates.sort_index()
 
     def calculateRelativeFrequency(self) :
+
+        '''
+        Calculate relative frequency from data_pivot. Result stored in data_rates['cf']
+        '''
+
         cid = self.data_pivot.loc['targetPresent','suspectId']         
         try :
             fid = self.data_pivot.loc['targetAbsent','suspectId']
@@ -106,6 +140,11 @@ class DataProcessed :
         self.data_rates = self.data_rates.sort_index()
 
     def calculateCAC(self) :
+
+        '''
+        Calculate confidence accuracy characteristic from data_pivot. Result stored in data_rates['cac']
+        '''
+
         cid = self.data_pivot.loc['targetPresent','suspectId'] 
 
         try :
@@ -116,12 +155,86 @@ class DataProcessed :
         cac = cid/(cid+fid)
         cac.name = ("cac","central")
         self.data_rates = self.data_rates.append(cac)
-        self.data_rates = self.data_rates.sort_index()      
+        self.data_rates = self.data_rates.sort_index()
 
-    def calculatePAUC(self) : 
+    def calculatePAUC(self, xmax = 1.0) : 
+        '''         
+        Calculate partial area under the curve from (0,0) to (xmax, y(xmax))
+
+        :param xmax: Upper integration limit
+        :type xmax: float
+        :rtype: float  
+        '''
+
+        self.pAUC_xmax = xmax
+
+        if xmax == 1.0 : 
+            xmax = self.liberalTargetAbsentSuspectId
+
+        xForIntegration = []
+        yForIntegration = []
+
+        # (0,0) for integration 
+        xForIntegration.append(0)
+        yForIntegration.append(0)
+
+        x = self.data_rates.loc['targetAbsent', 'suspectId']
+        y = self.data_rates.loc['targetPresent','suspectId']
+        i = _np.arange(0,len(x),1)
+
+        # rest of range apart from end point for integration 
+        xForIntegration.extend(list(x[x<xmax]))
+        yForIntegration.extend(list(y[x<xmax]))
+        
+        # check xmax is within x data range 
+        if xmax > x.max() :
+            raise IndexError("xmax of "+str(xmax)+" is larger than largest "+str(x.max()))
+        elif xmax == x.max() : # edge case where
+            i1 = i[-2]
+            i2 = i[-1]
+        else :
+            i1 = i[x <= xmax][-1]
+            i2 = i1+1
+
+        # last point
+        x1 = x[i1]
+        x2 = x[i2]
+        y1 = y[i1]
+        y2 = y[i2] 
+
+        ymax = (y2-y1)/(x2-x1)*(xmax-x1)+y1
+
+        xForIntegration.append(xmax)
+        yForIntegration.append(ymax)
+        
+        self.xForIntegration = _np.array(xForIntegration)
+        self.yForIntegration = _np.array(yForIntegration)
+
+        self.pAUC = _integrate.simps(self.xForIntegration,self.yForIntegration)
+        
+        return self.pAUC
+
+    def calculateNormalisedAUC(sef) : 
         pass
 
-    def calculateConfidenceBootstrap(self, nBootstraps = 200, cl = 95) :
+    def calculateConfidenceBootstrap(self, nBootstraps = 200, cl = 95, plotROC = False) :
+        
+        # if already bootstrapped delete DataFrame rows
+        if self.bootstrapped :
+            self.data_rates.drop(("cac","low"),inplace = True)
+            self.data_rates.drop(("cac","high"),inplace = True)
+            self.data_rates.drop(("targetAbsent","fillerId_high"),inplace = True)
+            self.data_rates.drop(("targetAbsent","fillerId_low"),inplace = True)
+            self.data_rates.drop(("targetAbsent","rejectId_high"),inplace = True)
+            self.data_rates.drop(("targetAbsent","rejectId_low"),inplace = True)
+            self.data_rates.drop(("targetAbsent","suspectId_high"),inplace = True)
+            self.data_rates.drop(("targetAbsent","suspectId_low"),inplace = True)
+            self.data_rates.drop(("targetPresent","fillerId_high"),inplace = True)
+            self.data_rates.drop(("targetPresent","fillerId_low"),inplace = True)
+            self.data_rates.drop(("targetPresent","rejectId_high"),inplace = True)
+            self.data_rates.drop(("targetPresent","rejectId_low"),inplace = True)
+            self.data_rates.drop(("targetPresent","suspectId_high"),inplace = True)
+            self.data_rates.drop(("targetPresent","suspectId_low"),inplace = True)
 
         cac = []
         targetAbsentFillerId   = []
@@ -132,27 +245,38 @@ class DataProcessed :
         targetPresentRejectId  = []
         targetPresentSuspectId = []
 
+        pAUC = []
+
         for i in range(0,nBootstraps,1) : 
             dr = self.dataRaw.resampleWithReplacement()
             dp = dr.process()
             cac.append(dp.data_rates.loc['cac'].values[0])
+
             targetAbsentFillerId.append(dp.data_rates.loc['targetAbsent','fillerId'].values)
             targetAbsentRejectId.append(dp.data_rates.loc['targetAbsent','rejectId'].values)
             targetAbsentSuspectId.append(dp.data_rates.loc['targetAbsent','suspectId'].values)
 
-            targetPresentFillerId.append(dp.data_rates.loc['targetPresent','fillerId'].values)
+            targetPresentFillerId.append(dp.data_rates.loc['targetPresent','fillerId'].values)          # No for showups (TODO)
             targetPresentRejectId.append(dp.data_rates.loc['targetPresent','rejectId'].values)
             targetPresentSuspectId.append(dp.data_rates.loc['targetPresent','suspectId'].values)
             
-        cac                   = _np.array(cac)
+            pAUC.append(dp.pAUC)
+            
+            if plotROC : 
+                _plt.scatter(dp.data_rates.loc['targetAbsent','suspectId'],
+                             dp.data_rates.loc['targetPresent','suspectId'])
 
-        targetAbsentFillerId  = _np.array(targetAbsentFillerId)
-        targetAbsentRejectId  = _np.array(targetAbsentRejectId)
-        targetAbsentSuspectId = _np.array(targetAbsentSuspectId)
+        cac                    = _np.array(cac)
 
-        targetPresentFillerId  = _np.array(targetPresentFillerId)
+        targetAbsentFillerId   = _np.array(targetAbsentFillerId)
+        targetAbsentRejectId   = _np.array(targetAbsentRejectId)
+        targetAbsentSuspectId  = _np.array(targetAbsentSuspectId)
+
+        targetPresentFillerId  = _np.array(targetPresentFillerId)                                       # No for showups (TODO)
         targetPresentRejectId  = _np.array(targetPresentRejectId)
         targetPresentSuspectId = _np.array(targetPresentSuspectId)
+
+        pAUC                   = _np.array(pAUC) 
 
         clHigh = cl 
         clLow  = 100-clHigh
@@ -160,24 +284,27 @@ class DataProcessed :
         cac_low                     = _np.percentile(cac,clLow,axis=0)
         cac_high                    = _np.percentile(cac,clHigh,axis=0)
 
-        targetAbsentFillerId_low  = _np.percentile(targetAbsentFillerId,clLow,axis=0)
-        targetAbsentFillerId_high = _np.percentile(targetAbsentFillerId,clHigh,axis=0)
+        targetAbsentFillerId_low    = _np.percentile(targetAbsentFillerId,clLow,axis=0)
+        targetAbsentFillerId_high   = _np.percentile(targetAbsentFillerId,clHigh,axis=0)
 
-        targetAbsentRejectId_low  = _np.percentile(targetAbsentRejectId,clLow,axis=0)
-        targetAbsentRejectId_high = _np.percentile(targetAbsentRejectId,clHigh,axis=0)
+        targetAbsentRejectId_low    = _np.percentile(targetAbsentRejectId,clLow,axis=0)
+        targetAbsentRejectId_high   = _np.percentile(targetAbsentRejectId,clHigh,axis=0)
 
-        targetAbsentSuspectId_low  = _np.percentile(targetAbsentSuspectId,clLow,axis=0)
-        targetAbsentSuspectId_high = _np.percentile(targetAbsentSuspectId,clHigh,axis=0)  
+        targetAbsentSuspectId_low   = _np.percentile(targetAbsentSuspectId,clLow,axis=0)
+        targetAbsentSuspectId_high  = _np.percentile(targetAbsentSuspectId,clHigh,axis=0)  
 
-        targetPresentFillerId_low  = _np.percentile(targetPresentFillerId,clLow,axis=0)
-        targetPresentFillerId_high = _np.percentile(targetPresentFillerId,clHigh,axis=0)
+        targetPresentFillerId_low   = _np.percentile(targetPresentFillerId,clLow,axis=0)                 # No for showups (TODO)
+        targetPresentFillerId_high  = _np.percentile(targetPresentFillerId,clHigh,axis=0)                # No for showups (TODO)
 
-        targetPresentRejectId_low  = _np.percentile(targetPresentRejectId,clLow,axis=0)
-        targetPresentRejectId_high = _np.percentile(targetPresentRejectId,clHigh,axis=0)
+        targetPresentRejectId_low   = _np.percentile(targetPresentRejectId,clLow,axis=0)
+        targetPresentRejectId_high  = _np.percentile(targetPresentRejectId,clHigh,axis=0)
 
         targetPresentSuspectId_low  = _np.percentile(targetPresentSuspectId,clLow,axis=0)
         targetPresentSuspectId_high = _np.percentile(targetPresentSuspectId,clHigh,axis=0)        
 
+        self.pAUC_low               = _np.percentile(pAUC,clLow)
+        self.pAUC_high              = _np.percentile(pAUC,clHigh)
+                
         template = self.data_rates.loc['cac','central']
         self.data_rates = self.data_rates.append(_pandas.Series(cac_low, name = ('cac','low'), index = template.index))
         self.data_rates = self.data_rates.append(_pandas.Series(cac_high, name = ('cac','high'), index = template.index))
@@ -191,8 +318,8 @@ class DataProcessed :
         self.data_rates = self.data_rates.append(_pandas.Series(targetAbsentSuspectId_low, name = ('targetAbsent','suspectId_low'), index = template.index))
         self.data_rates = self.data_rates.append(_pandas.Series(targetAbsentSuspectId_high, name = ('targetAbsent','suspectId_high'), index = template.index))
 
-        self.data_rates = self.data_rates.append(_pandas.Series(targetPresentFillerId_low, name = ('targetPresent','fillerId_low'), index = template.index))
-        self.data_rates = self.data_rates.append(_pandas.Series(targetPresentFillerId_high, name = ('targetPresent','fillerId_high'), index = template.index))
+        self.data_rates = self.data_rates.append(_pandas.Series(targetPresentFillerId_low, name = ('targetPresent','fillerId_low'), index = template.index))          # No for showups (TODO)
+        self.data_rates = self.data_rates.append(_pandas.Series(targetPresentFillerId_high, name = ('targetPresent','fillerId_high'), index = template.index))        # No for showups (TODO)
 
         self.data_rates = self.data_rates.append(_pandas.Series(targetPresentRejectId_low, name = ('targetPresent','rejectId_low'), index = template.index))
         self.data_rates = self.data_rates.append(_pandas.Series(targetPresentRejectId_high, name = ('targetPresent','rejectId_high'), index = template.index))
@@ -202,7 +329,22 @@ class DataProcessed :
 
         self.data_rates = self.data_rates.sort_index()
 
-    def plotROC(self, label = "ROC", relativeFrequencyScale = 400) :
+        self.bootstrapped = True
+
+    def plotROC(self, label = "ROC", relativeFrequencyScale = 400, errorType = 'bars') :
+        '''
+        Plot the receiver operating characteristic (ROC) for the data. The symbol size is proportional to 
+        relative frequency. If confidence limits are calculated using calculateConfidenceBootstrap they
+        are also plotted
+
+        :param label: plot label for legends 
+        :type label: str
+        :param relativeFrequencyScale: scale of relative frequncy (RF) to symbol size.
+        :type rellativeFrequencyScale: float
+        :rtype: None
+
+        '''
+
         x = _np.linspace(0,1,100)
 
         _plt.plot(x,x,"--",color="black",linewidth=1.0)
@@ -213,51 +355,109 @@ class DataProcessed :
         
         # Plot errors if they have been calculated
         try : 
-            _plt.errorbar(self.data_rates.loc['targetAbsent', 'suspectId'],
-                          self.data_rates.loc['targetPresent','suspectId'],
-                          xerr = [self.data_rates.loc['targetAbsent', 'suspectId'] - self.data_rates.loc['targetAbsent', 'suspectId_low'],
-                                  self.data_rates.loc['targetAbsent', 'suspectId_high'] - self.data_rates.loc['targetAbsent', 'suspectId']],                        
-                          yerr = [self.data_rates.loc['targetPresent','suspectId'] - self.data_rates.loc['targetPresent','suspectId_low'],
-                                  self.data_rates.loc['targetPresent','suspectId_high']- self.data_rates.loc['targetPresent','suspectId']])
+            if errorType == 'bars' : 
+                _plt.errorbar(self.data_rates.loc['targetAbsent', 'suspectId'],
+                              self.data_rates.loc['targetPresent','suspectId'],
+                              xerr = [self.data_rates.loc['targetAbsent', 'suspectId'] - self.data_rates.loc['targetAbsent', 'suspectId_low'],
+                                      self.data_rates.loc['targetAbsent', 'suspectId_high'] - self.data_rates.loc['targetAbsent', 'suspectId']],                        
+                              yerr = [self.data_rates.loc['targetPresent','suspectId'] - self.data_rates.loc['targetPresent','suspectId_low'],
+                                      self.data_rates.loc['targetPresent','suspectId_high']- self.data_rates.loc['targetPresent','suspectId']],
+                              fmt='.',
+                              capsize=5)
+            elif errorType == 'band' : 
+                _plt.fill_between(self.data_rates.loc['targetAbsent', 'suspectId'],
+                                  self.data_rates.loc['targetPresent', 'suspectId_low'],
+                                  self.data_rates.loc['targetPresent', 'suspectId_high'],
+                                  alpha=0.25)
         except KeyError :
             pass
-         
 
+        # shade ROC pAUC 
+        if self.pAUC_xmax != 1 :
+            _plt.fill_between(self.xForIntegration, 
+                              _np.zeros(self.xForIntegration.size), 
+                              self.yForIntegration,
+                              interpolate=True,
+                              alpha=0.25)
+         
+        xmin = self.data_rates.loc['targetAbsent', 'suspectId'].min()
+        xmax = self.data_rates.loc['targetAbsent', 'suspectId'].max()
+        xdif = xmax - xmin
+
+        ymin = self.data_rates.loc['targetPresent','suspectId'].min()
+        ymax = self.data_rates.loc['targetPresent','suspectId'].max()
+        ydif = ymax - ymin
+        
+        ax = _plt.gca()
+        ax.set_xlim(0, xmax+xdif*0.1)
+        ax.set_ylim(0, ymax+ydif*0.1)
+             
         _plt.xlabel("False ID rate")
         _plt.ylabel("Correct ID rate")
-        
-
-
         
         # Tight layout for plot
         _plt.tight_layout()
 
-    def plotCAC(self, label = "CAC", relativeFrequencyScale = 400) :
-         _plt.scatter(self.data_rates.columns.get_level_values('confidence'),
-                      self.data_rates.loc['cac','central'],
-                      s = self.data_rates.loc['rf','']*relativeFrequencyScale,
-                      label = label)        
+    def plotCAC(self, label = "CAC", relativeFrequencyScale = 400, errorType = 'bars') :
+        '''
+        Plot the confidence accuracy characteristic (CAC) for the data. The symbol size is proportional to 
+        relative frequency. If confidence limits are calculated using calculateConfidenceBootstrap they
+        are also plotted.
+        
+        :param label: plot label for legends 
+        :type label: str
+        :param relativeFrequencyScale: scale of relative frequncy (RF) to symbol size.
+        :type rellativeFrequencyScale: float
+        :rtype: None
+        
+        '''
 
+        _plt.scatter(self.data_rates.columns.get_level_values('confidence'),
+                     self.data_rates.loc['cac','central'],
+                     s = self.data_rates.loc['rf','']*relativeFrequencyScale,
+                     label = label)        
+        
          # Plot errors if they have been calculated
-         try : 
-             _plt.errorbar(self.data_rates.columns.get_level_values('confidence'),
-                           self.data_rates.loc['cac','central'],
-                           yerr = [self.data_rates.loc['cac','central']-self.data_rates.loc['cac','low'],
-                                   self.data_rates.loc['cac','high']-self.data_rates.loc['cac','central']])
-         except KeyError :
-             pass
+        try : 
+            if errorType == 'bars' : 
+                _plt.errorbar(self.data_rates.columns.get_level_values('confidence'),
+                              self.data_rates.loc['cac','central'],
+                              yerr = [self.data_rates.loc['cac','central']-self.data_rates.loc['cac','low'],
+                                      self.data_rates.loc['cac','high']-self.data_rates.loc['cac','central']],
+                              fmt='.',
+                              capsize=5)
+            elif errorType == 'band' : 
+                _plt.fill_between(self.data_rates.columns.get_level_values('confidence'),
+                                  self.data_rates.loc['cac','low'],
+                                  self.data_rates.loc['cac','high'],
+                                  alpha=0.25)
+        except KeyError :
+            pass
 
-         _plt.xlabel("Confidence")
-         _plt.ylabel("Proportion correct") 
+        _plt.xlabel("Confidence")
+        _plt.ylabel("Proportion correct") 
+        
+        if self.reverseConfidence :
+            ax = _plt.gca()
+            lx = ax.get_xlim()
+            ax.set_xlim([lx[1],lx[0]])
+        else : 
+            ax = _plt.gca()
+            
+            xmin = self.data_rates.columns.get_level_values('confidence').min()
+            xmax = self.data_rates.columns.get_level_values('confidence').max()
+            xdif = xmax-xmin 
 
-         if self.reverseConfidence :
-             ax = _plt.gca()
-             lx = ax.get_xlim()
-             ax.set_xlim([lx[1],lx[0]])
-
-         # Tight layout for plot
-         _plt.tight_layout()
-
+            ymin = self.data_rates.loc['cac','central'].min()
+            ymax = self.data_rates.loc['cac','central'].max()
+            ydif = ymax-ymin
+             
+            ax.set_xlim(xmin-xdif*0.1, xmax+xdif*0.1)
+            ax.set_ylim(ymin-ydif*0.1, ymax+ydif*0.1)
+             
+        # Tight layout for plot
+        _plt.tight_layout()
+            
     def plotRAC(self) : 
         pass
 
@@ -267,23 +467,93 @@ class DataProcessed :
     def printRates(self) :
         print(self.data_rates)
 
+    @property
     def numberConditions(self) :
+        '''
+        Number of confidences or other conditions 
+
+        :rtype: int 
+        '''
         return self.data_rates.columns.get_level_values('confidence').size
 
+    @property
+    def liberalTargetAbsentSuspectId(self) :
+        '''
+        Returns the maximum targetAbsent suspectId rate 
+
+        :rtype: float 
+        '''
+
+        return self.data_rates.loc['targetAbsent','suspectId'].max()
+
+    @property 
+    def liberalTargetAbsentFillerId(self) : 
+        '''
+        Returns the maximum targetAbsent falseId rate 
+
+        :rtype: float 
+        '''
+
+        return self.data_rates.loc['targetAbsent','fillerId'].max()        
+
     def writeRatesCsv(self, fileName) : 
+        '''
+        Write data_rates Dataframe to CSV file 
+        :rtype: None
+        '''
+
         self.data_rates.to_csv(fileName)
 
-    def writeRatesExcel(self, fileName) : 
-        self.data_rates.to_excel(fileName, engine = 'openpyxl')        
+    def writeRatesExcel(self, fileName, engine = 'openpyxl') : 
+        '''
+        Write data_rates Dataframe to excel file 
+
+        :param fileName: File name of the excel file to write
+        :type fileName: str
+        :param engine: Excel output engine
+        :type engine: str
+        :rtype: None
+        '''
+
+        self.data_rates.to_excel(fileName, engine = engine)        
 
     def writePivotCsv(self, fileName) : 
+        '''
+        Write data_rates Dataframe to CSV file 
+
+        :param fileName: File name of the CSV file to write
+        :type fileName: str
+        :rtype: None
+
+        '''
+
         self.data_pivot.to_csv(fileName)
 
-    def writePivotSimpleCsv(self, fileNameStub) : 
+    def writePivotSimpleCsv(self, fileName) : 
+        '''
+        Write data_pivot Dataframe to CSV file 
+
+        :param fileName: File name of the CSV file to write
+        :type fileName: str
+        :rtype: None
+
+        '''
+
         pass
 
     def writePivotExcel(self, fileName, engine = 'openpyxl') :
-        self.data_pivot.to_excel(fileName)
+        '''
+        Write data_pivot Dataframe to excel file 
+
+        :param fileName: File name of the excel file to write        
+        :type fileName: str
+        :param engine: Excel output engine
+        :type engine: str
+        :rtype: None
+
+        '''
+
+        self.data_pivot.to_excel(fileName, engine = engine)
 
 
         
