@@ -12,7 +12,6 @@ If the file is in ``excel`` format you will need to specify which sheet the raw 
    dr = pyWitness.DataRaw("test2.xlsx",excelSheet = "raw data")
 
 
-
 Transforming data into common format
 ------------------------------------
 
@@ -31,6 +30,34 @@ the name of the data columns and the values stored.
 						     "fillerId":"filler",
 						     "rejectId":"reject",
 						     "confidence":"conf_level"}))
+
+Processing data for a single condition
+--------------------------------------
+
+So a single data file might have multiple different experimental condtions. So imagine your data file 
+has a column labelled ``Condition`` and the values for each participant is either ``Sequential`` or 
+``Simultaneous``. So to proccess only the ``Sequential`` participants the following options are required
+for DataRaw.process() 
+
+.. code-block :: python
+   :linenos:
+   :emphasize-lines: 3
+
+   import pyWitness
+   dr = pyWitness.DataRaw("test1.csv")
+   dp = dr.process("Condition","Sequential")   
+
+So if you had a file with multiple conditions it would be very straight forward to make multiple 
+``DataProcessed`` for each condition, so like the following 
+
+.. code-block :: python
+   :linenos:
+   :emphasize-lines: 3-4
+
+   import pyWitness
+   dr = pyWitness.DataRaw("test1.csv")
+   dpSeq = dr.process("Condition","Sequential")   
+   dpSim = dr.process("Condition","Simultaneous")   
 
 Loading processed data 
 ----------------------

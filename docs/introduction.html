@@ -172,13 +172,16 @@
 <h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="eyewitness-identification-research">
 <h2>Eyewitness identification research<a class="headerlink" href="#eyewitness-identification-research" title="Permalink to this headline">¶</a></h2>
-<p>Eyewitnesses to crimes may try to identify the perpetrator from an identification procedure. One commonly used procedure is a lineup (identity parade in the UK). A lineup comprises the police suspect and fillers. A lineup with an innocent suspect is a target-absent lineup and a lineupw with a guilty suspect is a target-present lineup. Eyewitness can make filler IDs from either lineup, identify the innocent suspect (from a target-absent lineup) or guilty suspect (from a target-present lineup).</p>
-<p>Receiver operating characteristic (ROC) analysis measures discriminability (the ability to distinguish innocent from guilty suspects), confidence accuracy characteristic (CAC) and response-time accuracy characteristic (RAC) analysis measure positive predictive value (the likelihood the identified suspect is guilty). pyWitness allows researchers to run these analyses.</p>
+<p>Eyewitnesses to crimes may try to identify the perpetrator from an identification procedure. One commonly used procedure is a lineup (identity parade in the UK). A lineup comprises the police suspect and fillers, as shown in the illustration below. A lineup with an innocent suspect is a target-absent lineup, and a lineup with a guilty suspect is a target-present lineup. The eyewitness can make a filler ID from either lineup, identify the innocent suspect (from a target-absent lineup) or guilty suspect (from a target-present lineup).</p>
+<div class="figure">
+<img alt="_images/pyWitness_Lineup.png" src="_images/pyWitness_Lineup.png" />
+</div>
+<p>Receiver operating characteristic (ROC) analysis measures discriminability (the ability to distinguish innocent from guilty suspects), and confidence accuracy characteristic (CAC) and response-time accuracy characteristic (RAC) analysis measure positive predictive value (the likelihood the identified suspect is guilty). pyWitness allows researchers to run these analyses.</p>
 <p>Theories about eyewitness identification have thus far been signal detection-based. pyWitness allows researchers to compare signal detection-based model fits.</p>
 </div>
 <div class="section" id="receiver-operator-characteristic-roc">
 <h2>Receiver operator characteristic (ROC)<a class="headerlink" href="#receiver-operator-characteristic-roc" title="Permalink to this headline">¶</a></h2>
-<p>There are pacakges in R and MATLAB that calculate pAUCs, smooth ROCS, and statistically comparing pAUCs.</p>
+<p>There are pacakges in R and MATLAB that smooth ROCS and calculate and statistically compare pAUCs.</p>
 <blockquote>
 <div><ul class="simple">
 <li>pROC: an open-source package for R and S+ to analyze and compare ROC curves</li>
@@ -209,7 +212,7 @@
 <h2>Model fits<a class="headerlink" href="#model-fits" title="Permalink to this headline">¶</a></h2>
 <blockquote>
 <div><ul class="simple">
-<li>Independent observation</li>
+<li>Independent observations</li>
 <li>Integration</li>
 <li>Ensemble</li>
 </ul>
@@ -219,15 +222,15 @@
 <h2>Goals of pyWitness<a class="headerlink" href="#goals-of-pywitness" title="Permalink to this headline">¶</a></h2>
 <blockquote>
 <div><ul class="simple">
-<li>Little as possible human interaction (manipulating data, transcribing values)</li>
-<li>Place to store all relevant algorithms, fits and methods in a reproducible and documented way</li>
-<li>Bin and pivot raw data to rates (process raw data)</li>
-<li>Plot and compare ROC, CAC and RAC curves</li>
-<li>Calculate pAUC and compute statistial tests</li>
-<li>Perform statistical tests on CAC/RAC curves</li>
-<li>Fit signal detection models to the processed data</li>
+<li>Little as possible human interaction (e.g., reduce data manipulation, transcribing values)</li>
+<li>Place to store all relevant algorithms, fits, and methods in a reproducible and documented way</li>
+<li>Bin and pivot raw data to rates (i. e., processed data)</li>
+<li>Plot and compare ROC, CAC, and RAC curves</li>
+<li>Calculate pAUC and compute statistical tests</li>
+<li>Perform statistical tests on CAC and RAC curves</li>
+<li>Fit signal detection-based models to the processed data</li>
 <li>Monte Carlo simulation of raw data</li>
-<li>Teaching aid to create signal detection model plots</li>
+<li>Create teaching aids to understand signal detection theory</li>
 </ul>
 </div></blockquote>
 </div>
@@ -290,7 +293,7 @@
 <tbody valign="top">
 <tr class="row-even"><td>1</td>
 <td>6</td>
-<td>targetPesent</td>
+<td>targetPresent</td>
 <td>suspectId</td>
 <td>6</td>
 </tr>
@@ -360,7 +363,7 @@ or data, demographic data or personal differenes.</p>
 </table>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Confidence can verbal and so needs to be mapped to a number. For example, confidence could be low (1),
+<p class="last">Confidence can be verbal and needs to be mapped to a number. For example, confidence could be low (1),
 medium (2) or high (3).</p>
 </div>
 <div class="admonition note">
@@ -392,7 +395,7 @@ medium (2) or high (3).</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright Royal Holloway, University of London 2020 and University of Bristol 2020
-      Last updated on Dec 26, 2020.
+      Last updated on Dec 30, 2020.
 
     </p>
   </div>

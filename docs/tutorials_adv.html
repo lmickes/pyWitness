@@ -92,6 +92,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Advanced tutorials</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#loading-raw-data-excel-format">Loading raw data excel format</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#transforming-data-into-common-format">Transforming data into common format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#processing-data-for-a-single-condition">Processing data for a single condition</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#loading-processed-data">Loading processed data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#using-instances-of-raw-data-processed-data-and-model-fits">Using instances of raw data, processed data and model fits</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#overlaying-plots">Overlaying plots</a></li>
@@ -189,6 +190,31 @@ the name of the data columns and the values stored.</p>
                                                   <span class="s2">&quot;confidence&quot;</span><span class="p">:</span><span class="s2">&quot;conf_level&quot;</span><span class="p">}))</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="processing-data-for-a-single-condition">
+<h2>Processing data for a single condition<a class="headerlink" href="#processing-data-for-a-single-condition" title="Permalink to this headline">¶</a></h2>
+<p>So a single data file might have multiple different experimental condtions. So imagine your data file
+has a column labelled <code class="docutils literal notranslate"><span class="pre">Condition</span></code> and the values for each participant is either <code class="docutils literal notranslate"><span class="pre">Sequential</span></code> or
+<code class="docutils literal notranslate"><span class="pre">Simultaneous</span></code>. So to proccess only the <code class="docutils literal notranslate"><span class="pre">Sequential</span></code> participants the following options are required
+for DataRaw.process()</p>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
+<span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test1.csv&quot;</span><span class="p">)</span>
+<span class="hll"><span class="n">dp</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="s2">&quot;Condition&quot;</span><span class="p">,</span><span class="s2">&quot;Sequential&quot;</span><span class="p">)</span>
+</span></pre></div>
+</td></tr></table></div>
+<p>So if you had a file with multiple conditions it would be very straight forward to make multiple
+<code class="docutils literal notranslate"><span class="pre">DataProcessed</span></code> for each condition, so like the following</p>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
+<span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test1.csv&quot;</span><span class="p">)</span>
+<span class="hll"><span class="n">dpSeq</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="s2">&quot;Condition&quot;</span><span class="p">,</span><span class="s2">&quot;Sequential&quot;</span><span class="p">)</span>
+</span><span class="hll"><span class="n">dpSim</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="s2">&quot;Condition&quot;</span><span class="p">,</span><span class="s2">&quot;Simultaneous&quot;</span><span class="p">)</span>
+</span></pre></div>
+</td></tr></table></div>
 </div>
 <div class="section" id="loading-processed-data">
 <h2>Loading processed data<a class="headerlink" href="#loading-processed-data" title="Permalink to this headline">¶</a></h2>
@@ -390,7 +416,7 @@ data file, variations on the processed data and model fits to be manipulated sim
   <div role="contentinfo">
     <p>
         &copy; Copyright Royal Holloway, University of London 2020 and University of Bristol 2020
-      Last updated on Dec 26, 2020.
+      Last updated on Dec 30, 2020.
 
     </p>
   </div>

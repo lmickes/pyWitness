@@ -181,8 +181,7 @@ Fitting signal detection models to data</p>
 </div>
 <div class="section" id="loading-raw-experimental-data">
 <h2>Loading raw experimental data<a class="headerlink" href="#loading-raw-experimental-data" title="Permalink to this headline">¶</a></h2>
-<p>A single Python class <code class="docutils literal notranslate"><span class="pre">pyWitness.DataRaw</span></code> is used to load raw data in either <code class="docutils literal notranslate"><span class="pre">csv</span></code> or <code class="docutils literal notranslate"><span class="pre">excel</span></code> format. The format of <code class="docutils literal notranslate"><span class="pre">test1.csv</span></code>
-is the same as that described in the introduction.</p>
+<p>A single Python class <a class="reference external" href="./moduledocs.html#pyWitness.DataRaw">pyWitness.DataRaw</a> is used to load raw data in either <code class="docutils literal notranslate"><span class="pre">csv</span></code> or <code class="docutils literal notranslate"><span class="pre">excel</span></code> format. The format of <code class="docutils literal notranslate"><span class="pre">test1.csv</span></code> is the same as that described in the introduction.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
 <span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test1.csv&quot;</span><span class="p">)</span>
 </pre></div>
@@ -190,7 +189,7 @@ is the same as that described in the introduction.</p>
 </div>
 <div class="section" id="processing-raw-experimental-data">
 <h2>Processing raw experimental data<a class="headerlink" href="#processing-raw-experimental-data" title="Permalink to this headline">¶</a></h2>
-<p>To process the raw data the function <code class="docutils literal notranslate"><span class="pre">process</span></code> needs to be called on a raw data object. The calculates the cumulative rates from the raw data.</p>
+<p>To process the raw data the function <a class="reference external" href="./moduledocs.html#pyWitness.DataRaw.process">pyWitness.DataRaw.process</a> needs to be called on a raw data object. The calculates the cumulative rates from the raw data.</p>
 <div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
@@ -198,7 +197,7 @@ is the same as that described in the introduction.</p>
 <span class="hll"><span class="n">dp</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
 </span></pre></div>
 </td></tr></table></div>
-<p>Once <code class="docutils literal notranslate"><span class="pre">process</span></code> is called two <code class="docutils literal notranslate"><span class="pre">DataFrames</span></code> are created one which contains a pivot table and another that contains rates</p>
+<p>Once <a class="reference external" href="./moduledocs.html#pyWitness.DataRaw.process">pyWitness.DataRaw.process</a> is called two <code class="docutils literal notranslate"><span class="pre">DataFrames</span></code> are created one which contains a pivot table and another that contains rates</p>
 <div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -279,7 +278,7 @@ is the same as that described in the introduction.</p>
 </div>
 <div class="section" id="collapsing-the-confidence-binning">
 <h2>Collapsing the confidence binning<a class="headerlink" href="#collapsing-the-confidence-binning" title="Permalink to this headline">¶</a></h2>
-<p>The example in this tutorial as 11 confidence levels (0, 10, 20, 30, 40, 50, 60, 70, 80, 90 and 100). Typically catagorical confidence levels need to be binned or collapsed. This is best performed on the raw data before calling <code class="docutils literal notranslate"><span class="pre">process()</span></code>. This is done with the <code class="docutils literal notranslate"><span class="pre">collapseCatagoricalData</span></code> method of <code class="docutils literal notranslate"><span class="pre">DataRaw</span></code>. This is shown in example below, where the new bins are (0-60 map to 30, 70-80 to 75 and 90-100 to 95).</p>
+<p>The example in this tutorial as 11 confidence levels (0, 10, 20, 30, 40, 50, 60, 70, 80, 90 and 100). Typically categorical confidence levels need to be binned or collapsed. This is best performed on the raw data before calling <code class="docutils literal notranslate"><span class="pre">process()</span></code>. This is done with the <code class="docutils literal notranslate"><span class="pre">collapseCategoricalData</span></code> method of <code class="docutils literal notranslate"><span class="pre">DataRaw</span></code>. This is shown in example below, where the new bins are (0-60 map to 30, 70-80 to 75 and 90-100 to 95).</p>
 <div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -289,7 +288,7 @@ is the same as that described in the introduction.</p>
 7
 8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
 <span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test1.csv&quot;</span><span class="p">)</span>
-<span class="hll"><span class="n">dr</span><span class="o">.</span><span class="n">collapseCatagoricalData</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s1">&#39;confidence&#39;</span><span class="p">,</span>
+<span class="hll"><span class="n">dr</span><span class="o">.</span><span class="n">collapseCategoricalData</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s1">&#39;confidence&#39;</span><span class="p">,</span>
 </span><span class="hll">                           <span class="nb">map</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">10</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">20</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">30</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">50</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">60</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span>
 </span><span class="hll">                                <span class="mi">70</span><span class="p">:</span> <span class="mi">75</span><span class="p">,</span> <span class="mi">80</span><span class="p">:</span> <span class="mi">75</span><span class="p">,</span>
 </span><span class="hll">                                <span class="mi">90</span><span class="p">:</span> <span class="mi">95</span><span class="p">,</span> <span class="mi">100</span><span class="p">:</span> <span class="mi">95</span><span class="p">})</span>
@@ -302,7 +301,7 @@ is the same as that described in the introduction.</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">If you mess up the <code class="docutils literal notranslate"><span class="pre">collapseCatagoricalData</span></code> the data might be inconsistent. To start with the original data so call <code class="docutils literal notranslate"><span class="pre">collapseCatagoricalData</span></code> with <code class="docutils literal notranslate"><span class="pre">reload=True</span></code></p>
+<p class="last">If you mess up the <code class="docutils literal notranslate"><span class="pre">collapseCategoricalData</span></code> the data might be inconsistent. To start with the original data so call <code class="docutils literal notranslate"><span class="pre">collapseCategoricalData</span></code> with <code class="docutils literal notranslate"><span class="pre">reload=True</span></code></p>
 </div>
 </div>
 <div class="section" id="calculating-pauc-and-performing-statistical-tests">
@@ -321,7 +320,7 @@ is the same as that described in the introduction.</p>
 8
 9</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
 <span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test1.csv&quot;</span><span class="p">)</span>
-<span class="n">dr</span><span class="o">.</span><span class="n">collapseCatagoricalData</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s1">&#39;confidence&#39;</span><span class="p">,</span>
+<span class="n">dr</span><span class="o">.</span><span class="n">collapseCategoricalData</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s1">&#39;confidence&#39;</span><span class="p">,</span>
                            <span class="nb">map</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">10</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">20</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">30</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">50</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">60</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span>
                                 <span class="mi">70</span><span class="p">:</span> <span class="mi">75</span><span class="p">,</span> <span class="mi">80</span><span class="p">:</span> <span class="mi">75</span><span class="p">,</span>
                                 <span class="mi">90</span><span class="p">:</span> <span class="mi">95</span><span class="p">,</span> <span class="mi">100</span><span class="p">:</span> <span class="mi">95</span><span class="p">})</span>
@@ -388,7 +387,7 @@ is the same as that described in the introduction.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright Royal Holloway, University of London 2020 and University of Bristol 2020
-      Last updated on Dec 26, 2020.
+      Last updated on Dec 30, 2020.
 
     </p>
   </div>
