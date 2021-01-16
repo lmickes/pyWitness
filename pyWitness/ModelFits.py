@@ -4,6 +4,65 @@ from scipy import optimize as _optimize
 from scipy import interpolate as _interpolate
 from scipy.stats import norm as _norm
 import matplotlib.pyplot as _plt
+from numba import jit
+
+class Parameter(object) : 
+
+    def __init__(self, name, value, fixed = False) :
+        self.name  = name
+        self.__value = value
+        self.__fixed = fixed
+        self.other = None
+        
+    @property
+    def value(self) :
+        if not self.other : 
+            return self.__value
+        else :
+            return self.other.value
+
+    @value.setter
+    def value(self,value) : 
+        if not self.other :
+            self.__value = value 
+        else : 
+            self.other.value = value
+
+    @property 
+    def fixed(self) : 
+        return self.__fixed
+
+    @fixed.setter
+    def fixed(self,fixed) :
+        self.__fixed = fixed
+
+    def set_equal(self, other) : 
+        self.other = other
+        self.fixed = True
+        
+    def __eq__(self, other) : 
+        return self.value == other.value
+            
+    def __float__(self) :
+        return self.value
+
+    def __copy__(self) :
+        new = Parameter(0)
+        new.value = self.value
+        return new
+
+    def __repr__(self):
+
+        if self.fixed :
+            fixStr = "fixed"
+            
+            if self.other :
+                fixStr = fixStr+" "+self.other.name
+            
+        else : 
+            fixStr = "free"
+            
+        return self.name+" "+repr(self.value)+" ("+fixStr+")"
 
 class ModelFit :
     def __init__(self, processedData, debug = False) : 
@@ -18,11 +77,50 @@ class ModelFit :
         self.debug            = debug
 
         # parameters 
-        self.lureMean         = 0.0
-        self.lureSigma        = 1.0
-        self.targetMean       = 1.0
-        self.targetSigma      = 1.0
-        self.thresholds       = _np.linspace(self.targetMean, self.targetMean+self.targetSigma, self.numberConditions) # linearly spread the initial thresholds 
+        self.parameterNames     = []
+        self.lureMean           = self.addParameter("lureMean",0.0)
+        self.lureSigma          = self.addParameter("lureSigma",1.0)
+        self.targetMean         = self.addParameter("targetMean",1.0)
+        self.targetSigma        = self.addParameter("targetSigma",1.0)
+        self.lureBetweenSigma   = self.addParameter("lureBetweenSigma",0.0)
+        self.targetBetweenSigma = self.addParameter("targetBetweenSigma",0.0)
+
+        thresholds = _np.linspace(self.targetMean.value, self.targetMean.value+self.targetSigma.value, self.numberConditions)    
+        self.thresholds = [] 
+        for i in range(0,self.numberConditions,1) :
+            self.thresholds.append(self.addParameter("c"+str(i+1),thresholds[i]))
+
+        self.calculateWithinSigmas()
+
+    def addParameter(self, name, value, fixed = False) :
+        self.parameterNames.append(name) 
+        p = Parameter(name,value,fixed)
+        setattr(self,name,p)
+        return p
+
+    def freeParameterList(self) : 
+        freeParams = []
+        for p in self.parameterNames : 
+            p = getattr(self,p) 
+            if not p.fixed :
+                freeParams.append(p)
+
+        return freeParams
+
+    def printParameters(self) : 
+        for p in self.parameterNames :
+            p = getattr(self,p) 
+            print(p)
+
+    def setEqualVariance(self) :
+        self.lureMean.fixed = True
+        self.lureSigma.fixed = True
+        self.lureBetweenSigma.set_equal(self.targetBetweenSigma)
+        self.targetBetweenSigma.fixed = True
+        
+    def calculateWithinSigmas(self) :
+        self.lureWithinSigma    = _np.sqrt(self.lureSigma.value**2   - self.lureBetweenSigma.value**2)
+        self.targetWithinSigma  = _np.sqrt(self.targetSigma.value**2 - self.targetBetweenSigma.value**2)
 
     def calculateFrequencyForCriterion(self, c1, c2) :
         pred_c1 = self.calculateCumulativeFrequencyForCriterion(c1)
@@ -35,8 +133,8 @@ class ModelFit :
         pred_tpsid_array = []
         pred_tpfid_array = []
    
-        for i in range(0,self.thresholds.size,1) : 
-            if i < self.thresholds.size-1 : 
+        for i in range(0,len(self.thresholds),1) : 
+            if i < len(self.thresholds)-1 : 
                 [pred_tafid, pred_tpsid, pred_tpfid] = self.calculateFrequencyForCriterion(self.thresholds[i+1], self.thresholds[i])                 
             else :
                 [pred_tafid, pred_tpsid, pred_tpfid] = self.calculateCumulativeFrequencyForCriterion(self.thresholds[i]) 
@@ -67,15 +165,38 @@ class ModelFit :
                 pred_tprid,
                 pred_tpsid_array,
                 pred_tpfid_array]
+
+    @property
+    def chi2(self) : 
+        
+        debug = self.debug
+        self.debug = False 
+
+        freeParams = self.freeParameterList() 
+        p0 = []
+        for p in freeParams : 
+            p0.append(p.value)        
+        chi2 = self.calculateChi2(p0)
+        
+        self.debug = debug
+        return chi2
     
+    @property 
+    def numberFreeParameters(self) : 
+        iFreeParams = 0
+        freeParams = self.freeParameterList() 
+        for p in freeParams : 
+            iFreeParams = iFreeParams+1
+        
+        return iFreeParams
+
     def calculateChi2(self, params) : 
-
-        params = _np.array(params)
-
-        self.thresholds  = params[0:self.numberConditions]
-        # self.lureSigma   = params[self.numberConditions]
-        self.targetMean  = params[self.numberConditions+0]
-        self.targetSigma = params[self.numberConditions+1]
+        
+        freeParams = self.freeParameterList()
+        
+        for i in range(0,len(freeParams),1) : 
+            p = freeParams[i]
+            p.value = params[i]
         
         if self.debug :
             print('iteration',self.iteration)
@@ -90,9 +211,9 @@ class ModelFit :
         chi2_tarid = 0
         chi2_tprid = 0
         for i in range(0,self.numberConditions) :
-            chi2_tafid = chi2_tafid + (self.processedData.data_pivot.loc['targetAbsent' ,'fillerId'][i]  - pred_tafid_array[i])**2 / pred_tafid_array[i]
-            chi2_tpsid = chi2_tpsid + (self.processedData.data_pivot.loc['targetPresent','suspectId'][i] - pred_tpsid_array[i])**2 / pred_tpsid_array[i]
-            chi2_tpfid = chi2_tpfid + (self.processedData.data_pivot.loc['targetPresent','fillerId'][i]  - pred_tpfid_array[i])**2 / pred_tpfid_array[i] # No for showups (TODO)
+            chi2_tafid = chi2_tafid + (self.processedData.data_pivot.loc['targetAbsent' ,'fillerId'][i]  - pred_tafid_array[i])**2 / abs(pred_tafid_array[i])
+            chi2_tpsid = chi2_tpsid + (self.processedData.data_pivot.loc['targetPresent','suspectId'][i] - pred_tpsid_array[i])**2 / abs(pred_tpsid_array[i])
+            chi2_tpfid = chi2_tpfid + (self.processedData.data_pivot.loc['targetPresent','fillerId'][i]  - pred_tpfid_array[i])**2 / abs(pred_tpfid_array[i]) # No for showups (TODO)
 
         chi2_tarid = (self.processedData.data_pivot.loc['targetAbsent' ,'rejectId'].sum() - pred_tarid)**2 / pred_tarid
         chi2_tprid = (self.processedData.data_pivot.loc['targetPresent','rejectId'].sum() - pred_tprid)**2 / pred_tprid
@@ -110,29 +231,34 @@ class ModelFit :
         self.iteration = self.iteration+1
         return chi2        
             
-    def fit(self) : 
-        x0 = [1.52501177, 1.94621728, 2.52453685, 1.77685984, 0.76298395]
-        
+    def fit(self) :         
+        freeParams = self.freeParameterList() 
+        p0 = []
+        for p in freeParams : 
+            p0.append(p.value)
+
+        print(p0)
+
         self.iteration = 0
 
         def chiSquared(x) : 
             return self.calculateChi2(x)
 
-        opt = _optimize.minimize(chiSquared, x0, method='Nelder-Mead')
+        opt = _optimize.minimize(chiSquared,p0, method='Nelder-Mead')
         if self.debug : 
             print(opt)
 
-        self.thresholds = opt['x'][0:self.numberConditions]
+        # self.thresholds = opt['x'][0:self.numberConditions]
         
     def plotModel(self, xlow = -5, xhigh = 5) : 
         x      = _np.linspace(xlow, xhigh,200) 
-        lure   = _norm.pdf(x,self.lureMean, self.lureSigma)
-        target = _norm.pdf(x,self.targetMean, self.targetSigma)
+        lure   = _norm.pdf(x,self.lureMean.value, self.lureSigma.value)
+        target = _norm.pdf(x,self.targetMean.value, self.targetSigma.value)
         
         _plt.plot(x,lure)
         _plt.plot(x,target)
         for t in self.thresholds : 
-            _plt.axvline(t, linestyle='--')
+            _plt.axvline(t.value, linestyle='--')
 
         _plt.xlabel("Memory strength")
         _plt.ylabel("Probability")
@@ -141,8 +267,80 @@ class ModelFit :
         _plt.tight_layout()
 
     def plotFit(self) : 
-        pass
 
+        [pred_tarid,
+         pred_tasid_array, 
+         pred_tafid_array,
+         pred_tprid, 
+         pred_tpsid_array,
+         pred_tpfid_array] = self.calculateFrequenciesForAllCriteria()
+
+        x = range(0,pred_tasid_array.size,1)
+    
+        fig = _plt.figure(constrained_layout=True)
+        gs = fig.add_gridspec(3,3)
+        ax1 = fig.add_subplot(gs[0, 0:2])
+        ax2 = fig.add_subplot(gs[1, 0:2])
+        ax3 = fig.add_subplot(gs[2, 0:2])
+                                    
+        ax4 = fig.add_subplot(gs[0,2])
+        ax5 = fig.add_subplot(gs[2,2])
+
+        # tafid fit bar
+        _plt.sca(ax1)
+        _plt.bar(x,pred_tafid_array, fill=False)
+        _plt.errorbar(x,
+                      self.processedData.data_pivot.loc['targetAbsent' ,'fillerId'],
+                      _np.sqrt(self.processedData.data_pivot.loc['targetAbsent' ,'fillerId']),
+                      fmt='o',
+                      markersize=5,
+                      capsize=5) 
+        _plt.ylabel("TA Filler ID")
+
+        # tasid data plot
+        _plt.sca(ax2)
+        _plt.bar(x,pred_tpsid_array, fill=False)
+        _plt.errorbar(x,
+                      self.processedData.data_pivot.loc['targetPresent' ,'suspectId'],
+                      _np.sqrt(self.processedData.data_pivot.loc['targetPresent' ,'suspectId']),
+                      fmt='o',
+                      markersize=5,
+                      capsize=5) 
+        _plt.ylabel("TP Suspect ID")
+
+        # tpfid data plot
+        _plt.sca(ax3) 
+        _plt.bar(x,pred_tpfid_array, fill=False)
+        _plt.errorbar(x,
+                      self.processedData.data_pivot.loc['targetPresent' ,'fillerId'],
+                      _np.sqrt(self.processedData.data_pivot.loc['targetPresent' ,'fillerId']),
+                      fmt='o',
+                      markersize=5,
+                      capsize=5)  
+        _plt.ylabel("TP Filler ID")
+
+        # tarid data plot
+        _plt.sca(ax4)
+        _plt.bar([0],[pred_tarid],fill=False)
+        _plt.errorbar([0],
+                      [self.processedData.data_pivot.loc['targetAbsent' ,'rejectId'].sum()],
+                      [_np.sqrt(self.processedData.data_pivot.loc['targetAbsent' ,'rejectId'].sum())],
+                      fmt='o',
+                      markersize=5,
+                      capsize=5)  
+        _plt.ylabel("TA Reject ID")
+
+        # tarid data plot
+        _plt.sca(ax5)
+        _plt.bar([0],[pred_tprid],fill=False)
+        _plt.errorbar([0],
+                      [self.processedData.data_pivot.loc['targetPresent' ,'rejectId'].sum()],
+                      [_np.sqrt(self.processedData.data_pivot.loc['targetPresent' ,'rejectId'].sum())],
+                      fmt='o',
+                      markersize=5,
+                      capsize=5)  
+        _plt.ylabel("TP Reject ID")
+            
     def plotROC(self, criterion1 = 0, criterion2 = 5, nsteps = 50, label = "Indep model" ) :
         
         rate_tafid_array = []
@@ -198,28 +396,21 @@ class ModelFit :
         
         _plt.plot(confidence_array, cac, linestyle = '--', label=label)
 
-class ModelFitIndependentObservation(ModelFit) :
+class ModelFitIndependentObservationSimple(ModelFit) :
     def __init__(self, processedData, debug = False) : 
         ModelFit.__init__(self,processedData, debug = debug)
         
-        # parameters 
-        self.lureMean    = 0.0
-        self.lureSigma   = 1.0
-        self.targetMean  = 1.0
-        self.targetSigma = 1.0
-        self.thresholds  = _np.linspace(self.targetMean, self.targetMean+self.targetSigma, self.numberConditions) # linearly spread the initial thresholds 
-
     def calculateCumulativeFrequencyForCriterion(self, c) :
         # target ID in target present lineups 
         def probTargetIDTargetPresent(x) :
-            return _norm.cdf(x,self.lureMean, self.lureSigma)**(self.lineupSize-1)*_norm.pdf(x,self.targetMean, self.targetSigma)
+            return _norm.cdf(x,self.lureMean.value, self.lureSigma.value)**(self.lineupSize-1)*_norm.pdf(x,self.targetMean.value, self.targetSigma.value)
         
         def probTargetIDTargetPresentIntegral(x1, x2) :
             return _integrate.quad(probTargetIDTargetPresent,x1,x2)[0]
 
         # filler ID in target present lineups
         def probFillerIDTargetPresent(x) : 
-            return _norm.cdf(x,self.lureMean, self.lureSigma)**(self.lineupSize-2)*_norm.pdf(x,self.lureMean, self.lureSigma)*_norm.cdf(x,self.targetMean, self.targetSigma)
+            return _norm.cdf(x,self.lureMean.value, self.lureSigma.value)**(self.lineupSize-2)*_norm.pdf(x,self.lureMean.value, self.lureSigma.value)*_norm.cdf(x,self.targetMean.value, self.targetSigma.value)
 
         def probFillerIDTargetPresentIntegral(x1, x2) :
            return _integrate.quad(probFillerIDTargetPresent,x1,x2)[0]
@@ -228,9 +419,9 @@ class ModelFitIndependentObservation(ModelFit) :
         def probFillerIDTargetAbsentIntegral(x1) :
             return _norm.cdf(x1)**self.lineupSize
 
-        prob_tpsid = probTargetIDTargetPresentIntegral(c,6)
-        prob_tpfid = (self.lineupSize-1)*probFillerIDTargetPresentIntegral(c,6)
-        prob_tafid = 1-probFillerIDTargetAbsentIntegral(c)
+        prob_tpsid = probTargetIDTargetPresentIntegral(float(c),6)
+        prob_tpfid = (self.lineupSize-1)*probFillerIDTargetPresentIntegral(float(c),6)
+        prob_tafid = 1-probFillerIDTargetAbsentIntegral(float(c))
 
         pred_tpsid = prob_tpsid*self.numberTPLineups
         pred_tpfid = prob_tpfid*self.numberTPLineups
@@ -238,3 +429,42 @@ class ModelFitIndependentObservation(ModelFit) :
 
         return _np.array([pred_tafid, pred_tpsid, pred_tpfid])
 
+class ModelFitIndependentObservation(ModelFit) :
+    def __init__(self, processedData, debug = False) : 
+        ModelFit.__init__(self,processedData, debug = debug)
+
+    def calculateCumulativeFrequencyForCriterion(self, c) :
+
+        self.calculateWithinSigmas()
+
+        # target ID in target present lineups 
+
+        def probTargetIDTargetPresent(x) :
+            return _norm.cdf(x,self.lureMean.value, self.lureSigma.value)**(self.lineupSize-1)*_norm.pdf(x,self.targetMean.value, self.targetSigma.value)*(1-_norm.cdf(float(c),x,self.targetBetweenSigma.value))
+
+        def probTargetIDTargetPresentIntegral(x1, x2) :
+            return _integrate.quad(probTargetIDTargetPresent,x1,x2)[0]
+
+        # filler ID in target present lineups
+        def probFillerIDTargetPresent(x) : 
+            return _norm.cdf(x,self.lureMean.value, self.lureSigma.value)**(self.lineupSize-2)*_norm.pdf(x,self.lureMean.value, self.lureSigma.value)*_norm.cdf(x,self.targetMean.value, self.targetSigma.value)*(1-_norm.cdf(float(c),x,self.targetBetweenSigma.value))
+
+        def probFillerIDTargetPresentIntegral(x1, x2) :
+           return _integrate.quad(probFillerIDTargetPresent,x1,x2)[0]
+
+        def probFillerIDTargetAbsent(x) :
+            return _norm.pdf(x,self.lureMean.value,self.lureSigma.value)*_norm.cdf(x,self.lureMean.value, self.lureSigma.value)**(self.lineupSize-1)*(1-_norm.cdf(float(c),x,self.targetBetweenSigma.value))
+
+        # filler ID (suspect ID) in target absent lineups 
+        def probFillerIDTargetAbsentIntegral(x1,x2) :
+           return _integrate.quad(probFillerIDTargetAbsent,x1,x2)[0]
+
+        prob_tpsid = probTargetIDTargetPresentIntegral(-4,4)
+        prob_tpfid = (self.lineupSize-1)*probFillerIDTargetPresentIntegral(-3,4)
+        prob_tafid = self.lineupSize*probFillerIDTargetAbsentIntegral(-4,4)
+
+        pred_tpsid = prob_tpsid*self.numberTPLineups
+        pred_tpfid = prob_tpfid*self.numberTPLineups
+        pred_tafid = prob_tafid*self.numberTALineups
+
+        return _np.array([pred_tafid, pred_tpsid, pred_tpfid])        
