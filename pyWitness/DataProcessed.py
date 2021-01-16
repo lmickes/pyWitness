@@ -87,13 +87,15 @@ class DataProcessed :
         self.targetPresentSum  = self.data_pivot.loc['targetPresent'].sum().sum()
         
         try :
-            self.data_rates.loc['targetAbsent','fillerId']  = self.data_rates.loc['targetAbsent','fillerId']/self.targetAbsentSum            
+            self.data_rates.loc['targetAbsent','fillerId']  = self.data_rates.loc['targetAbsent','fillerId']/self.targetAbsentSum          
         except KeyError :
             pass
+
         try :
             self.data_rates.loc['targetAbsent','suspectId'] = self.data_rates.loc['targetAbsent','suspectId']/self.targetAbsentSum
         except KeyError :
             pass
+
         try :
             self.data_rates.loc['targetAbsent','rejectId']  = self.data_rates.loc['targetAbsent','rejectId']/self.targetAbsentSum
         except KeyError :
@@ -103,10 +105,12 @@ class DataProcessed :
             self.data_rates.loc['targetPresent','fillerId']  = self.data_rates.loc['targetPresent','fillerId']/self.targetPresentSum
         except KeyError :
             pass
+
         try :
             self.data_rates.loc['targetPresent','suspectId'] = self.data_rates.loc['targetPresent','suspectId']/self.targetPresentSum
         except KeyError :
             pass
+
         try :
             self.data_rates.loc['targetPresent','rejectId']  = self.data_rates.loc['targetPresent','rejectId']/self.targetPresentSum
         except KeyError :
