@@ -3,8 +3,30 @@ from scipy import integrate as _integrate
 from scipy import optimize as _optimize
 from scipy import interpolate as _interpolate
 from scipy.stats import norm as _norm
+import scipy.special as _sc
 import matplotlib.pyplot as _plt
+import random as _rand
 from numba import jit
+
+@jit(nopython=True)
+def normpdf(x, mean, sigma) :
+    stp = _np.sqrt(2*_np.pi)
+    return 1.0/(sigma*stp)*_np.exp(-0.5*((x-mean)/sigma)**2)
+
+def normcdf(x, mean, sigma) :
+    z  = (x-mean)/sigma
+
+    return _sc.ndtr(z)
+
+def truncatedMean(mu, sigma, x) :
+    beta = (x-mu)/sigma
+    Z    = normpdf(beta,0,1)/normcdf(beta,0,1)
+    return mu - sigma*Z
+
+def truncatedVar(mu, sigma, x) :
+    beta = (x-mu)/sigma
+    Z    = normpdf(beta,0,1)/normcdf(beta,0,1)
+    return sigma**2*(1.-Z*beta-Z**2)
 
 class Parameter(object) : 
 
@@ -65,7 +87,7 @@ class Parameter(object) :
         return self.name+" "+repr(self.value)+" ("+fixStr+")"
 
 class ModelFit :
-    def __init__(self, processedData, debug = False) : 
+    def __init__(self, processedData, debug = False, integrationSigma = 6) :
         self.processedData    = processedData 
         self.numberConditions = processedData.numberConditions
         self.lineupSize       = processedData.lineupSize
@@ -75,6 +97,7 @@ class ModelFit :
         self.pred_rates.iloc[:,:] = 0.0
         self.iteration        = 0
         self.debug            = debug
+        self.integrationSigma = integrationSigma
 
         # parameters 
         self.parameterNames     = []
@@ -107,16 +130,34 @@ class ModelFit :
 
         return freeParams
 
+
+    def resetParameters(self):
+        self.lureMean.value = 0.0
+        self.lureSigma.value = 1.0
+        self.targetMean.value = 1.0
+        self.targetSigma.value = 1.0
+        self.lureBetweenSigma.value = 0.3
+        self.targetBetweenSigma.value = 0.3
+
+        thresholds = _np.linspace(self.targetMean.value, self.targetMean.value+self.targetSigma.value, self.numberConditions)
+        for i in range(0,self.numberConditions,1) :
+            getattr(self,"c"+str(i+1)).value = thresholds[i]
+
     def printParameters(self) : 
         for p in self.parameterNames :
             p = getattr(self,p) 
             print(p)
 
     def setEqualVariance(self) :
+        self.lureMean.value = 0.0
         self.lureMean.fixed = True
+        self.lureSigma.value = 1.0
         self.lureSigma.fixed = True
+        self.targetMean.value = 1.0
+        self.targetSigma.value = 1.0
         self.lureBetweenSigma.set_equal(self.targetBetweenSigma)
-        self.targetBetweenSigma.fixed = True
+        self.targetBetweenSigma.fixed = False
+        self.targetBetweenSigma.value = 0.3
         
     def calculateWithinSigmas(self) :
         self.lureWithinSigma    = _np.sqrt(self.lureSigma.value**2   - self.lureBetweenSigma.value**2)
@@ -170,7 +211,7 @@ class ModelFit :
     def chi2(self) : 
         
         debug = self.debug
-        self.debug = False 
+        self.debug = True
 
         freeParams = self.freeParameterList() 
         p0 = []
@@ -231,22 +272,28 @@ class ModelFit :
         self.iteration = self.iteration+1
         return chi2        
             
-    def fit(self) :         
-        freeParams = self.freeParameterList() 
+    def fit(self, resetParameters = False) :
+
+        if resetParameters :
+            self.resetParameters()
+
+        freeParams = self.freeParameterList()
         p0 = []
         for p in freeParams : 
             p0.append(p.value)
 
-        print(p0)
+        if self.debug :
+            print('fit> starting parameters',p0)
 
         self.iteration = 0
 
         def chiSquared(x) : 
             return self.calculateChi2(x)
 
+
         opt = _optimize.minimize(chiSquared,p0, method='Nelder-Mead')
-        if self.debug : 
-            print(opt)
+
+        print(opt)
 
         # self.thresholds = opt['x'][0:self.numberConditions]
         
@@ -397,8 +444,8 @@ class ModelFit :
         _plt.plot(confidence_array, cac, linestyle = '--', label=label)
 
 class ModelFitIndependentObservationSimple(ModelFit) :
-    def __init__(self, processedData, debug = False) : 
-        ModelFit.__init__(self,processedData, debug = debug)
+    def __init__(self, processedData, debug = False, integrationSigma = 8) :
+        ModelFit.__init__(self,processedData, debug = debug, integrationSigma = integrationSigma)
         
     def calculateCumulativeFrequencyForCriterion(self, c) :
         # target ID in target present lineups 
@@ -430,8 +477,8 @@ class ModelFitIndependentObservationSimple(ModelFit) :
         return _np.array([pred_tafid, pred_tpsid, pred_tpfid])
 
 class ModelFitIndependentObservation(ModelFit) :
-    def __init__(self, processedData, debug = False) : 
-        ModelFit.__init__(self,processedData, debug = debug)
+    def __init__(self, processedData, debug = False, integrationSigma = 8) :
+        ModelFit.__init__(self,processedData, debug = debug, integrationSigma = integrationSigma)
 
     def calculateCumulativeFrequencyForCriterion(self, c) :
 
@@ -440,31 +487,160 @@ class ModelFitIndependentObservation(ModelFit) :
         # target ID in target present lineups 
 
         def probTargetIDTargetPresent(x) :
-            return _norm.cdf(x,self.lureMean.value, self.lureSigma.value)**(self.lineupSize-1)*_norm.pdf(x,self.targetMean.value, self.targetSigma.value)*(1-_norm.cdf(float(c),x,self.targetBetweenSigma.value))
+            return normcdf(x,self.lureMean.value, self.lureSigma.value)**(self.lineupSize-1)*\
+                   normpdf(x,self.targetMean.value, self.targetSigma.value)*\
+                   (1-normcdf(float(c),x,self.targetBetweenSigma.value))
 
         def probTargetIDTargetPresentIntegral(x1, x2) :
             return _integrate.quad(probTargetIDTargetPresent,x1,x2)[0]
 
         # filler ID in target present lineups
         def probFillerIDTargetPresent(x) : 
-            return _norm.cdf(x,self.lureMean.value, self.lureSigma.value)**(self.lineupSize-2)*_norm.pdf(x,self.lureMean.value, self.lureSigma.value)*_norm.cdf(x,self.targetMean.value, self.targetSigma.value)*(1-_norm.cdf(float(c),x,self.targetBetweenSigma.value))
+            return normcdf(x,self.lureMean.value, self.lureSigma.value)**(self.lineupSize-2)*\
+                   normpdf(x,self.lureMean.value, self.lureSigma.value)*\
+                   normcdf(x,self.targetMean.value, self.targetSigma.value)*\
+                   (1-normcdf(float(c),x,self.targetBetweenSigma.value))
 
         def probFillerIDTargetPresentIntegral(x1, x2) :
-           return _integrate.quad(probFillerIDTargetPresent,x1,x2)[0]
+            return _integrate.quad(probFillerIDTargetPresent,x1,x2)[0]
 
         def probFillerIDTargetAbsent(x) :
-            return _norm.pdf(x,self.lureMean.value,self.lureSigma.value)*_norm.cdf(x,self.lureMean.value, self.lureSigma.value)**(self.lineupSize-1)*(1-_norm.cdf(float(c),x,self.targetBetweenSigma.value))
+            return normpdf(x,self.lureMean.value,self.lureSigma.value)*\
+                   normcdf(x,self.lureMean.value, self.lureSigma.value)**(self.lineupSize-1)*\
+                   (1-normcdf(float(c),x,self.targetBetweenSigma.value))
 
         # filler ID (suspect ID) in target absent lineups 
         def probFillerIDTargetAbsentIntegral(x1,x2) :
            return _integrate.quad(probFillerIDTargetAbsent,x1,x2)[0]
 
-        prob_tpsid = probTargetIDTargetPresentIntegral(-4,4)
-        prob_tpfid = (self.lineupSize-1)*probFillerIDTargetPresentIntegral(-3,4)
-        prob_tafid = self.lineupSize*probFillerIDTargetAbsentIntegral(-4,4)
+        prob_tpsid = probTargetIDTargetPresentIntegral(self.targetMean.value - self.targetSigma.value * self.integrationSigma ,
+                                                       self.targetMean.value + self.targetSigma.value * self.integrationSigma)
+        prob_tpfid = (self.lineupSize-1)*probFillerIDTargetPresentIntegral(self.lureMean.value - self.lureSigma.value * self.integrationSigma ,
+                                                                           self.lureMean.value + self.lureSigma.value * self.integrationSigma)
+        prob_tafid = self.lineupSize*probFillerIDTargetAbsentIntegral(self.lureMean.value - self.lureSigma.value * self.integrationSigma ,
+                                                                      self.lureMean.value + self.lureSigma.value * self.integrationSigma)
 
         pred_tpsid = prob_tpsid*self.numberTPLineups
         pred_tpfid = prob_tpfid*self.numberTPLineups
         pred_tafid = prob_tafid*self.numberTALineups
 
         return _np.array([pred_tafid, pred_tpsid, pred_tpfid])        
+
+class ModelFitEnsemble(ModelFit) :
+    def __init__(self, processedData, debug = False, integrationSigma = 8) :
+        ModelFit.__init__(self,processedData, debug = debug, integrationSigma = integrationSigma)
+
+    def mean(self,w, lm, ls, tm, ts, nlineup) :
+        tlm = truncatedMean(lm,ls,w)
+        ttm = truncatedMean(tm,ts,w)
+
+        return (w*(nlineup-1)-tlm*(nlineup-2)-ttm)/nlineup
+
+    def sigma(self,w, lm, ls, tm, ts, nlineup) :
+        tlv = truncatedVar(lm,ls,w)
+        ttv = truncatedVar(tm,ts,w)
+
+        return _np.sqrt((ttv+(nlineup-2)*tlv)/nlineup**2)
+
+    def calculateCumulativeFrequencyForCriterion(self, c) :
+
+        self.calculateWithinSigmas()
+
+        # target ID in target present lineups
+        def probTargetIDTargetPresent(x) :
+            return normcdf(x,self.lureMean.value, self.lureSigma.value)**(self.lineupSize-1)*\
+                   normpdf(x,self.targetMean.value, self.targetSigma.value)*\
+                   (1-normcdf(float(c),
+                              self.mean( x,self.lureMean.value, self.lureSigma.value,self.lureMean.value,self.lureSigma.value,self.lineupSize),
+                              self.sigma(x,self.lureMean.value, self.lureSigma.value,self.lureMean.value,self.lureSigma.value,self.lineupSize)
+                              )
+                    )
+
+        def probTargetIDTargetPresentIntegral(x1, x2) :
+            return _integrate.quad(probTargetIDTargetPresent,x1,x2)[0]
+
+        def probFillerIDTargetPresent(x) :
+            return normcdf(x,self.lureMean.value, self.lureSigma.value)**(self.lineupSize-2)*\
+                   normpdf(x,self.lureMean.value, self.lureSigma.value)*\
+                   normcdf(x,self.targetMean.value, self.targetSigma.value)*\
+                   (1-normcdf(float(c),
+                              self.mean( x,self.lureMean.value, self.lureSigma.value,self.targetMean.value,self.targetSigma.value,self.lineupSize),
+                              self.sigma(x,self.lureMean.value, self.lureSigma.value,self.targetMean.value,self.targetSigma.value,self.lineupSize)
+                              )
+                    )
+        # filler ID in target present lineups
+        def probFillerIDTargetPresentIntegral(x1, x2) :
+           return _integrate.quad(probFillerIDTargetPresent,x1,x2)[0]
+
+        def probFillerIDTargetAbsent(x) :
+            return normpdf(x,self.lureMean.value,self.lureSigma.value)*\
+                   normcdf(x,self.lureMean.value, self.lureSigma.value)**(self.lineupSize-1)*\
+                   (1-normcdf(float(c),
+                              self.mean( x,self.lureMean.value, self.lureSigma.value,self.lureMean.value,self.lureSigma.value,self.lineupSize),
+                              self.sigma(x,self.lureMean.value, self.lureSigma.value,self.lureMean.value,self.lureSigma.value,self.lineupSize)                              )
+                    )
+
+        # filler ID (suspect ID) in target absent lineups
+        def probFillerIDTargetAbsentIntegral(x1,x2) :
+           return _integrate.quad(probFillerIDTargetAbsent,x1,x2)[0]
+
+        prob_tpsid = probTargetIDTargetPresentIntegral(self.targetMean.value - self.targetSigma.value * self.integrationSigma ,
+                                                       self.targetMean.value + self.targetSigma.value * self.integrationSigma)
+        prob_tpfid = (self.lineupSize-1)*probFillerIDTargetPresentIntegral(self.lureMean.value - self.lureSigma.value * self.integrationSigma ,
+                                                                           self.lureMean.value + self.lureSigma.value * self.integrationSigma)
+        prob_tafid = self.lineupSize*probFillerIDTargetAbsentIntegral(self.lureMean.value - self.lureSigma.value * self.integrationSigma ,
+                                                                      self.lureMean.value + self.lureSigma.value * self.integrationSigma)
+
+        pred_tpsid = prob_tpsid*self.numberTPLineups
+        pred_tpfid = prob_tpfid*self.numberTPLineups
+        pred_tafid = prob_tafid*self.numberTALineups
+
+        return _np.array([pred_tafid, pred_tpsid, pred_tpfid])
+
+class ModelFitIntegration(ModelFit):
+    def __init__(self, processedData, debug=False, integrationSigma=8):
+        ModelFit.__init__(self, processedData, debug=debug, integrationSigma=integrationSigma)
+
+    def calculateCumulativeFrequencyForCriterion(self, c):
+        self.calculateWithinSigmas()
+
+        # target ID in target present lineups
+        def probTargetIDTargetPresent(x):
+            return normcdf(x, self.lureMean.value, self.lureSigma.value) ** (self.lineupSize - 1) * \
+                   normpdf(x,self.targetMean.value,self.targetSigma.value) * \
+                   (1 - normcdf(float(c), x, self.targetBetweenSigma.value))
+
+        def probTargetIDTargetPresentIntegral(x1, x2):
+            return _integrate.quad(probTargetIDTargetPresent, x1, x2)[0]
+
+        # filler ID in target present lineups
+        def probFillerIDTargetPresent(x):
+            return normcdf(x, self.lureMean.value, self.lureSigma.value) ** (self.lineupSize - 2) * \
+                   normpdf(x,self.lureMean.value,self.lureSigma.value) * \
+                   normcdf(x, self.targetMean.value, self.targetSigma.value) * \
+                   (1 - normcdf(float(c), x, self.targetBetweenSigma.value))
+
+        def probFillerIDTargetPresentIntegral(x1, x2):
+            return _integrate.quad(probFillerIDTargetPresent, x1, x2)[0]
+
+        def probFillerIDTargetAbsent(x):
+            return normpdf(x, self.lureMean.value, self.lureSigma.value) * \
+                   normcdf(x, self.lureMean.value,self.lureSigma.value) ** (self.lineupSize - 1) * \
+                   (1 - normcdf(float(c), x, self.targetBetweenSigma.value))
+
+        # filler ID (suspect ID) in target absent lineups
+        def probFillerIDTargetAbsentIntegral(x1, x2):
+            return _integrate.quad(probFillerIDTargetAbsent, x1, x2)[0]
+
+        prob_tpsid = probTargetIDTargetPresentIntegral(self.targetMean.value - self.targetSigma.value * self.integrationSigma,
+                                                       self.targetMean.value + self.targetSigma.value * self.integrationSigma)
+        prob_tpfid = (self.lineupSize - 1) * probFillerIDTargetPresentIntegral(self.lureMean.value - self.lureSigma.value * self.integrationSigma,
+                                                                               self.lureMean.value + self.lureSigma.value * self.integrationSigma)
+        prob_tafid = self.lineupSize * probFillerIDTargetAbsentIntegral(self.lureMean.value - self.lureSigma.value * self.integrationSigma,
+                                                                        self.lureMean.value + self.lureSigma.value * self.integrationSigma)
+
+        pred_tpsid = prob_tpsid * self.numberTPLineups
+        pred_tpfid = prob_tpfid * self.numberTPLineups
+        pred_tafid = prob_tafid * self.numberTALineups
+
+        return _np.array([pred_tafid, pred_tpsid, pred_tpfid])
