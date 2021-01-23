@@ -38,6 +38,7 @@ You will need a suitable python environment.
      * ``conda install matplotlib``
      * ``conda install openpyxl``
      * ``conda install xlrd``
+     * ``conda install numba``
 
 3. Start up python to test 
      * ``ipython3 --pylab``
