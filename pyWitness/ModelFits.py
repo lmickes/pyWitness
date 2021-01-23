@@ -151,8 +151,7 @@ class ModelFit :
     def setEqualVariance(self) :
         self.lureMean.value = 0.0
         self.lureMean.fixed = True
-        self.lureSigma.value = 1.0
-        self.lureSigma.fixed = True
+        self.lureSigma.set_equal(self.targetSigma)
         self.targetMean.value = 1.0
         self.targetSigma.value = 1.0
         self.lureBetweenSigma.set_equal(self.targetBetweenSigma)
@@ -487,8 +486,8 @@ class ModelFitIndependentObservation(ModelFit) :
         # target ID in target present lineups 
 
         def probTargetIDTargetPresent(x) :
-            return normcdf(x,self.lureMean.value, self.lureSigma.value)**(self.lineupSize-1)*\
-                   normpdf(x,self.targetMean.value, self.targetSigma.value)*\
+            return normcdf(x,self.lureMean.value, self.lureWithinSigma)**(self.lineupSize-1)*\
+                   normpdf(x,self.targetMean.value, self.targetWithinSigma)*\
                    (1-normcdf(float(c),x,self.targetBetweenSigma.value))
 
         def probTargetIDTargetPresentIntegral(x1, x2) :
@@ -496,17 +495,17 @@ class ModelFitIndependentObservation(ModelFit) :
 
         # filler ID in target present lineups
         def probFillerIDTargetPresent(x) : 
-            return normcdf(x,self.lureMean.value, self.lureSigma.value)**(self.lineupSize-2)*\
-                   normpdf(x,self.lureMean.value, self.lureSigma.value)*\
-                   normcdf(x,self.targetMean.value, self.targetSigma.value)*\
+            return normcdf(x,self.lureMean.value, self.lureWithinSigma)**(self.lineupSize-2)*\
+                   normpdf(x,self.lureMean.value, self.lureWithinSigma)*\
+                   normcdf(x,self.targetMean.value, self.targetWithinSigma)*\
                    (1-normcdf(float(c),x,self.targetBetweenSigma.value))
 
         def probFillerIDTargetPresentIntegral(x1, x2) :
             return _integrate.quad(probFillerIDTargetPresent,x1,x2)[0]
 
         def probFillerIDTargetAbsent(x) :
-            return normpdf(x,self.lureMean.value,self.lureSigma.value)*\
-                   normcdf(x,self.lureMean.value, self.lureSigma.value)**(self.lineupSize-1)*\
+            return normpdf(x,self.lureMean.value,self.lureWithinSigma)*\
+                   normcdf(x,self.lureMean.value, self.lureWithinSigma)**(self.lineupSize-1)*\
                    (1-normcdf(float(c),x,self.targetBetweenSigma.value))
 
         # filler ID (suspect ID) in target absent lineups 
@@ -601,32 +600,55 @@ class ModelFitIntegration(ModelFit):
     def __init__(self, processedData, debug=False, integrationSigma=8):
         ModelFit.__init__(self, processedData, debug=debug, integrationSigma=integrationSigma)
 
+    def mean(self,w, lm, ls, tm, ts, nlineup) :
+        tlm = truncatedMean(lm,ls,w)
+        ttm = truncatedMean(tm,ts,w)
+
+        return w + ttm + (nlineup-2)*tlm
+
+    def sigma(self,w, lm, ls, tm, ts, nlineup) :
+        tlv = truncatedVar(lm,ls,w)
+        ttv = truncatedVar(tm,ts,w)
+
+        return _np.sqrt(nlineup**2*self.targetBetweenSigma.value**2 + ttv + (nlineup-2)*tlv)
+
     def calculateCumulativeFrequencyForCriterion(self, c):
         self.calculateWithinSigmas()
 
         # target ID in target present lineups
         def probTargetIDTargetPresent(x):
-            return normcdf(x, self.lureMean.value, self.lureSigma.value) ** (self.lineupSize - 1) * \
-                   normpdf(x,self.targetMean.value,self.targetSigma.value) * \
-                   (1 - normcdf(float(c), x, self.targetBetweenSigma.value))
+            return normcdf(x,self.lureMean.value, self.lureSigma.value)**(self.lineupSize-1)*\
+                   normpdf(x,self.targetMean.value, self.targetSigma.value)*\
+                   (1-normcdf(float(c),
+                              self.mean( x,self.lureMean.value, self.lureSigma.value,self.lureMean.value,self.lureSigma.value,self.lineupSize),
+                              self.sigma(x,self.lureMean.value, self.lureSigma.value,self.lureMean.value,self.lureSigma.value,self.lineupSize)
+                              )
+                    )
 
         def probTargetIDTargetPresentIntegral(x1, x2):
             return _integrate.quad(probTargetIDTargetPresent, x1, x2)[0]
 
         # filler ID in target present lineups
         def probFillerIDTargetPresent(x):
-            return normcdf(x, self.lureMean.value, self.lureSigma.value) ** (self.lineupSize - 2) * \
-                   normpdf(x,self.lureMean.value,self.lureSigma.value) * \
-                   normcdf(x, self.targetMean.value, self.targetSigma.value) * \
-                   (1 - normcdf(float(c), x, self.targetBetweenSigma.value))
+            return normcdf(x,self.lureMean.value, self.lureSigma.value)**(self.lineupSize-2)*\
+                   normpdf(x,self.lureMean.value, self.lureSigma.value)*\
+                   normcdf(x,self.targetMean.value, self.targetSigma.value)*\
+                   (1-normcdf(float(c),
+                              self.mean( x,self.lureMean.value, self.lureSigma.value,self.targetMean.value,self.targetSigma.value,self.lineupSize),
+                              self.sigma(x,self.lureMean.value, self.lureSigma.value,self.targetMean.value,self.targetSigma.value,self.lineupSize)
+                              )
+                    )
 
         def probFillerIDTargetPresentIntegral(x1, x2):
             return _integrate.quad(probFillerIDTargetPresent, x1, x2)[0]
 
         def probFillerIDTargetAbsent(x):
-            return normpdf(x, self.lureMean.value, self.lureSigma.value) * \
-                   normcdf(x, self.lureMean.value,self.lureSigma.value) ** (self.lineupSize - 1) * \
-                   (1 - normcdf(float(c), x, self.targetBetweenSigma.value))
+            return normpdf(x,self.lureMean.value,self.lureSigma.value)*\
+                   normcdf(x,self.lureMean.value, self.lureSigma.value)**(self.lineupSize-1)*\
+                   (1-normcdf(float(c),
+                              self.mean( x,self.lureMean.value, self.lureSigma.value,self.lureMean.value,self.lureSigma.value,self.lineupSize),
+                              self.sigma(x,self.lureMean.value, self.lureSigma.value,self.lureMean.value,self.lureSigma.value,self.lineupSize)                              )
+                    )
 
         # filler ID (suspect ID) in target absent lineups
         def probFillerIDTargetAbsentIntegral(x1, x2):
