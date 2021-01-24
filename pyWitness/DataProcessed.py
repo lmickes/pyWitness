@@ -62,6 +62,14 @@ class DataProcessed :
                                               index=['targetLineup','responseType'], 
                                               aggfunc={'confidence':'count'})
 
+
+        # TODO understand why this is needed. At appears targetAbsent lineup suspectId appears even if 0 in pivot
+        try :
+            if self.data_pivot.loc['targetAbsent','suspectId'].sum() == 0 :
+                self.data_pivot.drop(index=('targetAbsent','suspectId'), inplace=True)
+        except :
+            pass
+
     def calculateRates(self, reverseConfidence = False) :
         ''' 
         Calculate cumulative rates from data_pivot. Result stored in data_rates
