@@ -295,7 +295,36 @@ class ModelFit :
         print(opt)
 
         # self.thresholds = opt['x'][0:self.numberConditions]
-        
+
+    def calculateConfidenceBootstrap(self, nBootstraps = 200) :
+        self.debug = False
+
+        chi2 = []
+        c1   = []
+
+        for i in range(0,nBootstraps,1) :
+            dr = self.processedData.dataRaw.resampleWithReplacement()
+            dp = dr.process()
+            self.processedData = dp
+            self.resetParameters()
+            self.targetBetweenSigma.value = 0.3
+
+            self.numberConditions = dp.numberConditions
+            self.lineupSize       = dp.lineupSize
+            self.numberTPLineups  = dp.numberTPLineups
+            self.numberTALineups  = dp.numberTALineups
+            self.pred_rates       = dp.data_rates.copy()  # copy the processed data rates for a prediction data frame
+            self.pred_rates.iloc[:, :] = 0.0
+            self.iteration = 0
+
+            chi2.append(self.chi2)
+            c1.append(self.c1.value)
+
+            self.fit()
+            self.printParameters()
+
+        return [chi2,c1]
+
     def plotModel(self, xlow = -5, xhigh = 5) : 
         x      = _np.linspace(xlow, xhigh,200) 
         lure   = _norm.pdf(x,self.lureMean.value, self.lureSigma.value)
