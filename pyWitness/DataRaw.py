@@ -195,10 +195,9 @@ class DataRaw :
 
 
     def collapseContinuousData(self, 
-                               column = "responseTime",
-                               bins = {"low":(0,1000), 
-                                       "medium":(1000,2000), 
-                                       "high":(2000,3000)} 
+                               column = "confidence",
+                               bins = [-1,60,80,100],
+                               labels= [1,2,3]
                                ) :
         '''
         Take values of column and rebin to new keys in bins
@@ -211,7 +210,14 @@ class DataRaw :
         :rtype:None 
         '''
 
-        pass
+        column_original = column+"_original"
+
+        self.data.rename(columns = {column:column_original}, inplace= True)
+
+        dataToBin = self.data[column_original]
+
+        dataBinned = _pandas.cut(dataToBin,bins,labels = labels)
+        self.data.insert(self.data.columns.get_loc(column_original)+1, column, dataBinned)
 
     def resampleWithReplacement(self) :
         ''' 
