@@ -6,7 +6,9 @@ from scipy.stats import norm as _norm
 import scipy.special as _sc
 import matplotlib.pyplot as _plt
 import random as _rand
+import math as _math
 from numba import jit
+
 
 @jit(nopython=True)
 def normpdf(x, mean, sigma) :
@@ -61,7 +63,11 @@ class Parameter(object) :
     def set_equal(self, other) : 
         self.other = other
         self.fixed = True
-        
+
+    def unset_equal(self):
+        self.other = None
+        self.fixed = False
+
     def __eq__(self, other) : 
         return self.value == other.value
             
@@ -86,7 +92,7 @@ class Parameter(object) :
             
         return self.name+" "+repr(self.value)+" ("+fixStr+")"
 
-class ModelFit :
+class ModelFit(object) :
     def __init__(self, processedData, debug = False, integrationSigma = 6) :
         self.processedData    = processedData 
         self.numberConditions = processedData.numberConditions
@@ -154,9 +160,10 @@ class ModelFit :
         self.lureSigma.set_equal(self.targetSigma)
         self.targetMean.value = 1.0
         self.targetSigma.value = 1.0
+        self.targetSigma.fixed = True
         self.lureBetweenSigma.set_equal(self.targetBetweenSigma)
-        self.targetBetweenSigma.fixed = False
-        self.targetBetweenSigma.value = 0.3
+        self.targetBetweenSigma.fixed = True
+        self.targetBetweenSigma.value = 0.0
         
     def calculateWithinSigmas(self) :
         self.lureWithinSigma    = _np.sqrt(self.lureSigma.value**2   - self.lureBetweenSigma.value**2)
@@ -167,7 +174,7 @@ class ModelFit :
         pred_c2 = self.calculateCumulativeFrequencyForCriterion(c2)
 
         return pred_c2 - pred_c1
-    
+
     def calculateFrequenciesForAllCriteria(self) :     
         pred_tafid_array = []
         pred_tpsid_array = []
@@ -230,8 +237,58 @@ class ModelFit :
         
         return iFreeParams
 
+    def generateTALineup(self):
+        memoryStrength = _np.random.normal(self.lureMean, self.targetMean, self.lineupSize)
+
+        return [-1,memoryStrength]
+
+    def generateTPLineup(self):
+        memoryStrength   = _np.random.normal(self.lureMean, self.targetMean, self.lineupSize)
+        lineupLocation = int(_math.floor(_np.random.rand()*self.lineupSize))
+        targetStrength = _np.random.normal(self.targetMean,self.targetSigma,1)
+
+        memoryStrength[lineupLocation] = targetStrength
+        return [lineupLocation,memoryStrength]
+
+    def generateFrequenciesForAllCriteria(self, mcScale = 20) :
+        totalLineups = self.numberTALineups + self.numberTPLineups
+
+        fractionTALineups = self.numberTALineups
+        totalMCLineups    = mcScale*totalLineups
+
+        pred_tafid_array = _np.zeros(self.numberConditions)
+        pred_tpsid_array = _np.zeros(self.numberConditions)
+        pred_tpfid_array = _np.zeros(self.numberConditions)
+
+        for i in range(totalMCLineups) :
+            r = _rand.random()
+            if r < fractionTALineups :
+                memoryStrength = self.generateTALineup()
+            else :
+                memoryStrength = self.generateTPLineup()
+
+
+            self.monteCarloDecision(pred_tafid_array,
+                                    pred_tpsid_array,
+                                    pred_tpfid_array,
+                                    memoryStrength)
+
+        pred_tasid_array = pred_tafid_array / self.lineupSize
+        pred_tarid = self.numberTALineups - pred_tafid_array.sum()
+        pred_tprid = self.numberTPLineups - pred_tpsid_array.sum() - pred_tpfid_array.sum()
+
+        return [pred_tarid,
+                pred_tasid_array,
+                pred_tafid_array,
+                pred_tprid,
+                pred_tpsid_array,
+                pred_tpfid_array]
+
+    def monteCarloDecision(self,pred_tafid_array, pred_tpsid_array, pred_tpfid_array, memoryStrength) :
+        pass
+
     def calculateChi2(self, params) : 
-        
+
         freeParams = self.freeParameterList()
         
         for i in range(0,len(freeParams),1) : 
@@ -317,11 +374,11 @@ class ModelFit :
             self.pred_rates.iloc[:, :] = 0.0
             self.iteration = 0
 
-            chi2.append(self.chi2)
-            c1.append(self.c1.value)
-
             self.fit()
             self.printParameters()
+
+            chi2.append(self.chi2)
+            c1.append(self.c1.value)
 
         return [chi2,c1]
 
@@ -510,6 +567,15 @@ class ModelFitIndependentObservation(ModelFit) :
     def __init__(self, processedData, debug = False, integrationSigma = 8) :
         ModelFit.__init__(self,processedData, debug = debug, integrationSigma = integrationSigma)
 
+    def setEqualVariance(self) :
+        super().setEqualVariance()
+
+        self.targetBetweenSigma.fixed = False
+        self.targetBetweenSigma.value = 0.3
+
+    def monteCarloDecision(self,pred_tafid_array, pred_tpsid_array, pred_tpfid_array, memoryStrength) :
+        pass
+
     def calculateCumulativeFrequencyForCriterion(self, c) :
 
         self.calculateWithinSigmas()
@@ -565,7 +631,7 @@ class ModelFitBestRest(ModelFit):
         tlm = truncatedMean(lm, ls, w)
         ttm = truncatedMean(tm, ts, w)
 
-        return w - ( (nlineup-1)*tlm + ttm )/(nlineup-1)
+        return w - ( (nlineup-2)*tlm + ttm )/(nlineup-1)
 
     def sigma(self, w, lm, ls, tm, ts, nlineup):
         tlv = truncatedVar(lm, ls, w)
