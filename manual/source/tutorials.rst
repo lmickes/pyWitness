@@ -112,8 +112,8 @@ Plotting CAC curves
 Plotting RAC curves
 -------------------
 
-Collapsing the confidence binning
----------------------------------
+Collapsing the catagorical data
+-------------------------------
 
 The example in this tutorial as 11 confidence levels (0, 10, 20, 30, 40, 50, 60, 70, 80, 90 and 100). Typically categorical confidence levels need to be binned or collapsed. This is best performed on the raw data before calling ``process()``. This is done with the ``collapseCategoricalData`` method of ``DataRaw``. This is shown in example below, where the new bins are (0-60 map to 30, 70-80 to 75 and 90-100 to 95).
 
@@ -136,6 +136,43 @@ The example in this tutorial as 11 confidence levels (0, 10, 20, 30, 40, 50, 60,
 .. note:: 
    If you mess up the ``collapseCategoricalData`` the data might be inconsistent. To start with the original data so call ``collapseCategoricalData`` with ``reload=True``
 
+Collapsing (binning) continuous data
+------------------------------------
+
+Some data are not catagories for but a continuous variable.
+
+.. code-block :: python
+   :linenos:
+   :emphasize-lines: 3
+
+   import pyWitness
+   dr = pyWitness.DataRaw("test1.csv")
+   dr.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels= [1,2,3])
+   dp = dr.process()
+   dp.plotROC()
+
+The ``confidence`` column is relabelled to ``confidence-original`` and ``confidence`` is filled with labels. The mean and
+standard deviation is computed and filled in ``confidence-mean`` and ``confidence-std``. Here is an example of the raw data
+(``dr.data``) after binning.
+
+.. code-block :: console
+
+         Unnamed: 0  participantId  lineupSize   targetLineup responseType  confidence_original confidence  responseTime
+   0              0              1           6   targetAbsent     fillerId                   60          1          8330
+   1              1              2           6   targetAbsent     fillerId                   70          2         27624
+   2              2              3           6  targetPresent    suspectId                   60          1          3140
+   3              3              4           6   targetAbsent     rejectId                   80          2          8833
+   4              4              5           6  targetPresent    suspectId                   70          2          9810
+   ...          ...            ...         ...            ...          ...                  ...        ...           ...
+   1041        1041           1042           6  targetPresent    suspectId                   70          2         24910
+   1042        1042           1043           6  targetPresent    suspectId                   70          2         15683
+   1043        1043           1044           6   targetAbsent     fillerId                   70          2          1175
+   1044        1044           1045           6  targetPresent    suspectId                   70          2          2308
+   1045        1045           1046           6   targetAbsent     fillerId                   90          3         18185
+
+.. warning::
+   The confidence needs to be a numerical value as ROC analysis requires a value which can be ordered.
+
 Calculating pAUC and performing statistical tests
 -------------------------------------------------
 
@@ -146,14 +183,11 @@ There are many models available in pyWitness. We'll start with the independent o
 
 .. code-block :: python  
    :linenos: 
-   :emphasize-lines: 8-10
+   :emphasize-lines: 5-7
 
    import pyWitness
    dr = pyWitness.DataRaw("test1.csv")
-   dr.collapseCategoricalData(column='confidence',
-                              map={0: 30, 10: 30, 20: 30, 30: 30, 40: 30, 50: 30, 60: 30, 
-                                   70: 75, 80: 75, 
-                                   90: 95, 100: 95})
+   dr.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels= [1,2,3])
    dp = dr.process()
    mf = pyWitness.ModelFitIndependentObservation(dp)
    mf.setEqualVariance()
@@ -163,14 +197,11 @@ Line 9 sets the parameters for the fit. To display the fit parameters there is a
 
 .. code-block :: python
    :linenos:
-   :emphasize-lines: 9,12,15
+   :emphasize-lines: 6,9,12
 
    import pyWitness
    dr = pyWitness.DataRaw("test1.csv")
-   dr.collapseCategoricalData(column='confidence',
-                              map={0: 30, 10: 30, 20: 30, 30: 30, 40: 30, 50: 30, 60: 30,
-                                   70: 75, 80: 75,
-                                   90: 95, 100: 95})
+   dr.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels= [1,2,3])
    dp = dr.process()
    mf = pyWitness.ModelFitIndependentObservation(dp)
    mf.printParameters()
@@ -233,7 +264,7 @@ After running the fit the parameters are updated so the output of line 15 in the
 
 There lots of ways to control the model
 
-.. list-table:: Parameter control
+.. list-table:: Parameter control examples
    :widths: 70 70
    :header-rows: 1
 
@@ -249,6 +280,37 @@ There lots of ways to control the model
      - Locks ``c1`` and ``c2`` together
    * - ``mf.lureBetweenSigma.unset_equal()``
      - Release the linking of lureBetweenSigma and targetBetweenSigma
+
+There are multiple fits available and they all have the same interface they differ in the construction line
+
+.. code-block :: python
+   :linenos:
+   :emphasize-lines: 5-8
+
+   dr = pyWitness.DataRaw("test1.csv")
+   dr.collapseContinuousData(column="confidence")
+   dp = dr.process()
+
+   mf_io = pyWitness.ModelFitIndependentObservation(dp)
+   mf_br = pyWitness.ModelFitBestRest(dp)
+   mf_en = pyWitness.ModelFitEnsemble(dp)
+   mf_in = pyWitness.ModelFitIntegration(dp)
+
+Plotting fit and models
+-----------------------
+
+It is important to understand the performance of a given particular fit.
+
+.. code-block :: python
+
+   import pyWitness
+   dr = pyWitness.DataRaw("test1.csv")
+   dr.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels= [1,2,3])
+   dp = dr.process()
+   mf = pyWitness.ModelFitIndependentObservation(dp)
+   mf.setEqualVariance()
+   mf.fit()
+
 
 
 Writing results to file 

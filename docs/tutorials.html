@@ -94,13 +94,16 @@
 <li class="toctree-l2"><a class="reference internal" href="#plotting-roc-curves">Plotting ROC curves</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#plotting-cac-curves">Plotting CAC curves</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#plotting-rac-curves">Plotting RAC curves</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#collapsing-the-confidence-binning">Collapsing the confidence binning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#collapsing-the-catagorical-data">Collapsing the catagorical data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#collapsing-binning-continuous-data">Collapsing (binning) continuous data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#calculating-pauc-and-performing-statistical-tests">Calculating pAUC and performing statistical tests</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#fitting-signal-detection-models-to-data">Fitting signal detection models to data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#plotting-fit-and-models">Plotting fit and models</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#writing-results-to-file">Writing results to file</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials_adv.html">Advanced tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials_dev.html">Developer tutorials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="moduledocs.html">Module Contents</a></li>
 </ul>
 
@@ -276,8 +279,8 @@ Fitting signal detection models to data</p>
 <div class="section" id="plotting-rac-curves">
 <h2>Plotting RAC curves<a class="headerlink" href="#plotting-rac-curves" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="collapsing-the-confidence-binning">
-<h2>Collapsing the confidence binning<a class="headerlink" href="#collapsing-the-confidence-binning" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="collapsing-the-catagorical-data">
+<h2>Collapsing the catagorical data<a class="headerlink" href="#collapsing-the-catagorical-data" title="Permalink to this headline">¶</a></h2>
 <p>The example in this tutorial as 11 confidence levels (0, 10, 20, 30, 40, 50, 60, 70, 80, 90 and 100). Typically categorical confidence levels need to be binned or collapsed. This is best performed on the raw data before calling <code class="docutils literal notranslate"><span class="pre">process()</span></code>. This is done with the <code class="docutils literal notranslate"><span class="pre">collapseCategoricalData</span></code> method of <code class="docutils literal notranslate"><span class="pre">DataRaw</span></code>. This is shown in example below, where the new bins are (0-60 map to 30, 70-80 to 75 and 90-100 to 95).</p>
 <div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
@@ -304,6 +307,42 @@ Fitting signal detection models to data</p>
 <p class="last">If you mess up the <code class="docutils literal notranslate"><span class="pre">collapseCategoricalData</span></code> the data might be inconsistent. To start with the original data so call <code class="docutils literal notranslate"><span class="pre">collapseCategoricalData</span></code> with <code class="docutils literal notranslate"><span class="pre">reload=True</span></code></p>
 </div>
 </div>
+<div class="section" id="collapsing-binning-continuous-data">
+<h2>Collapsing (binning) continuous data<a class="headerlink" href="#collapsing-binning-continuous-data" title="Permalink to this headline">¶</a></h2>
+<p>Some data are not catagories for but a continuous variable.</p>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
+<span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test1.csv&quot;</span><span class="p">)</span>
+<span class="hll"><span class="n">dr</span><span class="o">.</span><span class="n">collapseContinuousData</span><span class="p">(</span><span class="n">column</span> <span class="o">=</span> <span class="s2">&quot;confidence&quot;</span><span class="p">,</span><span class="n">bins</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">60</span><span class="p">,</span><span class="mi">80</span><span class="p">,</span><span class="mi">100</span><span class="p">],</span><span class="n">labels</span><span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+</span><span class="n">dp</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
+<span class="n">dp</span><span class="o">.</span><span class="n">plotROC</span><span class="p">()</span>
+</pre></div>
+</td></tr></table></div>
+<p>The <code class="docutils literal notranslate"><span class="pre">confidence</span></code> column is relabelled to <code class="docutils literal notranslate"><span class="pre">confidence-original</span></code> and <code class="docutils literal notranslate"><span class="pre">confidence</span></code> is filled with labels. The mean and
+standard deviation is computed and filled in <code class="docutils literal notranslate"><span class="pre">confidence-mean</span></code> and <code class="docutils literal notranslate"><span class="pre">confidence-std</span></code>. Here is an example of the raw data
+(<code class="docutils literal notranslate"><span class="pre">dr.data</span></code>) after binning.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">      Unnamed: 0  participantId  lineupSize   targetLineup responseType  confidence_original confidence  responseTime</span>
+<span class="go">0              0              1           6   targetAbsent     fillerId                   60          1          8330</span>
+<span class="go">1              1              2           6   targetAbsent     fillerId                   70          2         27624</span>
+<span class="go">2              2              3           6  targetPresent    suspectId                   60          1          3140</span>
+<span class="go">3              3              4           6   targetAbsent     rejectId                   80          2          8833</span>
+<span class="go">4              4              5           6  targetPresent    suspectId                   70          2          9810</span>
+<span class="go">...          ...            ...         ...            ...          ...                  ...        ...           ...</span>
+<span class="go">1041        1041           1042           6  targetPresent    suspectId                   70          2         24910</span>
+<span class="go">1042        1042           1043           6  targetPresent    suspectId                   70          2         15683</span>
+<span class="go">1043        1043           1044           6   targetAbsent     fillerId                   70          2          1175</span>
+<span class="go">1044        1044           1045           6  targetPresent    suspectId                   70          2          2308</span>
+<span class="go">1045        1045           1046           6   targetAbsent     fillerId                   90          3         18185</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The confidence needs to be a numerical value as ROC analysis requires a value which can be ordered.</p>
+</div>
+</div>
 <div class="section" id="calculating-pauc-and-performing-statistical-tests">
 <h2>Calculating pAUC and performing statistical tests<a class="headerlink" href="#calculating-pauc-and-performing-statistical-tests" title="Permalink to this headline">¶</a></h2>
 </div>
@@ -316,19 +355,148 @@ Fitting signal detection models to data</p>
 4
 5
 6
-7
-8
-9</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
 <span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test1.csv&quot;</span><span class="p">)</span>
-<span class="n">dr</span><span class="o">.</span><span class="n">collapseCategoricalData</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s1">&#39;confidence&#39;</span><span class="p">,</span>
-                           <span class="nb">map</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">10</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">20</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">30</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">50</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">60</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span>
-                                <span class="mi">70</span><span class="p">:</span> <span class="mi">75</span><span class="p">,</span> <span class="mi">80</span><span class="p">:</span> <span class="mi">75</span><span class="p">,</span>
-                                <span class="mi">90</span><span class="p">:</span> <span class="mi">95</span><span class="p">,</span> <span class="mi">100</span><span class="p">:</span> <span class="mi">95</span><span class="p">})</span>
+<span class="n">dr</span><span class="o">.</span><span class="n">collapseContinuousData</span><span class="p">(</span><span class="n">column</span> <span class="o">=</span> <span class="s2">&quot;confidence&quot;</span><span class="p">,</span><span class="n">bins</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">60</span><span class="p">,</span><span class="mi">80</span><span class="p">,</span><span class="mi">100</span><span class="p">],</span><span class="n">labels</span><span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
 <span class="n">dp</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
 <span class="hll"><span class="n">mf</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">ModelFitIndependentObservation</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span>
+</span><span class="hll"><span class="n">mf</span><span class="o">.</span><span class="n">setEqualVariance</span><span class="p">()</span>
 </span><span class="hll"><span class="n">mf</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </span></pre></div>
 </td></tr></table></div>
+<p>Line 9 sets the parameters for the fit. To display the fit parameters there is a function printParameters so</p>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
+<span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test1.csv&quot;</span><span class="p">)</span>
+<span class="n">dr</span><span class="o">.</span><span class="n">collapseContinuousData</span><span class="p">(</span><span class="n">column</span> <span class="o">=</span> <span class="s2">&quot;confidence&quot;</span><span class="p">,</span><span class="n">bins</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">60</span><span class="p">,</span><span class="mi">80</span><span class="p">,</span><span class="mi">100</span><span class="p">],</span><span class="n">labels</span><span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+<span class="n">dp</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
+<span class="n">mf</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">ModelFitIndependentObservation</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span>
+<span class="hll"><span class="n">mf</span><span class="o">.</span><span class="n">printParameters</span><span class="p">()</span>
+</span>
+<span class="n">mf</span><span class="o">.</span><span class="n">setEqualVariance</span><span class="p">()</span>
+<span class="hll"><span class="n">mf</span><span class="o">.</span><span class="n">printParameters</span><span class="p">()</span>
+</span>
+<span class="n">mf</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="hll"><span class="n">mf</span><span class="o">.</span><span class="n">printParameters</span><span class="p">()</span>
+</span></pre></div>
+</td></tr></table></div>
+<p>After creating the <code class="docutils literal notranslate"><span class="pre">mf</span></code> object (line 9) the parameters are at their default values and free</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">lureMean 0.0 (free)</span>
+<span class="go">lureSigma 1.0 (free)</span>
+<span class="go">targetMean 1.0 (free)</span>
+<span class="go">targetSigma 1.0 (free)</span>
+<span class="go">lureBetweenSigma 0.0 (free)</span>
+<span class="go">targetBetweenSigma 0.0 (free)</span>
+<span class="go">c1 1.0 (free)</span>
+<span class="go">c2 1.5 (free)</span>
+<span class="go">c3 2.0 (free)</span>
+</pre></div>
+</div>
+<p>Typically you would want to control the fit parameters. <code class="docutils literal notranslate"><span class="pre">setEqualVariance</span></code> sets some default model which is
+an appropriate start so line 12 yields</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">lureMean 0.0 (fixed)</span>
+<span class="go">lureSigma 1.0 (fixed targetSigma)</span>
+<span class="go">targetMean 1.0 (free)</span>
+<span class="go">targetSigma 1.0 (fixed)</span>
+<span class="go">lureBetweenSigma 0.3 (fixed targetBetweenSigma)</span>
+<span class="go">targetBetweenSigma 0.3 (free)</span>
+<span class="go">c1 1.0 (free)</span>
+<span class="go">c2 1.5 (free)</span>
+<span class="go">c3 2.0 (free)</span>
+</pre></div>
+</div>
+<p>Comparing these two fit parameters settings</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">lureSigma</span></code> is forced to be equal to <code class="docutils literal notranslate"><span class="pre">targetSigma</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">targetSigma</span></code> is fixed to its current value</li>
+<li><code class="docutils literal notranslate"><span class="pre">lureBetweenSigma</span></code> is fixed to <code class="docutils literal notranslate"><span class="pre">targetBetweenSigma</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">targetBetweenSigma</span></code> is fixed to its current value</li>
+</ul>
+</div></blockquote>
+<p>After running the fit the parameters are updated so the output of line 15 in the code example gives</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">lureMean 0.0 (fixed)</span>
+<span class="go">lureSigma 1.0 (fixed targetSigma)</span>
+<span class="go">targetMean 1.6644667559751338 (free)</span>
+<span class="go">targetSigma 1.0 (fixed)</span>
+<span class="go">lureBetweenSigma 0.47633248791026106 (fixed targetBetweenSigma)</span>
+<span class="go">targetBetweenSigma 0.47633248791026106 (free)</span>
+<span class="go">c1 1.3610178212548698 (free)</span>
+<span class="go">c2 1.8627517728791307 (free)</span>
+<span class="go">c3 2.5659741783090464 (free)</span>
+</pre></div>
+</div>
+<p>There lots of ways to control the model</p>
+<table border="1" class="colwidths-given docutils" id="id2">
+<caption><span class="caption-text">Parameter control examples</span><a class="headerlink" href="#id2" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Command</th>
+<th class="head">Notes</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">mf.lureMean.value</span> <span class="pre">=</span> <span class="pre">-0.1</span></code></td>
+<td>Sets the lure mean parameter to -0.1</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">mf.targetMean.fixed</span> <span class="pre">=</span> <span class="pre">True</span></code></td>
+<td>Fixed the parameter so it cannot change during a fit</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">mf.lureMean.fixed</span> <span class="pre">=</span> <span class="pre">False</span></code></td>
+<td>Unfixes the parameter so it will be free in a fit</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">mf.c1.set_equal(mf.c2)</span></code></td>
+<td>Locks <code class="docutils literal notranslate"><span class="pre">c1</span></code> and <code class="docutils literal notranslate"><span class="pre">c2</span></code> together</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">mf.lureBetweenSigma.unset_equal()</span></code></td>
+<td>Release the linking of lureBetweenSigma and targetBetweenSigma</td>
+</tr>
+</tbody>
+</table>
+<p>There are multiple fits available and they all have the same interface they differ in the construction line</p>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test1.csv&quot;</span><span class="p">)</span>
+<span class="n">dr</span><span class="o">.</span><span class="n">collapseContinuousData</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s2">&quot;confidence&quot;</span><span class="p">)</span>
+<span class="n">dp</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
+
+<span class="hll"><span class="n">mf_io</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">ModelFitIndependentObservation</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span>
+</span><span class="hll"><span class="n">mf_br</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">ModelFitBestRest</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span>
+</span><span class="hll"><span class="n">mf_en</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">ModelFitEnsemble</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span>
+</span><span class="hll"><span class="n">mf_in</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">ModelFitIntegration</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span>
+</span></pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="plotting-fit-and-models">
+<h2>Plotting fit and models<a class="headerlink" href="#plotting-fit-and-models" title="Permalink to this headline">¶</a></h2>
+<p>It is important to understand the performance of a given particular fit.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
+<span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test1.csv&quot;</span><span class="p">)</span>
+<span class="n">dr</span><span class="o">.</span><span class="n">collapseContinuousData</span><span class="p">(</span><span class="n">column</span> <span class="o">=</span> <span class="s2">&quot;confidence&quot;</span><span class="p">,</span><span class="n">bins</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">60</span><span class="p">,</span><span class="mi">80</span><span class="p">,</span><span class="mi">100</span><span class="p">],</span><span class="n">labels</span><span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+<span class="n">dp</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
+<span class="n">mf</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">ModelFitIndependentObservation</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span>
+<span class="n">mf</span><span class="o">.</span><span class="n">setEqualVariance</span><span class="p">()</span>
+<span class="n">mf</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="writing-results-to-file">
 <h2>Writing results to file<a class="headerlink" href="#writing-results-to-file" title="Permalink to this headline">¶</a></h2>
@@ -387,7 +555,7 @@ Fitting signal detection models to data</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright Royal Holloway, University of London 2020 and University of Bristol 2020
-      Last updated on Dec 30, 2020.
+      Last updated on Jan 30, 2021.
 
     </p>
   </div>

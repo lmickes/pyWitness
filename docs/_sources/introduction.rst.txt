@@ -89,7 +89,7 @@ Minimal example data file for an experiment
    :widths: 35 35 35 35 35
    :header-rows: 1
 
-   * - participantNumber 
+   * - participantId
      - lineupSize
      - targetLineup
      - responseType

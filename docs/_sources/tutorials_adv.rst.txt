@@ -1,6 +1,10 @@
 Advanced tutorials
 ==================
 
+Bootstrapping uncertainties/confidence limits
+---------------------------------------------
+
+
 Loading raw data excel format
 -----------------------------
 
@@ -168,10 +172,8 @@ A good example is collapsing data, one might want to check the effect of rebinni
    dr1 = pyWitness.DataRaw("test1.csv")
    dr2 = pyWitness.DataRaw("test1.csv")
    
-   dr2.collapseCatagoricalData(column='confidence',
-                               map={0: 30, 10: 30, 20: 30, 30: 30, 40: 30, 50: 30, 60: 30, 
-                                    70: 75, 80: 75, 
-                                    90: 95, 100: 95})
+   dr2.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels= [1,2,3])
+
    dp1 = dr1.process()
    dp2 = dr2.process()
 
@@ -193,10 +195,8 @@ To make a legend the plots need to be given a label. So this example is the same
    dr1 = pyWitness.DataRaw("test1.csv")
    dr2 = pyWitness.DataRaw("test1.csv")
    
-   dr2.collapseCatagoricalData(column='confidence',
-                               map={0: 30, 10: 30, 20: 30, 30: 30, 40: 30, 50: 30, 60: 30, 
-                                    70: 75, 80: 75, 
-                                    90: 95, 100: 95})
+   dr2.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels= [1,2,3])
+
    dp1 = dr1.process()
    dp2 = dr2.process()
 

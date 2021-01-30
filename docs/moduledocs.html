@@ -29,7 +29,7 @@
   <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Advanced tutorials" href="tutorials_adv.html" /> 
+    <link rel="prev" title="Developer tutorials" href="tutorials_dev.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -89,6 +89,7 @@
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials_adv.html">Advanced tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials_dev.html">Developer tutorials</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Module Contents</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#dataraw">DataRaw</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#dataprocessed">DataProcessed</a></li>
@@ -382,7 +383,7 @@ may be incomplete.</p>
 
 <dl class="method">
 <dt id="pyWitness.DataRaw.collapseContinuousData">
-<code class="descname">collapseContinuousData</code><span class="sig-paren">(</span><em>column='responseTime'</em>, <em>bins={'high': (2000</em>, <em>3000)</em>, <em>'low': (0</em>, <em>1000)</em>, <em>'medium': (1000</em>, <em>2000)}</em><span class="sig-paren">)</span><a class="headerlink" href="#pyWitness.DataRaw.collapseContinuousData" title="Permalink to this definition">¶</a></dt>
+<code class="descname">collapseContinuousData</code><span class="sig-paren">(</span><em>column='confidence', bins=[-1, 60, 80, 100], labels=[1, 2, 3]</em><span class="sig-paren">)</span><a class="headerlink" href="#pyWitness.DataRaw.collapseContinuousData" title="Permalink to this definition">¶</a></dt>
 <dd><p>Take values of column and rebin to new keys in bins</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -709,8 +710,18 @@ are also plotted.</p>
 <h2>ModelFit<a class="headerlink" href="#modelfit" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="pyWitness.ModelFitIndependentObservation">
-<em class="property">class </em><code class="descclassname">pyWitness.</code><code class="descname">ModelFitIndependentObservation</code><span class="sig-paren">(</span><em>processedData</em>, <em>debug=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pyWitness.ModelFitIndependentObservation" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyWitness.</code><code class="descname">ModelFitIndependentObservation</code><span class="sig-paren">(</span><em>processedData</em>, <em>debug=False</em>, <em>integrationSigma=8</em><span class="sig-paren">)</span><a class="headerlink" href="#pyWitness.ModelFitIndependentObservation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pyWitness.ModelFits.ModelFit</span></code></p>
+<dl class="method">
+<dt id="pyWitness.ModelFitIndependentObservation.setEqualVariance">
+<code class="descname">setEqualVariance</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyWitness.ModelFitIndependentObservation.setEqualVariance" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyWitness.ModelFitIndependentObservation.monteCarloDecision">
+<code class="descname">monteCarloDecision</code><span class="sig-paren">(</span><em>pred_tafid_array</em>, <em>pred_tpsid_array</em>, <em>pred_tpfid_array</em>, <em>memoryStrength</em><span class="sig-paren">)</span><a class="headerlink" href="#pyWitness.ModelFitIndependentObservation.monteCarloDecision" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="method">
 <dt id="pyWitness.ModelFitIndependentObservation.calculateCumulativeFrequencyForCriterion">
 <code class="descname">calculateCumulativeFrequencyForCriterion</code><span class="sig-paren">(</span><em>c</em><span class="sig-paren">)</span><a class="headerlink" href="#pyWitness.ModelFitIndependentObservation.calculateCumulativeFrequencyForCriterion" title="Permalink to this definition">¶</a></dt>
@@ -730,7 +741,7 @@ are also plotted.</p>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
       
-        <a href="tutorials_adv.html" class="btn btn-neutral" title="Advanced tutorials" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="tutorials_dev.html" class="btn btn-neutral" title="Developer tutorials" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -740,7 +751,7 @@ are also plotted.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright Royal Holloway, University of London 2020 and University of Bristol 2020
-      Last updated on Jan 04, 2021.
+      Last updated on Jan 30, 2021.
 
     </p>
   </div>
