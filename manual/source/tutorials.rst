@@ -146,7 +146,7 @@ There are many models available in pyWitness. We'll start with the independent o
 
 .. code-block :: python  
    :linenos: 
-   :emphasize-lines: 8-9
+   :emphasize-lines: 8-10
 
    import pyWitness
    dr = pyWitness.DataRaw("test1.csv")
@@ -155,8 +155,100 @@ There are many models available in pyWitness. We'll start with the independent o
                                    70: 75, 80: 75, 
                                    90: 95, 100: 95})
    dp = dr.process()
-   mf = pyWitness.ModelFitIndependentObservation(dp)					        
+   mf = pyWitness.ModelFitIndependentObservation(dp)
+   mf.setEqualVariance()
    mf.fit()
+
+Line 9 sets the parameters for the fit. To display the fit parameters there is a function printParameters so
+
+.. code-block :: python
+   :linenos:
+   :emphasize-lines: 9,12,15
+
+   import pyWitness
+   dr = pyWitness.DataRaw("test1.csv")
+   dr.collapseCategoricalData(column='confidence',
+                              map={0: 30, 10: 30, 20: 30, 30: 30, 40: 30, 50: 30, 60: 30,
+                                   70: 75, 80: 75,
+                                   90: 95, 100: 95})
+   dp = dr.process()
+   mf = pyWitness.ModelFitIndependentObservation(dp)
+   mf.printParameters()
+
+   mf.setEqualVariance()
+   mf.printParameters()
+
+   mf.fit()
+   mf.printParameters()
+
+After creating the ``mf`` object (line 9) the parameters are at their default values and free
+
+.. code-block :: console
+
+   lureMean 0.0 (free)
+   lureSigma 1.0 (free)
+   targetMean 1.0 (free)
+   targetSigma 1.0 (free)
+   lureBetweenSigma 0.0 (free)
+   targetBetweenSigma 0.0 (free)
+   c1 1.0 (free)
+   c2 1.5 (free)
+   c3 2.0 (free)
+
+Typically you would want to control the fit parameters. ``setEqualVariance`` sets some default model which is
+an appropriate start so line 12 yields
+
+.. code-block :: console
+
+   lureMean 0.0 (fixed)
+   lureSigma 1.0 (fixed targetSigma)
+   targetMean 1.0 (free)
+   targetSigma 1.0 (fixed)
+   lureBetweenSigma 0.3 (fixed targetBetweenSigma)
+   targetBetweenSigma 0.3 (free)
+   c1 1.0 (free)
+   c2 1.5 (free)
+   c3 2.0 (free)
+
+Comparing these two fit parameters settings
+
+   * ``lureSigma`` is forced to be equal to ``targetSigma``
+   * ``targetSigma`` is fixed to its current value
+   * ``lureBetweenSigma`` is fixed to ``targetBetweenSigma``
+   * ``targetBetweenSigma`` is fixed to its current value
+
+After running the fit the parameters are updated so the output of line 15 in the code example gives
+
+.. code-block :: console
+
+   lureMean 0.0 (fixed)
+   lureSigma 1.0 (fixed targetSigma)
+   targetMean 1.6644667559751338 (free)
+   targetSigma 1.0 (fixed)
+   lureBetweenSigma 0.47633248791026106 (fixed targetBetweenSigma)
+   targetBetweenSigma 0.47633248791026106 (free)
+   c1 1.3610178212548698 (free)
+   c2 1.8627517728791307 (free)
+   c3 2.5659741783090464 (free)
+
+There lots of ways to control the model
+
+.. list-table:: Parameter control
+   :widths: 70 70
+   :header-rows: 1
+
+   * - Command
+     - Notes
+   * - ``mf.lureMean.value = -0.1``
+     - Sets the lure mean parameter to -0.1
+   * - ``mf.targetMean.fixed = True``
+     - Fixed the parameter so it cannot change during a fit
+   * - ``mf.lureMean.fixed = False``
+     - Unfixes the parameter so it will be free in a fit
+   * - ``mf.c1.set_equal(mf.c2)``
+     - Locks ``c1`` and ``c2`` together
+   * - ``mf.lureBetweenSigma.unset_equal()``
+     - Release the linking of lureBetweenSigma and targetBetweenSigma
 
 
 Writing results to file 
