@@ -308,7 +308,7 @@ class ModelFit(object) :
         chi2_tarid = 0
         chi2_tprid = 0
         for i in range(0,self.numberConditions) :
-            chi2_tafid = chi2_tafid + (self.processedData.data_pivot.loc['targetAbsent' ,'fillerId'][i]  - pred_tafid_array[i])**2 / abs(pred_tafid_array[i])
+            chi2_tafid = chi2_tafid + (self.processedData.data_pivot.loc['targetAbsent' ,'fillerId'][i]  - pred_tafid_array[i])**2 / abs(pred_tafid_array[i]) # No for showups (TODO)
             chi2_tpsid = chi2_tpsid + (self.processedData.data_pivot.loc['targetPresent','suspectId'][i] - pred_tpsid_array[i])**2 / abs(pred_tpsid_array[i])
             chi2_tpfid = chi2_tpfid + (self.processedData.data_pivot.loc['targetPresent','fillerId'][i]  - pred_tpfid_array[i])**2 / abs(pred_tpfid_array[i]) # No for showups (TODO)
 

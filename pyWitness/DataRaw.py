@@ -56,6 +56,8 @@ class DataRaw :
             self.loadData()
             self.renameRawData()
 
+        self.collapseContinuous = False
+
     def loadData(self) :
         '''
         Load data from file using panda functions
@@ -210,6 +212,18 @@ class DataRaw :
         :rtype:None 
         '''
 
+        if self.collapseContinuous :
+            raise Exception("Already binned confidence")
+
+        # If there are no labels generate them
+        if labels == None :
+            labels = range(1,len(bins))
+
+        self.collapseContinuous       = True
+        self.collapseContinuousColumn = column
+        self.collapseContinuousBins   = bins
+        self.collapseContinuousLabels = labels
+
         column_original = column+"_original"
 
         self.data.rename(columns = {column:column_original}, inplace= True)
@@ -226,7 +240,13 @@ class DataRaw :
  
         data_copy = DataRaw('',self.excelSheet, self.dataMapping)        
         data_copy.data = self.data.sample(n = self.data.shape[0],replace = True)
-        
+
+        if self.collapseContinuous :
+            data_copy.collapseContinuous       = self.collapseContinuous
+            data_copy.collapseContinuousColumn = self.collapseContinuousColumn
+            data_copy.collapseContinuousBins   = self.collapseContinuousBins
+            data_copy.collapseContinuousLabels = self.collapseContinuousLabels
+
         return data_copy
 
     def process(self, column = '', condition = '', reverseConfidence = False) :
@@ -242,6 +262,10 @@ class DataRaw :
         :rtype: DataProcessed
         '''
 
+
+        self.processColumn = column
+        self.processCondition = condition
+        self.processReverseConfidence = reverseConfidence
 
         if column != '' :
             self.dataSelected = self.data[self.data[column] == condition]

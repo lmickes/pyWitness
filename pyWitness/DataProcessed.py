@@ -44,6 +44,7 @@ class DataProcessed :
             self.numberTALineups   = self.data_pivot.loc['targetAbsent'].sum().sum()
 
         self.calculateRates(reverseConfidence)
+        self.calculateConfidence()
         self.calculateRelativeFrequency()
         self.calculateCAC()
         self.calculatePAUC()
@@ -68,6 +69,13 @@ class DataProcessed :
             if self.data_pivot.loc['targetAbsent','suspectId'].sum() == 0 :
                 self.data_pivot.drop(index=('targetAbsent','suspectId'), inplace=True)
         except :
+            pass
+
+        # TODO understand NA removal
+        self.data_pivot.fillna(0,inplace=True)
+
+        # If showup fold the rejectID into the suspectID rates
+        if self.lineupSize == 1 :
             pass
 
     def calculateRates(self, reverseConfidence = False) :
@@ -100,7 +108,10 @@ class DataProcessed :
             pass
 
         try :
-            self.data_rates.loc['targetAbsent','suspectId'] = self.data_rates.loc['targetAbsent','suspectId']/self.targetAbsentSum
+            if self.lineupSize != 1 :
+                self.data_rates.loc['targetAbsent','suspectId'] = self.data_rates.loc['targetAbsent','suspectId']/self.targetAbsentSum
+            else :
+                self.data_rates.loc['targetAbsent','suspectId'] = (self.data_rates.loc['targetAbsent','rejectId'] + self.data_rates.loc['targetAbsent','suspectId'])  /self.targetAbsentSum
         except KeyError :
             pass
 
@@ -115,7 +126,10 @@ class DataProcessed :
             pass
 
         try :
-            self.data_rates.loc['targetPresent','suspectId'] = self.data_rates.loc['targetPresent','suspectId']/self.targetPresentSum
+            if self.lineupSize != 1:
+                self.data_rates.loc['targetPresent','suspectId'] = self.data_rates.loc['targetPresent','suspectId']/self.targetPresentSum
+            else :
+                self.data_rates.loc['targetPresent','suspectId'] = (self.data_rates.loc['targetPresent','rejectId'] + self.data_rates.loc['targetPresent','suspectId']) /self.targetPresentSum
         except KeyError :
             pass
 
@@ -134,15 +148,39 @@ class DataProcessed :
             self.data_rates = self.data_rates.append(suspectId)
             self.data_rates = self.data_rates.sort_index()
 
+    def calculateConfidence(self):
+
+        conf_mean_array = []
+        conf_std_array  = []
+
+        if self.dataRaw and self.dataRaw.collapseContinuous :
+            for label in self.dataRaw.collapseContinuousLabels :
+                conf_label = self.dataRaw.data['confidence_original'][self.dataRaw.data['confidence'] == label]
+                conf_mean  = conf_label.mean()
+                conf_std   = conf_label.std()
+
+                conf_mean_array.append(conf_mean)
+                conf_std_array.append(conf_std)
+
+        conf_mean_array = _np.array(conf_mean_array)
+        conf_std_array  = _np.array(conf_std_array)
+
     def calculateRelativeFrequency(self) :
 
         '''
         Calculate relative frequency from data_pivot. Result stored in data_rates['cf']
         '''
 
-        cid = self.data_pivot.loc['targetPresent','suspectId']         
+        if self.lineupSize != 1 :                                                                           # SHOWUP
+            cid = self.data_pivot.loc['targetPresent','suspectId']
+        else :
+            cid = self.data_pivot.loc['targetPresent','suspectId'] + self.data_pivot.loc['targetPresent','rejectId']
+
         try :
-            fid = self.data_pivot.loc['targetAbsent','suspectId']
+            if self.lineupSize != 1 :                                                                       # SHOWUP
+                fid = self.data_pivot.loc['targetAbsent','suspectId']
+            else :
+                fid = self.data_pivot.loc['targetAbsent','suspectId'] + self.data_pivot.loc['targetAbsent','rejectId']
         except KeyError :            
             fid = self.data_pivot.loc['targetAbsent','fillerId']/self.lineupSize
 
@@ -157,10 +195,16 @@ class DataProcessed :
         Calculate confidence accuracy characteristic from data_pivot. Result stored in data_rates['cac']
         '''
 
-        cid = self.data_pivot.loc['targetPresent','suspectId'] 
+        if self.lineupSize != 1 :                                                                           # SHOWUP
+            cid = self.data_pivot.loc['targetPresent','suspectId']
+        else :
+            cid = self.data_pivot.loc['targetPresent', 'suspectId'] + self.data_pivot.loc['targetPresent', 'rejectId']
 
         try :
-            fid = self.data_pivot.loc['targetAbsent','suspectId']
+            if self.lineupSize != 1 :                                                                       # SHOWUP
+                fid = self.data_pivot.loc['targetAbsent','suspectId']
+            else :
+                fid = self.data_pivot.loc['targetAbsent', 'suspectId'] + self.data_pivot.loc['targetAbsent', 'rejectId']
         except KeyError :            
             fid = self.data_pivot.loc['targetAbsent','fillerId']/self.lineupSize
         
@@ -169,7 +213,7 @@ class DataProcessed :
         self.data_rates = self.data_rates.append(cac)
         self.data_rates = self.data_rates.sort_index()
 
-    def calculatePAUC(self, xmax = 1.0) : 
+    def calculatePAUC(self, xmax = 1.0) :
         '''         
         Calculate partial area under the curve from (0,0) to (xmax, y(xmax))
 
@@ -218,12 +262,12 @@ class DataProcessed :
 
         xForIntegration.append(xmax)
         yForIntegration.append(ymax)
-        
+
         self.xForIntegration = _np.array(xForIntegration)
         self.yForIntegration = _np.array(yForIntegration)
 
-        self.pAUC = _integrate.simps(self.xForIntegration,self.yForIntegration)
-        
+        self.pAUC = _integrate.simps(self.yForIntegration,self.xForIntegration)
+
         return self.pAUC
 
     def calculateNormalisedAUC(sef) : 
@@ -261,17 +305,25 @@ class DataProcessed :
 
         for i in range(0,nBootstraps,1) : 
             dr = self.dataRaw.resampleWithReplacement()
-            dp = dr.process()
+            dp = dr.process(self.dataRaw.processColumn, self.dataRaw.processCondition, self.dataRaw.processReverseConfidence)
             cac.append(dp.data_rates.loc['cac'].values[0])
 
-            targetAbsentFillerId.append(dp.data_rates.loc['targetAbsent','fillerId'].values)
             targetAbsentRejectId.append(dp.data_rates.loc['targetAbsent','rejectId'].values)
             targetAbsentSuspectId.append(dp.data_rates.loc['targetAbsent','suspectId'].values)
 
-            targetPresentFillerId.append(dp.data_rates.loc['targetPresent','fillerId'].values)          # No for showups (TODO)
+            if self.lineupSize != 1 :                                                                       # SHOWUP
+                targetAbsentFillerId.append(dp.data_rates.loc['targetAbsent','fillerId'].values)
+            else :
+                targetAbsentFillerId.append(_np.zeros(len(dp.data_rates.loc['targetAbsent','suspectId'].values)))
+
             targetPresentRejectId.append(dp.data_rates.loc['targetPresent','rejectId'].values)
             targetPresentSuspectId.append(dp.data_rates.loc['targetPresent','suspectId'].values)
-            
+
+            if self.lineupSize != 1 :                                                                       # SHOWUP
+                targetPresentFillerId.append(dp.data_rates.loc['targetPresent','fillerId'].values)
+            else :
+                targetPresentFillerId.append(_np.zeros(len(dp.data_rates.loc['targetPresent','suspectId'].values)))
+
             pAUC.append(dp.pAUC)
             
             if plotROC : 
@@ -284,7 +336,7 @@ class DataProcessed :
         targetAbsentRejectId   = _np.array(targetAbsentRejectId)
         targetAbsentSuspectId  = _np.array(targetAbsentSuspectId)
 
-        targetPresentFillerId  = _np.array(targetPresentFillerId)                                       # No for showups (TODO)
+        targetPresentFillerId  = _np.array(targetPresentFillerId)
         targetPresentRejectId  = _np.array(targetPresentRejectId)
         targetPresentSuspectId = _np.array(targetPresentSuspectId)
 
@@ -330,8 +382,8 @@ class DataProcessed :
         self.data_rates = self.data_rates.append(_pandas.Series(targetAbsentSuspectId_low, name = ('targetAbsent','suspectId_low'), index = template.index))
         self.data_rates = self.data_rates.append(_pandas.Series(targetAbsentSuspectId_high, name = ('targetAbsent','suspectId_high'), index = template.index))
 
-        self.data_rates = self.data_rates.append(_pandas.Series(targetPresentFillerId_low, name = ('targetPresent','fillerId_low'), index = template.index))          # No for showups (TODO)
-        self.data_rates = self.data_rates.append(_pandas.Series(targetPresentFillerId_high, name = ('targetPresent','fillerId_high'), index = template.index))        # No for showups (TODO)
+        self.data_rates = self.data_rates.append(_pandas.Series(targetPresentFillerId_low, name = ('targetPresent','fillerId_low'), index = template.index))
+        self.data_rates = self.data_rates.append(_pandas.Series(targetPresentFillerId_high, name = ('targetPresent','fillerId_high'), index = template.index))
 
         self.data_rates = self.data_rates.append(_pandas.Series(targetPresentRejectId_low, name = ('targetPresent','rejectId_low'), index = template.index))
         self.data_rates = self.data_rates.append(_pandas.Series(targetPresentRejectId_high, name = ('targetPresent','rejectId_high'), index = template.index))
