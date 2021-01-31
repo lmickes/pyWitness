@@ -170,6 +170,48 @@
 <h1>Advanced tutorials<a class="headerlink" href="#advanced-tutorials" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="bootstrapping-uncertainties-confidence-limits">
 <h2>Bootstrapping uncertainties/confidence limits<a class="headerlink" href="#bootstrapping-uncertainties-confidence-limits" title="Permalink to this headline">¶</a></h2>
+<p>To create confidence limits on binned cumulative, statistical measures and parameters, pyWitness uses
+the bootstrap method. This method takes N random participants from the original data <em>with replacement</em>.
+pyWitness can then proceed to compute any quantity (ROC, CAC, pAUC, fit parameters). This is repeated M
+times and the distribution of the computed quantity used to calculate a confidence interval with a user
+definable range.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
+<span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test1.csv&quot;</span><span class="p">)</span>
+<span class="n">dp</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
+<span class="n">dp</span><span class="o">.</span><span class="n">calculateConfidenceBootstrap</span><span class="p">(</span><span class="n">nBootstraps</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">cl</span><span class="o">=</span><span class="mi">95</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>After calling <code class="docutils literal notranslate"><span class="pre">calculateConfidenceBootstrap</span></code> the rates table is populated with the 95% confidence limit
+data</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">                             confidence</span>
+<span class="go">confidence                            3         2         1</span>
+<span class="go">targetLineup  responseType</span>
+<span class="go">cac           central          0.956357  0.940618  0.839228</span>
+<span class="go">              high             0.972634  0.954553  0.872744</span>
+<span class="go">              low              0.941128  0.924256  0.804342</span>
+<span class="go">rf                             0.264691  0.422903  0.312406</span>
+<span class="go">targetAbsent  fillerId         0.044660  0.141748  0.335922</span>
+<span class="go">              fillerId_high    0.061102  0.165681  0.364264</span>
+<span class="go">              fillerId_low     0.030039  0.119101  0.300467</span>
+<span class="go">              rejectId         0.217476  0.473786  0.664078</span>
+<span class="go">              rejectId_high    0.246578  0.514653  0.699533</span>
+<span class="go">              rejectId_low     0.191284  0.442407  0.635736</span>
+<span class="go">              suspectId        0.007443  0.023625  0.055987</span>
+<span class="go">              suspectId_high   0.010184  0.027614  0.060711</span>
+<span class="go">              suspectId_low    0.005006  0.019850  0.050078</span>
+<span class="go">targetPresent fillerId         0.018832  0.080979  0.152542</span>
+<span class="go">              fillerId_high    0.030098  0.100959  0.178660</span>
+<span class="go">              fillerId_low     0.009258  0.062043  0.125396</span>
+<span class="go">              rejectId         0.080979  0.163842  0.276836</span>
+<span class="go">              rejectId_high    0.099837  0.190588  0.313290</span>
+<span class="go">              rejectId_low     0.062990  0.140654  0.247567</span>
+<span class="go">              suspectId        0.158192  0.406780  0.570621</span>
+<span class="go">              suspectId_high   0.182503  0.444297  0.605620</span>
+<span class="go">              suspectId_low    0.135651  0.371787  0.534313</span>
+</pre></div>
+</div>
+<p>If a plot function (<code class="docutils literal notranslate"><span class="pre">plotROC</span></code>, <code class="docutils literal notranslate"><span class="pre">plotCAC</span></code>) is callled after calling <code class="docutils literal notranslate"><span class="pre">calculateConfidenceBootstrap</span></code> then
+the confidence interval is drawn as error bars.</p>
 </div>
 <div class="section" id="loading-raw-data-excel-format">
 <h2>Loading raw data excel format<a class="headerlink" href="#loading-raw-data-excel-format" title="Permalink to this headline">¶</a></h2>
@@ -378,9 +420,9 @@ data file, variations on the processed data and model fits to be manipulated sim
 <span class="n">dp1</span> <span class="o">=</span> <span class="n">dr1</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
 <span class="n">dp2</span> <span class="o">=</span> <span class="n">dr2</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
 
-<span class="n">dp1</span><span class="o">.</span><span class="n">plotCAC</span><span class="p">(</span><span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;11 bins&quot;</span><span class="p">)</span>
-<span class="n">dp2</span><span class="o">.</span><span class="n">plotCAC</span><span class="p">(</span><span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;3 bins&quot;</span><span class="p">)</span>
-<span class="hll">
+<span class="hll"><span class="n">dp1</span><span class="o">.</span><span class="n">plotCAC</span><span class="p">(</span><span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;11 bins&quot;</span><span class="p">)</span>
+</span><span class="hll"><span class="n">dp2</span><span class="o">.</span><span class="n">plotCAC</span><span class="p">(</span><span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;3 bins&quot;</span><span class="p">)</span>
+</span><span class="hll">
 </span><span class="hll"><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">_plt</span>
 </span><span class="hll"><span class="n">_plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 </span></pre></div>
@@ -415,7 +457,7 @@ data file, variations on the processed data and model fits to be manipulated sim
   <div role="contentinfo">
     <p>
         &copy; Copyright Royal Holloway, University of London 2020 and University of Bristol 2020
-      Last updated on Jan 30, 2021.
+      Last updated on Jan 31, 2021.
 
     </p>
   </div>

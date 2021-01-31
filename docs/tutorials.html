@@ -345,6 +345,20 @@ standard deviation is computed and filled in <code class="docutils literal notra
 </div>
 <div class="section" id="calculating-pauc-and-performing-statistical-tests">
 <h2>Calculating pAUC and performing statistical tests<a class="headerlink" href="#calculating-pauc-and-performing-statistical-tests" title="Permalink to this headline">¶</a></h2>
+<p>Partial area under the curve is calculated when <code class="docutils literal notranslate"><span class="pre">dr.process()</span></code> is called. Simpsons rule is integrate the area
+under the ROC upto a maximum value. If the maximum value is between two data points linear interpolation is used
+to calculate the most liberal point.</p>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
+<span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test1.csv&quot;</span><span class="p">)</span>
+<span class="n">dr</span><span class="o">.</span><span class="n">collapseContinuousData</span><span class="p">(</span><span class="n">column</span> <span class="o">=</span> <span class="s2">&quot;confidence&quot;</span><span class="p">,</span><span class="n">bins</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">60</span><span class="p">,</span><span class="mi">80</span><span class="p">,</span><span class="mi">100</span><span class="p">],</span><span class="n">labels</span><span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+<span class="n">dp</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
+<span class="hll"><span class="nb">print</span><span class="p">(</span><span class="n">dp</span><span class="o">.</span><span class="n">pAUC</span><span class="p">)</span>
+</span></pre></div>
+</td></tr></table></div>
 </div>
 <div class="section" id="fitting-signal-detection-models-to-data">
 <h2>Fitting signal detection models to data<a class="headerlink" href="#fitting-signal-detection-models-to-data" title="Permalink to this headline">¶</a></h2>
@@ -555,7 +569,7 @@ an appropriate start so line 12 yields</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright Royal Holloway, University of London 2020 and University of Bristol 2020
-      Last updated on Jan 30, 2021.
+      Last updated on Jan 31, 2021.
 
     </p>
   </div>

@@ -144,6 +144,14 @@ Transforming data into pyWitness format can be time consuming and error prone.
    * - confidence
      - conf_level
 
+Data for show ups
+^^^^^^^^^^^^^^^^^
+
+To perform an analysis of showup data. The data needs to be organised differently compared to lineup data.
+So rejectId for both targetAbsent and targetPresent showups need to given new confidences. So for example if
+the data is measured on a three point confidence scale (1, 2 and 3). The sujectId for both targetPresent and
+targetAbsent confidences need to be mapped to (4, 5, 6) and rejectId needs to be given (3, 2, 1).
+
 .. note::
    Confidence can be verbal and needs to be mapped to a number. For example, confidence could be low (1), 
    medium (2) or high (3).

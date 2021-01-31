@@ -97,6 +97,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#background-to-the-pywitness-and-the-code">Background to the pyWitness and the code</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#internal-data-format">Internal data format</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#transforming-data-structures">Transforming data structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#data-for-show-ups">Data for show ups</a></li>
 </ul>
 </li>
 </ul>
@@ -362,6 +363,13 @@ or data, demographic data or personal differenes.</p>
 </tr>
 </tbody>
 </table>
+</div>
+<div class="section" id="data-for-show-ups">
+<h3>Data for show ups<a class="headerlink" href="#data-for-show-ups" title="Permalink to this headline">¶</a></h3>
+<p>To perform an analysis of showup data. The data needs to be organised differently compared to lineup data.
+So rejectId for both targetAbsent and targetPresent showups need to given new confidences. So for example if
+the data is measured on a three point confidence scale (1, 2 and 3). The sujectId for both targetPresent and
+targetAbsent confidences need to be mapped to (4, 5, 6) and rejectId needs to be given (3, 2, 1).</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Confidence can be verbal and needs to be mapped to a number. For example, confidence could be low (1),
@@ -396,7 +404,7 @@ medium (2) or high (3).</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright Royal Holloway, University of London 2020 and University of Bristol 2020
-      Last updated on Jan 30, 2021.
+      Last updated on Jan 31, 2021.
 
     </p>
   </div>

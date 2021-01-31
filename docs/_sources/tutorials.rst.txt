@@ -176,6 +176,21 @@ standard deviation is computed and filled in ``confidence-mean`` and ``confidenc
 Calculating pAUC and performing statistical tests
 -------------------------------------------------
 
+Partial area under the curve is calculated when ``dr.process()`` is called. Simpsons rule is integrate the area
+under the ROC upto a maximum value. If the maximum value is between two data points linear interpolation is used
+to calculate the most liberal point.
+
+.. code-block :: python
+   :linenos:
+   :emphasize-lines: 5
+
+   import pyWitness
+   dr = pyWitness.DataRaw("test1.csv")
+   dr.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels= [1,2,3])
+   dp = dr.process()
+   print(dp.pAUC)
+
+
 Fitting signal detection models to data
 ---------------------------------------
 
