@@ -4,6 +4,52 @@ Advanced tutorials
 Bootstrapping uncertainties/confidence limits
 ---------------------------------------------
 
+To create confidence limits on binned cumulative, statistical measures and parameters, pyWitness uses
+the bootstrap method. This method takes N random participants from the original data *with replacement*.
+pyWitness can then proceed to compute any quantity (ROC, CAC, pAUC, fit parameters). This is repeated M
+times and the distribution of the computed quantity used to calculate a confidence interval with a user
+definable range.
+
+.. code-block :: python
+
+   import pyWitness
+   dr = pyWitness.DataRaw("test1.csv")
+   dp = dr.process()
+   dp.calculateConfidenceBootstrap(nBootstraps=200, cl=95)
+
+After calling ``calculateConfidenceBootstrap`` the rates table is populated with the 95% confidence limit
+data
+
+.. code-block :: console
+
+                                confidence
+   confidence                            3         2         1
+   targetLineup  responseType
+   cac           central          0.956357  0.940618  0.839228
+                 high             0.972634  0.954553  0.872744
+                 low              0.941128  0.924256  0.804342
+   rf                             0.264691  0.422903  0.312406
+   targetAbsent  fillerId         0.044660  0.141748  0.335922
+                 fillerId_high    0.061102  0.165681  0.364264
+                 fillerId_low     0.030039  0.119101  0.300467
+                 rejectId         0.217476  0.473786  0.664078
+                 rejectId_high    0.246578  0.514653  0.699533
+                 rejectId_low     0.191284  0.442407  0.635736
+                 suspectId        0.007443  0.023625  0.055987
+                 suspectId_high   0.010184  0.027614  0.060711
+                 suspectId_low    0.005006  0.019850  0.050078
+   targetPresent fillerId         0.018832  0.080979  0.152542
+                 fillerId_high    0.030098  0.100959  0.178660
+                 fillerId_low     0.009258  0.062043  0.125396
+                 rejectId         0.080979  0.163842  0.276836
+                 rejectId_high    0.099837  0.190588  0.313290
+                 rejectId_low     0.062990  0.140654  0.247567
+                 suspectId        0.158192  0.406780  0.570621
+                 suspectId_high   0.182503  0.444297  0.605620
+                 suspectId_low    0.135651  0.371787  0.534313
+
+If a plot function (``plotROC``, ``plotCAC``) is callled after calling ``calculateConfidenceBootstrap`` then
+the confidence interval is drawn as error bars.
 
 Loading raw data excel format
 -----------------------------
@@ -189,7 +235,7 @@ To make a legend the plots need to be given a label. So this example is the same
 
 .. code-block :: python
    :linenos:
-   :emphasize-lines: 12-16
+   :emphasize-lines: 10-14
 
    import pyWitness
    dr1 = pyWitness.DataRaw("test1.csv")
