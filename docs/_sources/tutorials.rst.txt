@@ -314,9 +314,12 @@ There are multiple fits available and they all have the same interface they diff
 Plotting fit and models
 -----------------------
 
-It is important to understand the performance of a given particular fit.
+It is important to understand the performance of a given particular fit. The following plot compares
+the experimental data to the model fit. 
 
 .. code-block :: python
+   :linenos:
+   :emphasize-lines: 8
 
    import pyWitness
    dr = pyWitness.DataRaw("test1.csv")
@@ -325,8 +328,10 @@ It is important to understand the performance of a given particular fit.
    mf = pyWitness.ModelFitIndependentObservation(dp)
    mf.setEqualVariance()
    mf.fit()
+   mf.plotFit()
 
-
+.. figure:: images/test1_fitPlot.jpg
+   :alt: ROC for test1.csv
 
 Writing results to file 
 -----------------------

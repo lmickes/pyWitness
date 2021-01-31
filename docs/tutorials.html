@@ -501,15 +501,27 @@ an appropriate start so line 12 yields</p>
 </div>
 <div class="section" id="plotting-fit-and-models">
 <h2>Plotting fit and models<a class="headerlink" href="#plotting-fit-and-models" title="Permalink to this headline">¶</a></h2>
-<p>It is important to understand the performance of a given particular fit.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
+<p>It is important to understand the performance of a given particular fit. The following plot compares
+the experimental data to the model fit.</p>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
 <span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test1.csv&quot;</span><span class="p">)</span>
 <span class="n">dr</span><span class="o">.</span><span class="n">collapseContinuousData</span><span class="p">(</span><span class="n">column</span> <span class="o">=</span> <span class="s2">&quot;confidence&quot;</span><span class="p">,</span><span class="n">bins</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">60</span><span class="p">,</span><span class="mi">80</span><span class="p">,</span><span class="mi">100</span><span class="p">],</span><span class="n">labels</span><span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
 <span class="n">dp</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
 <span class="n">mf</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">ModelFitIndependentObservation</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span>
 <span class="n">mf</span><span class="o">.</span><span class="n">setEqualVariance</span><span class="p">()</span>
 <span class="n">mf</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
-</pre></div>
+<span class="hll"><span class="n">mf</span><span class="o">.</span><span class="n">plotFit</span><span class="p">()</span>
+</span></pre></div>
+</td></tr></table></div>
+<div class="figure">
+<img alt="ROC for test1.csv" src="_images/test1_fitPlot.jpg" />
 </div>
 </div>
 <div class="section" id="writing-results-to-file">
