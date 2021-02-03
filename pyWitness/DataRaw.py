@@ -52,9 +52,11 @@ class DataRaw :
 
         self.dataAggFunc = ["confidence"]
         
-        if fileName != '' : 
+        if fileName != '' :
             self.loadData()
             self.renameRawData()
+        else :
+            self.data = None
 
         self.collapseContinuous = False
 
@@ -248,6 +250,23 @@ class DataRaw :
             data_copy.collapseContinuousLabels = self.collapseContinuousLabels
 
         return data_copy
+
+    def addParticipant(self, participantId = None, lineupSize = 6, targetLineup = "targetPresent",
+                       responseType = "suspectId", confidence = 0, n = 1):
+
+        if not isinstance(self.data,_pandas.DataFrame):
+            self.iParticipant = 1
+            self.data = _pandas.DataFrame(columns = ['participantId','lineupSize','targetLineup','responseType','confidence'])
+
+        for i in range(0,int(n),1) :
+            self.data = self.data.append({"participantId":self.iParticipant,
+                                          "lineupSize":lineupSize,
+                                          "targetLineup":targetLineup,
+                                          "responseType":responseType,
+                                          "confidence":confidence},
+                                         ignore_index=True)
+            self.iParticipant += 1
+
 
     def process(self, column = '', condition = '', reverseConfidence = False) :
         '''
