@@ -289,7 +289,7 @@ class ModelFit(object) :
     def monteCarloDecision(self,pred_tafid_array, pred_tpsid_array, pred_tpfid_array, memoryStrength) :
         pass
 
-    def generateRawData(self, nGenParticipants) :
+    def generateRawData(self, nGenParticipants = 10000, tasid = False) :
         [pred_tarid,
          pred_tasid_array,
          pred_tafid_array,
@@ -297,7 +297,8 @@ class ModelFit(object) :
          pred_tpsid_array,
          pred_tpfid_array]  = self.calculateFrequenciesForAllCriteria()
 
-        nParticipants = pred_tarid+pred_tasid_array.sum()+pred_tafid_array.sum() + pred_tprid+pred_tpsid_array.sum()+pred_tpfid_array.sum()
+
+        nParticipants = pred_tarid+pred_tafid_array.sum() + pred_tprid+pred_tpsid_array.sum()+pred_tpfid_array.sum()
 
         gen_tarid       = _np.round(pred_tarid/nParticipants*nGenParticipants)
         gen_tasid_array = _np.round(pred_tasid_array/nParticipants*nGenParticipants)
@@ -305,6 +306,9 @@ class ModelFit(object) :
         gen_tprid       = _np.round(pred_tprid/nParticipants*nGenParticipants)
         gen_tpsid_array = _np.round(pred_tpsid_array/nParticipants*nGenParticipants)
         gen_tpfid_array = _np.round(pred_tpfid_array/nParticipants*nGenParticipants)
+
+        if tasid :
+            gen_tafid_array = gen_tafid_array - gen_tasid_array
 
         print('gen_tafid',gen_tafid_array)
         print('gen_tasid',gen_tasid_array)
@@ -343,6 +347,15 @@ class ModelFit(object) :
                               n=int(gen_tafid_array[i]))
 
         # generate TA suspect
+        if tasid :
+            for i in range(0, len(gen_tasid_array)):
+                dr.addParticipant(participantId=None,
+                                  lineupSize=self.processedData.lineupSize,
+                                  targetLineup="targetAbsent",
+                                  responseType="suspectId",
+                                  confidence=i + 1,  # this should be confidence from DataRaw.
+                                  n=int(gen_tasid_array[i]))
+
 
         # generate TP filler
         for i in range(0,len(gen_tpfid_array)) :
