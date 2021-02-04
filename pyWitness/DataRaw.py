@@ -295,3 +295,12 @@ class DataRaw :
                                               reverseConfidence = reverseConfidence,
                                               lineupSize        = self.data.iloc[0]['lineupSize'])
         return self._data_processed
+
+    def writeCsv(self, fileName):
+        pass
+
+    def writeExcel(self, fileName, engine = 'openpyxl'):
+        self.data.to_excel(fileName, engine = engine)
+
+
+
