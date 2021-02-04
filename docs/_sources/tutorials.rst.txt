@@ -315,7 +315,7 @@ Plotting fit and models
 -----------------------
 
 It is important to understand the performance of a given particular fit. The following plot compares
-the experimental data to the model fit. 
+the experimental data to the model fit.
 
 .. code-block :: python
    :linenos:

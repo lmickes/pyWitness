@@ -185,12 +185,6 @@ may be incomplete.</p>
 </tbody>
 </table>
 <dl class="attribute">
-<dt id="pyWitness.DataRaw.data">
-<code class="descname">data</code><em class="property"> = None</em><a class="headerlink" href="#pyWitness.DataRaw.data" title="Permalink to this definition">¶</a></dt>
-<dd><p>Data frame of all raw data for processing</p>
-</dd></dl>
-
-<dl class="attribute">
 <dt id="pyWitness.DataRaw.dataSelected">
 <code class="descname">dataSelected</code><em class="property"> = None</em><a class="headerlink" href="#pyWitness.DataRaw.dataSelected" title="Permalink to this definition">¶</a></dt>
 <dd><p>Data frame of selected data for processing</p>
@@ -212,6 +206,12 @@ may be incomplete.</p>
 <dt id="pyWitness.DataRaw.dataMapping">
 <code class="descname">dataMapping</code><em class="property"> = None</em><a class="headerlink" href="#pyWitness.DataRaw.dataMapping" title="Permalink to this definition">¶</a></dt>
 <dd><p>Map of columns and values for renaming</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyWitness.DataRaw.data">
+<code class="descname">data</code><em class="property"> = None</em><a class="headerlink" href="#pyWitness.DataRaw.data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Data frame of all raw data for processing</p>
 </dd></dl>
 
 <dl class="method">
@@ -407,6 +407,11 @@ may be incomplete.</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="pyWitness.DataRaw.addParticipant">
+<code class="descname">addParticipant</code><span class="sig-paren">(</span><em>participantId=None</em>, <em>lineupSize=6</em>, <em>targetLineup='targetPresent'</em>, <em>responseType='suspectId'</em>, <em>confidence=0</em>, <em>n=1</em><span class="sig-paren">)</span><a class="headerlink" href="#pyWitness.DataRaw.addParticipant" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
 <dt id="pyWitness.DataRaw.process">
 <code class="descname">process</code><span class="sig-paren">(</span><em>column=''</em>, <em>condition=''</em>, <em>reverseConfidence=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pyWitness.DataRaw.process" title="Permalink to this definition">¶</a></dt>
 <dd><p>Process the raw data and returns DataProcessed object</p>
@@ -427,6 +432,16 @@ may be incomplete.</p>
 </tbody>
 </table>
 </dd></dl>
+
+<dl class="method">
+<dt id="pyWitness.DataRaw.writeCsv">
+<code class="descname">writeCsv</code><span class="sig-paren">(</span><em>fileName</em><span class="sig-paren">)</span><a class="headerlink" href="#pyWitness.DataRaw.writeCsv" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyWitness.DataRaw.writeExcel">
+<code class="descname">writeExcel</code><span class="sig-paren">(</span><em>fileName</em>, <em>engine='openpyxl'</em><span class="sig-paren">)</span><a class="headerlink" href="#pyWitness.DataRaw.writeExcel" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -756,7 +771,7 @@ are also plotted.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright Royal Holloway, University of London 2020 and University of Bristol 2020
-      Last updated on Jan 31, 2021.
+      Last updated on Feb 04, 2021.
 
     </p>
   </div>

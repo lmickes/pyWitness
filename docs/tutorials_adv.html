@@ -98,6 +98,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#using-instances-of-raw-data-processed-data-and-model-fits">Using instances of raw data, processed data and model fits</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#overlaying-plots">Overlaying plots</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#generating-data-from-signal-detection-model">Generating data from signal detection model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#power-analysis">Power analysis</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials_dev.html">Developer tutorials</a></li>
@@ -433,6 +434,41 @@ data file, variations on the processed data and model fits to be manipulated sim
 </div>
 <div class="section" id="generating-data-from-signal-detection-model">
 <h2>Generating data from signal detection model<a class="headerlink" href="#generating-data-from-signal-detection-model" title="Permalink to this headline">¶</a></h2>
+<p>Raw and processed data can be generated simply from a signal detection model.</p>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
+<span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test1.csv&quot;</span><span class="p">)</span>
+<span class="n">dr</span><span class="o">.</span><span class="n">collapseContinuousData</span><span class="p">(</span><span class="n">column</span> <span class="o">=</span> <span class="s2">&quot;confidence&quot;</span><span class="p">,</span><span class="n">bins</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">60</span><span class="p">,</span><span class="mi">80</span><span class="p">,</span><span class="mi">100</span><span class="p">],</span><span class="n">labels</span><span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+<span class="n">dp</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
+<span class="n">mf</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">ModelFitIndependentObservation</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span>
+<span class="n">mf</span><span class="o">.</span><span class="n">setEqualVariance</span><span class="p">()</span>
+<span class="n">mf</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="hll"><span class="n">dr1</span> <span class="o">=</span> <span class="n">mf</span><span class="o">.</span><span class="n">generateRawData</span><span class="p">(</span><span class="n">nGenParticipants</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span>
+</span></pre></div>
+</td></tr></table></div>
+<p><code class="docutils literal notranslate"><span class="pre">dr1</span></code> is a <code class="docutils literal notranslate"><span class="pre">DataRaw</span></code> object and is simulated data for 10,000 participants. <code class="docutils literal notranslate"><span class="pre">dr1</span></code> can be used for any
+pyWitness analysis so ROC, CAC, (p)AUC etc. The raw data can also be written to disk to either preserve or
+share with colleagues.</p>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">dr1</span> <span class="o">=</span> <span class="n">mf</span><span class="o">.</span><span class="n">generateRawData</span><span class="p">(</span><span class="n">nGenParticipants</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span>
+<span class="hll"><span class="n">dr1</span><span class="o">.</span><span class="n">writeCsv</span><span class="p">()</span>
+</span><span class="hll"><span class="n">dr1</span><span class="o">.</span><span class="n">writeExcel</span><span class="p">()</span>
+</span></pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="power-analysis">
+<h2>Power analysis<a class="headerlink" href="#power-analysis" title="Permalink to this headline">¶</a></h2>
+<p>Having the ability to generate data from a model it is possible to vary the number of generated participants.
+This is not too dissimilar to boot strapping. Instead of generating new samples (with replacement) from the
+data, new samples with variable numbers of participants is possible. For each sample all the analysis can be
+performed and dependence on sample size can be explored.</p>
 </div>
 </div>
 
@@ -457,7 +493,7 @@ data file, variations on the processed data and model fits to be manipulated sim
   <div role="contentinfo">
     <p>
         &copy; Copyright Royal Holloway, University of London 2020 and University of Bristol 2020
-      Last updated on Jan 31, 2021.
+      Last updated on Feb 04, 2021.
 
     </p>
   </div>
