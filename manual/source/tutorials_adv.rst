@@ -258,4 +258,37 @@ To make a legend the plots need to be given a label. So this example is the same
 Generating data from signal detection model
 -------------------------------------------
 
+Raw and processed data can be generated simply from a signal detection model.
 
+.. code-block :: python
+   :linenos:
+   :emphasize-lines: 8
+
+   import pyWitness
+   dr = pyWitness.DataRaw("test1.csv")
+   dr.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels= [1,2,3])
+   dp = dr.process()
+   mf = pyWitness.ModelFitIndependentObservation(dp)
+   mf.setEqualVariance()
+   mf.fit()
+   dr1 = mf.generateRawData(nGenParticipants=10000)
+
+``dr1`` is a ``DataRaw`` object and is simulated data for 10,000 participants. ``dr1`` can be used for any
+pyWitness analysis so ROC, CAC, (p)AUC etc. The raw data can also be written to disk to either preserve or
+share with colleagues.
+
+.. code-block :: python
+   :linenos:
+   :emphasize-lines: 2-3
+
+   dr1 = mf.generateRawData(nGenParticipants=10000)
+   dr1.writeCsv()
+   dr1.writeExcel()
+
+Power analysis
+--------------
+
+Having the ability to generate data from a model it is possible to vary the number of generated participants.
+This is not too dissimilar to boot strapping. Instead of generating new samples (with replacement) from the
+data, new samples with variable numbers of participants is possible. For each sample all the analysis can be
+performed and dependence on sample size can be explored.
