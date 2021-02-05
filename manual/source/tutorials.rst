@@ -7,13 +7,47 @@ Tutorials
    code are highlighted in yellow.
 
 .. warning::
-   error bars, Processing raw experimental data for a particular experimental condition, Calculating pAUC and performing statistical tests, 
-   Fitting signal detection models to data
+   Calculating pAUC statistical tests,
+
+Python
+------
+
+Python is a interpreted object oriented programming language. There is a large range
+of modules which python imported into python to provide extra functionality or features.
+pyWitness uses numpy (numerical arrays), scipy (fitting and functions), pandas
+(data frames), matplotlib (plotting), openpyxl (reading/writing excel),
+xlrd (reading/writing excel) and numba (compiler to speed up code).
+
+Python is best started from a terminal/command prompt
+
+.. code-block :: console
+
+   ipython3 --pylab
+
+This then lands you in a python console window
+
+.. code-block :: console
+
+   Python 3.7.9 (default, Sep  6 2020, 16:32:30)
+   Type 'copyright', 'credits' or 'license' for more information
+   IPython 7.14.0 -- An enhanced Interactive Python. Type '?' for help.
+
+   In [1]:
+
+Now commands can be typed in to execute python and pyWitness commands. There are some key tips
+which can speed up inputing commands into python
+
+   * Always try and cut and paste commands from the manual (this will reduce typos)
+   * Use the command history (up and down cursor arrows) to find commands that were used previously
+   * Use command history with search (so try ``import pyW`` and then up arrow. This will search the
+     command history with that command fragment and probably match with a previous ``import pyWitness``
+   * A command can be completed by using ``tab``. So try typing in ``import pyW`` and then hitting ``tab``
 
 Loading raw experimental data
 -----------------------------
 
-A single Python class `pyWitness.DataRaw <./moduledocs.html#pyWitness.DataRaw>`_ is used to load raw data in either ``csv`` or ``excel`` format. The format of ``test1.csv`` is the same as that described in the introduction. 
+A single Python class `pyWitness.DataRaw <./moduledocs.html#pyWitness.DataRaw>`_ is used to load raw data in
+either ``csv`` or ``excel`` format. The format of ``test1.csv`` is the same as that described in the introduction.
 
 .. code-block :: python 
 
@@ -22,7 +56,8 @@ A single Python class `pyWitness.DataRaw <./moduledocs.html#pyWitness.DataRaw>`_
 
 Processing raw experimental data
 --------------------------------
-To process the raw data the function `pyWitness.DataRaw.process <./moduledocs.html#pyWitness.DataRaw.process>`_ needs to be called on a raw data object. The calculates the cumulative rates from the raw data. 
+To process the raw data the function `pyWitness.DataRaw.process <./moduledocs.html#pyWitness.DataRaw.process>`_
+needs to be called on a raw data object. The calculates the cumulative rates from the raw data.
 
 .. code-block :: python 
    :linenos:
@@ -32,7 +67,8 @@ To process the raw data the function `pyWitness.DataRaw.process <./moduledocs.ht
    dr = pyWitness.DataRaw("test1.csv")
    dp = dr.process()
 
-Once `pyWitness.DataRaw.process <./moduledocs.html#pyWitness.DataRaw.process>`_ is called two ``DataFrames`` are created one which contains a pivot table and another that contains rates
+Once `pyWitness.DataRaw.process <./moduledocs.html#pyWitness.DataRaw.process>`_ is called two ``DataFrames`` are
+created one which contains a pivot table and another that contains rates
 
 .. code-block :: python 
    :linenos:
@@ -115,7 +151,10 @@ Plotting RAC curves
 Collapsing the catagorical data
 -------------------------------
 
-The example in this tutorial as 11 confidence levels (0, 10, 20, 30, 40, 50, 60, 70, 80, 90 and 100). Typically categorical confidence levels need to be binned or collapsed. This is best performed on the raw data before calling ``process()``. This is done with the ``collapseCategoricalData`` method of ``DataRaw``. This is shown in example below, where the new bins are (0-60 map to 30, 70-80 to 75 and 90-100 to 95).
+The example in this tutorial as 11 confidence levels (0, 10, 20, 30, 40, 50, 60, 70, 80, 90 and 100). Typically
+categorical confidence levels need to be binned or collapsed. This is best performed on the raw data before calling
+``process()``. This is done with the ``collapseCategoricalData`` method of ``DataRaw``. This is shown in example below,
+where the new bins are (0-60 map to 30, 70-80 to 75 and 90-100 to 95).
 
 .. code-block :: python 
    :linenos:
@@ -134,7 +173,8 @@ The example in this tutorial as 11 confidence levels (0, 10, 20, 30, 40, 50, 60,
    :alt: Rebinned CAC for test1.csv 
 
 .. note:: 
-   If you mess up the ``collapseCategoricalData`` the data might be inconsistent. To start with the original data so call ``collapseCategoricalData`` with ``reload=True``
+   If you mess up the ``collapseCategoricalData`` the data might be inconsistent. To start with the original data so
+   call ``collapseCategoricalData`` with ``reload=True``
 
 Collapsing (binning) continuous data
 ------------------------------------
@@ -194,7 +234,8 @@ to calculate the most liberal point.
 Fitting signal detection models to data
 ---------------------------------------
 
-There are many models available in pyWitness. We'll start with the independent observation model. To load and process the data is the same as before
+There are many models available in pyWitness. We'll start with the independent observation model. To load and process
+the data is the same as before
 
 .. code-block :: python  
    :linenos: 
@@ -336,7 +377,8 @@ the experimental data to the model fit.
 Writing results to file 
 -----------------------
 
-The internal dataframes can be written to either ``csv`` or ``xlsx`` file format for further analysis. There are four functions belonging to ``DataProcessed``. 
+The internal dataframes can be written to either ``csv`` or ``xlsx`` file format for further analysis. There are four
+functions belonging to ``DataProcessed``.
 
    * ``writePivotExcel`` writes the pivot table to excel
    * ``writePivotCsv`` writes the pivot table to csv

@@ -65,8 +65,8 @@ If the file is in ``excel`` format you will need to specify which sheet the raw 
 Transforming data into common format
 ------------------------------------
 
-The raw experimental data does not have to be in the internal format used by pyWitness. As the data is loaded is it possible to replace 
-the name of the data columns and the values stored.
+The raw experimental data does not have to be in the internal format used by pyWitness. As the data is loaded is it
+possible to replace the name of the data columns and the values stored.
 
 .. code-block :: python 
 
@@ -112,8 +112,8 @@ So if you had a file with multiple conditions it would be very straight forward 
 Loading processed data 
 ----------------------
 
-You might already have processed the raw data. It is possible to load a file to perform model fits etc. The processed data needs 
-to be in the following CSV format. This is basically the same format as the pivot table stored in ``DataProcessed``. 
+You might already have processed the raw data. It is possible to load a file to perform model fits etc. The processed
+data needs to be in the following CSV format. This is basically the same format as the pivot table stored in ``DataProcessed``.
 
 .. list-table:: Processed data columns and allowed values
    :widths: 35 15 15 15 15 15 15 15 15 15 15 15 
@@ -207,10 +207,13 @@ This data is stored in ``data/tutorials/test1_processed.csv``
 Using instances of raw data, processed data and model fits
 ----------------------------------------------------------
 
-Using an object orientated approach allows multiple instances (objects) to be created and manipulated. This allows lots of different 
-data file, variations on the processed data and model fits to be manipulated simultanuously in a single Python session.
+Using an object orientated approach allows multiple instances (objects) to be created and manipulated. This allows lots
+of different data file, variations on the processed data and model fits to be manipulated simultanuously in a single
+Python session.
 
-A good example is collapsing data, one might want to check the effect of rebinning the data. So in the following example the ``test1.csv`` is processed twice, once with the original binning (``dr1`` and ``dp1``) and one with 3 confidence bins (``dr2`` and ``dp2``)
+A good example is collapsing data, one might want to check the effect of rebinning the data. So in the following example
+the ``test1.csv`` is processed twice, once with the original binning (``dr1`` and ``dp1``) and one with 3 confidence bins
+(``dr2`` and ``dp2``)
 
 .. code-block :: python
 
@@ -229,7 +232,8 @@ A good example is collapsing data, one might want to check the effect of rebinni
 Overlaying plots
 ----------------
 
-In general each ``plotXXX`` function does not create a canvas, so to overlay plots the functions need to be called sequentially in order.
+In general each ``plotXXX`` function does not create a canvas, so to overlay plots the functions need to be called
+sequentially in order.
 
 To make a legend the plots need to be given a label. So this example is the same as the 
 
@@ -254,6 +258,14 @@ To make a legend the plots need to be given a label. So this example is the same
 
 .. figure:: images/test1_overlay.jpg
    :alt: CAC for test1.csv with two different binning
+
+After overlaying plots it maybe important to change the plot axis ranges this can be done with ``xlim`` and ``ylim``
+
+.. code-block :: python
+
+   xlim(0,1)
+   ylim(0,1)
+
 
 Generating data from signal detection model
 -------------------------------------------
