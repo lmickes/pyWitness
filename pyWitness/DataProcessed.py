@@ -1,7 +1,8 @@
 import pandas as _pandas
 import matplotlib.pyplot as _plt
 import numpy as _np
-import scipy.integrate as _integrate 
+import scipy.integrate as _integrate
+import copy as _copy
 
 class DataProcessed :
     '''
@@ -150,20 +151,23 @@ class DataProcessed :
 
     def calculateConfidence(self):
 
-        conf_mean_array = []
-        conf_std_array  = []
+        '''
+        Calculate average confidence for a bin. Result stored in data_rates['confidence']
+        '''
+
+        confidence_mean = _copy.copy(self.data_rates.loc['targetAbsent','fillerId'])
+        confidence_mean.name = ("confidence","central")
 
         if self.dataRaw and self.dataRaw.collapseContinuous :
-            for label in self.dataRaw.collapseContinuousLabels :
+            for i in range(0,len(self.dataRaw.collapseContinuousLabels)) :
+                label = self.dataRaw.collapseContinuousLabels[i]
                 conf_label = self.dataRaw.data['confidence_original'][self.dataRaw.data['confidence'] == label]
                 conf_mean  = conf_label.mean()
-                conf_std   = conf_label.std()
 
-                conf_mean_array.append(conf_mean)
-                conf_std_array.append(conf_std)
+                confidence_mean[len(self.dataRaw.collapseContinuousLabels)-i-1] = conf_mean
 
-        conf_mean_array = _np.array(conf_mean_array)
-        conf_std_array  = _np.array(conf_std_array)
+            self.data_rates = self.data_rates.append(confidence_mean)
+            self.data_rates = self.data_rates.sort_index()
 
     def calculateRelativeFrequency(self) :
 
@@ -292,7 +296,15 @@ class DataProcessed :
             self.data_rates.drop(("targetPresent","suspectId_high"),inplace = True)
             self.data_rates.drop(("targetPresent","suspectId_low"),inplace = True)
 
+            try:
+                self.data_rates.drop(("confidence","low"), inplace=True)
+                self.data_rates.drop(("confidence","high"), inplace=True)
+            except :
+                pass
+
         cac = []
+        confidence = []
+
         targetAbsentFillerId   = []
         targetAbsentRejectId   = []
         targetAbsentSuspectId  = []
@@ -306,7 +318,13 @@ class DataProcessed :
         for i in range(0,nBootstraps,1) : 
             dr = self.dataRaw.resampleWithReplacement()
             dp = dr.process(self.dataRaw.processColumn, self.dataRaw.processCondition, self.dataRaw.processReverseConfidence)
-            cac.append(dp.data_rates.loc['cac'].values[0])
+
+            cac.append(dp.data_rates.loc['cac','central'].values)
+
+            try :
+                confidence.append(dp.data_rates.loc['confidence','central'].values)
+            except :
+                pass
 
             targetAbsentRejectId.append(dp.data_rates.loc['targetAbsent','rejectId'].values)
             targetAbsentSuspectId.append(dp.data_rates.loc['targetAbsent','suspectId'].values)
@@ -332,6 +350,8 @@ class DataProcessed :
 
         cac                    = _np.array(cac)
 
+        confidence             = _np.array(confidence)
+
         targetAbsentFillerId   = _np.array(targetAbsentFillerId)
         targetAbsentRejectId   = _np.array(targetAbsentRejectId)
         targetAbsentSuspectId  = _np.array(targetAbsentSuspectId)
@@ -347,6 +367,9 @@ class DataProcessed :
 
         cac_low                     = _np.percentile(cac,clLow,axis=0)
         cac_high                    = _np.percentile(cac,clHigh,axis=0)
+
+        confidence_low              = _np.percentile(confidence,clLow,axis=0)
+        confidence_high             = _np.percentile(confidence,clHigh,axis=0)
 
         targetAbsentFillerId_low    = _np.percentile(targetAbsentFillerId,clLow,axis=0)
         targetAbsentFillerId_high   = _np.percentile(targetAbsentFillerId,clHigh,axis=0)
@@ -372,6 +395,9 @@ class DataProcessed :
         template = self.data_rates.loc['cac','central']
         self.data_rates = self.data_rates.append(_pandas.Series(cac_low, name = ('cac','low'), index = template.index))
         self.data_rates = self.data_rates.append(_pandas.Series(cac_high, name = ('cac','high'), index = template.index))
+
+        self.data_rates = self.data_rates.append(_pandas.Series(confidence_low, name = ('confidence','low'), index = template.index))
+        self.data_rates = self.data_rates.append(_pandas.Series(confidence_high, name = ('confidence','high'), index = template.index))
 
         self.data_rates = self.data_rates.append(_pandas.Series(targetAbsentFillerId_low, name = ('targetAbsent','fillerId_low'), index = template.index))
         self.data_rates = self.data_rates.append(_pandas.Series(targetAbsentFillerId_high, name = ('targetAbsent','fillerId_high'), index = template.index))
@@ -476,22 +502,31 @@ class DataProcessed :
         
         '''
 
-        _plt.scatter(self.data_rates.columns.get_level_values('confidence'),
-                     self.data_rates.loc['cac','central'],
-                     s = self.data_rates.loc['rf','']*relativeFrequencyScale,
-                     label = label)        
+        confidence = self.data_rates.columns.get_level_values('confidence')
+        cac        = self.data_rates.loc['cac','central']
+        rf         = self.data_rates.loc['rf','']
+
+        # try average confidence (if calculated)
+        try :
+            confidence = self.data_rates.loc['confidence','central']
+        except :
+            pass
+
+        # Basic scatter plot
+        _plt.scatter(confidence,cac,s = rf*relativeFrequencyScale,label = label)
         
-         # Plot errors if they have been calculated
+        # Plot errors if they have been calculated
         try : 
             if errorType == 'bars' : 
-                _plt.errorbar(self.data_rates.columns.get_level_values('confidence'),
-                              self.data_rates.loc['cac','central'],
+                _plt.errorbar(confidence,cac,
                               yerr = [self.data_rates.loc['cac','central']-self.data_rates.loc['cac','low'],
                                       self.data_rates.loc['cac','high']-self.data_rates.loc['cac','central']],
+                              xerr = [self.data_rates.loc['confidence','central']-self.data_rates.loc['confidence','low'],
+                                      self.data_rates.loc['confidence','high']-self.data_rates.loc['confidence','central']],
                               fmt='.',
                               capsize=5)
             elif errorType == 'band' : 
-                _plt.fill_between(self.data_rates.columns.get_level_values('confidence'),
+                _plt.fill_between(confidence,
                                   self.data_rates.loc['cac','low'],
                                   self.data_rates.loc['cac','high'],
                                   alpha=0.25)
@@ -508,12 +543,12 @@ class DataProcessed :
         else : 
             ax = _plt.gca()
             
-            xmin = self.data_rates.columns.get_level_values('confidence').min()
-            xmax = self.data_rates.columns.get_level_values('confidence').max()
+            xmin = confidence.min()
+            xmax = confidence.max()
             xdif = xmax-xmin 
 
-            ymin = self.data_rates.loc['cac','central'].min()
-            ymax = self.data_rates.loc['cac','central'].max()
+            ymin = cac.min()
+            ymax = cac.max()
             ydif = ymax-ymin
              
             ax.set_xlim(xmin-xdif*0.1, xmax+xdif*0.1)
