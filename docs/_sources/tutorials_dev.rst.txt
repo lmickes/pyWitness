@@ -75,7 +75,8 @@ Making a new likelihood  model
 Making a new Monte Carlo decision rule
 --------------------------------------
 
-
+Running tests
+-------------
 
 Interfacing R code
 ------------------
