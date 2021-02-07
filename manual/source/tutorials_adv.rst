@@ -278,7 +278,7 @@ Raw and processed data can be generated simply from a signal detection model.
 
    import pyWitness
    dr = pyWitness.DataRaw("test1.csv")
-   dr.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels= [1,2,3])
+   dr.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels= None)
    dp = dr.process()
    mf = pyWitness.ModelFitIndependentObservation(dp)
    mf.setEqualVariance()
@@ -296,6 +296,23 @@ share with colleagues.
    dr1 = mf.generateRawData(nGenParticipants=10000)
    dr1.writeCsv()
    dr1.writeExcel()
+
+So having performed a fit on ``dr`` and generated ``dr1`` a synthetic data set
+
+.. code-block :: python
+   :linenos:
+
+   # Need to process the synthetic data
+   dp1 = dr1.process()
+
+   # calculate uncertainties using bootstrap
+   dp.calculateConfidenceBootstrap()
+   dp1.calculateConfidenceBootstrap()
+
+   # plot ROCs
+   dp.plotROC()
+   dp1.plotROC()
+   mf.plotROC()
 
 Power analysis
 --------------

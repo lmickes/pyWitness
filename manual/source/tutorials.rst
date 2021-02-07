@@ -191,8 +191,11 @@ Some data are not catagories for but a continuous variable.
    dp = dr.process()
    dp.plotROC()
 
-The ``confidence`` column is relabelled to ``confidence-original`` and ``confidence`` is filled with labels. The mean and
-standard deviation is computed and filled in ``confidence-mean`` and ``confidence-std``. Here is an example of the raw data
+.. note::
+   ``labels==None`` can be used and the bins will be automatically labelled
+
+
+The ``confidence`` column is relabelled to ``confidence-original`` and ``confidence`` is filled with labels. Here is an example of the raw data
 (``dr.data``) after binning.
 
 .. code-block :: console
@@ -364,7 +367,7 @@ the experimental data to the model fit.
 
    import pyWitness
    dr = pyWitness.DataRaw("test1.csv")
-   dr.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels= [1,2,3])
+   dr.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels= None)
    dp = dr.process()
    mf = pyWitness.ModelFitIndependentObservation(dp)
    mf.setEqualVariance()
@@ -372,7 +375,18 @@ the experimental data to the model fit.
    mf.plotFit()
 
 .. figure:: images/test1_fitPlot.jpg
-   :alt: ROC for test1.csv
+   :alt: Data-model comparision for test1.csv
+
+Once a fit has been performed, the model can be displayed as a function of memory strenth. So lure and target
+distributions and the associated criteria. This a simple command belonging to a ModelFit object can be used to
+make the plot below.
+
+.. code-block :: python
+
+   mf.plotModel()
+
+.. figure:: images/test1_model.jpg
+   :alt: Independent Observation model fit.
 
 Writing results to file 
 -----------------------
