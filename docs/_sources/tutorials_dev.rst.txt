@@ -5,6 +5,8 @@ Making a new likelihood  model
 ------------------------------
 
 .. code-block :: python
+   :linenos:
+   :emphasize-lines: 9, 15, 22-26, 33-38, 44-48
 
     class ModelFitIntegration(ModelFit):
         def __init__(self, processedData, debug=False, integrationSigma=8):
@@ -83,3 +85,14 @@ Interfacing R code
 
 Interfacing Matlab code
 -----------------------
+
+Making the logo
+---------------
+
+.. code-block:: python
+
+    import pyWitness
+    dr = pyWitness.DataRaw("./test1.csv")
+    dp = dr.process()
+    dp.calculateConfidenceBootstrap(nBootstraps=80,plotROC=True)
+

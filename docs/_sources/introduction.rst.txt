@@ -18,13 +18,13 @@ Receiver operator characteristic (ROC)
 
 There are pacakges in R and MATLAB that smooth ROCS and calculate and statistically compare pAUCs. 
 
-   * pROC: an open-source package for R and S+ to analyze and compare ROC curves
-   * The ROC Toolbox: A MATLAB toolbox for analyzing ROCs derived from confidence ratings
+   * `pROC: an open-source package for R and S+ to analyze and compare ROC curves <https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-12-77>`_
+   * `The ROC Toolbox: A MATLAB toolbox for analyzing ROCs derived from confidence ratings <https://link.springer.com/article/10.3758/s13428-016-0796-z>`_
 
 Signal Detection Theory 
 -----------------------
 
-   * sdtlu: an open-source package for R to run signal detection model fits on lineup data
+   * `sdtlu: an open-source package for R to run signal detection model fits on lineup data <https://link.springer.com/article/10.3758/s13428-020-01402-7>`_
 
 Statistical tests 
 -----------------

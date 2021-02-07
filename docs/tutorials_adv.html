@@ -176,12 +176,15 @@ the bootstrap method. This method takes N random participants from the original 
 pyWitness can then proceed to compute any quantity (ROC, CAC, pAUC, fit parameters). This is repeated M
 times and the distribution of the computed quantity used to calculate a confidence interval with a user
 definable range.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
 <span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test1.csv&quot;</span><span class="p">)</span>
 <span class="n">dp</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
 <span class="n">dp</span><span class="o">.</span><span class="n">calculateConfidenceBootstrap</span><span class="p">(</span><span class="n">nBootstraps</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">cl</span><span class="o">=</span><span class="mi">95</span><span class="p">)</span>
 </pre></div>
-</div>
+</td></tr></table></div>
 <p>After calling <code class="docutils literal notranslate"><span class="pre">calculateConfidenceBootstrap</span></code> the rates table is populated with the 95% confidence limit
 data</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">                             confidence</span>
@@ -217,10 +220,11 @@ the confidence interval is drawn as error bars.</p>
 <div class="section" id="loading-raw-data-excel-format">
 <h2>Loading raw data excel format<a class="headerlink" href="#loading-raw-data-excel-format" title="Permalink to this headline">¶</a></h2>
 <p>If the file is in <code class="docutils literal notranslate"><span class="pre">excel</span></code> format you will need to specify which sheet the raw data is stored in</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
 <span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test2.xlsx&quot;</span><span class="p">,</span><span class="n">excelSheet</span> <span class="o">=</span> <span class="s2">&quot;raw data&quot;</span><span class="p">)</span>
 </pre></div>
-</div>
+</td></tr></table></div>
 </div>
 <div class="section" id="transforming-data-into-common-format">
 <h2>Transforming data into common format<a class="headerlink" href="#transforming-data-into-common-format" title="Permalink to this headline">¶</a></h2>

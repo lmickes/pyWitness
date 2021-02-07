@@ -11,6 +11,7 @@ times and the distribution of the computed quantity used to calculate a confiden
 definable range.
 
 .. code-block :: python
+   :linenos:
 
    import pyWitness
    dr = pyWitness.DataRaw("test1.csv")
@@ -57,7 +58,8 @@ Loading raw data excel format
 If the file is in ``excel`` format you will need to specify which sheet the raw data is stored in 
 
 .. code-block :: python 
-      
+   :linenos:
+
    import pyWitness
    dr = pyWitness.DataRaw("test2.xlsx",excelSheet = "raw data")
 
