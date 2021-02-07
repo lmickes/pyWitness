@@ -353,7 +353,7 @@ class ModelFit(object) :
                                   lineupSize=self.processedData.lineupSize,
                                   targetLineup="targetAbsent",
                                   responseType="suspectId",
-                                  confidence=i + 1,  # this should be confidence from DataRaw.
+                                  confidence=i+1,  # this should be confidence from DataRaw.
                                   n=int(gen_tasid_array[i]))
 
 
@@ -366,7 +366,7 @@ class ModelFit(object) :
                               confidence=i+1,                               # this should be confidence from DataRaw.
                               n=int(gen_tpfid_array[i]))
 
-        # generaet TP suspect
+        # generate TP suspect
         for i in range(0,len(gen_tpsid_array)) :
             dr.addParticipant(participantId=None,
                               lineupSize=self.processedData.lineupSize,
