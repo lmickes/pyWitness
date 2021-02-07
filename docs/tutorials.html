@@ -89,6 +89,7 @@
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorials</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#python">Python</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#loading-raw-experimental-data">Loading raw experimental data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#processing-raw-experimental-data">Processing raw experimental data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#plotting-roc-curves">Plotting ROC curves</a></li>
@@ -179,12 +180,43 @@ code are highlighted in yellow.</p>
 </div>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
-<p class="last">error bars, Processing raw experimental data for a particular experimental condition, Calculating pAUC and performing statistical tests,
-Fitting signal detection models to data</p>
+<p class="last">Calculating pAUC statistical tests,</p>
+</div>
+<div class="section" id="python">
+<h2>Python<a class="headerlink" href="#python" title="Permalink to this headline">¶</a></h2>
+<p>Python is a interpreted object oriented programming language. There is a large range
+of modules which python imported into python to provide extra functionality or features.
+pyWitness uses numpy (numerical arrays), scipy (fitting and functions), pandas
+(data frames), matplotlib (plotting), openpyxl (reading/writing excel),
+xlrd (reading/writing excel) and numba (compiler to speed up code).</p>
+<p>Python is best started from a terminal/command prompt</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">ipython3 --pylab</span>
+</pre></div>
+</div>
+<p>This then lands you in a python console window</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">Python 3.7.9 (default, Sep  6 2020, 16:32:30)</span>
+<span class="go">Type &#39;copyright&#39;, &#39;credits&#39; or &#39;license&#39; for more information</span>
+<span class="go">IPython 7.14.0 -- An enhanced Interactive Python. Type &#39;?&#39; for help.</span>
+
+<span class="go">In [1]:</span>
+</pre></div>
+</div>
+<p>Now commands can be typed in to execute python and pyWitness commands. There are some key tips
+which can speed up inputing commands into python</p>
+<blockquote>
+<div><ul class="simple">
+<li>Always try and cut and paste commands from the manual (this will reduce typos)</li>
+<li>Use the command history (up and down cursor arrows) to find commands that were used previously</li>
+<li>Use command history with search (so try <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">pyW</span></code> and then up arrow. This will search the
+command history with that command fragment and probably match with a previous <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">pyWitness</span></code></li>
+<li>A command can be completed by using <code class="docutils literal notranslate"><span class="pre">tab</span></code>. So try typing in <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">pyW</span></code> and then hitting <code class="docutils literal notranslate"><span class="pre">tab</span></code></li>
+</ul>
+</div></blockquote>
 </div>
 <div class="section" id="loading-raw-experimental-data">
 <h2>Loading raw experimental data<a class="headerlink" href="#loading-raw-experimental-data" title="Permalink to this headline">¶</a></h2>
-<p>A single Python class <a class="reference external" href="./moduledocs.html#pyWitness.DataRaw">pyWitness.DataRaw</a> is used to load raw data in either <code class="docutils literal notranslate"><span class="pre">csv</span></code> or <code class="docutils literal notranslate"><span class="pre">excel</span></code> format. The format of <code class="docutils literal notranslate"><span class="pre">test1.csv</span></code> is the same as that described in the introduction.</p>
+<p>A single Python class <a class="reference external" href="./moduledocs.html#pyWitness.DataRaw">pyWitness.DataRaw</a> is used to load raw data in
+either <code class="docutils literal notranslate"><span class="pre">csv</span></code> or <code class="docutils literal notranslate"><span class="pre">excel</span></code> format. The format of <code class="docutils literal notranslate"><span class="pre">test1.csv</span></code> is the same as that described in the introduction.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
 <span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test1.csv&quot;</span><span class="p">)</span>
 </pre></div>
@@ -192,7 +224,8 @@ Fitting signal detection models to data</p>
 </div>
 <div class="section" id="processing-raw-experimental-data">
 <h2>Processing raw experimental data<a class="headerlink" href="#processing-raw-experimental-data" title="Permalink to this headline">¶</a></h2>
-<p>To process the raw data the function <a class="reference external" href="./moduledocs.html#pyWitness.DataRaw.process">pyWitness.DataRaw.process</a> needs to be called on a raw data object. The calculates the cumulative rates from the raw data.</p>
+<p>To process the raw data the function <a class="reference external" href="./moduledocs.html#pyWitness.DataRaw.process">pyWitness.DataRaw.process</a>
+needs to be called on a raw data object. The calculates the cumulative rates from the raw data.</p>
 <div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
@@ -200,7 +233,8 @@ Fitting signal detection models to data</p>
 <span class="hll"><span class="n">dp</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
 </span></pre></div>
 </td></tr></table></div>
-<p>Once <a class="reference external" href="./moduledocs.html#pyWitness.DataRaw.process">pyWitness.DataRaw.process</a> is called two <code class="docutils literal notranslate"><span class="pre">DataFrames</span></code> are created one which contains a pivot table and another that contains rates</p>
+<p>Once <a class="reference external" href="./moduledocs.html#pyWitness.DataRaw.process">pyWitness.DataRaw.process</a> is called two <code class="docutils literal notranslate"><span class="pre">DataFrames</span></code> are
+created one which contains a pivot table and another that contains rates</p>
 <div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -281,7 +315,10 @@ Fitting signal detection models to data</p>
 </div>
 <div class="section" id="collapsing-the-catagorical-data">
 <h2>Collapsing the catagorical data<a class="headerlink" href="#collapsing-the-catagorical-data" title="Permalink to this headline">¶</a></h2>
-<p>The example in this tutorial as 11 confidence levels (0, 10, 20, 30, 40, 50, 60, 70, 80, 90 and 100). Typically categorical confidence levels need to be binned or collapsed. This is best performed on the raw data before calling <code class="docutils literal notranslate"><span class="pre">process()</span></code>. This is done with the <code class="docutils literal notranslate"><span class="pre">collapseCategoricalData</span></code> method of <code class="docutils literal notranslate"><span class="pre">DataRaw</span></code>. This is shown in example below, where the new bins are (0-60 map to 30, 70-80 to 75 and 90-100 to 95).</p>
+<p>The example in this tutorial as 11 confidence levels (0, 10, 20, 30, 40, 50, 60, 70, 80, 90 and 100). Typically
+categorical confidence levels need to be binned or collapsed. This is best performed on the raw data before calling
+<code class="docutils literal notranslate"><span class="pre">process()</span></code>. This is done with the <code class="docutils literal notranslate"><span class="pre">collapseCategoricalData</span></code> method of <code class="docutils literal notranslate"><span class="pre">DataRaw</span></code>. This is shown in example below,
+where the new bins are (0-60 map to 30, 70-80 to 75 and 90-100 to 95).</p>
 <div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -304,7 +341,8 @@ Fitting signal detection models to data</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">If you mess up the <code class="docutils literal notranslate"><span class="pre">collapseCategoricalData</span></code> the data might be inconsistent. To start with the original data so call <code class="docutils literal notranslate"><span class="pre">collapseCategoricalData</span></code> with <code class="docutils literal notranslate"><span class="pre">reload=True</span></code></p>
+<p class="last">If you mess up the <code class="docutils literal notranslate"><span class="pre">collapseCategoricalData</span></code> the data might be inconsistent. To start with the original data so
+call <code class="docutils literal notranslate"><span class="pre">collapseCategoricalData</span></code> with <code class="docutils literal notranslate"><span class="pre">reload=True</span></code></p>
 </div>
 </div>
 <div class="section" id="collapsing-binning-continuous-data">
@@ -321,8 +359,11 @@ Fitting signal detection models to data</p>
 <span class="n">dp</span><span class="o">.</span><span class="n">plotROC</span><span class="p">()</span>
 </pre></div>
 </td></tr></table></div>
-<p>The <code class="docutils literal notranslate"><span class="pre">confidence</span></code> column is relabelled to <code class="docutils literal notranslate"><span class="pre">confidence-original</span></code> and <code class="docutils literal notranslate"><span class="pre">confidence</span></code> is filled with labels. The mean and
-standard deviation is computed and filled in <code class="docutils literal notranslate"><span class="pre">confidence-mean</span></code> and <code class="docutils literal notranslate"><span class="pre">confidence-std</span></code>. Here is an example of the raw data
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">labels==None</span></code> can be used and the bins will be automatically labelled</p>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">confidence</span></code> column is relabelled to <code class="docutils literal notranslate"><span class="pre">confidence-original</span></code> and <code class="docutils literal notranslate"><span class="pre">confidence</span></code> is filled with labels. Here is an example of the raw data
 (<code class="docutils literal notranslate"><span class="pre">dr.data</span></code>) after binning.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">      Unnamed: 0  participantId  lineupSize   targetLineup responseType  confidence_original confidence  responseTime</span>
 <span class="go">0              0              1           6   targetAbsent     fillerId                   60          1          8330</span>
@@ -362,7 +403,8 @@ to calculate the most liberal point.</p>
 </div>
 <div class="section" id="fitting-signal-detection-models-to-data">
 <h2>Fitting signal detection models to data<a class="headerlink" href="#fitting-signal-detection-models-to-data" title="Permalink to this headline">¶</a></h2>
-<p>There are many models available in pyWitness. We’ll start with the independent observation model. To load and process the data is the same as before</p>
+<p>There are many models available in pyWitness. We’ll start with the independent observation model. To load and process
+the data is the same as before</p>
 <div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -512,7 +554,7 @@ the experimental data to the model fit.</p>
 7
 8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
 <span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test1.csv&quot;</span><span class="p">)</span>
-<span class="n">dr</span><span class="o">.</span><span class="n">collapseContinuousData</span><span class="p">(</span><span class="n">column</span> <span class="o">=</span> <span class="s2">&quot;confidence&quot;</span><span class="p">,</span><span class="n">bins</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">60</span><span class="p">,</span><span class="mi">80</span><span class="p">,</span><span class="mi">100</span><span class="p">],</span><span class="n">labels</span><span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+<span class="n">dr</span><span class="o">.</span><span class="n">collapseContinuousData</span><span class="p">(</span><span class="n">column</span> <span class="o">=</span> <span class="s2">&quot;confidence&quot;</span><span class="p">,</span><span class="n">bins</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">60</span><span class="p">,</span><span class="mi">80</span><span class="p">,</span><span class="mi">100</span><span class="p">],</span><span class="n">labels</span><span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
 <span class="n">dp</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
 <span class="n">mf</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">ModelFitIndependentObservation</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span>
 <span class="n">mf</span><span class="o">.</span><span class="n">setEqualVariance</span><span class="p">()</span>
@@ -521,12 +563,22 @@ the experimental data to the model fit.</p>
 </span></pre></div>
 </td></tr></table></div>
 <div class="figure">
-<img alt="ROC for test1.csv" src="_images/test1_fitPlot.jpg" />
+<img alt="Data-model comparision for test1.csv" src="_images/test1_fitPlot.jpg" />
+</div>
+<p>Once a fit has been performed, the model can be displayed as a function of memory strenth. So lure and target
+distributions and the associated criteria. This a simple command belonging to a ModelFit object can be used to
+make the plot below.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mf</span><span class="o">.</span><span class="n">plotModel</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="figure">
+<img alt="Independent Observation model fit." src="_images/test1_model.jpg" />
 </div>
 </div>
 <div class="section" id="writing-results-to-file">
 <h2>Writing results to file<a class="headerlink" href="#writing-results-to-file" title="Permalink to this headline">¶</a></h2>
-<p>The internal dataframes can be written to either <code class="docutils literal notranslate"><span class="pre">csv</span></code> or <code class="docutils literal notranslate"><span class="pre">xlsx</span></code> file format for further analysis. There are four functions belonging to <code class="docutils literal notranslate"><span class="pre">DataProcessed</span></code>.</p>
+<p>The internal dataframes can be written to either <code class="docutils literal notranslate"><span class="pre">csv</span></code> or <code class="docutils literal notranslate"><span class="pre">xlsx</span></code> file format for further analysis. There are four
+functions belonging to <code class="docutils literal notranslate"><span class="pre">DataProcessed</span></code>.</p>
 <blockquote>
 <div><ul class="simple">
 <li><code class="docutils literal notranslate"><span class="pre">writePivotExcel</span></code> writes the pivot table to excel</li>
@@ -581,7 +633,7 @@ the experimental data to the model fit.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright Royal Holloway, University of London 2020 and University of Bristol 2020
-      Last updated on Feb 02, 2021.
+      Last updated on Feb 07, 2021.
 
     </p>
   </div>

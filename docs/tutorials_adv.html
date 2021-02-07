@@ -224,8 +224,8 @@ the confidence interval is drawn as error bars.</p>
 </div>
 <div class="section" id="transforming-data-into-common-format">
 <h2>Transforming data into common format<a class="headerlink" href="#transforming-data-into-common-format" title="Permalink to this headline">¶</a></h2>
-<p>The raw experimental data does not have to be in the internal format used by pyWitness. As the data is loaded is it possible to replace
-the name of the data columns and the values stored.</p>
+<p>The raw experimental data does not have to be in the internal format used by pyWitness. As the data is loaded is it
+possible to replace the name of the data columns and the values stored.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
 <span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test2.csv&quot;</span><span class="p">,</span> <span class="n">dataMapping</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;lineupSize&quot;</span><span class="p">:</span><span class="s2">&quot;lineup_size&quot;</span><span class="p">,</span>
                                                   <span class="s2">&quot;targetLineup&quot;</span><span class="p">:</span><span class="s2">&quot;culprit_present&quot;</span><span class="p">,</span>
@@ -266,8 +266,8 @@ for DataRaw.process()</p>
 </div>
 <div class="section" id="loading-processed-data">
 <h2>Loading processed data<a class="headerlink" href="#loading-processed-data" title="Permalink to this headline">¶</a></h2>
-<p>You might already have processed the raw data. It is possible to load a file to perform model fits etc. The processed data needs
-to be in the following CSV format. This is basically the same format as the pivot table stored in <code class="docutils literal notranslate"><span class="pre">DataProcessed</span></code>.</p>
+<p>You might already have processed the raw data. It is possible to load a file to perform model fits etc. The processed
+data needs to be in the following CSV format. This is basically the same format as the pivot table stored in <code class="docutils literal notranslate"><span class="pre">DataProcessed</span></code>.</p>
 <table border="1" class="colwidths-given docutils" id="id1">
 <caption><span class="caption-text">Processed data columns and allowed values</span><a class="headerlink" href="#id1" title="Permalink to this table">¶</a></caption>
 <colgroup>
@@ -378,9 +378,12 @@ to be in the following CSV format. This is basically the same format as the pivo
 </div>
 <div class="section" id="using-instances-of-raw-data-processed-data-and-model-fits">
 <h2>Using instances of raw data, processed data and model fits<a class="headerlink" href="#using-instances-of-raw-data-processed-data-and-model-fits" title="Permalink to this headline">¶</a></h2>
-<p>Using an object orientated approach allows multiple instances (objects) to be created and manipulated. This allows lots of different
-data file, variations on the processed data and model fits to be manipulated simultanuously in a single Python session.</p>
-<p>A good example is collapsing data, one might want to check the effect of rebinning the data. So in the following example the <code class="docutils literal notranslate"><span class="pre">test1.csv</span></code> is processed twice, once with the original binning (<code class="docutils literal notranslate"><span class="pre">dr1</span></code> and <code class="docutils literal notranslate"><span class="pre">dp1</span></code>) and one with 3 confidence bins (<code class="docutils literal notranslate"><span class="pre">dr2</span></code> and <code class="docutils literal notranslate"><span class="pre">dp2</span></code>)</p>
+<p>Using an object orientated approach allows multiple instances (objects) to be created and manipulated. This allows lots
+of different data file, variations on the processed data and model fits to be manipulated simultanuously in a single
+Python session.</p>
+<p>A good example is collapsing data, one might want to check the effect of rebinning the data. So in the following example
+the <code class="docutils literal notranslate"><span class="pre">test1.csv</span></code> is processed twice, once with the original binning (<code class="docutils literal notranslate"><span class="pre">dr1</span></code> and <code class="docutils literal notranslate"><span class="pre">dp1</span></code>) and one with 3 confidence bins
+(<code class="docutils literal notranslate"><span class="pre">dr2</span></code> and <code class="docutils literal notranslate"><span class="pre">dp2</span></code>)</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
 <span class="n">dr1</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test1.csv&quot;</span><span class="p">)</span>
 <span class="n">dr2</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test1.csv&quot;</span><span class="p">)</span>
@@ -397,7 +400,8 @@ data file, variations on the processed data and model fits to be manipulated sim
 </div>
 <div class="section" id="overlaying-plots">
 <h2>Overlaying plots<a class="headerlink" href="#overlaying-plots" title="Permalink to this headline">¶</a></h2>
-<p>In general each <code class="docutils literal notranslate"><span class="pre">plotXXX</span></code> function does not create a canvas, so to overlay plots the functions need to be called sequentially in order.</p>
+<p>In general each <code class="docutils literal notranslate"><span class="pre">plotXXX</span></code> function does not create a canvas, so to overlay plots the functions need to be called
+sequentially in order.</p>
 <p>To make a legend the plots need to be given a label. So this example is the same as the</p>
 <div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -431,6 +435,11 @@ data file, variations on the processed data and model fits to be manipulated sim
 <div class="figure">
 <img alt="CAC for test1.csv with two different binning" src="_images/test1_overlay.jpg" />
 </div>
+<p>After overlaying plots it maybe important to change the plot axis ranges this can be done with <code class="docutils literal notranslate"><span class="pre">xlim</span></code> and <code class="docutils literal notranslate"><span class="pre">ylim</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="generating-data-from-signal-detection-model">
 <h2>Generating data from signal detection model<a class="headerlink" href="#generating-data-from-signal-detection-model" title="Permalink to this headline">¶</a></h2>
@@ -444,7 +453,7 @@ data file, variations on the processed data and model fits to be manipulated sim
 7
 8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
 <span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test1.csv&quot;</span><span class="p">)</span>
-<span class="n">dr</span><span class="o">.</span><span class="n">collapseContinuousData</span><span class="p">(</span><span class="n">column</span> <span class="o">=</span> <span class="s2">&quot;confidence&quot;</span><span class="p">,</span><span class="n">bins</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">60</span><span class="p">,</span><span class="mi">80</span><span class="p">,</span><span class="mi">100</span><span class="p">],</span><span class="n">labels</span><span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+<span class="n">dr</span><span class="o">.</span><span class="n">collapseContinuousData</span><span class="p">(</span><span class="n">column</span> <span class="o">=</span> <span class="s2">&quot;confidence&quot;</span><span class="p">,</span><span class="n">bins</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">60</span><span class="p">,</span><span class="mi">80</span><span class="p">,</span><span class="mi">100</span><span class="p">],</span><span class="n">labels</span><span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
 <span class="n">dp</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
 <span class="n">mf</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">ModelFitIndependentObservation</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span>
 <span class="n">mf</span><span class="o">.</span><span class="n">setEqualVariance</span><span class="p">()</span>
@@ -461,6 +470,30 @@ share with colleagues.</p>
 <span class="hll"><span class="n">dr1</span><span class="o">.</span><span class="n">writeCsv</span><span class="p">()</span>
 </span><span class="hll"><span class="n">dr1</span><span class="o">.</span><span class="n">writeExcel</span><span class="p">()</span>
 </span></pre></div>
+</td></tr></table></div>
+<p>So having performed a fit on <code class="docutils literal notranslate"><span class="pre">dr</span></code> and generated <code class="docutils literal notranslate"><span class="pre">dr1</span></code> a synthetic data set</p>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Need to process the synthetic data</span>
+<span class="n">dp1</span> <span class="o">=</span> <span class="n">dr1</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
+
+<span class="c1"># calculate uncertainties using bootstrap</span>
+<span class="n">dp</span><span class="o">.</span><span class="n">calculateConfidenceBootstrap</span><span class="p">()</span>
+<span class="n">dp1</span><span class="o">.</span><span class="n">calculateConfidenceBootstrap</span><span class="p">()</span>
+
+<span class="c1"># plot ROCs</span>
+<span class="n">dp</span><span class="o">.</span><span class="n">plotROC</span><span class="p">()</span>
+<span class="n">dp1</span><span class="o">.</span><span class="n">plotROC</span><span class="p">()</span>
+<span class="n">mf</span><span class="o">.</span><span class="n">plotROC</span><span class="p">()</span>
+</pre></div>
 </td></tr></table></div>
 </div>
 <div class="section" id="power-analysis">
@@ -493,7 +526,7 @@ performed and dependence on sample size can be explored.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright Royal Holloway, University of London 2020 and University of Bristol 2020
-      Last updated on Feb 04, 2021.
+      Last updated on Feb 07, 2021.
 
     </p>
   </div>
