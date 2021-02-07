@@ -368,8 +368,11 @@ class DataProcessed :
         cac_low                     = _np.percentile(cac,clLow,axis=0)
         cac_high                    = _np.percentile(cac,clHigh,axis=0)
 
-        confidence_low              = _np.percentile(confidence,clLow,axis=0)
-        confidence_high             = _np.percentile(confidence,clHigh,axis=0)
+        try :
+            confidence_low              = _np.percentile(confidence,clLow,axis=0)
+            confidence_high             = _np.percentile(confidence,clHigh,axis=0)
+        except :
+            pass
 
         targetAbsentFillerId_low    = _np.percentile(targetAbsentFillerId,clLow,axis=0)
         targetAbsentFillerId_high   = _np.percentile(targetAbsentFillerId,clHigh,axis=0)
@@ -396,8 +399,11 @@ class DataProcessed :
         self.data_rates = self.data_rates.append(_pandas.Series(cac_low, name = ('cac','low'), index = template.index))
         self.data_rates = self.data_rates.append(_pandas.Series(cac_high, name = ('cac','high'), index = template.index))
 
-        self.data_rates = self.data_rates.append(_pandas.Series(confidence_low, name = ('confidence','low'), index = template.index))
-        self.data_rates = self.data_rates.append(_pandas.Series(confidence_high, name = ('confidence','high'), index = template.index))
+        try :
+            self.data_rates = self.data_rates.append(_pandas.Series(confidence_low, name = ('confidence','low'), index = template.index))
+            self.data_rates = self.data_rates.append(_pandas.Series(confidence_high, name = ('confidence','high'), index = template.index))
+        except :
+            pass
 
         self.data_rates = self.data_rates.append(_pandas.Series(targetAbsentFillerId_low, name = ('targetAbsent','fillerId_low'), index = template.index))
         self.data_rates = self.data_rates.append(_pandas.Series(targetAbsentFillerId_high, name = ('targetAbsent','fillerId_high'), index = template.index))
