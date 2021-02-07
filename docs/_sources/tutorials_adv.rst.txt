@@ -221,7 +221,7 @@ the ``test1.csv`` is processed twice, once with the original binning (``dr1`` an
    dr1 = pyWitness.DataRaw("test1.csv")
    dr2 = pyWitness.DataRaw("test1.csv")
    
-   dr2.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels= [1,2,3])
+   dr2.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels=None)
 
    dp1 = dr1.process()
    dp2 = dr2.process()
@@ -245,7 +245,7 @@ To make a legend the plots need to be given a label. So this example is the same
    dr1 = pyWitness.DataRaw("test1.csv")
    dr2 = pyWitness.DataRaw("test1.csv")
    
-   dr2.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels= [1,2,3])
+   dr2.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels=None)
 
    dp1 = dr1.process()
    dp2 = dr2.process()
@@ -278,7 +278,7 @@ Raw and processed data can be generated simply from a signal detection model.
 
    import pyWitness
    dr = pyWitness.DataRaw("test1.csv")
-   dr.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels= None)
+   dr.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels=None)
    dp = dr.process()
    mf = pyWitness.ModelFitIndependentObservation(dp)
    mf.setEqualVariance()
@@ -291,9 +291,8 @@ share with colleagues.
 
 .. code-block :: python
    :linenos:
-   :emphasize-lines: 2-3
+   :emphasize-lines: 1-2
 
-   dr1 = mf.generateRawData(nGenParticipants=10000)
    dr1.writeCsv()
    dr1.writeExcel()
 
@@ -310,9 +309,12 @@ So having performed a fit on ``dr`` and generated ``dr1`` a synthetic data set
    dp1.calculateConfidenceBootstrap()
 
    # plot ROCs
-   dp.plotROC()
-   dp1.plotROC()
-   mf.plotROC()
+   dp.plotROC(label="Experimental data")
+   dp1.plotROC(label="Simulated data")
+   mf.plotROC(label="Model fit")
+
+   import matplotlib.pyplot as _plt
+   _plt.legend()
 
 .. figure:: images/test1_genEx.jpg
    :alt: Generated data comparision example
