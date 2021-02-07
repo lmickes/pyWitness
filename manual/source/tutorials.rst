@@ -42,6 +42,7 @@ which can speed up inputing commands into python
    * Use command history with search (so try ``import pyW`` and then up arrow. This will search the
      command history with that command fragment and probably match with a previous ``import pyWitness``
    * A command can be completed by using ``tab``. So try typing in ``import pyW`` and then hitting ``tab``
+   * To get help on a command type the function and then ``?`` so for example ``dp.plotROC?``
 
 Loading raw experimental data
 -----------------------------
