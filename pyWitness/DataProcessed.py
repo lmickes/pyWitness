@@ -659,7 +659,3 @@ class DataProcessed :
         '''
 
         self.data_pivot.to_excel(fileName, engine = engine)
-
-
-        
-    
