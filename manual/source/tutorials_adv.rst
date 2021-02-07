@@ -314,6 +314,9 @@ So having performed a fit on ``dr`` and generated ``dr1`` a synthetic data set
    dp1.plotROC()
    mf.plotROC()
 
+.. figure:: images/test1_genEx.jpg
+   :alt: Generated data comparision example
+
 Power analysis
 --------------
 
