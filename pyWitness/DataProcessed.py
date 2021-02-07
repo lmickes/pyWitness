@@ -277,7 +277,7 @@ class DataProcessed :
     def calculateNormalisedAUC(sef) : 
         pass
 
-    def calculateConfidenceBootstrap(self, nBootstraps = 200, cl = 95, plotROC = False) :
+    def calculateConfidenceBootstrap(self, nBootstraps = 200, cl = 95, plotROC = False, plotCAC = False) :
         
         # if already bootstrapped delete DataFrame rows
         if self.bootstrapped :
@@ -344,9 +344,13 @@ class DataProcessed :
 
             pAUC.append(dp.pAUC)
             
-            if plotROC : 
-                _plt.scatter(dp.data_rates.loc['targetAbsent','suspectId'],
-                             dp.data_rates.loc['targetPresent','suspectId'])
+            if plotROC :
+                _plt.figure(1)
+                dp.plotROC()
+
+            if plotCAC :
+                _plt.figure(2)
+                dp.plotCAC()
 
         cac                    = _np.array(cac)
 
