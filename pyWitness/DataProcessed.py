@@ -398,7 +398,8 @@ class DataProcessed :
 
         self.pAUC_low               = _np.percentile(pAUC,clLow)
         self.pAUC_high              = _np.percentile(pAUC,clHigh)
-                
+        self.pAUC_array             = pAUC
+
         template = self.data_rates.loc['cac','central']
         self.data_rates = self.data_rates.append(_pandas.Series(cac_low, name = ('cac','low'), index = template.index))
         self.data_rates = self.data_rates.append(_pandas.Series(cac_high, name = ('cac','high'), index = template.index))
