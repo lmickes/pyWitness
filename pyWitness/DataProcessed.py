@@ -155,7 +155,7 @@ class DataProcessed :
         Calculate average confidence for a bin. Result stored in data_rates['confidence']
         '''
 
-        confidence_mean = _copy.copy(self.data_rates.loc['targetAbsent','fillerId'])
+        confidence_mean = _copy.copy(self.data_rates.loc['targetPresent','suspectId'])
         confidence_mean.name = ("confidence","central")
 
         if self.dataRaw and self.dataRaw.collapseContinuous :
