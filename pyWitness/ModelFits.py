@@ -392,28 +392,52 @@ class ModelFit(object) :
         [pred_tarid, pred_tasid_array, pred_tafid_array, 
          pred_tprid, pred_tpsid_array, pred_tpfid_array] = self.calculateFrequenciesForAllCriteria()
 
-        chi2_tafid = 0 
-        chi2_tpsid = 0
-        chi2_tpfid = 0
-        chi2_tarid = 0
-        chi2_tprid = 0
-        for i in range(0,self.numberConditions) :
-            chi2_tafid = chi2_tafid + (self.processedData.data_pivot.loc['targetAbsent' ,'fillerId'][i]  - pred_tafid_array[i])**2 / abs(pred_tafid_array[i]) # No for showups (TODO)
-            chi2_tpsid = chi2_tpsid + (self.processedData.data_pivot.loc['targetPresent','suspectId'][i] - pred_tpsid_array[i])**2 / abs(pred_tpsid_array[i])
-            chi2_tpfid = chi2_tpfid + (self.processedData.data_pivot.loc['targetPresent','fillerId'][i]  - pred_tpfid_array[i])**2 / abs(pred_tpfid_array[i]) # No for showups (TODO)
+        if self.lineupSize != 1:
+            chi2_tafid = 0
+            chi2_tpsid = 0
+            chi2_tpfid = 0
+            chi2_tarid = 0
+            chi2_tprid = 0
 
-        chi2_tarid = (self.processedData.data_pivot.loc['targetAbsent' ,'rejectId'].sum() - pred_tarid)**2 / pred_tarid
-        chi2_tprid = (self.processedData.data_pivot.loc['targetPresent','rejectId'].sum() - pred_tprid)**2 / pred_tprid
+            for i in range(0,self.numberConditions) :
+                chi2_tafid = chi2_tafid + (self.processedData.data_pivot.loc['targetAbsent' ,'fillerId'][i]  - pred_tafid_array[i])**2 / abs(pred_tafid_array[i])
+                chi2_tpsid = chi2_tpsid + (self.processedData.data_pivot.loc['targetPresent','suspectId'][i] - pred_tpsid_array[i])**2 / abs(pred_tpsid_array[i])
+                chi2_tpfid = chi2_tpfid + (self.processedData.data_pivot.loc['targetPresent','fillerId'][i]  - pred_tpfid_array[i])**2 / abs(pred_tpfid_array[i])
 
-        chi2 = chi2_tafid + chi2_tpsid + chi2_tpfid + chi2_tarid + chi2_tprid
+            chi2_tarid = (self.processedData.data_pivot.loc['targetAbsent' ,'rejectId'].sum() - pred_tarid)**2 / pred_tarid
+            chi2_tprid = (self.processedData.data_pivot.loc['targetPresent','rejectId'].sum() - pred_tprid)**2 / pred_tprid
 
-        if self.debug : 
-            print('chi2 total', chi2)
-            print('chi2 tafid', chi2_tafid)
-            print('chi2 tarid', chi2_tarid)
-            print('chi2 tpfid', chi2_tpfid)
-            print('chi2 tpsid', chi2_tpsid)
-            print('chi2 tprid', chi2_tprid)
+            chi2 = chi2_tafid + chi2_tpsid + chi2_tpfid + chi2_tarid + chi2_tprid
+
+            if self.debug:
+                print('chi2 total', chi2)
+                print('chi2 tafid', chi2_tafid)
+                print('chi2 tarid', chi2_tarid)
+                print('chi2 tpfid', chi2_tpfid)
+                print('chi2 tpsid', chi2_tpsid)
+                print('chi2 tprid', chi2_tprid)
+
+        else :
+            chi2_ta = 0
+            chi2_tp = 0
+
+            for i in range(0,self.numberConditions) :
+                #chi2_ta = chi2_ta + (self.processedData.data_pivot.loc['targetAbsent' ,'suspectId'][i] + self.processedData.data_pivot.loc['targetAbsent' ,'rejectId'][i] -
+                #                     pred_tasid_array[i])**2 / abs(self.processedData.data_pivot.loc['targetAbsent' ,'suspectId'][i] + self.processedData.data_pivot.loc['targetAbsent' ,'rejectId'][i])
+                #chi2_tp = chi2_tp + (self.processedData.data_pivot.loc['targetPresent','suspectId'][i] + self.processedData.data_pivot.loc['targetPresent','rejectId'][i] -
+                #                     pred_tpsid_array[i])**2 / abs(self.processedData.data_pivot.loc['targetPresent','suspectId'][i] + self.processedData.data_pivot.loc['targetPresent','rejectId'][i])
+
+                chi2_ta = chi2_ta + (self.processedData.data_pivot.loc['targetAbsent' ,'suspectId'][i] + self.processedData.data_pivot.loc['targetAbsent' ,'rejectId'][i] -
+                                     pred_tasid_array[i])**2 / abs(pred_tasid_array[i])
+                chi2_tp = chi2_tp + (self.processedData.data_pivot.loc['targetPresent','suspectId'][i] + self.processedData.data_pivot.loc['targetPresent','rejectId'][i] -
+                                     pred_tpsid_array[i])**2 / abs(pred_tpsid_array[i])
+
+            chi2 = chi2_ta + chi2_tp
+
+            if self.debug:
+                print('chi2 total', chi2)
+                print('chi2 ta', chi2_ta)
+                print('chi2 tp', chi2_tp)
         
         self.iteration = self.iteration+1
         return chi2        
@@ -488,7 +512,13 @@ class ModelFit(object) :
         # Tight layout for plot
         _plt.tight_layout()
 
-    def plotFit(self) : 
+    def plotFit(self):
+        if self.lineupSize != 1 :
+            self.plotFitLineup()
+        else :
+            self.plotFitShowup()
+
+    def plotFitLineup(self) :
 
         [pred_tarid,
          pred_tasid_array, 
@@ -516,7 +546,7 @@ class ModelFit(object) :
                       _np.sqrt(self.processedData.data_pivot.loc['targetAbsent' ,'fillerId']),
                       fmt='o',
                       markersize=5,
-                      capsize=5) 
+                      capsize=5)
         _plt.ylabel("TA Filler ID")
 
         # tasid data plot
@@ -527,7 +557,7 @@ class ModelFit(object) :
                       _np.sqrt(self.processedData.data_pivot.loc['targetPresent' ,'suspectId']),
                       fmt='o',
                       markersize=5,
-                      capsize=5) 
+                      capsize=5)
         _plt.ylabel("TP Suspect ID")
 
         # tpfid data plot
@@ -538,7 +568,7 @@ class ModelFit(object) :
                       _np.sqrt(self.processedData.data_pivot.loc['targetPresent' ,'fillerId']),
                       fmt='o',
                       markersize=5,
-                      capsize=5)  
+                      capsize=5)
         _plt.ylabel("TP Filler ID")
 
         # tarid data plot
@@ -562,8 +592,41 @@ class ModelFit(object) :
                       markersize=5,
                       capsize=5)  
         _plt.ylabel("TP Reject ID")
-            
-    def plotROC(self, criterion1 = 0, criterion2 = 5, nsteps = 50, label = "Indep model" ) :
+
+    def plotFitShowup(self):
+
+        [pred_tarid,
+         pred_tasid_array,
+         pred_tafid_array,
+         pred_tprid,
+         pred_tpsid_array,
+         pred_tpfid_array] = self.calculateFrequenciesForAllCriteria()
+
+        x = range(0, pred_tasid_array.size, 1)
+
+        fig = _plt.figure()
+        _plt.subplot(2,1,1)
+
+        _plt.bar(x, pred_tasid_array, fill=False)
+        _plt.errorbar(x,
+                      self.processedData.data_pivot.loc['targetAbsent', 'suspectId'] + self.processedData.data_pivot.loc['targetAbsent', 'rejectId'],
+                      _np.sqrt(self.processedData.data_pivot.loc['targetAbsent', 'suspectId'] + self.processedData.data_pivot.loc['targetAbsent', 'rejectId']),
+                      fmt='o',
+                      markersize=5,
+                      capsize=5)
+        _plt.ylabel("TA frequencies")
+
+        _plt.subplot(2,1,2)
+        _plt.bar(x, pred_tpsid_array, fill=False)
+        _plt.errorbar(x,
+                      self.processedData.data_pivot.loc['targetPresent', 'suspectId'] + self.processedData.data_pivot.loc['targetPresent', 'rejectId'],
+                      _np.sqrt(self.processedData.data_pivot.loc['targetPresent', 'suspectId'] + self.processedData.data_pivot.loc['targetPresent', 'rejectId']),
+                      fmt='o',
+                      markersize=5,
+                      capsize=5)
+        _plt.ylabel("TP frequencies")
+
+    def plotROC(self, criterion1 = -10, criterion2 = 10, nsteps = 100, label = "Indep model" ) :
         
         rate_tafid_array = []
         rate_tpfid_array = []
@@ -571,7 +634,7 @@ class ModelFit(object) :
         
         for x in _np.linspace(criterion1,criterion2,nsteps) : 
             [pred_tafid, pred_tpsid, pred_tpfid] = self.calculateCumulativeFrequencyForCriterion(x)
-                       
+
             rate_tafid_array.append(pred_tafid/self.lineupSize/self.numberTALineups)
             rate_tpfid_array.append(pred_tpfid/self.numberTPLineups)
             rate_tpsid_array.append(pred_tpsid/self.numberTPLineups)
