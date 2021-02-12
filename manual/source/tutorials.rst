@@ -3,7 +3,7 @@ Tutorials
 
 .. warning::
    The data files used in this tutorial are stored in ``pyWitness/data/tutorial/``. It is a good idea to copy these files to your working 
-   directory change directoy ``cd`` to that directory. This tutorial builds up! Between each example and previous examples the new lines of 
+   directory change directoy ``cd`` to that directory. This tutorial builds up! Between each example and the previous examples, the new lines of 
    code are highlighted in yellow.
 
 .. warning::
@@ -34,15 +34,15 @@ This then lands you in a python console window
 
    In [1]:
 
-Now commands can be typed in to execute python and pyWitness commands. There are some key tips
-which can speed up inputing commands into python
+Commands can now be typed in to execute python and pyWitness commands. There are some helpful tips
+to speed up inputing commands 
 
-   * Always try and cut and paste commands from the manual (this will reduce typos)
+   * Cut and paste commands from the manual (this will reduce typos)
    * Use the command history (up and down cursor arrows) to find commands that were used previously
    * Use command history with search (so try ``import pyW`` and then up arrow. This will search the
      command history with that command fragment and probably match with a previous ``import pyWitness``
-   * A command can be completed by using ``tab``. So try typing in ``import pyW`` and then hitting ``tab``
-   * To get help on a command type the function and then ``?`` so for example ``dp.plotROC?``
+   * A command can be completed by using ``tab``. Try typing in ``import pyW`` and then pressing ``tab``
+   * To get help on a command, type the function and then ``?`` for example, ``dp.plotROC?``
 
 Loading raw experimental data
 -----------------------------
@@ -58,7 +58,7 @@ either ``csv`` or ``excel`` format. The format of ``test1.csv`` is the same as t
 Processing raw experimental data
 --------------------------------
 To process the raw data the function `pyWitness.DataRaw.process <./moduledocs.html#pyWitness.DataRaw.process>`_
-needs to be called on a raw data object. The calculates the cumulative rates from the raw data.
+needs to be called on a raw data object. This calculates the cumulative rates from the raw data.
 
 .. code-block :: python 
    :linenos:
@@ -69,7 +69,7 @@ needs to be called on a raw data object. The calculates the cumulative rates fro
    dp = dr.process()
 
 Once `pyWitness.DataRaw.process <./moduledocs.html#pyWitness.DataRaw.process>`_ is called two ``DataFrames`` are
-created one which contains a pivot table and another that contains rates
+created one which contains a pivot table and another that contains rates.
 
 .. code-block :: python 
    :linenos:
@@ -81,7 +81,7 @@ created one which contains a pivot table and another that contains rates
    dp.printPivot()
    dp.printRates()
 
-You should see  the output of the ``dp.printPivot()``
+You should see the output of the ``dp.printPivot()``
 
 .. code-block :: console
 
@@ -152,7 +152,7 @@ Plotting RAC curves
 Collapsing the catagorical data
 -------------------------------
 
-The example in this tutorial as 11 confidence levels (0, 10, 20, 30, 40, 50, 60, 70, 80, 90 and 100). Typically
+The example in this tutorial has 11 confidence levels (0, 10, 20, 30, 40, 50, 60, 70, 80, 90 and 100). Typically
 categorical confidence levels need to be binned or collapsed. This is best performed on the raw data before calling
 ``process()``. This is done with the ``collapseCategoricalData`` method of ``DataRaw``. This is shown in example below,
 where the new bins are (0-60 map to 30, 70-80 to 75 and 90-100 to 95).
@@ -220,8 +220,8 @@ The ``confidence`` column is relabelled to ``confidence-original`` and ``confide
 Calculating pAUC and performing statistical tests
 -------------------------------------------------
 
-Partial area under the curve is calculated when ``dr.process()`` is called. Simpsons rule is integrate the area
-under the ROC upto a maximum value. If the maximum value is between two data points linear interpolation is used
+pAUC is calculated when ``dr.process()`` is called. Simpsons rule is integrate the area
+under the ROC curve up to a maximum value. If the maximum value is between two data points linear interpolation is used
 to calculate the most liberal point.
 
 .. code-block :: python
@@ -287,7 +287,7 @@ After creating the ``mf`` object (line 9) the parameters are at their default va
    c3 2.0 (free)
 
 Typically you would want to control the fit parameters. ``setEqualVariance`` sets some default model which is
-an appropriate start so line 12 yields
+an appropriate start; line 12 yields
 
 .. code-block :: console
 
@@ -378,7 +378,7 @@ the experimental data to the model fit.
 .. figure:: images/test1_fitPlot.jpg
    :alt: Data-model comparision for test1.csv
 
-Once a fit has been performed, the model can be displayed as a function of memory strenth. So lure and target
+Once a fit has been performed, the model can be displayed as a function of memory strenth and includes the lure and target
 distributions and the associated criteria. This a simple command belonging to a ModelFit object can be used to
 make the plot below.
 
