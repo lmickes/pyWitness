@@ -55,6 +55,7 @@ class DataRaw :
         if fileName != '' :
             self.loadData()
             self.renameRawData()
+            self.checkData()
         else :
             self.data = None
 
@@ -171,6 +172,20 @@ class DataRaw :
         self.data['responseType'] = self.data['responseType'].map({self.dataMapping['suspectId']:'suspectId',
                                                                    self.dataMapping['fillerId']:'fillerId',
                                                                    self.dataMapping['rejectId']:'rejectId'}) 
+
+    def checkData(self):
+
+        print('DataRaw.checkData>')
+
+        lineupSize   = _np.unique(self.data['lineupSize'])
+        targetLineup = _np.unique(self.data['targetLineup'])
+        responseType = _np.unique(self.data['responseType'])
+        confidence   = _np.unique(self.data['confidence'])
+
+        print('lineupSize',lineupSize)
+        print('targetLineup',targetLineup)
+        print('responseType',responseType)
+        print('confidence',confidence)
 
     def collapseCategoricalData(self, 
                                 column = "confidence", 
@@ -297,9 +312,28 @@ class DataRaw :
         return self._data_processed
 
     def writeCsv(self, fileName):
-        pass
+        '''
+        Write raw data Dataframe to csv file
+
+        :param fileName: File name of the excel file to write
+        :type fileName: str
+        '''
+
+        self.data.to_csv(fileName)
+
 
     def writeExcel(self, fileName, engine = 'openpyxl'):
+        '''
+        Write raw data Dataframe to excel file
+
+        :param fileName: File name of the excel file to write
+        :type fileName: str
+        :param engine: Excel output engine
+        :type engine: str
+        :rtype: None
+
+        '''
+
         self.data.to_excel(fileName, engine = engine)
 
 
