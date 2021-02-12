@@ -7,7 +7,7 @@ Requirements
 ------------
 
 pyWitness is developed exclusively for Python 3, the numpy/scipy/matplotlib ecosystem are used for data analysis. 
-These packages are required
+The following packages are required:
 
   * python > 3.7
   * ipython
