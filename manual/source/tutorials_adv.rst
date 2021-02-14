@@ -86,9 +86,9 @@ possible to replace the name of the data columns and the values stored.
 Processing data for a single condition
 --------------------------------------
 
-So a single data file might have multiple different experimental condtions. So imagine your data file 
+A single data file might have multiple different experimental condtions. Imagine your data file 
 has a column labelled ``Condition`` and the values for each participant is either ``Sequential`` or 
-``Simultaneous``. So to proccess only the ``Sequential`` participants the following options are required
+``Simultaneous``. To proccess only the ``Sequential`` participants the following options are required
 for DataRaw.process() 
 
 .. code-block :: python
@@ -99,8 +99,8 @@ for DataRaw.process()
    dr = pyWitness.DataRaw("test1.csv")
    dp = dr.process("Condition","Sequential")   
 
-So if you had a file with multiple conditions it would be very straight forward to make multiple 
-``DataProcessed`` for each condition, so like the following 
+So if you had a file with multiple conditions it would be straightforward to make multiple 
+``DataProcessed`` for each condition, as in the following 
 
 .. code-block :: python
    :linenos:
@@ -209,11 +209,11 @@ This data is stored in ``data/tutorials/test1_processed.csv``
 Using instances of raw data, processed data and model fits
 ----------------------------------------------------------
 
-Using an object orientated approach allows multiple instances (objects) to be created and manipulated. This allows lots
-of different data file, variations on the processed data and model fits to be manipulated simultanuously in a single
+Using an object orientated approach allows multiple instances (objects) to be created and manipulated. This allows many
+different data file variations on the processed data and model fits to be manipulated simultanuously in a single
 Python session.
 
-A good example is collapsing data, one might want to check the effect of rebinning the data. So in the following example
+A good example is collapsing data, one might want to check the effect of rebinning the data. In the following example,
 the ``test1.csv`` is processed twice, once with the original binning (``dr1`` and ``dp1``) and one with 3 confidence bins
 (``dr2`` and ``dp2``)
 
@@ -234,7 +234,7 @@ the ``test1.csv`` is processed twice, once with the original binning (``dr1`` an
 Overlaying plots
 ----------------
 
-In general each ``plotXXX`` function does not create a canvas, so to overlay plots the functions need to be called
+In general, each ``plotXXX`` function does not create a canvas, so to overlay plots the functions need to be called
 sequentially in order.
 
 To make a legend the plots need to be given a label. So this example is the same as the 
@@ -288,7 +288,7 @@ Raw and processed data can be generated simply from a signal detection model.
    dr1 = mf.generateRawData(nGenParticipants=10000)
 
 ``dr1`` is a ``DataRaw`` object and is simulated data for 10,000 participants. ``dr1`` can be used for any
-pyWitness analysis so ROC, CAC, (p)AUC etc. The raw data can also be written to disk to either preserve or
+pyWitness analysis so ROC, CAC, pAUC, etc. The raw data can also be written to disk to either preserve and/or
 share with colleagues.
 
 .. code-block :: python
@@ -298,7 +298,7 @@ share with colleagues.
    dr1.writeCsv("fileName.csv")
    dr1.writeExcel("fileName.xlsx")
 
-So having performed a fit on ``dr`` and generated ``dr1`` a synthetic data set
+So having performed a fit on ``dr`` and generated ``dr1`` a synthetic dataset
 
 .. code-block :: python
    :linenos:
@@ -324,7 +324,7 @@ So having performed a fit on ``dr`` and generated ``dr1`` a synthetic data set
 Power analysis
 --------------
 
-Having the ability to generate data from a model it is possible to vary the number of generated participants.
-This is not too dissimilar to boot strapping. Instead of generating new samples (with replacement) from the
+By having the ability to generate data from a model it is possible to vary the number of generated participants.
+This is not too dissimilar to bootstrapping. Instead of generating new samples (with replacement) from the
 data, new samples with variable numbers of participants is possible. For each sample all the analysis can be
 performed and dependence on sample size can be explored.
