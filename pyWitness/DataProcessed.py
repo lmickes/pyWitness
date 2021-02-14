@@ -2,6 +2,7 @@ import pandas as _pandas
 import matplotlib.pyplot as _plt
 import numpy as _np
 import scipy.integrate as _integrate
+import scipy.special as _special
 import copy as _copy
 
 class DataProcessed :
@@ -49,6 +50,8 @@ class DataProcessed :
         self.calculateRelativeFrequency()
         self.calculateCAC()
         self.calculatePAUC()
+        self.calculateNormalisedAUC()
+        self.calculateDPrime()
 
         self.bootstrapped = False
 
@@ -168,6 +171,15 @@ class DataProcessed :
 
             self.data_rates = self.data_rates.append(confidence_mean)
             self.data_rates = self.data_rates.sort_index()
+        else :
+            confidence_mean = _copy.copy(self.data_rates.loc['targetPresent', 'suspectId'])
+            confidence_mean.name = ("confidence", "central")
+
+            confidence = self.data_rates.columns.get_level_values('confidence').values
+            confidence_mean[:] = confidence
+
+            self.data_rates = self.data_rates.append(confidence_mean)
+            self.data_rates = self.data_rates.sort_index()
 
     def calculateRelativeFrequency(self) :
 
@@ -274,8 +286,30 @@ class DataProcessed :
 
         return self.pAUC
 
-    def calculateNormalisedAUC(sef) : 
+    def calculateNormalisedAUC(self) :
         pass
+
+    def calculateDPrime(self):
+        zT = _special.ndtri(self.data_rates.loc['targetPresent','suspectId'])
+        zL = _special.ndtri(self.data_rates.loc['targetAbsent','suspectId'])
+
+        dPrime = zT - zL
+        dPrime.name = ("dprime", "central")
+
+        self.data_rates = self.data_rates.append(dPrime)
+        self.data_rates = self.data_rates.sort_index()
+
+        c = self.data_rates.columns.get_level_values('confidence').values
+
+        if self.lineupSize == 1 :
+            # lowest positive confidence
+            posConf = _np.sort(c[c>0])
+            lowPosConf = posConf[0]
+            self.dPrime = self.data_rates.loc['dprime','central']['confidence'][lowPosConf]
+        else :
+            conf = _np.sort(c)
+            lowConf = conf[0]
+            self.dPrime = self.data_rates.loc['dprime', 'central']['confidence'][lowConf]
 
     def calculateConfidenceBootstrap(self, nBootstraps = 200, cl = 95, plotROC = False, plotCAC = False) :
         
