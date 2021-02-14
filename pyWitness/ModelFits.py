@@ -94,7 +94,12 @@ class Parameter(object) :
         return self.name+" "+repr(self.value)+" ("+fixStr+")"
 
 class ModelFit(object) :
-    def __init__(self, processedData, debug = False, integrationSigma = 6) :
+    def __init__(self, processedData, debug = False, integrationSigma = 6, chi2Var = 'expected') :
+
+        # check chi2Var variable
+        if chi2Var != 'expected' and chi2Var != 'observed' :
+            print("chi2Var should be 'expected'|'observed'")
+
         self.processedData    = processedData 
         self.numberConditions = processedData.numberConditions
         self.lineupSize       = processedData.lineupSize
@@ -105,6 +110,7 @@ class ModelFit(object) :
         self.iteration        = 0
         self.debug            = debug
         self.integrationSigma = integrationSigma
+        self.chi2Var          = chi2Var
 
         # parameters 
         self.parameterNames     = []
@@ -164,8 +170,20 @@ class ModelFit(object) :
         self.targetSigma.fixed = True
         self.lureBetweenSigma.set_equal(self.targetBetweenSigma)
         self.targetBetweenSigma.fixed = True
-        self.targetBetweenSigma.value = 0.0
-        
+        self.targetBetweenSigma.value = 0.1
+
+    def setUnequalVariance(self) :
+        self.lureMean.value = 0.0
+        self.lureMean.fixed = True
+        self.lureSigma.value = 1.0
+        self.lureSigma.fixed = True
+        self.targetMean.value = 1.0
+        self.targetSigma.value = 1.0
+        self.targetSigma.fixed = False
+        self.lureBetweenSigma.set_equal(self.targetBetweenSigma)
+        self.targetBetweenSigma.fixed = True
+        self.targetBetweenSigma.value = 0.1
+
     def calculateWithinSigmas(self) :
         self.lureWithinSigma    = _np.sqrt(self.lureSigma.value**2   - self.lureBetweenSigma.value**2)
         self.targetWithinSigma  = _np.sqrt(self.targetSigma.value**2 - self.targetBetweenSigma.value**2)
@@ -289,14 +307,20 @@ class ModelFit(object) :
     def monteCarloDecision(self,pred_tafid_array, pred_tpsid_array, pred_tpfid_array, memoryStrength) :
         pass
 
-    def generateRawData(self, nGenParticipants = 10000, tasid = False) :
+    def generateRawData(self, nGenParticipants = 10000, tasid = False):
+        if self.lineupSize != 1 :
+            return self.generateRawDataLineup(nGenParticipants = nGenParticipants, tasid = tasid)
+        else :
+            return self.generateRawDataShowup(nGenParticipants = nGenParticipants, tasid = tasid)
+
+
+    def generateRawDataLineup(self, nGenParticipants = 10000, tasid = False) :
         [pred_tarid,
          pred_tasid_array,
          pred_tafid_array,
          pred_tprid,
          pred_tpsid_array,
          pred_tpfid_array]  = self.calculateFrequenciesForAllCriteria()
-
 
         nParticipants = pred_tarid+pred_tafid_array.sum() + pred_tprid+pred_tpsid_array.sum()+pred_tpfid_array.sum()
 
@@ -377,6 +401,62 @@ class ModelFit(object) :
 
         return dr
 
+    def generateRawDataShowup(self, nGenParticipants = 10000, tasid = False) :
+        [pred_tarid,
+         pred_tasid_array,
+         pred_tafid_array,
+         pred_tprid,
+         pred_tpsid_array,
+         pred_tpfid_array]  = self.calculateFrequenciesForAllCriteria()
+
+        nParticipants = pred_tasid_array.sum() + pred_tpsid_array.sum()
+
+        gen_tasid_array = _np.round(pred_tasid_array/nParticipants*nGenParticipants)
+        gen_tpsid_array = _np.round(pred_tpsid_array/nParticipants*nGenParticipants)
+
+        print(nParticipants)
+
+        print(pred_tasid_array)
+        print(pred_tpsid_array)
+
+        print(gen_tasid_array)
+        print(gen_tpsid_array)
+
+        dr = _DataRaw('')
+
+        confidence = self.processedData.data_rates.columns.get_level_values('confidence').values[-1::-1]
+
+        # target absent
+        for i in range(0,len(gen_tasid_array)) :
+
+            if i <= len(gen_tasid_array)/2 :
+                responseType = "rejectId"
+            else :
+                responseType = "suspectId"
+
+            dr.addParticipant(participantId=None,
+                              lineupSize=self.processedData.lineupSize,
+                              targetLineup="targetAbsent",
+                              responseType=responseType,
+                              confidence=confidence[i],
+                              n=int(gen_tasid_array[i]))
+
+        # target present
+        for i in range(0,len(gen_tpsid_array)) :
+            if i <= len(gen_tasid_array)/2:
+                responseType = "rejectId"
+            else:
+                responseType = "suspectId"
+
+            dr.addParticipant(participantId=None,
+                              lineupSize=self.processedData.lineupSize,
+                              targetLineup="targetPresent",
+                              responseType=responseType,
+                              confidence=confidence[i],
+                              n=int(gen_tpsid_array[i]))
+
+        return dr
+
     def calculateChi2(self, params) : 
 
         freeParams = self.freeParameterList()
@@ -400,12 +480,28 @@ class ModelFit(object) :
             chi2_tprid = 0
 
             for i in range(0,self.numberConditions) :
-                chi2_tafid = chi2_tafid + (self.processedData.data_pivot.loc['targetAbsent' ,'fillerId'][i]  - pred_tafid_array[i])**2 / abs(pred_tafid_array[i])
-                chi2_tpsid = chi2_tpsid + (self.processedData.data_pivot.loc['targetPresent','suspectId'][i] - pred_tpsid_array[i])**2 / abs(pred_tpsid_array[i])
-                chi2_tpfid = chi2_tpfid + (self.processedData.data_pivot.loc['targetPresent','fillerId'][i]  - pred_tpfid_array[i])**2 / abs(pred_tpfid_array[i])
+                if self.chi2Var == "observed" :
+                    var_tafid = self.processedData.data_pivot.loc['targetAbsent' ,'fillerId'][i]
+                    var_tpsid = self.processedData.data_pivot.loc['targetPresent','suspectId'][i]
+                    var_tpfid = self.processedData.data_pivot.loc['targetPresent','fillerId'][i]
+                elif self.chi2Var == "expected" :
+                    var_tafid = abs(pred_tafid_array[i])
+                    var_tpsid = abs(pred_tpsid_array[i])
+                    var_tpfid = abs(pred_tpfid_array[i])
 
-            chi2_tarid = (self.processedData.data_pivot.loc['targetAbsent' ,'rejectId'].sum() - pred_tarid)**2 / pred_tarid
-            chi2_tprid = (self.processedData.data_pivot.loc['targetPresent','rejectId'].sum() - pred_tprid)**2 / pred_tprid
+                chi2_tafid = chi2_tafid + (self.processedData.data_pivot.loc['targetAbsent' ,'fillerId'][i]  - pred_tafid_array[i])**2 / var_tafid
+                chi2_tpsid = chi2_tpsid + (self.processedData.data_pivot.loc['targetPresent','suspectId'][i] - pred_tpsid_array[i])**2 / var_tpsid
+                chi2_tpfid = chi2_tpfid + (self.processedData.data_pivot.loc['targetPresent','fillerId'][i]  - pred_tpfid_array[i])**2 / var_tpfid
+
+            if self.chi2Var == "observed":
+                var_tarid = pred_tarid
+                var_tprid = pred_tprid
+            elif self.chi2Var == "expected" :
+                var_tarid = self.processedData.data_pivot.loc['targetAbsent' ,'rejectId'].sum()
+                var_tprid = self.processedData.data_pivot.loc['targetPresent','rejectId'].sum()
+
+            chi2_tarid = (self.processedData.data_pivot.loc['targetAbsent' ,'rejectId'].sum() - pred_tarid)**2 / var_tarid
+            chi2_tprid = (self.processedData.data_pivot.loc['targetPresent','rejectId'].sum() - pred_tprid)**2 / var_tprid
 
             chi2 = chi2_tafid + chi2_tpsid + chi2_tpfid + chi2_tarid + chi2_tprid
 
@@ -422,15 +518,17 @@ class ModelFit(object) :
             chi2_tp = 0
 
             for i in range(0,self.numberConditions) :
-                #chi2_ta = chi2_ta + (self.processedData.data_pivot.loc['targetAbsent' ,'suspectId'][i] + self.processedData.data_pivot.loc['targetAbsent' ,'rejectId'][i] -
-                #                     pred_tasid_array[i])**2 / abs(self.processedData.data_pivot.loc['targetAbsent' ,'suspectId'][i] + self.processedData.data_pivot.loc['targetAbsent' ,'rejectId'][i])
-                #chi2_tp = chi2_tp + (self.processedData.data_pivot.loc['targetPresent','suspectId'][i] + self.processedData.data_pivot.loc['targetPresent','rejectId'][i] -
-                #                     pred_tpsid_array[i])**2 / abs(self.processedData.data_pivot.loc['targetPresent','suspectId'][i] + self.processedData.data_pivot.loc['targetPresent','rejectId'][i])
+                if self.chi2Var == "observed" :
+                    var_ta = abs(self.processedData.data_pivot.loc['targetAbsent' ,'suspectId'][i] + self.processedData.data_pivot.loc['targetAbsent' ,'rejectId'][i])
+                    var_tp = abs(self.processedData.data_pivot.loc['targetPresent','suspectId'][i] + self.processedData.data_pivot.loc['targetPresent','rejectId'][i])
+                elif self.chi2Var == "expected" :
+                    var_ta = abs(pred_tasid_array[i])
+                    var_tp = abs(pred_tpsid_array[i])
 
                 chi2_ta = chi2_ta + (self.processedData.data_pivot.loc['targetAbsent' ,'suspectId'][i] + self.processedData.data_pivot.loc['targetAbsent' ,'rejectId'][i] -
-                                     pred_tasid_array[i])**2 / abs(pred_tasid_array[i])
+                                     pred_tasid_array[i])**2 / var_ta
                 chi2_tp = chi2_tp + (self.processedData.data_pivot.loc['targetPresent','suspectId'][i] + self.processedData.data_pivot.loc['targetPresent','rejectId'][i] -
-                                     pred_tpsid_array[i])**2 / abs(pred_tpsid_array[i])
+                                     pred_tpsid_array[i])**2 / var_tp
 
             chi2 = chi2_ta + chi2_tp
 
@@ -465,6 +563,8 @@ class ModelFit(object) :
 
         print(opt)
 
+        self.calculateD()
+
         # self.thresholds = opt['x'][0:self.numberConditions]
 
     def calculateConfidenceBootstrap(self, nBootstraps = 200) :
@@ -495,6 +595,9 @@ class ModelFit(object) :
             c1.append(self.c1.value)
 
         return [chi2,c1]
+
+    def calculateD(self):
+        self.d = (self.targetMean.value - self.lureMean.value) / _np.sqrt( (self.targetSigma.value**2 + self.lureSigma.value**2)/2.0 )
 
     def plotModel(self, xlow = -5, xhigh = 5) : 
         x      = _np.linspace(xlow, xhigh,200) 
@@ -644,47 +747,37 @@ class ModelFit(object) :
     def plotCAC(self, nsteps = 50, label = "Indep model") :
         
         # need to create look up between confidence and criterion
-        confidence = self.processedData.data_rates.columns.get_level_values('confidence')
-        criterion  = self.thresholds[-1::-1]
-
-        print(confidence)
-        print(criterion)
-
-        confidenceMin = confidence.min()
-        confidenceMax = confidence.max()
-
-        confCriterionInterpol = _interpolate.interp1d(confidence, criterion)
-        
-        confidence_array = []
+        confidence = self.processedData.data_rates.loc['confidence','central']
 
         rate_tafid_array = []
         rate_tasid_array = []
         rate_tpfid_array = []
         rate_tpsid_array = []
-        
-        for x in _np.linspace(confidenceMin,confidenceMax,nsteps) : 
-            [pred_tafid, pred_tpsid, pred_tpfid] = self.calculateFrequencyForCriterion(confCriterionInterpol(x))
-        
-            confidence_array.append(x)
-            rate_tafid_array.append(pred_tafid/self.numberTALineups)
-            rate_tasid_array.append(pred_tafid/self.lineupSize/self.numberTALineups)
-            rate_tpfid_array.append(pred_tpfid/self.numberTPLineups)
-            rate_tpsid_array.append(pred_tpsid/self.numberTPLineups)
+
+        for i in range(0,len(self.thresholds),1) :
+            if i < len(self.thresholds)-1 :
+                [pred_tafid, pred_tpsid, pred_tpfid] = self.calculateFrequencyForCriterion(self.thresholds[i+1], self.thresholds[i])
+            else :
+                [pred_tafid, pred_tpsid, pred_tpfid] = self.calculateCumulativeFrequencyForCriterion(self.thresholds[i])
+
+            rate_tafid_array.append(pred_tafid)
+            rate_tasid_array.append(pred_tafid/self.lineupSize)
+            rate_tpfid_array.append(pred_tpfid)
+            rate_tpsid_array.append(pred_tpsid)
             
-        confidence_array = _np.array(confidence_array)
         rate_tafid_array = _np.array(rate_tafid_array)
         rate_tasid_array = _np.array(rate_tasid_array)
         rate_tpfid_array = _np.array(rate_tpfid_array)
         rate_tpsid_array = _np.array(rate_tpsid_array)
 
-        cac = rate_tpsid_array/(rate_tpsid_array+rate_tafid_array)
-        
-        _plt.plot(confidence_array, cac, linestyle = '--', label=label)
+        cac = rate_tpsid_array/(rate_tpsid_array+rate_tasid_array)
+
+        _plt.plot(confidence[-1::-1], cac, linestyle = '--', label=label)
 
 ###########################################################################################################################################
 class ModelFitIndependentObservationSimple(ModelFit) :
-    def __init__(self, processedData, debug = False, integrationSigma = 8) :
-        ModelFit.__init__(self,processedData, debug = debug, integrationSigma = integrationSigma)
+    def __init__(self, processedData, debug = False, integrationSigma = 8, chi2Var = 'expected') :
+        ModelFit.__init__(self,processedData, debug = debug, integrationSigma = integrationSigma, chi2Var = chi2Var)
         
     def calculateCumulativeFrequencyForCriterion(self, c) :
         # target ID in target present lineups 
@@ -717,8 +810,8 @@ class ModelFitIndependentObservationSimple(ModelFit) :
 
 ###########################################################################################################################################
 class ModelFitIndependentObservation(ModelFit) :
-    def __init__(self, processedData, debug = False, integrationSigma = 8) :
-        ModelFit.__init__(self,processedData, debug = debug, integrationSigma = integrationSigma)
+    def __init__(self, processedData, debug = False, integrationSigma = 8, chi2Var = 'expected') :
+        ModelFit.__init__(self,processedData, debug = debug, integrationSigma = integrationSigma, chi2Var = chi2Var)
 
     def setEqualVariance(self) :
         super().setEqualVariance()
@@ -777,8 +870,8 @@ class ModelFitIndependentObservation(ModelFit) :
 
 ###########################################################################################################################################
 class ModelFitBestRest(ModelFit):
-    def __init__(self, processedData, debug=False, integrationSigma=8):
-        ModelFit.__init__(self, processedData, debug=debug, integrationSigma=integrationSigma)
+    def __init__(self, processedData, debug=False, integrationSigma=8, chi2Var = 'expected'):
+        ModelFit.__init__(self, processedData, debug=debug, integrationSigma=integrationSigma, chi2Var = chi2Var)
 
     def mean(self, w, lm, ls, tm, ts, nlineup):
         tlm = truncatedMean(lm, ls, w)
@@ -858,8 +951,8 @@ class ModelFitBestRest(ModelFit):
 
 ###########################################################################################################################################
 class ModelFitEnsemble(ModelFit) :
-    def __init__(self, processedData, debug = False, integrationSigma = 8) :
-        ModelFit.__init__(self,processedData, debug = debug, integrationSigma = integrationSigma)
+    def __init__(self, processedData, debug = False, integrationSigma = 8, chi2Var = 'expected') :
+        ModelFit.__init__(self,processedData, debug = debug, integrationSigma = integrationSigma, chi2Var = chi2Var)
 
     def mean(self,w, lm, ls, tm, ts, nlineup) :
         tlm = truncatedMean(lm,ls,w)
@@ -930,8 +1023,8 @@ class ModelFitEnsemble(ModelFit) :
 
 ###########################################################################################################################################
 class ModelFitIntegration(ModelFit):
-    def __init__(self, processedData, debug=False, integrationSigma=8):
-        ModelFit.__init__(self, processedData, debug=debug, integrationSigma=integrationSigma)
+    def __init__(self, processedData, debug=False, integrationSigma=8, chi2Var = 'expected'):
+        ModelFit.__init__(self, processedData, debug=debug, integrationSigma=integrationSigma, chi2Var = chi2Var)
 
     def mean(self,w, lm, ls, tm, ts, nlineup) :
         tlm = truncatedMean(lm,ls,w)
