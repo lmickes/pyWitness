@@ -100,6 +100,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#calculating-pauc-and-performing-statistical-tests">Calculating pAUC and performing statistical tests</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#fitting-signal-detection-models-to-data">Fitting signal detection models to data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#plotting-fit-and-models">Plotting fit and models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#d-prime-calculation">d-prime calculation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#writing-results-to-file">Writing results to file</a></li>
 </ul>
 </li>
@@ -552,10 +553,12 @@ the experimental data to the model fit.</p>
 4
 5
 6
-7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
 <span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test1.csv&quot;</span><span class="p">)</span>
 <span class="n">dr</span><span class="o">.</span><span class="n">collapseContinuousData</span><span class="p">(</span><span class="n">column</span> <span class="o">=</span> <span class="s2">&quot;confidence&quot;</span><span class="p">,</span><span class="n">bins</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">60</span><span class="p">,</span><span class="mi">80</span><span class="p">,</span><span class="mi">100</span><span class="p">],</span><span class="n">labels</span><span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
 <span class="n">dp</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
+<span class="n">dp</span><span class="o">.</span><span class="n">calculateConfidenceBootstrap</span><span class="p">(</span><span class="n">nBootstraps</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
 <span class="n">mf</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">ModelFitIndependentObservation</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span>
 <span class="n">mf</span><span class="o">.</span><span class="n">setEqualVariance</span><span class="p">()</span>
 <span class="n">mf</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
@@ -598,6 +601,59 @@ make the plot below.</p>
 </div>
 <div class="figure">
 <img alt="Independent Observation model fit." src="_images/test1_model.jpg" />
+</div>
+</div>
+<div class="section" id="d-prime-calculation">
+<h2>d-prime calculation<a class="headerlink" href="#d-prime-calculation" title="Permalink to this headline">¶</a></h2>
+<p>The d-prime can be calculated by computing</p>
+<div class="math notranslate nohighlight">
+\[d^{\prime} = Z(R_{T,i}) - Z(R_{L,i})\]</div>
+<p>where <span class="math notranslate nohighlight">\(R_{T,i}\)</span> is the cumulative rate for targets (<span class="math notranslate nohighlight">\(T\)</span>) with confidence <span class="math notranslate nohighlight">\(i\)</span>, <span class="math notranslate nohighlight">\(R_{L,i}\)</span> is the cumulative
+rate for lures (<span class="math notranslate nohighlight">\(L\)</span>) with confidence <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(Z\)</span> is the inverse normal CDF. This can be evaluated for every
+confidence bin, but there are conventions for lineups and showups. For all confidence levels <span class="math notranslate nohighlight">\(d^{\prime}\)</span> is stored in the rates
+dataframe, so <code class="docutils literal notranslate"><span class="pre">dp.printRates()</span></code> gives</p>
+<div class="highlight-console notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">                           confidence</span>
+<span class="go">confidence                          3          2          1</span>
+<span class="go">targetLineup  responseType</span>
+<span class="go">cac           central        0.956357   0.940618   0.839228</span>
+<span class="go">confidence    central       95.588235  74.859335  44.778068</span>
+<span class="hll"><span class="go">dprime        central        1.433207   1.748223   1.767339</span>
+</span><span class="go">rf                           0.264691   0.422903   0.312406</span>
+<span class="go">targetAbsent  fillerId       0.044660   0.141748   0.335922</span>
+<span class="go">              rejectId       0.217476   0.473786   0.664078</span>
+<span class="go">              suspectId      0.007443   0.023625   0.055987</span>
+<span class="go">targetPresent fillerId       0.018832   0.080979   0.152542</span>
+<span class="go">              rejectId       0.080979   0.163842   0.276836</span>
+<span class="go">              suspectId      0.158192   0.406780   0.570621</span>
+</pre></div>
+</td></tr></table></div>
+<dl class="docutils">
+<dt>A member variable <code class="docutils literal notranslate"><span class="pre">dPrime</span></code> in <code class="docutils literal notranslate"><span class="pre">DataProcessed</span></code> is set according to</dt>
+<dd><ul class="first last simple">
+<li>Lineup convention <span class="math notranslate nohighlight">\(d^{\prime}\)</span> is the lowest confidence (most liberal) so <code class="docutils literal notranslate"><span class="pre">dp.dPrime</span></code> is <code class="docutils literal notranslate"><span class="pre">1.767339</span></code></li>
+<li>Showup convention <span class="math notranslate nohighlight">\(d^{\prime}\)</span> is the lowest positive confidence</li>
+</ul>
+</dd>
+</dl>
+<p><span class="math notranslate nohighlight">\(d\)</span> can also be calculated from a signal detection model so</p>
+<div class="math notranslate nohighlight">
+\[d = \frac{\mu_{T} - \mu_{L}}{ \sqrt{\frac{\sigma_T^2 + \sigma_L^2}{2}} }\]</div>
+<p>This is calculated from the fit parameters for the fits described in the previous section so</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">In [X]: mf.d</span>
+<span class="go">Out[X]: 1.6671878567242588</span>
+</pre></div>
 </div>
 </div>
 <div class="section" id="writing-results-to-file">
@@ -683,6 +739,7 @@ functions belonging to <code class="docutils literal notranslate"><span class="p
         <script type="text/javascript" src="_static/jquery.js"></script>
         <script type="text/javascript" src="_static/underscore.js"></script>
         <script type="text/javascript" src="_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
 
   
