@@ -364,15 +364,46 @@ the experimental data to the model fit.
 
 .. code-block :: python
    :linenos:
-   :emphasize-lines: 8
 
    import pyWitness
    dr = pyWitness.DataRaw("test1.csv")
    dr.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels= None)
    dp = dr.process()
+   dp.calculateConfidenceBootstrap(nBootstraps=200)
    mf = pyWitness.ModelFitIndependentObservation(dp)
    mf.setEqualVariance()
    mf.fit()
+
+To compare a *ROC* plot between data and fit
+
+.. code-block :: python
+
+   dp.plotROC(label="Data")
+   mf.plotROC(label="Indep. obs. fit")
+
+   import matplotlib.pyplot _plt
+   _plt.legend
+
+.. figure:: images/test1_fitDataROCComparision.jpg
+   :alt: Data-model ROC comparision for test1.csv
+
+To compare a *CAC* plot between data and fit
+
+.. code-block :: python
+
+   dp.plotCAC(label="Data")
+   mf.plotCAC(label="Indep. obs. fit")
+
+   import matplotlib.pyplot _plt
+   _plt.legend
+
+.. figure:: images/test1_fitDataCACComparision.jpg
+   :alt: Data-model CAC comparision for test1.csv
+
+To compare frequencies in each bin between data and fit
+
+.. code-block :: python
+
    mf.plotFit()
 
 .. figure:: images/test1_fitPlot.jpg
