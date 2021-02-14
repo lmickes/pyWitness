@@ -420,6 +420,56 @@ make the plot below.
 .. figure:: images/test1_model.jpg
    :alt: Independent Observation model fit.
 
+
+d-prime calculation
+-------------------
+
+The d-prime can be calculated by computing
+
+.. math ::
+
+   d^{\prime} = Z(R_{T,i}) - Z(R_{L,i})
+
+where :math:`R_{T,i}` is the cumulative rate for targets (:math:`T`) with confidence :math:`i`, :math:`R_{L,i}` is the cumulative
+rate for lures (:math:`L`) with confidence :math:`i` and :math:`Z` is the inverse normal CDF. This can be evaluated for every
+confidence bin, but there are conventions for lineups and showups. For all confidence levels :math:`d^{\prime}` is stored in the rates
+dataframe, so ``dp.printRates()`` gives
+
+.. code-block :: console
+   :linenos:
+   :emphasize-lines: 6
+
+                              confidence
+   confidence                          3          2          1
+   targetLineup  responseType
+   cac           central        0.956357   0.940618   0.839228
+   confidence    central       95.588235  74.859335  44.778068
+   dprime        central        1.433207   1.748223   1.767339
+   rf                           0.264691   0.422903   0.312406
+   targetAbsent  fillerId       0.044660   0.141748   0.335922
+                 rejectId       0.217476   0.473786   0.664078
+                 suspectId      0.007443   0.023625   0.055987
+   targetPresent fillerId       0.018832   0.080979   0.152542
+                 rejectId       0.080979   0.163842   0.276836
+                 suspectId      0.158192   0.406780   0.570621
+
+A member variable ``dPrime`` in ``DataProcessed`` is set according to
+   * Lineup convention :math:`d^{\prime}` is the lowest confidence (most liberal) so ``dp.dPrime`` is ``1.767339``
+   * Showup convention :math:`d^{\prime}` is the lowest positive confidence
+
+:math:`d` can also be calculated from a signal detection model so
+
+.. math ::
+
+   d = \frac{\mu_{T} - \mu_{L}}{ \sqrt{\frac{\sigma_T^2 + \sigma_L^2}{2}} }
+
+This is calculated from the fit parameters for the fits described in the previous section so
+
+.. code-block :: console
+
+   In [X]: mf.d
+   Out[X]: 1.6671878567242588
+
 Writing results to file 
 -----------------------
 
