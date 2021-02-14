@@ -552,17 +552,41 @@ the experimental data to the model fit.</p>
 4
 5
 6
-7
-8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
 <span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test1.csv&quot;</span><span class="p">)</span>
 <span class="n">dr</span><span class="o">.</span><span class="n">collapseContinuousData</span><span class="p">(</span><span class="n">column</span> <span class="o">=</span> <span class="s2">&quot;confidence&quot;</span><span class="p">,</span><span class="n">bins</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">60</span><span class="p">,</span><span class="mi">80</span><span class="p">,</span><span class="mi">100</span><span class="p">],</span><span class="n">labels</span><span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
 <span class="n">dp</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
 <span class="n">mf</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">ModelFitIndependentObservation</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span>
 <span class="n">mf</span><span class="o">.</span><span class="n">setEqualVariance</span><span class="p">()</span>
 <span class="n">mf</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
-<span class="hll"><span class="n">mf</span><span class="o">.</span><span class="n">plotFit</span><span class="p">()</span>
-</span></pre></div>
+</pre></div>
 </td></tr></table></div>
+<p>To compare a <em>ROC</em> plot between data and fit</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dp</span><span class="o">.</span><span class="n">plotROC</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Data&quot;</span><span class="p">)</span>
+<span class="n">mf</span><span class="o">.</span><span class="n">plotROC</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Indep. obs. fit&quot;</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="n">_plt</span>
+<span class="n">_plt</span><span class="o">.</span><span class="n">legend</span>
+</pre></div>
+</div>
+<div class="figure">
+<img alt="Data-model ROC comparision for test1.csv" src="_images/test1_fitDataROCComparision.jpg" />
+</div>
+<p>To compare a <em>CAC</em> plot between data and fit</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dp</span><span class="o">.</span><span class="n">plotCAC</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Data&quot;</span><span class="p">)</span>
+<span class="n">mf</span><span class="o">.</span><span class="n">plotCAC</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Indep. obs. fit&quot;</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="n">_plt</span>
+<span class="n">_plt</span><span class="o">.</span><span class="n">legend</span>
+</pre></div>
+</div>
+<div class="figure">
+<img alt="Data-model CAC comparision for test1.csv" src="_images/test1_fitDataCACComparision.jpg" />
+</div>
+<p>To compare frequencies in each bin between data and fit</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mf</span><span class="o">.</span><span class="n">plotFit</span><span class="p">()</span>
+</pre></div>
+</div>
 <div class="figure">
 <img alt="Data-model comparision for test1.csv" src="_images/test1_fitPlot.jpg" />
 </div>
