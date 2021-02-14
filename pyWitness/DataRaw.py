@@ -266,6 +266,25 @@ class DataRaw :
 
         return data_copy
 
+    def shuffle(self):
+        self.data = self.data.sample(frac=1).reset_index(drop=True)
+
+    def resampleParticipantTrial(self, nTrial = 100, iParticipant = 0):
+
+        # TODO : Guard against going out of data range (iParticipant+1)*nTrial > length of data frame
+
+        data_copy = DataRaw('', self.excelSheet, self.dataMapping)
+        data_copy.data = self.data[iParticipant*nTrial:(iParticipant+1)*nTrial]
+
+        if self.collapseContinuous :
+            data_copy.collapseContinuous       = self.collapseContinuous
+            data_copy.collapseContinuousColumn = self.collapseContinuousColumn
+            data_copy.collapseContinuousBins   = self.collapseContinuousBins
+            data_copy.collapseContinuousLabels = self.collapseContinuousLabels
+
+        return data_copy
+
+
     def addParticipant(self, participantId = None, lineupSize = 6, targetLineup = "targetPresent",
                        responseType = "suspectId", confidence = 0, n = 1):
 
