@@ -175,7 +175,7 @@
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p class="last">The data files used in this tutorial are stored in <code class="docutils literal notranslate"><span class="pre">pyWitness/data/tutorial/</span></code>. It is a good idea to copy these files to your working
-directory change directoy <code class="docutils literal notranslate"><span class="pre">cd</span></code> to that directory. This tutorial builds up! Between each example and previous examples the new lines of
+directory change directoy <code class="docutils literal notranslate"><span class="pre">cd</span></code> to that directory. This tutorial builds up! Between each example and the previous examples, the new lines of
 code are highlighted in yellow.</p>
 </div>
 <div class="admonition warning">
@@ -201,16 +201,16 @@ xlrd (reading/writing excel) and numba (compiler to speed up code).</p>
 <span class="go">In [1]:</span>
 </pre></div>
 </div>
-<p>Now commands can be typed in to execute python and pyWitness commands. There are some key tips
-which can speed up inputing commands into python</p>
+<p>Commands can now be typed in to execute python and pyWitness commands. There are some helpful tips
+to speed up inputing commands</p>
 <blockquote>
 <div><ul class="simple">
-<li>Always try and cut and paste commands from the manual (this will reduce typos)</li>
+<li>Cut and paste commands from the manual (this will reduce typos)</li>
 <li>Use the command history (up and down cursor arrows) to find commands that were used previously</li>
 <li>Use command history with search (so try <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">pyW</span></code> and then up arrow. This will search the
 command history with that command fragment and probably match with a previous <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">pyWitness</span></code></li>
-<li>A command can be completed by using <code class="docutils literal notranslate"><span class="pre">tab</span></code>. So try typing in <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">pyW</span></code> and then hitting <code class="docutils literal notranslate"><span class="pre">tab</span></code></li>
-<li>To get help on a command type the function and then <code class="docutils literal notranslate"><span class="pre">?</span></code> so for example <code class="docutils literal notranslate"><span class="pre">dp.plotROC?</span></code></li>
+<li>A command can be completed by using <code class="docutils literal notranslate"><span class="pre">tab</span></code>. Try typing in <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">pyW</span></code> and then pressing <code class="docutils literal notranslate"><span class="pre">tab</span></code></li>
+<li>To get help on a command, type the function and then <code class="docutils literal notranslate"><span class="pre">?</span></code> for example, <code class="docutils literal notranslate"><span class="pre">dp.plotROC?</span></code></li>
 </ul>
 </div></blockquote>
 </div>
@@ -226,7 +226,7 @@ either <code class="docutils literal notranslate"><span class="pre">csv</span></
 <div class="section" id="processing-raw-experimental-data">
 <h2>Processing raw experimental data<a class="headerlink" href="#processing-raw-experimental-data" title="Permalink to this headline">¶</a></h2>
 <p>To process the raw data the function <a class="reference external" href="./moduledocs.html#pyWitness.DataRaw.process">pyWitness.DataRaw.process</a>
-needs to be called on a raw data object. The calculates the cumulative rates from the raw data.</p>
+needs to be called on a raw data object. This calculates the cumulative rates from the raw data.</p>
 <div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
@@ -235,7 +235,7 @@ needs to be called on a raw data object. The calculates the cumulative rates fro
 </span></pre></div>
 </td></tr></table></div>
 <p>Once <a class="reference external" href="./moduledocs.html#pyWitness.DataRaw.process">pyWitness.DataRaw.process</a> is called two <code class="docutils literal notranslate"><span class="pre">DataFrames</span></code> are
-created one which contains a pivot table and another that contains rates</p>
+created one which contains a pivot table and another that contains rates.</p>
 <div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -247,7 +247,7 @@ created one which contains a pivot table and another that contains rates</p>
 </span><span class="hll"><span class="n">dp</span><span class="o">.</span><span class="n">printRates</span><span class="p">()</span>
 </span></pre></div>
 </td></tr></table></div>
-<p>You should see  the output of the <code class="docutils literal notranslate"><span class="pre">dp.printPivot()</span></code></p>
+<p>You should see the output of the <code class="docutils literal notranslate"><span class="pre">dp.printPivot()</span></code></p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">                           confidence</span>
 <span class="go">confidence                        0    10   20    30    40    50    60    70    80    90    100</span>
 <span class="go">targetLineup  responseType</span>
@@ -316,7 +316,7 @@ created one which contains a pivot table and another that contains rates</p>
 </div>
 <div class="section" id="collapsing-the-catagorical-data">
 <h2>Collapsing the catagorical data<a class="headerlink" href="#collapsing-the-catagorical-data" title="Permalink to this headline">¶</a></h2>
-<p>The example in this tutorial as 11 confidence levels (0, 10, 20, 30, 40, 50, 60, 70, 80, 90 and 100). Typically
+<p>The example in this tutorial has 11 confidence levels (0, 10, 20, 30, 40, 50, 60, 70, 80, 90 and 100). Typically
 categorical confidence levels need to be binned or collapsed. This is best performed on the raw data before calling
 <code class="docutils literal notranslate"><span class="pre">process()</span></code>. This is done with the <code class="docutils literal notranslate"><span class="pre">collapseCategoricalData</span></code> method of <code class="docutils literal notranslate"><span class="pre">DataRaw</span></code>. This is shown in example below,
 where the new bins are (0-60 map to 30, 70-80 to 75 and 90-100 to 95).</p>
@@ -387,8 +387,8 @@ call <code class="docutils literal notranslate"><span class="pre">collapseCatego
 </div>
 <div class="section" id="calculating-pauc-and-performing-statistical-tests">
 <h2>Calculating pAUC and performing statistical tests<a class="headerlink" href="#calculating-pauc-and-performing-statistical-tests" title="Permalink to this headline">¶</a></h2>
-<p>Partial area under the curve is calculated when <code class="docutils literal notranslate"><span class="pre">dr.process()</span></code> is called. Simpsons rule is integrate the area
-under the ROC upto a maximum value. If the maximum value is between two data points linear interpolation is used
+<p>pAUC is calculated when <code class="docutils literal notranslate"><span class="pre">dr.process()</span></code> is called. Simpsons rule is integrate the area
+under the ROC curve up to a maximum value. If the maximum value is between two data points linear interpolation is used
 to calculate the most liberal point.</p>
 <div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
@@ -460,7 +460,7 @@ the data is the same as before</p>
 </pre></div>
 </div>
 <p>Typically you would want to control the fit parameters. <code class="docutils literal notranslate"><span class="pre">setEqualVariance</span></code> sets some default model which is
-an appropriate start so line 12 yields</p>
+an appropriate start; line 12 yields</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">lureMean 0.0 (fixed)</span>
 <span class="go">lureSigma 1.0 (fixed targetSigma)</span>
 <span class="go">targetMean 1.0 (free)</span>
@@ -566,7 +566,7 @@ the experimental data to the model fit.</p>
 <div class="figure">
 <img alt="Data-model comparision for test1.csv" src="_images/test1_fitPlot.jpg" />
 </div>
-<p>Once a fit has been performed, the model can be displayed as a function of memory strenth. So lure and target
+<p>Once a fit has been performed, the model can be displayed as a function of memory strenth and includes the lure and target
 distributions and the associated criteria. This a simple command belonging to a ModelFit object can be used to
 make the plot below.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mf</span><span class="o">.</span><span class="n">plotModel</span><span class="p">()</span>
@@ -634,7 +634,7 @@ functions belonging to <code class="docutils literal notranslate"><span class="p
   <div role="contentinfo">
     <p>
         &copy; Copyright Royal Holloway, University of London 2020 and University of Bristol 2020
-      Last updated on Feb 07, 2021.
+      Last updated on Feb 14, 2021.
 
     </p>
   </div>

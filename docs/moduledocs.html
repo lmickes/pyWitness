@@ -360,6 +360,11 @@ may be incomplete.</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="pyWitness.DataRaw.checkData">
+<code class="descname">checkData</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyWitness.DataRaw.checkData" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
 <dt id="pyWitness.DataRaw.collapseCategoricalData">
 <code class="descname">collapseCategoricalData</code><span class="sig-paren">(</span><em>column='confidence'</em>, <em>map={0: 30</em>, <em>10: 30</em>, <em>20: 30</em>, <em>30: 30</em>, <em>40: 30</em>, <em>50: 30</em>, <em>60: 30</em>, <em>70: 75</em>, <em>80: 75</em>, <em>90: 95</em>, <em>100: 95}</em>, <em>reload=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pyWitness.DataRaw.collapseCategoricalData" title="Permalink to this definition">¶</a></dt>
 <dd><p>Take values of column and convert to new values in map</p>
@@ -407,6 +412,16 @@ may be incomplete.</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="pyWitness.DataRaw.shuffle">
+<code class="descname">shuffle</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyWitness.DataRaw.shuffle" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyWitness.DataRaw.resampleParticipantTrial">
+<code class="descname">resampleParticipantTrial</code><span class="sig-paren">(</span><em>nTrial=100</em>, <em>iParticipant=0</em><span class="sig-paren">)</span><a class="headerlink" href="#pyWitness.DataRaw.resampleParticipantTrial" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
 <dt id="pyWitness.DataRaw.addParticipant">
 <code class="descname">addParticipant</code><span class="sig-paren">(</span><em>participantId=None</em>, <em>lineupSize=6</em>, <em>targetLineup='targetPresent'</em>, <em>responseType='suspectId'</em>, <em>confidence=0</em>, <em>n=1</em><span class="sig-paren">)</span><a class="headerlink" href="#pyWitness.DataRaw.addParticipant" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -436,12 +451,37 @@ may be incomplete.</p>
 <dl class="method">
 <dt id="pyWitness.DataRaw.writeCsv">
 <code class="descname">writeCsv</code><span class="sig-paren">(</span><em>fileName</em><span class="sig-paren">)</span><a class="headerlink" href="#pyWitness.DataRaw.writeCsv" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Write raw data Dataframe to csv file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>fileName</strong> (<em>str</em>) – File name of the excel file to write</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="pyWitness.DataRaw.writeExcel">
 <code class="descname">writeExcel</code><span class="sig-paren">(</span><em>fileName</em>, <em>engine='openpyxl'</em><span class="sig-paren">)</span><a class="headerlink" href="#pyWitness.DataRaw.writeExcel" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Write raw data Dataframe to excel file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>fileName</strong> (<em>str</em>) – File name of the excel file to write</li>
+<li><strong>engine</strong> (<em>str</em>) – Excel output engine</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">None</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </dd></dl>
 
@@ -533,6 +573,11 @@ may be incomplete.</p>
 <dl class="method">
 <dt id="pyWitness.DataProcessed.calculateNormalisedAUC">
 <code class="descname">calculateNormalisedAUC</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyWitness.DataProcessed.calculateNormalisedAUC" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyWitness.DataProcessed.calculateDPrime">
+<code class="descname">calculateDPrime</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyWitness.DataProcessed.calculateDPrime" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -731,7 +776,7 @@ are also plotted.</p>
 <h2>ModelFit<a class="headerlink" href="#modelfit" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="pyWitness.ModelFitIndependentObservation">
-<em class="property">class </em><code class="descclassname">pyWitness.</code><code class="descname">ModelFitIndependentObservation</code><span class="sig-paren">(</span><em>processedData</em>, <em>debug=False</em>, <em>integrationSigma=8</em><span class="sig-paren">)</span><a class="headerlink" href="#pyWitness.ModelFitIndependentObservation" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyWitness.</code><code class="descname">ModelFitIndependentObservation</code><span class="sig-paren">(</span><em>processedData</em>, <em>debug=False</em>, <em>integrationSigma=8</em>, <em>chi2Var='expected'</em><span class="sig-paren">)</span><a class="headerlink" href="#pyWitness.ModelFitIndependentObservation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pyWitness.ModelFits.ModelFit</span></code></p>
 <dl class="method">
 <dt id="pyWitness.ModelFitIndependentObservation.setEqualVariance">
@@ -772,7 +817,7 @@ are also plotted.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright Royal Holloway, University of London 2020 and University of Bristol 2020
-      Last updated on Feb 07, 2021.
+      Last updated on Feb 14, 2021.
 
     </p>
   </div>

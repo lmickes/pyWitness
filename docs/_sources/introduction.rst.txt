@@ -44,11 +44,11 @@ Model fits
 Goals of pyWitness
 ------------------
 
-   * Little as possible human interaction (e.g., reduce data manipulation, transcribing values)
+   * Little as possible human interaction (to reduce data manipulation, transcribing values)
    * Place to store all relevant algorithms, fits, and methods in a reproducible and documented way
-   * Bin and pivot raw data to rates (i. e., processed data)
+   * Bin and pivot raw data to rates (the processed data)
    * Plot and compare ROC, CAC, and RAC curves
-   * Calculate pAUC and compute statistical tests
+   * Calculate pAUC and compute statistical comparisons
    * Perform statistical tests on CAC and RAC curves
    * Fit signal detection-based models to the processed data
    * Monte Carlo simulation of raw data
@@ -111,8 +111,8 @@ Minimal example data file for an experiment
      - 1
 
 .. note::
-   Of course other columns can present in the data file, for examples labels for other experimental conditions 
-   or data, demographic data or personal differenes.
+  Other columns can be in the data file (e.g., labels for other experimental conditions 
+   or data, demographic data or personal differenes).
 
 Transforming data structures
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -144,16 +144,16 @@ Transforming data into pyWitness format can be time consuming and error prone.
    * - confidence
      - conf_level
 
-Data for show ups
-^^^^^^^^^^^^^^^^^
+Data for showups
+^^^^^^^^^^^^^^^^
 
-To perform an analysis of showup data. The data needs to be organised differently compared to lineup data.
-So rejectId for both targetAbsent and targetPresent showups need to given new confidences. So for example if
-the data is measured on a three point confidence scale (1, 2 and 3). The sujectId for both targetPresent and
+To perform an analysis of showup data, the data need to be organised differently compared to lineup data.
+rejectId for both targetAbsent and targetPresent showups need to given new confidence names. For example, if
+the data are measured on a three point confidence scale (1, 2 and 3). The subjectId for both targetPresent and
 targetAbsent confidences need to be mapped to (4, 5, 6) and rejectId needs to be given (3, 2, 1).
 
 .. note::
-   Confidence can be verbal and needs to be mapped to a number. For example, confidence could be low (1), 
+   Confidence can be a verbal expression and needs to be mapped to a number. For example, confidence could be low (1), 
    medium (2) or high (3).
 
 .. note:: 

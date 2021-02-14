@@ -245,9 +245,9 @@ possible to replace the name of the data columns and the values stored.</p>
 </div>
 <div class="section" id="processing-data-for-a-single-condition">
 <h2>Processing data for a single condition<a class="headerlink" href="#processing-data-for-a-single-condition" title="Permalink to this headline">¶</a></h2>
-<p>So a single data file might have multiple different experimental condtions. So imagine your data file
+<p>A single data file might have multiple different experimental condtions. Imagine your data file
 has a column labelled <code class="docutils literal notranslate"><span class="pre">Condition</span></code> and the values for each participant is either <code class="docutils literal notranslate"><span class="pre">Sequential</span></code> or
-<code class="docutils literal notranslate"><span class="pre">Simultaneous</span></code>. So to proccess only the <code class="docutils literal notranslate"><span class="pre">Sequential</span></code> participants the following options are required
+<code class="docutils literal notranslate"><span class="pre">Simultaneous</span></code>. To proccess only the <code class="docutils literal notranslate"><span class="pre">Sequential</span></code> participants the following options are required
 for DataRaw.process()</p>
 <div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
@@ -256,8 +256,8 @@ for DataRaw.process()</p>
 <span class="hll"><span class="n">dp</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="s2">&quot;Condition&quot;</span><span class="p">,</span><span class="s2">&quot;Sequential&quot;</span><span class="p">)</span>
 </span></pre></div>
 </td></tr></table></div>
-<p>So if you had a file with multiple conditions it would be very straight forward to make multiple
-<code class="docutils literal notranslate"><span class="pre">DataProcessed</span></code> for each condition, so like the following</p>
+<p>So if you had a file with multiple conditions it would be straightforward to make multiple
+<code class="docutils literal notranslate"><span class="pre">DataProcessed</span></code> for each condition, as in the following</p>
 <div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -382,10 +382,10 @@ data needs to be in the following CSV format. This is basically the same format 
 </div>
 <div class="section" id="using-instances-of-raw-data-processed-data-and-model-fits">
 <h2>Using instances of raw data, processed data and model fits<a class="headerlink" href="#using-instances-of-raw-data-processed-data-and-model-fits" title="Permalink to this headline">¶</a></h2>
-<p>Using an object orientated approach allows multiple instances (objects) to be created and manipulated. This allows lots
-of different data file, variations on the processed data and model fits to be manipulated simultanuously in a single
+<p>Using an object orientated approach allows multiple instances (objects) to be created and manipulated. This allows many
+different data file variations on the processed data and model fits to be manipulated simultanuously in a single
 Python session.</p>
-<p>A good example is collapsing data, one might want to check the effect of rebinning the data. So in the following example
+<p>A good example is collapsing data, one might want to check the effect of rebinning the data. In the following example,
 the <code class="docutils literal notranslate"><span class="pre">test1.csv</span></code> is processed twice, once with the original binning (<code class="docutils literal notranslate"><span class="pre">dr1</span></code> and <code class="docutils literal notranslate"><span class="pre">dp1</span></code>) and one with 3 confidence bins
 (<code class="docutils literal notranslate"><span class="pre">dr2</span></code> and <code class="docutils literal notranslate"><span class="pre">dp2</span></code>)</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
@@ -404,7 +404,7 @@ the <code class="docutils literal notranslate"><span class="pre">test1.csv</span
 </div>
 <div class="section" id="overlaying-plots">
 <h2>Overlaying plots<a class="headerlink" href="#overlaying-plots" title="Permalink to this headline">¶</a></h2>
-<p>In general each <code class="docutils literal notranslate"><span class="pre">plotXXX</span></code> function does not create a canvas, so to overlay plots the functions need to be called
+<p>In general, each <code class="docutils literal notranslate"><span class="pre">plotXXX</span></code> function does not create a canvas, so to overlay plots the functions need to be called
 sequentially in order.</p>
 <p>To make a legend the plots need to be given a label. So this example is the same as the</p>
 <div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -459,21 +459,21 @@ sequentially in order.</p>
 <span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test1.csv&quot;</span><span class="p">)</span>
 <span class="n">dr</span><span class="o">.</span><span class="n">collapseContinuousData</span><span class="p">(</span><span class="n">column</span> <span class="o">=</span> <span class="s2">&quot;confidence&quot;</span><span class="p">,</span><span class="n">bins</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">60</span><span class="p">,</span><span class="mi">80</span><span class="p">,</span><span class="mi">100</span><span class="p">],</span><span class="n">labels</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 <span class="n">dp</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
-<span class="n">mf</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">ModelFitIndependentObservation</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span>
+<span class="n">mf</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">ModelFitIndependentObservation</span><span class="p">(</span><span class="n">dp</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">mf</span><span class="o">.</span><span class="n">setEqualVariance</span><span class="p">()</span>
 <span class="n">mf</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 <span class="hll"><span class="n">dr1</span> <span class="o">=</span> <span class="n">mf</span><span class="o">.</span><span class="n">generateRawData</span><span class="p">(</span><span class="n">nGenParticipants</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span>
 </span></pre></div>
 </td></tr></table></div>
 <p><code class="docutils literal notranslate"><span class="pre">dr1</span></code> is a <code class="docutils literal notranslate"><span class="pre">DataRaw</span></code> object and is simulated data for 10,000 participants. <code class="docutils literal notranslate"><span class="pre">dr1</span></code> can be used for any
-pyWitness analysis so ROC, CAC, (p)AUC etc. The raw data can also be written to disk to either preserve or
+pyWitness analysis so ROC, CAC, pAUC, etc. The raw data can also be written to disk to either preserve and/or
 share with colleagues.</p>
 <div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="hll"><span class="n">dr1</span><span class="o">.</span><span class="n">writeCsv</span><span class="p">()</span>
-</span><span class="hll"><span class="n">dr1</span><span class="o">.</span><span class="n">writeExcel</span><span class="p">()</span>
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="hll"><span class="n">dr1</span><span class="o">.</span><span class="n">writeCsv</span><span class="p">(</span><span class="s2">&quot;fileName.csv&quot;</span><span class="p">)</span>
+</span><span class="hll"><span class="n">dr1</span><span class="o">.</span><span class="n">writeExcel</span><span class="p">(</span><span class="s2">&quot;fileName.xlsx&quot;</span><span class="p">)</span>
 </span></pre></div>
 </td></tr></table></div>
-<p>So having performed a fit on <code class="docutils literal notranslate"><span class="pre">dr</span></code> and generated <code class="docutils literal notranslate"><span class="pre">dr1</span></code> a synthetic data set</p>
+<p>So having performed a fit on <code class="docutils literal notranslate"><span class="pre">dr</span></code> and generated <code class="docutils literal notranslate"><span class="pre">dr1</span></code> a synthetic dataset</p>
 <div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -509,8 +509,8 @@ share with colleagues.</p>
 </div>
 <div class="section" id="power-analysis">
 <h2>Power analysis<a class="headerlink" href="#power-analysis" title="Permalink to this headline">¶</a></h2>
-<p>Having the ability to generate data from a model it is possible to vary the number of generated participants.
-This is not too dissimilar to boot strapping. Instead of generating new samples (with replacement) from the
+<p>By having the ability to generate data from a model it is possible to vary the number of generated participants.
+This is not too dissimilar to bootstrapping. Instead of generating new samples (with replacement) from the
 data, new samples with variable numbers of participants is possible. For each sample all the analysis can be
 performed and dependence on sample size can be explored.</p>
 </div>
@@ -537,7 +537,7 @@ performed and dependence on sample size can be explored.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright Royal Holloway, University of London 2020 and University of Bristol 2020
-      Last updated on Feb 07, 2021.
+      Last updated on Feb 14, 2021.
 
     </p>
   </div>
