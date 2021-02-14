@@ -282,7 +282,7 @@ Raw and processed data can be generated simply from a signal detection model.
    dr = pyWitness.DataRaw("test1.csv")
    dr.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels=None)
    dp = dr.process()
-   mf = pyWitness.ModelFitIndependentObservation(dp)
+   mf = pyWitness.ModelFitIndependentObservation(dp, debug=True)
    mf.setEqualVariance()
    mf.fit()
    dr1 = mf.generateRawData(nGenParticipants=10000)
@@ -295,8 +295,8 @@ share with colleagues.
    :linenos:
    :emphasize-lines: 1-2
 
-   dr1.writeCsv()
-   dr1.writeExcel()
+   dr1.writeCsv("fileName.csv")
+   dr1.writeExcel("fileName.xlsx")
 
 So having performed a fit on ``dr`` and generated ``dr1`` a synthetic data set
 
