@@ -381,8 +381,8 @@ To compare a *ROC* plot between data and fit
    dp.plotROC(label="Data")
    mf.plotROC(label="Indep. obs. fit")
 
-   import matplotlib.pyplot _plt
-   _plt.legend
+   import matplotlib.pyplot as _plt
+   _plt.legend()
 
 .. figure:: images/test1_fitDataROCComparision.jpg
    :alt: Data-model ROC comparision for test1.csv
