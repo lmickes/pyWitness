@@ -1,5 +1,6 @@
 from .DataRaw import DataRaw, dataMapSdtlu, dataMapPyWitness
-from .DataProcessed import DataProcessed 
+from .DataProcessed import DataProcessed
+from .DataTranslator import *
 from .ModelFits import ModelFit
 from .ModelFits import Parameter 
 from .ModelFits import ModelFitIndependentObservationSimple
