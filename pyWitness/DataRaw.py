@@ -327,7 +327,7 @@ class DataRaw :
         
         self._data_processed = _DataProcessed(dataRaw           = self,
                                               reverseConfidence = reverseConfidence,
-                                              lineupSize        = self.data.iloc[0]['lineupSize'])
+                                              lineupSize        = self.dataSelected.iloc[0]['lineupSize'])
         return self._data_processed
 
     def writeCsv(self, fileName):
