@@ -3,9 +3,12 @@ import numpy as _np
 from .DataRaw import DataRaw
 
 def relabelConfidenceForShowups(df) :
-    pass
+    conf_min = df["confidence"][1] -df["confidence"][0]
+    df["confidence"][_np.logical_and(df["lineupSize"] == 1, df["responseType"] == "rejectId")] = -df["confidence"] - conf_min
 
-def published_Aken_2020_Experiment1(fileName = "experiment1", excelSheet = 'E1') :
+    df["responseType"][_np.logical_and(_np.logical_and(df["responseType"] == "fillerId", df["targetLineup"] == "targetAbsent"), df["lineupSize"]==1)] = "suspectId"
+
+def published_Akan_2020_Experiment1(fileName = "experiment1", excelSheet = 'E1') :
     data = _pandas.read_excel(fileName, excelSheet, engine='openpyxl')
 
     participantId = data['Subject #']
