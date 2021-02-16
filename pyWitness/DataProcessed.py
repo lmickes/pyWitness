@@ -299,7 +299,7 @@ class DataProcessed :
         self.data_rates = self.data_rates.append(dPrime)
         self.data_rates = self.data_rates.sort_index()
 
-        c = self.data_rates.columns.get_level_values('confidence').values
+        c = _np.array(self.data_rates.columns.get_level_values('confidence').values)
 
         if self.lineupSize == 1 :
             # lowest positive confidence
