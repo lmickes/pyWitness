@@ -415,10 +415,9 @@ class ModelFit(object) :
         gen_tasid_array = _np.round(pred_tasid_array/nParticipants*nGenParticipants)
         gen_tpsid_array = _np.round(pred_tpsid_array/nParticipants*nGenParticipants)
 
-
-        print(nParticipants)
-
         if debug :
+            print(nParticipants)
+
             print('pred_tasid',pred_tasid_array)
             print('pred_tpsid',pred_tpsid_array)
 
