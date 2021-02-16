@@ -314,7 +314,7 @@ class ModelFit(object) :
             return self.generateRawDataShowup(nGenParticipants = nGenParticipants, tasid = tasid)
 
 
-    def generateRawDataLineup(self, nGenParticipants = 10000, tasid = False) :
+    def generateRawDataLineup(self, nGenParticipants = 10000, tasid = False, debug = False) :
         [pred_tarid,
          pred_tasid_array,
          pred_tafid_array,
@@ -334,13 +334,14 @@ class ModelFit(object) :
         if tasid :
             gen_tafid_array = gen_tafid_array - gen_tasid_array
 
-        print('gen_tafid',gen_tafid_array)
-        print('gen_tasid',gen_tasid_array)
-        print('gen_tarid',gen_tarid)
+        if debug :
+            print('gen_tafid',gen_tafid_array)
+            print('gen_tasid',gen_tasid_array)
+            print('gen_tarid',gen_tarid)
 
-        print('gen_tpfid',gen_tpfid_array)
-        print('gen_tpsid',gen_tpsid_array)
-        print('gen_tprid',gen_tprid)
+            print('gen_tpfid',gen_tpfid_array)
+            print('gen_tpsid',gen_tpsid_array)
+            print('gen_tprid',gen_tprid)
 
 
         dr = _DataRaw('')
@@ -401,7 +402,7 @@ class ModelFit(object) :
 
         return dr
 
-    def generateRawDataShowup(self, nGenParticipants = 10000, tasid = False) :
+    def generateRawDataShowup(self, nGenParticipants = 10000, tasid = False, debug = False) :
         [pred_tarid,
          pred_tasid_array,
          pred_tafid_array,
@@ -414,13 +415,15 @@ class ModelFit(object) :
         gen_tasid_array = _np.round(pred_tasid_array/nParticipants*nGenParticipants)
         gen_tpsid_array = _np.round(pred_tpsid_array/nParticipants*nGenParticipants)
 
+
         print(nParticipants)
 
-        print(pred_tasid_array)
-        print(pred_tpsid_array)
+        if debug :
+            print('pred_tasid',pred_tasid_array)
+            print('pred_tpsid',pred_tpsid_array)
 
-        print(gen_tasid_array)
-        print(gen_tpsid_array)
+            print('gen_tasid',gen_tasid_array)
+            print('gen_tpsid',gen_tpsid_array)
 
         dr = _DataRaw('')
 
