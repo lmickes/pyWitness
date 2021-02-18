@@ -10,3 +10,10 @@ from .ModelFits import ModelFitBestRest
 from .ModelFits import ModelFitIntegration
 
 print("pyWitness v0.1 : Laura Mickes")
+
+import sys
+import warnings
+
+if not sys.warnoptions:
+    warnings.simplefilter("ignore")
+    print(pyWitness   : Runtime warnings are supressed)
