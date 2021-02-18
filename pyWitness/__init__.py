@@ -16,4 +16,4 @@ import warnings
 
 if not sys.warnoptions:
     warnings.simplefilter("ignore")
-    print(pyWitness   : Runtime warnings are supressed)
+    print("pyWitness   : Runtime warnings are supressed")
