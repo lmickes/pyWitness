@@ -9,11 +9,16 @@ from .ModelFits import ModelFitEnsemble
 from .ModelFits import ModelFitBestRest
 from .ModelFits import ModelFitIntegration
 
-print("pyWitness v0.1 : Laura Mickes")
+print("pyWitness v0.1 : Laura Mickes, Stewart Boogert")
 
 import sys
 import warnings
 
 if not sys.warnoptions:
     warnings.simplefilter("ignore")
-    print("pyWitness   : Runtime warnings are supressed")
+    print('pyWitness      : Runtime warnings are supressed')
+    print('pyWitness      : to reinstate (import warnings; warnings.simplefilter("") ')
+
+
+import numpy as _np
+_np.set_printoptions(precision=3)
