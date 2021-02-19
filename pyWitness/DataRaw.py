@@ -182,10 +182,10 @@ class DataRaw :
         responseType = _np.unique(self.data['responseType'])
         confidence   = _np.unique(self.data['confidence'])
 
-        print('lineupSize',lineupSize)
-        print('targetLineup',targetLineup)
-        print('responseType',responseType)
-        print('confidence',confidence)
+        print('DataRaw.checkData> lineupSize   :',lineupSize)
+        print('DataRaw.checkData> targetLineup :',targetLineup)
+        print('DataRaw.checkData> responseType :',responseType)
+        print('DataRaw.checkData> confidence   :',confidence)
 
     def collapseCategoricalData(self, 
                                 column = "confidence", 
