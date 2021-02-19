@@ -96,6 +96,8 @@ class Parameter(object) :
 class ModelFit(object) :
     def __init__(self, processedData, debug = False, integrationSigma = 6, chi2Var = 'expected') :
 
+        self.debugIoPadSize = 60
+
         # check chi2Var variable
         if chi2Var != 'expected' and chi2Var != 'observed' :
             print("chi2Var should be 'expected'|'observed'")
@@ -159,7 +161,7 @@ class ModelFit(object) :
     def printParameters(self) : 
         for p in self.parameterNames :
             p = getattr(self,p) 
-            print(p)
+            print('ModelFit.printParameters> ',p)
 
     def setEqualVariance(self) :
         self.lureMean.value = 0.0
@@ -194,7 +196,7 @@ class ModelFit(object) :
 
         return pred_c2 - pred_c1
 
-    def calculateFrequenciesForAllCriteria(self) :     
+    def calculateFrequenciesForAllCriteria(self) :
         pred_tafid_array = []
         pred_tpsid_array = []
         pred_tpfid_array = []
@@ -219,12 +221,12 @@ class ModelFit(object) :
         pred_tprid = self.numberTPLineups - pred_tpsid_array.sum() - pred_tpfid_array.sum()
  
         if self.debug :
-            print('pred_tafid',pred_tafid_array)
-            print('pred_tasid',pred_tasid_array)
-            print('pred_tarid',pred_tarid)
-            print('pred_tpfid',pred_tpfid_array)
-            print('pred_tpsid',pred_tpsid_array)
-            print('pred_tprid',pred_tprid)
+            print('ModelFits.calculateFrequenciesForAllCriteria> pred_tafid'.ljust(self.debugIoPadSize,' ')+":",pred_tafid_array)
+            print('ModelFits.calculateFrequenciesForAllCriteria> pred_tasid'.ljust(self.debugIoPadSize,' ')+":",pred_tasid_array)
+            print('ModelFits.calculateFrequenciesForAllCriteria> pred_tarid'.ljust(self.debugIoPadSize,' ')+":",pred_tarid)
+            print('ModelFits.calculateFrequenciesForAllCriteria> pred_tpfid'.ljust(self.debugIoPadSize,' ')+":",pred_tpfid_array)
+            print('ModelFits.calculateFrequenciesForAllCriteria> pred_tpsid'.ljust(self.debugIoPadSize,' ')+":",pred_tpsid_array)
+            print('ModelFits.calculateFrequenciesForAllCriteria> pred_tprid'.ljust(self.debugIoPadSize,' ')+":",pred_tprid)
 
         return [pred_tarid,
                 pred_tasid_array,
@@ -335,13 +337,13 @@ class ModelFit(object) :
             gen_tafid_array = gen_tafid_array - gen_tasid_array
 
         if debug :
-            print('gen_tafid',gen_tafid_array)
-            print('gen_tasid',gen_tasid_array)
-            print('gen_tarid',gen_tarid)
+            print('ModelFit.generateRawDataShowup> gen_tafid'.ljust(self.debugIoPadSize,' ')+":",gen_tafid_array)
+            print('ModelFit.generateRawDataShowup> gen_tasid'.ljust(self.debugIoPadSize,' ')+":",gen_tasid_array)
+            print('ModelFit.generateRawDataShowup> gen_tarid'.ljust(self.debugIoPadSize,' ')+":",gen_tarid)
 
-            print('gen_tpfid',gen_tpfid_array)
-            print('gen_tpsid',gen_tpsid_array)
-            print('gen_tprid',gen_tprid)
+            print('ModelFit.generateRawDataShowup> gen_tpfid'.ljust(self.debugIoPadSize,' ')+":",gen_tpfid_array)
+            print('ModelFit.generateRawDataShowup> gen_tpsid'.ljust(self.debugIoPadSize,' ')+":",gen_tpsid_array)
+            print('ModelFit.generateRawDataShowup> gen_tprid'.ljust(self.debugIoPadSize,' ')+":",gen_tprid)
 
 
         dr = _DataRaw('')
@@ -418,11 +420,11 @@ class ModelFit(object) :
         if debug :
             print(nParticipants)
 
-            print('pred_tasid',pred_tasid_array)
-            print('pred_tpsid',pred_tpsid_array)
+            print('ModelFit.generateRawDataShowup> pred_tasid'.ljust(self.debugIoPadSize,' ')+":",pred_tasid_array)
+            print('ModelFit.generateRawDataShowup> pred_tpsid'.ljust(self.debugIoPadSize,' ')+":",pred_tpsid_array)
 
-            print('gen_tasid',gen_tasid_array)
-            print('gen_tpsid',gen_tpsid_array)
+            print('ModelFit.generateRawDataShowup> gen_tasid'.ljust(self.debugIoPadSize,' ')+":",gen_tasid_array)
+            print('ModelFit.generateRawDataShowup> gen_tpsid'.ljust(self.debugIoPadSize,' ')+":",gen_tpsid_array)
 
         dr = _DataRaw('')
 
@@ -468,8 +470,9 @@ class ModelFit(object) :
             p.value = params[i]
         
         if self.debug :
-            print('iteration',self.iteration)
-            print('params',params)
+            print('------------------------------------------------------------------------------')
+            print('ModelFit.calculateChi2> chi2 valuation number'.ljust(self.debugIoPadSize,' ')+":",self.iteration)
+            print('ModelFit.calculateChi2> params               '.ljust(self.debugIoPadSize,' ')+":",params)
 
         [pred_tarid, pred_tasid_array, pred_tafid_array, 
          pred_tprid, pred_tpsid_array, pred_tpfid_array] = self.calculateFrequenciesForAllCriteria()
@@ -508,12 +511,12 @@ class ModelFit(object) :
             chi2 = chi2_tafid + chi2_tpsid + chi2_tpfid + chi2_tarid + chi2_tprid
 
             if self.debug:
-                print('chi2 total', chi2)
-                print('chi2 tafid', chi2_tafid)
-                print('chi2 tarid', chi2_tarid)
-                print('chi2 tpfid', chi2_tpfid)
-                print('chi2 tpsid', chi2_tpsid)
-                print('chi2 tprid', chi2_tprid)
+                print('ModelFit.calculateChi2> chi2 tafid'.ljust(self.debugIoPadSize,' ')+":", chi2_tafid)
+                print('ModelFit.calculateChi2> chi2 tarid'.ljust(self.debugIoPadSize,' ')+":", chi2_tarid)
+                print('ModelFit.calculateChi2> chi2 tpfid'.ljust(self.debugIoPadSize,' ')+":", chi2_tpfid)
+                print('ModelFit.calculateChi2> chi2 tpsid'.ljust(self.debugIoPadSize,' ')+":", chi2_tpsid)
+                print('ModelFit.calculateChi2> chi2 tprid'.ljust(self.debugIoPadSize,' ')+":", chi2_tprid)
+                print('ModelFit.calculateChi2> chi2 total'.ljust(self.debugIoPadSize,' ')+":", chi2)
 
         else :
             chi2_ta = 0
@@ -535,10 +538,10 @@ class ModelFit(object) :
             chi2 = chi2_ta + chi2_tp
 
             if self.debug:
-                print('chi2 total', chi2)
-                print('chi2 ta', chi2_ta)
-                print('chi2 tp', chi2_tp)
-        
+                print('ModelFit.calculateChi2> chi2 ta    '.ljust(self.debugIoPadSize,' ')+":", chi2_ta)
+                print('ModelFit.calculateChi2> chi2 tp    '.ljust(self.debugIoPadSize,' ')+":", chi2_tp)
+                print('ModelFit.calculateChi2> chi2 total '.ljust(self.debugIoPadSize,' ')+":", chi2)
+
         self.iteration = self.iteration+1
         return chi2        
             
@@ -553,18 +556,18 @@ class ModelFit(object) :
             p0.append(p.value)
 
         if self.debug :
-            print('fit> starting parameters',p0)
+            print('fit> starting parameters'.ljust(self.debugIoPadSize,' ')+":",p0)
 
         self.iteration = 0
 
         def chiSquared(x) : 
             return self.calculateChi2(x)
 
-
         opt = _optimize.minimize(chiSquared,p0, method='Nelder-Mead')
 
         print(opt)
 
+        # Post fit calculations
         self.calculateD()
 
         # self.thresholds = opt['x'][0:self.numberConditions]
@@ -603,16 +606,23 @@ class ModelFit(object) :
 
     def plotModel(self, xlow = -5, xhigh = 5) : 
         x      = _np.linspace(xlow, xhigh,200) 
-        lure   = _norm.pdf(x,self.lureMean.value, self.lureSigma.value)
         target = _norm.pdf(x,self.targetMean.value, self.targetSigma.value)
-        
-        _plt.plot(x,lure)
-        _plt.plot(x,target)
-        for t in self.thresholds : 
+        lure   = _norm.pdf(x,self.lureMean.value, self.lureSigma.value)
+
+        _plt.plot(x,target,label="Target")
+        _plt.plot(x,lure,label="Lure")
+
+        for t in self.thresholds :
             _plt.axvline(t.value, linestyle='--')
 
         _plt.xlabel("Memory strength")
         _plt.ylabel("Probability")
+
+        # Plot vertical range
+        _plt.ylim(0,max([target.max(), lure.max()])*1.2)
+
+        # Legend
+        _plt.legend()
 
         # Tight layout for plot
         _plt.tight_layout()
@@ -641,18 +651,22 @@ class ModelFit(object) :
         ax3 = fig.add_subplot(gs[2, 0:2])
                                     
         ax4 = fig.add_subplot(gs[0,2])
+        ax6 = fig.add_subplot(gs[1,2])
         ax5 = fig.add_subplot(gs[2,2])
 
         # tafid fit bar
         _plt.sca(ax1)
-        _plt.bar(x,pred_tafid_array, fill=False)
+        _plt.bar(x,pred_tafid_array, fill=False, label="Prediction")
         _plt.errorbar(x,
                       self.processedData.data_pivot.loc['targetAbsent' ,'fillerId'],
                       _np.sqrt(self.processedData.data_pivot.loc['targetAbsent' ,'fillerId']),
                       fmt='o',
                       markersize=5,
-                      capsize=5)
+                      capsize=5,
+                      label="Data")
         _plt.ylabel("TA Filler ID")
+
+        _plt.legend()
 
         # tasid data plot
         _plt.sca(ax2)
@@ -712,13 +726,14 @@ class ModelFit(object) :
         fig = _plt.figure()
         _plt.subplot(2,1,1)
 
-        _plt.bar(x, pred_tasid_array, fill=False)
+        _plt.bar(x, pred_tasid_array, fill=False, label="Prediction")
         _plt.errorbar(x,
                       self.processedData.data_pivot.loc['targetAbsent', 'suspectId'] + self.processedData.data_pivot.loc['targetAbsent', 'rejectId'],
                       _np.sqrt(self.processedData.data_pivot.loc['targetAbsent', 'suspectId'] + self.processedData.data_pivot.loc['targetAbsent', 'rejectId']),
                       fmt='o',
                       markersize=5,
-                      capsize=5)
+                      capsize=5,
+                      label="Data")
         _plt.ylabel("TA frequencies")
 
         _plt.subplot(2,1,2)
