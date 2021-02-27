@@ -1,6 +1,7 @@
 import pandas as _pandas
 import matplotlib.pyplot as _plt
 import numpy as _np
+import math as _math
 import scipy.integrate as _integrate
 import scipy.special as _special
 import copy as _copy
@@ -18,8 +19,10 @@ class DataProcessed :
     
     '''
     
-    def __init__(self, dataRaw, reverseConfidence = False, lineupSize = 1) : 
-        
+    def __init__(self, dataRaw, reverseConfidence = False, lineupSize = 1, pAUCLiberal = 1.0, levels = None) :
+
+        self.debugIoPadSize = 35
+
         if isinstance(dataRaw, str) :
             # could just load the data frame from csv, but want to have in exactly same format. 
 
@@ -42,14 +45,21 @@ class DataProcessed :
             self.lineupSize        = lineupSize 
             self.reverseConfidence = reverseConfidence
             self.calculatePivot()
+
+            if levels is not None :
+                self.data_pivot = self.data_pivot.reindex(columns=levels, fill_value=0)
+            self.confidenceLevels =  self.data_pivot.columns # _np.sort(self.dataRaw.data['confidence'].unique())
+
             self.numberTPLineups   = self.data_pivot.loc['targetPresent'].sum().sum()
             self.numberTALineups   = self.data_pivot.loc['targetAbsent'].sum().sum()
+
+        self.pAUCLiberal = pAUCLiberal
 
         self.calculateRates(reverseConfidence)
         self.calculateConfidence()
         self.calculateRelativeFrequency()
         self.calculateCAC()
-        self.calculatePAUC()
+        self.calculatePAUC(pAUCLiberal)
         self.calculateNormalisedAUC()
         self.calculateDPrime()
 
@@ -66,7 +76,6 @@ class DataProcessed :
                                               columns='confidence', 
                                               index=['targetLineup','responseType'], 
                                               aggfunc={'confidence':'count'})
-
 
         # TODO understand why this is needed. At appears targetAbsent lineup suspectId appears even if 0 in pivot
         try :
@@ -258,21 +267,35 @@ class DataProcessed :
         xForIntegration.extend(list(x[x<xmax]))
         yForIntegration.extend(list(y[x<xmax]))
         
-        # check xmax is within x data range 
+        # check xmax is within x data range
         if xmax > x.max() :
-            raise IndexError("xmax of "+str(xmax)+" is larger than largest "+str(x.max()))
+            # print("pAUC extrapolating")
+
+            # last point
+            x1 = x[-1]
+            x2 = 1.0
+            y1 = y[-1]
+            y2 = 1.0
+
         elif xmax == x.max() : # edge case where
             i1 = i[-2]
             i2 = i[-1]
+
+            # last point
+            x1 = x[i1]
+            x2 = x[i2]
+            y1 = y[i1]
+            y2 = y[i2]
+
         else :
             i1 = i[x <= xmax][-1]
             i2 = i1+1
 
-        # last point
-        x1 = x[i1]
-        x2 = x[i2]
-        y1 = y[i1]
-        y2 = y[i2] 
+            # last point
+            x1 = x[i1]
+            x2 = x[i2]
+            y1 = y[i1]
+            y2 = y[i2]
 
         ymax = (y2-y1)/(x2-x1)*(xmax-x1)+y1
 
@@ -283,6 +306,11 @@ class DataProcessed :
         self.yForIntegration = _np.array(yForIntegration)
 
         self.pAUC = _integrate.simps(self.yForIntegration,self.xForIntegration)
+
+        #if _math.isnan(self.pAUC) :
+        #    print(self.xForIntegration)
+        #    print(self.yForIntegration)
+        #    print(self.pAUC)
 
         return self.pAUC
 
@@ -351,7 +379,11 @@ class DataProcessed :
 
         for i in range(0,nBootstraps,1) : 
             dr = self.dataRaw.resampleWithReplacement()
-            dp = dr.process(self.dataRaw.processColumn, self.dataRaw.processCondition, self.dataRaw.processReverseConfidence)
+            dp = dr.process(self.dataRaw.processColumn,
+                            self.dataRaw.processCondition,
+                            self.dataRaw.processReverseConfidence,
+                            self.dataRaw.pAUCLiberal,
+                            self.confidenceLevels)
 
             cac.append(dp.data_rates.loc['cac','central'].values)
 
@@ -406,11 +438,8 @@ class DataProcessed :
         cac_low                     = _np.percentile(cac,clLow,axis=0)
         cac_high                    = _np.percentile(cac,clHigh,axis=0)
 
-        try :
-            confidence_low              = _np.percentile(confidence,clLow,axis=0)
-            confidence_high             = _np.percentile(confidence,clHigh,axis=0)
-        except :
-            pass
+        confidence_low              = _np.percentile(confidence,clLow,axis=0)
+        confidence_high             = _np.percentile(confidence,clHigh,axis=0)
 
         targetAbsentFillerId_low    = _np.percentile(targetAbsentFillerId,clLow,axis=0)
         targetAbsentFillerId_high   = _np.percentile(targetAbsentFillerId,clHigh,axis=0)
@@ -465,6 +494,36 @@ class DataProcessed :
         self.data_rates = self.data_rates.sort_index()
 
         self.bootstrapped = True
+
+    def comparePAUC(self, other):
+        '''
+        Statistical test compare two pAUCs
+
+        :param other: object to compare against
+        :type other: DataProcessed
+        :return:
+        '''
+
+        pAUC1 = self.pAUC_array
+        pAUC2 = other.pAUC_array
+
+        # strip nan (not right TODO regarind pAUC integrals)
+        pAUC1 = pAUC1[_np.logical_not(_np.isnan(pAUC1))]
+        pAUC2 = pAUC2[_np.logical_not(_np.isnan(pAUC2))]
+
+        pAUC1_mean = pAUC1.mean()
+        pAUC1_std  = pAUC1.std()
+        pAUC2_mean = pAUC2.mean()
+        pAUC2_std  = pAUC2.std()
+
+        D = _np.abs(self.pAUC - other.pAUC)/_np.sqrt(pAUC1_std**2 + pAUC2_std**2)
+        p = (1-_special.ndtr(D))*2
+
+        print('DataProcessed.comparePAUC> pAUC1'.ljust(self.debugIoPadSize,' ')+":",round(self.pAUC,4), "+/-",round(pAUC1_std,4))
+        print('DataProcessed.comparePAUC> pAUC2'.ljust(self.debugIoPadSize,' ')+":",round(other.pAUC,4),"+/-",round(pAUC2_std,4))
+        print('DataProcessed.comparePAUC> Z, p'.ljust(self.debugIoPadSize,' ')+":",round(D,4),round(p,4))
+
+        return [D,p]
 
     def plotROC(self, label = "ROC", relativeFrequencyScale = 400, errorType = 'bars') :
         '''

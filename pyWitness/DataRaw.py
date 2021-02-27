@@ -301,8 +301,10 @@ class DataRaw :
                                          ignore_index=True)
             self.iParticipant += 1
 
+    def cutData(self, column = '', value = ''):
+        self.data = self.data.loc[self.data[column] == value]
 
-    def process(self, column = '', condition = '', reverseConfidence = False) :
+    def process(self, column = '', condition = '', reverseConfidence = False, pAUCLiberal = 1.0, levels = None) :
         '''
         Process the raw data and returns DataProcessed object
 
@@ -324,10 +326,14 @@ class DataRaw :
             self.dataSelected = self.data[self.data[column] == condition]
         else :
             self.dataSelected = self.data            
-        
+
+        self.pAUCLiberal = pAUCLiberal
+
         self._data_processed = _DataProcessed(dataRaw           = self,
                                               reverseConfidence = reverseConfidence,
-                                              lineupSize        = self.dataSelected.iloc[0]['lineupSize'])
+                                              lineupSize        = self.dataSelected.iloc[0]['lineupSize'],
+                                              pAUCLiberal       = pAUCLiberal,
+                                              levels            = levels)
         return self._data_processed
 
     def writeCsv(self, fileName):
