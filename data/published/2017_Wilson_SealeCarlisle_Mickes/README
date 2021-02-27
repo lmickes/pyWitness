@@ -1,0 +1,28 @@
+Paper           : http://dx.doi.org/10.1037/xge0000354
+Original data   : https://osf.io/6wcjs/
+DataTranslators : published_Wilson_2018_Experiment12, published_Wilson_2018_Experiment34
+Notes           :
+
+Experiment 1
+dr = pyWitness.DataTranslator.published_Wilson_2018_Experiment12()
+dr.cutData("experiment",1)
+dr.cutData("previouslyViewed",1)
+
+dpControl = dr.process("group","Control")
+dpVerbal  = dr.process("group","Verbal")
+
+Experiment 2
+dr = pyWitness.DataTranslator.published_Wilson_2018_Experiment12()
+dr.cutData("experiment",2)
+dr.cutData("previouslyViewed",1)
+
+dpControl = dr.process("group","Control")
+dpVerbal  = dr.process("group","Verbal")
+
+
+Experiment 3
+
+Experiment 4
+
+
+
