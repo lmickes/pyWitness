@@ -1,5 +1,7 @@
 from .DataRaw import DataRaw as _DataRaw
 import numpy as _np
+import pandas as _pandas
+import copy as _copy
 from scipy import integrate as _integrate
 from scipy import optimize as _optimize
 from scipy import interpolate as _interpolate
@@ -97,6 +99,8 @@ class ModelFit(object) :
     def __init__(self, processedData, debug = False, integrationSigma = 6, chi2Var = 'expected') :
 
         self.debugIoPadSize = 60
+
+        self.fit_parameters = None
 
         # check chi2Var variable
         if chi2Var != 'expected' and chi2Var != 'observed' :
@@ -567,10 +571,50 @@ class ModelFit(object) :
 
         print(opt)
 
+        # Store fit output
+        self.numberIterations = opt["nit"]
+        self.fitStatus        = opt["message"]
+
         # Post fit calculations
         self.calculateD()
 
         # self.thresholds = opt['x'][0:self.numberConditions]
+
+    def saveParametersToTable(self, name) :
+
+        if self.fit_parameters is  None :
+            columns = _copy.copy(self.parameterNames)
+            columns.extend(["numberIterations", "chi2", "fitStatus","d"])
+            self.fit_parameters = _pandas.DataFrame(columns = columns)
+
+
+        values = {}
+
+        for p in self.parameterNames :
+            values[p] = p = getattr(self,p).value
+
+        try :
+            values["numberIterations"] = self.numberIterations
+            values["chi2"]             = self.chi2
+            values["fitStatus"]        = self.fitStatus
+            values["d"]                = self.d
+        except :
+            pass
+
+        print(values)
+
+        self.fit_parameters = self.fit_parameters.append(values, ignore_index=True)
+
+
+
+    def printParameterTable(self):
+        print(self.fit_parameters)
+
+    def writeParameterTableCsv(self, fileName) :
+        pass
+
+    def writeParameterTableExcel(self, fileName) :
+        pass
 
     def calculateConfidenceBootstrap(self, nBootstraps = 200) :
         self.debug = False
@@ -585,13 +629,13 @@ class ModelFit(object) :
             self.resetParameters()
             self.targetBetweenSigma.value = 0.3
 
-            self.numberConditions = dp.numberConditions
-            self.lineupSize       = dp.lineupSize
-            self.numberTPLineups  = dp.numberTPLineups
-            self.numberTALineups  = dp.numberTALineups
-            self.pred_rates       = dp.data_rates.copy()  # copy the processed data rates for a prediction data frame
+            self.numberConditions      = dp.numberConditions
+            self.lineupSize            = dp.lineupSize
+            self.numberTPLineups       = dp.numberTPLineups
+            self.numberTALineups       = dp.numberTALineups
+            self.pred_rates            = dp.data_rates.copy()  # copy the processed data rates for a prediction data frame
             self.pred_rates.iloc[:, :] = 0.0
-            self.iteration = 0
+            self.iteration             = 0
 
             self.fit()
             self.printParameters()
@@ -735,6 +779,7 @@ class ModelFit(object) :
                       capsize=5,
                       label="Data")
         _plt.ylabel("TA frequencies")
+        _plt.legend()
 
         _plt.subplot(2,1,2)
         _plt.bar(x, pred_tpsid_array, fill=False)
