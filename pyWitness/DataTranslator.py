@@ -1,7 +1,12 @@
 import pandas as _pandas
 import numpy as _np
 import copy as _copy
+import os as _os
+import sys as _sys
+
 from .DataRaw import DataRaw
+
+_dir = _os.path.dirname(__file__)
 
 def relabelConfidenceForShowups(df) :
     conf_min = df["confidence"][1] -df["confidence"][0]
@@ -9,10 +14,21 @@ def relabelConfidenceForShowups(df) :
 
     df["responseType"][_np.logical_and(_np.logical_and(df["responseType"] == "fillerId", df["targetLineup"] == "targetAbsent"), df["lineupSize"]==1)] = "suspectId"
 
-def published_Wilson_2018_Experiment12(fileName = "Wilson_SealeCarlisle_Mickes2017.xlsx", excelSheet = "Exp1_2") :
+def openExcelFile(fileName, excelSheet) :
+
+    try :
+        d = _pandas.read_excel(fileName, excelSheet, engine='openpyxl')
+        return d
+    except KeyError :
+        print("Excel file does not have sheet called :"+excelSheet)
+
+def published_Wilson_2018_Experiment12(fileName = "", excelSheet = "Exp1_2") :
+
+    if fileName == "" :
+        fileName = _dir+"/../data/published/2017_Wilson_SealeCarlisle_Mickes/Wilson_SealeCarlisle_Mickes2017.xlsx"
 
     # load spreadsheet
-    data = _pandas.read_excel(fileName, excelSheet, engine='openpyxl')
+    data = openExcelFile(fileName, excelSheet)
 
     # get important data
     participantId    = data['ID #']
@@ -62,11 +78,16 @@ def published_Wilson_2018_Experiment12(fileName = "Wilson_SealeCarlisle_Mickes20
 
     dr = DataRaw('')
     dr.data = dataNew
+    dr.checkData()
 
     return dr
 
-def published_Wilson_2018_Experiment34(fileName = "Wilson_SealeCarlisle_Mickes2017.xlsx", excelSheet = "Exp3") :
-    data = _pandas.read_excel(fileName, excelSheet, engine='openpyxl')
+def published_Wilson_2018_Experiment34(fileName = "", excelSheet = "Exp3") :
+
+    if fileName == "" :
+        fileName = _dir+"/../data/published/2017_Wilson_SealeCarlisle_Mickes/Wilson_SealeCarlisle_Mickes2017.xlsx"
+
+    data = openExcelFile(fileName, excelSheet)
 
     group         = data['Group']
     targetLineup  = data['Target or Lure']
@@ -96,11 +117,16 @@ def published_Wilson_2018_Experiment34(fileName = "Wilson_SealeCarlisle_Mickes20
 
     dr = DataRaw('')
     dr.data = dataNew
+    dr.checkData()
 
     return dr
 
-def published_Akan_2020_Experiment1(fileName = "experiment1", excelSheet = 'E1') :
-    data = _pandas.read_excel(fileName, excelSheet, engine='openpyxl')
+def published_Akan_2020_Experiment1(fileName = "", excelSheet = 'E1') :
+
+    if fileName == "" :
+        fileName = _dir+"/../data/published/2020_Akan/Experiment1.xlsx"
+
+    data = openExcelFile(fileName, excelSheet)
 
     participantId = data['Subject #']
     targetLineup  = data['TP/TA']
@@ -127,6 +153,7 @@ def published_Akan_2020_Experiment1(fileName = "experiment1", excelSheet = 'E1')
 
     dr = DataRaw('')
     dr.data = dataNew
+    dr.checkData()
 
     return dr
 
