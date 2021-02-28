@@ -19,8 +19,20 @@ dr.cutData("previouslyViewed",1)
 dpControl = dr.process("group","Control")
 dpVerbal  = dr.process("group","Verbal")
 
-
 Experiment 3
+
+dr = pyWitness.DataTranslator.published_Wilson_2018_Experiment34()
+dr.collapseContinuousData(column = "confidence",
+                          bins = [-12,-10,-8,-5,0,5,8,10,11],
+                          labels=[-4,-3,-2,-1,1,2,3,4])
+
+dr.collapseCategoricalData(column='confidence',
+                           map={-11:-4,-10:-4,-9:-3,-8:-3,-7:-2,-6:-2,-5:-2,-4:-1,-3:-1,-2:-1,-1:-1,
+                                  1:1 ,  2:1 , 3:1,  4:1 , 5:1 , 6:2 , 7:2,  8:2 , 9:3 ,10:3 ,11:4})
+
+
+dpControl    = dr.process("group","Control")
+dpOvershadow = dr.process("group","Overshadow")
 
 Experiment 4
 
