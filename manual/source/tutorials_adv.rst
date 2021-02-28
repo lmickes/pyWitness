@@ -5,8 +5,8 @@ Bootstrapping uncertainties/confidence limits
 ---------------------------------------------
 
 To create confidence limits on binned cumulative, statistical measures and parameters, pyWitness uses
-the bootstrap method. This method takes N random participants from the original data *with replacement*.
-pyWitness can then proceed to compute any quantity (ROC, CAC, pAUC, fit parameters). This is repeated M
+the bootstrap method. This method takes :math:`N` random participants from the original data *with replacement*.
+pyWitness can then proceed to compute any quantity (ROC, CAC, pAUC, fit parameters). This is repeated :math:`M`
 times and the distribution of the computed quantity used to calculate a confidence interval with a user
 definable range.
 
@@ -73,15 +73,16 @@ possible to replace the name of the data columns and the values stored.
 .. code-block :: python 
 
    import pyWitness
-   dr = pyWitness.DataRaw("test2.csv", dataMapping = {"lineupSize":"lineup_size",
-                                                     "targetLineup":"culprit_present",
-						     "targetPresent":"present",
-						     "targetAbsent":"absent",
-						     "responseType":"id_type",
-						     "suspectId":"suspect",
-						     "fillerId":"filler",
-						     "rejectId":"reject",
-						     "confidence":"conf_level"}))
+   dr = pyWitness.DataRaw("test2.csv",
+                          dataMapping = {"lineupSize":"lineup_size",
+                                         "targetLineup":"culprit_present",
+                          "targetPresent":"present",
+                          "targetAbsent":"absent",
+                          "responseType":"id_type",
+                          "suspectId":"suspect",
+                          "fillerId":"filler",
+                          "rejectId":"reject",
+                          "confidence":"conf_level"}))
 
 Processing data for a single condition
 --------------------------------------
