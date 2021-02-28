@@ -6,9 +6,6 @@ Tutorials
    directory change directoy ``cd`` to that directory. This tutorial builds up! Between each example and the previous examples, the new lines of 
    code are highlighted in yellow.
 
-.. warning::
-   Calculating pAUC statistical tests,
-
 Python
 ------
 
@@ -194,6 +191,9 @@ Some data are not catagories for but a continuous variable.
 
 .. note::
    ``labels==None`` can be used and the bins will be automatically labelled
+
+.. note::
+   The bend edges are exclusive of the low edge and inclusive of the high edge
 
 
 The ``confidence`` column is relabelled to ``confidence-original`` and ``confidence`` is filled with labels. Here is an example of the raw data

@@ -111,6 +111,12 @@ So if you had a file with multiple conditions it would be straightforward to mak
    dpSeq = dr.process("Condition","Sequential")   
    dpSim = dr.process("Condition","Simultaneous")   
 
+Statistical (pAUC) comparision between two conditions
+-----------------------------------------------------
+
+
+
+
 Loading processed data 
 ----------------------
 
