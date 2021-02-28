@@ -182,10 +182,28 @@ class DataRaw :
         responseType = _np.unique(self.data['responseType'])
         confidence   = _np.unique(self.data['confidence'])
 
+        print('DataRaw.checkData> columns      :',self.data.columns.values)
         print('DataRaw.checkData> lineupSize   :',lineupSize)
         print('DataRaw.checkData> targetLineup :',targetLineup)
         print('DataRaw.checkData> responseType :',responseType)
         print('DataRaw.checkData> confidence   :',confidence)
+
+    def columnValues(self,columnName):
+
+        if not self.checkColumn(columnName) :
+            return
+
+        uniqueValues = _np.unique(self.data[columnName])
+        print('DataRaw.columnValues>           :',columnName,uniqueValues)
+
+    def checkColumn(self,columnName):
+        try :
+            self.data[columnName]
+            return True
+        except :
+            print("DataRaw.checkColumn> Column not present :",columnName)
+            return False
+
 
     def collapseCategoricalData(self, 
                                 column = "confidence", 
@@ -360,6 +378,3 @@ class DataRaw :
         '''
 
         self.data.to_excel(fileName, engine = engine)
-
-
-
