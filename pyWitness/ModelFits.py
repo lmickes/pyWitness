@@ -418,12 +418,10 @@ class ModelFit(object) :
 
         nParticipants = pred_tasid_array.sum() + pred_tpsid_array.sum()
 
-        gen_tasid_array = _np.round(pred_tasid_array/nParticipants*nGenParticipants)
-        gen_tpsid_array = _np.round(pred_tpsid_array/nParticipants*nGenParticipants)
+        gen_tasid_array = pred_tasid_array/nParticipants*nGenParticipants
+        gen_tpsid_array = pred_tpsid_array/nParticipants*nGenParticipants
 
         if debug :
-            print(nParticipants)
-
             print('ModelFit.generateRawDataShowup> pred_tasid'.ljust(self.debugIoPadSize,' ')+":",pred_tasid_array)
             print('ModelFit.generateRawDataShowup> pred_tpsid'.ljust(self.debugIoPadSize,' ')+":",pred_tpsid_array)
 
@@ -437,7 +435,7 @@ class ModelFit(object) :
         # target absent
         for i in range(0,len(gen_tasid_array)) :
 
-            if i <= len(gen_tasid_array)/2 :
+            if i <= len(gen_tasid_array)/2.0 :
                 responseType = "rejectId"
             else :
                 responseType = "suspectId"
@@ -447,7 +445,7 @@ class ModelFit(object) :
                               targetLineup="targetAbsent",
                               responseType=responseType,
                               confidence=confidence[i],
-                              n=int(gen_tasid_array[i]))
+                              n=int(_np.round(gen_tasid_array[i])))
 
         # target present
         for i in range(0,len(gen_tpsid_array)) :
@@ -461,7 +459,7 @@ class ModelFit(object) :
                               targetLineup="targetPresent",
                               responseType=responseType,
                               confidence=confidence[i],
-                              n=int(gen_tpsid_array[i]))
+                              n=int(_np.round(gen_tpsid_array[i])))
 
         return dr
 
