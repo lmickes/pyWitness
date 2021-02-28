@@ -66,8 +66,38 @@ def published_Wilson_2018_Experiment12(fileName = "Wilson_SealeCarlisle_Mickes20
     return dr
 
 def published_Wilson_2018_Experiment34(fileName = "Wilson_SealeCarlisle_Mickes2017.xlsx", excelSheet = "Exp3") :
-    pass
+    data = _pandas.read_excel(fileName, excelSheet, engine='openpyxl')
 
+    group         = data['Group']
+    targetLineup  = data['Target or Lure']
+    responseType  = data['Target or Lure Response']
+    confidence    = data['Confidence']
+    lineupSize    = _copy.copy(data['Confidence'])   # copy column
+
+    description   = data['Description']
+    age           = data['Age']
+    gender        = data['Gender']
+
+    targetLineup.replace({"Target":"targetPresent","Lure":"targetAbsent"}, inplace=True)
+    responseType.replace({"Lure":"rejectId", "Target":"suspectId"}, inplace=True)
+    lineupSize[:] = 1
+
+    dataNew = _pandas.DataFrame()
+    # dataNew = dataNew.assign(participantId = participantId)
+    dataNew = dataNew.assign(targetLineup  = targetLineup)
+    dataNew = dataNew.assign(lineupSize    = lineupSize)
+    dataNew = dataNew.assign(responseType  = responseType)
+    dataNew = dataNew.assign(confidence    = confidence)
+
+    dataNew = dataNew.assign(group         = group)
+    dataNew = dataNew.assign(description   = description)
+    dataNew = dataNew.assign(age           = age)
+    dataNew = dataNew.assign(gender        = gender)
+
+    dr = DataRaw('')
+    dr.data = dataNew
+
+    return dr
 
 def published_Akan_2020_Experiment1(fileName = "experiment1", excelSheet = 'E1') :
     data = _pandas.read_excel(fileName, excelSheet, engine='openpyxl')
