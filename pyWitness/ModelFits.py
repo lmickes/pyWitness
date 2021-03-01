@@ -93,7 +93,7 @@ class Parameter(object) :
         else : 
             fixStr = "free"
             
-        return self.name+" "+repr(self.value)+" ("+fixStr+")"
+        return self.name+" "+ ('%.3f' % self.value) +" ("+fixStr+")"
 
 class ModelFit(object) :
     def __init__(self, processedData, debug = False, integrationSigma = 6, chi2Var = 'expected') :
