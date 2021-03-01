@@ -512,6 +512,11 @@ class ModelFit(object) :
 
             chi2 = chi2_tafid + chi2_tpsid + chi2_tpfid + chi2_tarid + chi2_tprid
 
+            # Criterion flip guard
+            for i in range(0,len(self.thresholds)-1) :
+                if self.thresholds[i].value > self.thresholds[i+1].value :
+                    chi2 = chi2 + 10000
+
             if self.debug:
                 print('ModelFit.calculateChi2> chi2 tafid'.ljust(self.debugIoPadSize,' ')+":", chi2_tafid)
                 print('ModelFit.calculateChi2> chi2 tarid'.ljust(self.debugIoPadSize,' ')+":", chi2_tarid)
@@ -539,15 +544,21 @@ class ModelFit(object) :
 
             chi2 = chi2_ta + chi2_tp
 
+            # Criterion flip guard
+            for i in range(0,len(self.thresholds)-1) :
+                if self.thresholds[i].value > self.thresholds[i+1].value :
+                    chi2 = chi2 + 10000
+
             if self.debug:
                 print('ModelFit.calculateChi2> chi2 ta    '.ljust(self.debugIoPadSize,' ')+":", chi2_ta)
                 print('ModelFit.calculateChi2> chi2 tp    '.ljust(self.debugIoPadSize,' ')+":", chi2_tp)
                 print('ModelFit.calculateChi2> chi2 total '.ljust(self.debugIoPadSize,' ')+":", chi2)
 
         self.iteration = self.iteration+1
+
         return chi2        
             
-    def fit(self, resetParameters = False) :
+    def fit(self, maxiter = 5000, method = "Nelder-Mead", resetParameters = False) :
 
         if resetParameters :
             self.resetParameters()
@@ -565,7 +576,7 @@ class ModelFit(object) :
         def chiSquared(x) : 
             return self.calculateChi2(x)
 
-        opt = _optimize.minimize(chiSquared,p0, method='Nelder-Mead')
+        opt = _optimize.minimize(chiSquared,p0, method=method, options={"maxiter":maxiter})
 
         print(opt)
 
