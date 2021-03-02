@@ -556,6 +556,8 @@ class ModelFit(object) :
 
         self.iteration = self.iteration+1
 
+        self.chi2_array.append(chi2)
+
         return chi2        
             
     def fit(self, maxiter = 5000, method = "Nelder-Mead", resetParameters = False) :
@@ -575,6 +577,8 @@ class ModelFit(object) :
 
         def chiSquared(x) : 
             return self.calculateChi2(x)
+
+        self.chi2_array = []
 
         opt = _optimize.minimize(chiSquared,p0, method=method, options={"maxiter":maxiter})
 
@@ -844,6 +848,14 @@ class ModelFit(object) :
         cac = rate_tpsid_array/(rate_tpsid_array+rate_tasid_array)
 
         _plt.plot(confidence[-1::-1], cac, linestyle = '--', label=label)
+
+    def plotChi2History(self):
+
+        _plt.plot(self.chi2_array)
+        _plt.axhline(self.chi2,linestyle="--")
+
+        _plt.xlabel("Chi2 evaluation number")
+        _plt.ylabel("$\\chi^2$")
 
 ###########################################################################################################################################
 class ModelFitIndependentObservationSimple(ModelFit) :
