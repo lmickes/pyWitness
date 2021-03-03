@@ -4,6 +4,7 @@ import numpy as _np
 import math as _math
 import scipy.integrate as _integrate
 import scipy.special as _special
+=import scipy.optimize as _optimize
 import copy as _copy
 
 class DataProcessed :
@@ -266,7 +267,7 @@ class DataProcessed :
         # rest of range apart from end point for integration 
         xForIntegration.extend(list(x[x<xmax]))
         yForIntegration.extend(list(y[x<xmax]))
-        
+
         # check xmax is within x data range
         if xmax > x.max() :
             # print("pAUC extrapolating")
@@ -327,7 +328,25 @@ class DataProcessed :
         self.data_rates = self.data_rates.append(dPrime)
         self.data_rates = self.data_rates.sort_index()
 
+        def p0(x, a,b) :
+            return a*x+b
+
+        # TODO remove NaN
+        [self.zLzT_fitOpt, self.zLzT_fitCov] = _optimize.curve_fit(p0,zT[0:-1],zL[0:-1])
+
+        # TODO think of better naming
+        self.sigma_pred = self.zLzT_fitOpt[0]
+        self.mu_pred    = -self.zLzT_fitOpt[1]
+        self.c_pred     = _special.ndtri(1 - self.data_rates.loc['targetPresent', 'suspectId']) * self.sigma_pred +self.mu_pred
+
         c = _np.array(self.data_rates.columns.get_level_values('confidence').values)
+
+        zT_series = _pandas.Series(name=("zT","central"),data=zT)
+        zL_series = _pandas.Series(name=("zL","central"),data=zL)
+
+        self.data_rates = self.data_rates.append(zT_series)
+        self.data_rates = self.data_rates.append(zL_series)
+        self.data_rates = self.data_rates.sort_index()
 
         if self.lineupSize == 1 :
             # lowest positive confidence
@@ -663,6 +682,24 @@ class DataProcessed :
             
     def plotRAC(self) : 
         pass
+
+    def plotHitVsFalseAlarmRate(self):
+
+        zL = self.data_rates.loc["zL", "central"]
+        zT = self.data_rates.loc["zT", "central"]
+
+        # TODO remove NaN
+        zT_pred = _np.linspace(zT.min(),zT[0:-1].max(),100)
+        zL_pred = zT_pred*self.zLzT_fitOpt[0]+self.zLzT_fitOpt[1]
+
+        _plt.plot(zT,zL,"o",label="Data")
+        _plt.plot(zT_pred,zL_pred,"--",label="Linear fit")
+
+        _plt.grid(True)
+        _plt.tight_layout()
+        _plt.legend()
+        _plt.xlabel("$Z_{\\rm HR}$")
+        _plt.ylabel("$Z_{\\rm FAR}$")
 
     def printPivot(self) :
         print(self.data_pivot)
