@@ -556,7 +556,10 @@ class ModelFit(object) :
 
         self.iteration = self.iteration+1
 
-        self.chi2_array.append(chi2)
+        try :
+            self.chi2_array.append(chi2)
+        except :
+            pass
 
         return chi2        
             
