@@ -4,7 +4,7 @@ import numpy as _np
 import math as _math
 import scipy.integrate as _integrate
 import scipy.special as _special
-=import scipy.optimize as _optimize
+import scipy.optimize as _optimize
 import copy as _copy
 
 class DataProcessed :
