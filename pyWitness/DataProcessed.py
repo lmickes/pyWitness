@@ -332,7 +332,10 @@ class DataProcessed :
             return a*x+b
 
         # TODO remove NaN
-        [self.zLzT_fitOpt, self.zLzT_fitCov] = _optimize.curve_fit(p0,zT[0:-1],zL[0:-1])
+        if self.lineupSize == 1 :
+            [self.zLzT_fitOpt, self.zLzT_fitCov] = _optimize.curve_fit(p0,zT[0:-1],zL[0:-1])
+        else :
+            [self.zLzT_fitOpt, self.zLzT_fitCov] = _optimize.curve_fit(p0, zT, zL)
 
         # TODO think of better naming
         self.sigma_pred = self.zLzT_fitOpt[0]
@@ -689,7 +692,11 @@ class DataProcessed :
         zT = self.data_rates.loc["zT", "central"]
 
         # TODO remove NaN
-        zT_pred = _np.linspace(zT.min(),zT[0:-1].max(),100)
+        if self.lineupSize == 1 :
+            zT_pred = _np.linspace(zT.min(),zT[0:-1].max(),100)
+        else :
+            zT_pred = _np.linspace(zT.min(),zT.max(),100)
+
         zL_pred = zT_pred*self.zLzT_fitOpt[0]+self.zLzT_fitOpt[1]
 
         _plt.plot(zT,zL,"o",label="Data")

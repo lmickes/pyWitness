@@ -190,6 +190,19 @@ class ModelFit(object) :
         self.targetBetweenSigma.fixed = True
         self.targetBetweenSigma.value = 0.1
 
+    def setParameterEstimates(self):
+
+        self.targetMean.value  = self.processedData.mu_pred
+        self.targetSigma.value = self.processedData.sigma_pred
+
+        for i in range(0,len(self.processedData.c_pred),1) :
+            c_pred = _np.flip(self.processedData.c_pred.values)[i]
+            if c_pred != -_np.inf :
+                self.__getattribute__("c"+str(i+1)).value = _np.flip(self.processedData.c_pred.values)[i]
+            else :
+                self.__getattribute__("c" + str(i + 1)).value = -10.0
+                self.__getattribute__("c" + str(i + 1)).fixed = True
+
     def calculateWithinSigmas(self) :
         self.lureWithinSigma    = _np.sqrt(self.lureSigma.value**2   - self.lureBetweenSigma.value**2)
         self.targetWithinSigma  = _np.sqrt(self.targetSigma.value**2 - self.targetBetweenSigma.value**2)
@@ -205,7 +218,7 @@ class ModelFit(object) :
         pred_tpsid_array = []
         pred_tpfid_array = []
    
-        for i in range(0,len(self.thresholds),1) : 
+        for i in range(0,len(self.thresholds),1) :
             if i < len(self.thresholds)-1 : 
                 [pred_tafid, pred_tpsid, pred_tpfid] = self.calculateFrequencyForCriterion(self.thresholds[i+1], self.thresholds[i])                 
             else :
