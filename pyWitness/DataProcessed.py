@@ -56,7 +56,7 @@ class DataProcessed :
 
         self.pAUCLiberal = pAUCLiberal
 
-        self.calculateRates(reverseConfidence)
+        self.calculateRates()
         self.calculateConfidence()
         self.calculateRelativeFrequency()
         self.calculateCAC()
@@ -78,6 +78,12 @@ class DataProcessed :
                                               index=['targetLineup','responseType'], 
                                               aggfunc={'confidence':'count'})
 
+        # reverse confidence
+        if self.reverseConfidence :
+            columns = self.data_pivot.columns.tolist()
+            columns = columns[::-1]
+            self.data_pivot = self.data_pivot[columns]
+
         # TODO understand why this is needed. At appears targetAbsent lineup suspectId appears even if 0 in pivot
         try :
             if self.data_pivot.loc['targetAbsent','suspectId'].sum() == 0 :
@@ -92,23 +98,19 @@ class DataProcessed :
         if self.lineupSize == 1 :
             pass
 
-    def calculateRates(self, reverseConfidence = False) :
+    def calculateRates(self) :
         ''' 
         Calculate cumulative rates from data_pivot. Result stored in data_rates
-        
-        :param reverseConfidence: Flag true if confidence increases with lower values
-        :type reverseConfidence: bool
+
         :rtype: None
         '''
         
         self.data_rates = self.data_pivot.copy()
 
         # reverse confidence
-        self.reverseConfidence = reverseConfidence
-        if not reverseConfidence : 
-            columns = self.data_rates.columns.tolist()
-            columns = columns[::-1]
-            self.data_rates = self.data_rates[columns]
+        columns = self.data_rates.columns.tolist()
+        columns = columns[::-1]
+        self.data_rates = self.data_rates[columns]
 
         # cumulative rates
         self.data_rates = self.data_rates.cumsum(1)
