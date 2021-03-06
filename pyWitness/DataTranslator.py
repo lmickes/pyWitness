@@ -22,6 +22,72 @@ def openExcelFile(fileName, excelSheet) :
     except KeyError :
         print("Excel file does not have sheet called :"+excelSheet)
 
+def published_Colloff_2016(fileName = "", excelSheet = "Data") :
+
+    if fileName == "" :
+        fileName = _dir+"/../data/published/2016_ColloffWadeStrange/Colloff_Wade_Strange2016.xlsx"
+
+    # load spreadsheet
+    data = openExcelFile(fileName, excelSheet)
+
+    # get important data
+    participantId       = data['subjectNo ']
+    targetLineup        = data['targetLabel ']
+    lineupSize          = _copy.copy(data['targetLabel '])
+    responseType        = _copy.copy(data['targetLabel '])
+    confidence          = data['confidenceRounded']
+
+    targetLineup.replace({"absent":"targetAbsent", "present":"targetPresent"}, inplace=True)
+    lineupSize.loc[:]   = 6
+
+    face0               = data['face0 ']
+    face1               = data['face1 ']
+    face2               = data['face2 ']
+    face3               = data['face3 ']
+    face4               = data['face4 ']
+    face5               = data['face5 ']
+    faceSelected        = data['faceSelected ']
+
+    for i in range(0,len(faceSelected)) : 
+        if faceSelected[i] == "notpresent" : 
+            responseType[i] = "rejectId"
+        elif faceSelected[i] == "face0div" and face0[i].find("perpetrator") != -1 :
+            responseType[i] = "suspectId"
+        elif faceSelected[i] == "face1div" and face1[i].find("perpetrator") != -1 :
+            responseType[i] = "suspectId"
+        elif faceSelected[i] == "face2div" and face2[i].find("perpetrator") != -1 :
+            responseType[i] = "suspectId"
+        elif faceSelected[i] == "face3div" and face3[i].find("perpetrator") != -1 :
+            responseType[i] = "suspectId"
+        elif faceSelected[i] == "face4div" and face4[i].find("perpetrator") != -1 :
+            responseType[i] = "suspectId"
+        elif faceSelected[i] == "face5div" and face5[i].find("perpetrator") != -1 :
+            responseType[i] = "suspectId"
+        else : 
+            responseType[i] = "fillerId"
+
+    # get other data
+    treatmentLabel          = data['treatmentLabel ']
+    exclude         = data['exclude']
+
+
+
+    dataNew = _pandas.DataFrame()
+    dataNew = dataNew.assign(participantId    = participantId)
+    dataNew = dataNew.assign(targetLineup     = targetLineup)
+    dataNew = dataNew.assign(lineupSize       = lineupSize)
+    dataNew = dataNew.assign(responseType     = responseType)
+    dataNew = dataNew.assign(confidence       = confidence)
+    dataNew = dataNew.assign(treatmentLabel   = treatmentLabel)
+    dataNew = dataNew.assign(exclude          = exclude)
+
+    dr = DataRaw('')
+    dr.data = dataNew
+    dr.checkData()
+
+    return dr       
+
+
 def published_Wilson_2018_Experiment12(fileName = "", excelSheet = "Exp1_2") :
 
     if fileName == "" :

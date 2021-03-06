@@ -1,5 +1,10 @@
 Paper                : https://journals.sagepub.com/doi/abs/10.1177/0956797616655789
 Original data        : https://osf.io/j5r4m/
-DataTranslators      :
-Notes                :
+DataTranslators      : published_Colloff_2016
+Notes                : 
+
+dr = pyWitness.DataTranslator.published_Colloff_2016()
+dr.cutData("exclude","no")
+
+
 
