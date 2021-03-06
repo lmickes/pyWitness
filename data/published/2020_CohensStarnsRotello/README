@@ -1,1 +1,18 @@
-Original data : https://osf.io/4efqx/
+Paper           : https://doi.org/10.3758/s13428-020-01402-7
+Original data   : https://osf.io/4efqx/
+DataTranslators : Standard pyWitness
+Notes           :
+
+The data published in this methods paper is based on two other experimental papers.
+
+Gronlund (gronlund_data.csv)
+
+Palmer (palmer_data.csv, palmer_delay_long_data.cscv, palmer_delay_short.csv)
+
+
+drGronlund = pyWitness.DataRaw("./gronlund_data.csv",dataMapping=pyWitness.dataMapSdtlu)
+dpGronlund = drGronlung.process(reverseConfidence = True)
+
+drPlamer      = pyWitness.DataRaw("./plamer_data.csv",dataMapping=pyWitness.dataMapSdtlu)
+drPlamerLong  = pyWitness.DataRaw("./plamer_delay_long_data.csv",dataMapping=pyWitness.dataMapSdtlu)
+drPlamerShort = pyWitness.DataRaw("./plamer_delay_short_data.csv",dataMapping=pyWitness.dataMapSdtlu)
