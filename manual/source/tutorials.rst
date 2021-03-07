@@ -52,6 +52,10 @@ either ``csv`` or ``excel`` format. The format of ``test1.csv`` is the same as t
    import pyWitness
    dr = pyWitness.DataRaw("test1.csv")
 
+Checking and exploring loaded data
+----------------------------------
+
+
 Processing raw experimental data
 --------------------------------
 To process the raw data the function `pyWitness.DataRaw.process <./moduledocs.html#pyWitness.DataRaw.process>`_
@@ -341,7 +345,8 @@ There lots of ways to control the model
    * - ``mf.lureBetweenSigma.unset_equal()``
      - Release the linking of lureBetweenSigma and targetBetweenSigma
 
-There are multiple fits available and they all have the same interface they differ in the construction line
+There are multiple fits available and they all have the same interface they differ in
+the construction line
 
 .. code-block :: python
    :linenos:
@@ -355,6 +360,64 @@ There are multiple fits available and they all have the same interface they diff
    mf_br = pyWitness.ModelFitBestRest(dp)
    mf_en = pyWitness.ModelFitEnsemble(dp)
    mf_in = pyWitness.ModelFitIntegration(dp)
+
+Setting initial fit parameters
+------------------------------
+
+With data samples with large number of confidence bins the fits can take a large
+number of iterations to converge (long run times). Sensible fit parameters can be be
+estimated from the data.
+
+To estimate the target mean :math:`\mu_t` and sigma :math:`\sigma_t` the following relation is used
+
+.. math ::
+
+   Z(R_{T,i}) = \frac{Z(R_{L,i})- \mu_t}{\sigma_t}
+
+Rearranging gives
+
+.. math ::
+
+   \sigma_t Z(R_{T,i}) = Z(R_{L,i}) - \mu_s
+
+So there is a linear relationship between target and lure :math:`Z` values. This can be plotted
+and a linear fit used to estimate the gradient and intercept.
+
+.. code-block :: python
+   :linenos:
+   :emphasize-lines: 5
+
+   import pyWitness
+   dr = pyWitness.DataRaw("test1.csv")
+   dr.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels= [1,2,3])
+   dp = dr.process()
+   dp.plotHitVsFalseAlarmRate()
+
+
+.. code-block :: python
+   :linenos:
+   :emphasize-lines: 9
+
+   import pyWitness
+   dr = pyWitness.DataRaw("test1.csv")
+   dr.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels= [1,2,3])
+   dp = dr.process()
+   mf = pyWitness.ModelFitIndependentObservation(dp)
+   mf.printParameters()
+
+   mf.setEqualVariance()
+   mf.setParameterEstimates()
+   mf.printParameters()
+
+   mf.fit()
+   mf.printParameters()
+
+Checking the convergence of fit
+-------------------------------
+
+Loading and saving fit parameters for later use
+-----------------------------------------------
+
 
 Plotting fit and models
 -----------------------
@@ -459,7 +522,7 @@ A member variable ``dPrime`` in ``DataProcessed`` is set according to
 
 :math:`d` can also be calculated from a signal detection model so
 
-.. math ::
+. . math ::
 
    d = \frac{\mu_{T} - \mu_{L}}{ \sqrt{\frac{\sigma_T^2 + \sigma_L^2}{2}} }
 

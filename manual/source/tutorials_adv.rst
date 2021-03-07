@@ -84,6 +84,11 @@ possible to replace the name of the data columns and the values stored.
                           "rejectId":"reject",
                           "confidence":"conf_level"}))
 
+Loading SDTLU data
+------------------
+
+
+
 Processing data for a single condition
 --------------------------------------
 
