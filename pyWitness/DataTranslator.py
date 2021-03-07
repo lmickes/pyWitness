@@ -5,6 +5,7 @@ import os as _os
 import sys as _sys
 
 from .DataRaw import DataRaw
+from .DataRaw import dataMapSdtlu
 
 _dir = _os.path.dirname(__file__)
 
@@ -22,6 +23,7 @@ def openExcelFile(fileName, excelSheet) :
     except KeyError :
         print("Excel file does not have sheet called :"+excelSheet)
 
+#########################################################################################################
 def published_Colloff_2016(fileName = "", excelSheet = "Data") :
 
     if fileName == "" :
@@ -87,7 +89,7 @@ def published_Colloff_2016(fileName = "", excelSheet = "Data") :
 
     return dr       
 
-
+#########################################################################################################
 def published_Wilson_2018_Experiment12(fileName = "", excelSheet = "Exp1_2") :
 
     if fileName == "" :
@@ -187,6 +189,7 @@ def published_Wilson_2018_Experiment34(fileName = "", excelSheet = "Exp3") :
 
     return dr
 
+#########################################################################################################
 def published_Akan_2020_Experiment1(fileName = "", excelSheet = 'E1') :
 
     if fileName == "" :
@@ -223,3 +226,23 @@ def published_Akan_2020_Experiment1(fileName = "", excelSheet = 'E1') :
 
     return dr
 
+#########################################################################################################
+def published_Cohens_2020_Gonlund() :
+    fileName = _dir + "/../data/published/2020_CohensStarnsRotello/gronlund_data.csv"
+    dr       = DataRaw(fileName,dataMapping=dataMapSdtlu)
+    return dr
+
+def published_Cohens_2020_Palmer() :
+    fileName = _dir + "/../data/published/2020_CohensStarnsRotello/palmer_data.csv"
+    dr       = DataRaw(fileName,dataMapping=dataMapSdtlu)
+    return dr
+
+def published_Cohens_2020_PalmerDelayShort() :
+    fileName = _dir + "/../data/published/2020_CohensStarnsRotello/palmer_delay_short_data.csv"
+    dr       = DataRaw(fileName,dataMapping=dataMapSdtlu)
+    return dr
+
+def published_Cohens_2020_PalmerDelayLong() :
+    fileName = _dir + "/../data/published/2020_CohensStarnsRotello/palmer_delay_long_data.csv"
+    dr       = DataRaw(fileName,dataMapping=dataMapSdtlu)
+    return dr
