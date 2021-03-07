@@ -230,19 +230,35 @@ def published_Akan_2020_Experiment1(fileName = "", excelSheet = 'E1') :
 def published_Cohens_2020_Gonlund() :
     fileName = _dir + "/../data/published/2020_CohensStarnsRotello/gronlund_data.csv"
     dr       = DataRaw(fileName,dataMapping=dataMapSdtlu)
+
+    c = _np.logical_and(dr.data['targetLineup'] == "targetAbsent", dr.data['responseType'] == "suspectId")
+    dr.data['responseType'][c] = "fillerId"
+
     return dr
 
 def published_Cohens_2020_Palmer() :
     fileName = _dir + "/../data/published/2020_CohensStarnsRotello/palmer_data.csv"
     dr       = DataRaw(fileName,dataMapping=dataMapSdtlu)
+
+    c = _np.logical_and(dr.data['targetLineup'] == "targetAbsent", dr.data['responseType'] == "suspectId")
+    dr.data['responseType'][c] = "fillerId"
+
     return dr
 
 def published_Cohens_2020_PalmerDelayShort() :
     fileName = _dir + "/../data/published/2020_CohensStarnsRotello/palmer_delay_short_data.csv"
     dr       = DataRaw(fileName,dataMapping=dataMapSdtlu)
+
+    c = _np.logical_and(dr.data['targetLineup'] == "targetAbsent", dr.data['responseType'] == "suspectId")
+    dr.data['responseType'][c] = "fillerId"
+
     return dr
 
 def published_Cohens_2020_PalmerDelayLong() :
     fileName = _dir + "/../data/published/2020_CohensStarnsRotello/palmer_delay_long_data.csv"
     dr       = DataRaw(fileName,dataMapping=dataMapSdtlu)
+
+    c = _np.logical_and(dr.data['targetLineup'] == "targetAbsent", dr.data['responseType'] == "suspectId")
+    dr.data['responseType'][c] = "fillerId"
+
     return dr
