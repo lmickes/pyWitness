@@ -4,6 +4,8 @@ DataTranslators : published_Wilson_2018_Experiment12, published_Wilson_2018_Expe
 Notes           :
 
 Experiment 1
+------------
+
 dr = pyWitness.DataTranslator.published_Wilson_2018_Experiment12()
 dr.cutData("experiment",1)
 dr.cutData("previouslyViewed",1)
@@ -12,6 +14,8 @@ dpControl = dr.process("group","Control")
 dpVerbal  = dr.process("group","Verbal")
 
 Experiment 2
+------------
+
 dr = pyWitness.DataTranslator.published_Wilson_2018_Experiment12()
 dr.cutData("experiment",2)
 dr.cutData("previouslyViewed",1)
@@ -20,6 +24,8 @@ dpControl = dr.process("group","Control")
 dpVerbal  = dr.process("group","Verbal")
 
 Experiment 3
+------------
+
 
 dr = pyWitness.DataTranslator.published_Wilson_2018_Experiment34()
 dr.collapseContinuousData(column = "confidence",
@@ -32,9 +38,17 @@ dr.collapseCategoricalData(column='confidence',
 
 
 dpControl    = dr.process("group","Control")
-dpOvershadow = dr.process("group","Overshadow")
+dpVerbal    = dr.process("group","Verbal")
 
 Experiment 4
+------------
 
+dr = pyWitness.DataTranslator.published_Wilson_2018_Experiment34(excelSheet = "Exp4")
+dr.collapseContinuousData(column = "confidence",
+                          bins = [-12,-10,-8,-5,0,5,8,10,11],
+                          labels=[-4,-3,-2,-1,1,2,3,4])
+
+dpControl    = dr.process("group","Control")
+dpOvershadow = dr.process("group","Overshadow")
 
 
