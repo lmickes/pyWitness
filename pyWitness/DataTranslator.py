@@ -90,6 +90,66 @@ def published_Colloff_2016(fileName = "", excelSheet = "Data") :
     return dr       
 
 #########################################################################################################
+def published_Morgan_2019(fileName = "", excelSheet = "Raw Data") :
+
+    if fileName == "" :
+        fileName = _dir+"/../data/published/2019_Morgan_Tamminen_SealeCarlisle_Mickes/2019_Morgan_Tamminen_SealeCarlisle_Mickes.xlsx"
+
+    # load spreadsheet
+    data = openExcelFile(fileName, excelSheet)
+
+    # get important data
+    participantId    = data['Participant ID']
+    targetLineup     = data['Target Present or Target Absent Lineup']
+    lineupSize       = _copy.copy(data['Minutes2'])   # copy column
+    accuracy         = data['Accuracy']
+    response         = data['Participant Response']
+    responseType     = _copy.copy(data['Target Present or Target Absent Lineup'])   # copy column
+    confidence       = data['Confidence']
+
+    # translate data
+    targetLineup.replace({"Target Absent":"targetAbsent", "Target Present":"targetPresent"}, inplace=True)
+    lineupSize.loc[:] = 6
+
+    response.replace({"absent":"targetAbsent", "present":"targetPresent"}, inplace=True)
+
+    accuracy.replace({"Incorrect":"incorrect"}, inplace=True)
+
+    taFillerId       = _np.logical_and(_np.logical_and(targetLineup == "targetAbsent",  accuracy == "incorrect"),response == "targetPresent")
+    taRejectId       = _np.logical_and(_np.logical_and(targetLineup == "targetAbsent",  accuracy == "correct"),response == "targetAbsent")
+    tpFillerId       = _np.logical_and(_np.logical_and(targetLineup == "targetPresent", accuracy == "incorrect"),response == "targetPresent")
+    tpSuspectId      = _np.logical_and(_np.logical_and(targetLineup == "targetPresent", accuracy == "correct"),response == "targetPresent")
+    tpRejectId       = _np.logical_and(_np.logical_and(targetLineup == "targetPresent", accuracy == "incorrect"),response == "targetAbsent")
+
+    responseType.loc[taFillerId]  = "fillerId"
+    responseType.loc[taRejectId]  = "rejectId"
+    responseType.loc[tpFillerId]  = "fillerId"
+    responseType.loc[tpSuspectId] = "suspectId"
+    responseType.loc[tpRejectId]  = "rejectId"
+
+    # get other data
+    age              = data['Age']
+    gender           = data['Sex']
+    condition        = data['Condition']
+
+    dataNew = _pandas.DataFrame()
+    dataNew = dataNew.assign(participantId    = participantId)
+    dataNew = dataNew.assign(targetLineup     = targetLineup)
+    dataNew = dataNew.assign(lineupSize       = lineupSize)
+    dataNew = dataNew.assign(responseType     = responseType)
+    dataNew = dataNew.assign(confidence       = confidence)
+    dataNew = dataNew.assign(age              = age)
+    dataNew = dataNew.assign(gender           = gender)
+    dataNew = dataNew.assign(condition        = condition)
+
+    dr = DataRaw('')
+    dr.data = dataNew
+    dr.checkData()
+
+    return dr
+
+#########################################################################################################
+#########################################################################################################
 def published_Wilson_2018_Experiment12(fileName = "", excelSheet = "Exp1_2") :
 
     if fileName == "" :
