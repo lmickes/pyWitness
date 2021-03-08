@@ -93,7 +93,9 @@
 <li class="toctree-l2"><a class="reference internal" href="#bootstrapping-uncertainties-confidence-limits">Bootstrapping uncertainties/confidence limits</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#loading-raw-data-excel-format">Loading raw data excel format</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#transforming-data-into-common-format">Transforming data into common format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#loading-sdtlu-data">Loading SDTLU data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#processing-data-for-a-single-condition">Processing data for a single condition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#statistical-pauc-comparision-between-two-conditions">Statistical (pAUC) comparision between two conditions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#loading-processed-data">Loading processed data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#using-instances-of-raw-data-processed-data-and-model-fits">Using instances of raw data, processed data and model fits</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#overlaying-plots">Overlaying plots</a></li>
@@ -102,6 +104,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials_dev.html">Developer tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="results.html">Results</a></li>
 <li class="toctree-l1"><a class="reference internal" href="moduledocs.html">Module Contents</a></li>
 </ul>
 
@@ -172,8 +175,8 @@
 <div class="section" id="bootstrapping-uncertainties-confidence-limits">
 <h2>Bootstrapping uncertainties/confidence limits<a class="headerlink" href="#bootstrapping-uncertainties-confidence-limits" title="Permalink to this headline">¶</a></h2>
 <p>To create confidence limits on binned cumulative, statistical measures and parameters, pyWitness uses
-the bootstrap method. This method takes N random participants from the original data <em>with replacement</em>.
-pyWitness can then proceed to compute any quantity (ROC, CAC, pAUC, fit parameters). This is repeated M
+the bootstrap method. This method takes <span class="math notranslate nohighlight">\(N\)</span> random participants from the original data <em>with replacement</em>.
+pyWitness can then proceed to compute any quantity (ROC, CAC, pAUC, fit parameters). This is repeated <span class="math notranslate nohighlight">\(M\)</span>
 times and the distribution of the computed quantity used to calculate a confidence interval with a user
 definable range.</p>
 <div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -231,17 +234,21 @@ the confidence interval is drawn as error bars.</p>
 <p>The raw experimental data does not have to be in the internal format used by pyWitness. As the data is loaded is it
 possible to replace the name of the data columns and the values stored.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
-<span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test2.csv&quot;</span><span class="p">,</span> <span class="n">dataMapping</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;lineupSize&quot;</span><span class="p">:</span><span class="s2">&quot;lineup_size&quot;</span><span class="p">,</span>
-                                                  <span class="s2">&quot;targetLineup&quot;</span><span class="p">:</span><span class="s2">&quot;culprit_present&quot;</span><span class="p">,</span>
-                                                  <span class="s2">&quot;targetPresent&quot;</span><span class="p">:</span><span class="s2">&quot;present&quot;</span><span class="p">,</span>
-                                                  <span class="s2">&quot;targetAbsent&quot;</span><span class="p">:</span><span class="s2">&quot;absent&quot;</span><span class="p">,</span>
-                                                  <span class="s2">&quot;responseType&quot;</span><span class="p">:</span><span class="s2">&quot;id_type&quot;</span><span class="p">,</span>
-                                                  <span class="s2">&quot;suspectId&quot;</span><span class="p">:</span><span class="s2">&quot;suspect&quot;</span><span class="p">,</span>
-                                                  <span class="s2">&quot;fillerId&quot;</span><span class="p">:</span><span class="s2">&quot;filler&quot;</span><span class="p">,</span>
-                                                  <span class="s2">&quot;rejectId&quot;</span><span class="p">:</span><span class="s2">&quot;reject&quot;</span><span class="p">,</span>
-                                                  <span class="s2">&quot;confidence&quot;</span><span class="p">:</span><span class="s2">&quot;conf_level&quot;</span><span class="p">}))</span>
+<span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test2.csv&quot;</span><span class="p">,</span>
+                       <span class="n">dataMapping</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;lineupSize&quot;</span><span class="p">:</span><span class="s2">&quot;lineup_size&quot;</span><span class="p">,</span>
+                                      <span class="s2">&quot;targetLineup&quot;</span><span class="p">:</span><span class="s2">&quot;culprit_present&quot;</span><span class="p">,</span>
+                       <span class="s2">&quot;targetPresent&quot;</span><span class="p">:</span><span class="s2">&quot;present&quot;</span><span class="p">,</span>
+                       <span class="s2">&quot;targetAbsent&quot;</span><span class="p">:</span><span class="s2">&quot;absent&quot;</span><span class="p">,</span>
+                       <span class="s2">&quot;responseType&quot;</span><span class="p">:</span><span class="s2">&quot;id_type&quot;</span><span class="p">,</span>
+                       <span class="s2">&quot;suspectId&quot;</span><span class="p">:</span><span class="s2">&quot;suspect&quot;</span><span class="p">,</span>
+                       <span class="s2">&quot;fillerId&quot;</span><span class="p">:</span><span class="s2">&quot;filler&quot;</span><span class="p">,</span>
+                       <span class="s2">&quot;rejectId&quot;</span><span class="p">:</span><span class="s2">&quot;reject&quot;</span><span class="p">,</span>
+                       <span class="s2">&quot;confidence&quot;</span><span class="p">:</span><span class="s2">&quot;conf_level&quot;</span><span class="p">}))</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="loading-sdtlu-data">
+<h2>Loading SDTLU data<a class="headerlink" href="#loading-sdtlu-data" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="processing-data-for-a-single-condition">
 <h2>Processing data for a single condition<a class="headerlink" href="#processing-data-for-a-single-condition" title="Permalink to this headline">¶</a></h2>
@@ -267,6 +274,9 @@ for DataRaw.process()</p>
 </span><span class="hll"><span class="n">dpSim</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="s2">&quot;Condition&quot;</span><span class="p">,</span><span class="s2">&quot;Simultaneous&quot;</span><span class="p">)</span>
 </span></pre></div>
 </td></tr></table></div>
+</div>
+<div class="section" id="statistical-pauc-comparision-between-two-conditions">
+<h2>Statistical (pAUC) comparision between two conditions<a class="headerlink" href="#statistical-pauc-comparision-between-two-conditions" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="loading-processed-data">
 <h2>Loading processed data<a class="headerlink" href="#loading-processed-data" title="Permalink to this headline">¶</a></h2>
@@ -537,7 +547,7 @@ performed and dependence on sample size can be explored.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright Royal Holloway, University of London 2020 and University of Bristol 2020
-      Last updated on Feb 14, 2021.
+      Last updated on Mar 05, 2021.
 
     </p>
   </div>

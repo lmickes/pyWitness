@@ -13,6 +13,7 @@ pyWitness is a python package to manipulate, process, model, fit eye witness dat
    tutorials
    tutorials_adv
    tutorials_dev
+   results
    moduledocs
    
 Indices and tables

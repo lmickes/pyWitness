@@ -91,6 +91,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorials</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#python">Python</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#loading-raw-experimental-data">Loading raw experimental data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#checking-and-exploring-loaded-data">Checking and exploring loaded data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#processing-raw-experimental-data">Processing raw experimental data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#plotting-roc-curves">Plotting ROC curves</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#plotting-cac-curves">Plotting CAC curves</a></li>
@@ -99,6 +100,9 @@
 <li class="toctree-l2"><a class="reference internal" href="#collapsing-binning-continuous-data">Collapsing (binning) continuous data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#calculating-pauc-and-performing-statistical-tests">Calculating pAUC and performing statistical tests</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#fitting-signal-detection-models-to-data">Fitting signal detection models to data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#setting-initial-fit-parameters">Setting initial fit parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#checking-the-convergence-of-fit">Checking the convergence of fit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#loading-and-saving-fit-parameters-for-later-use">Loading and saving fit parameters for later use</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#plotting-fit-and-models">Plotting fit and models</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#d-prime-calculation">d-prime calculation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#writing-results-to-file">Writing results to file</a></li>
@@ -106,6 +110,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials_adv.html">Advanced tutorials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials_dev.html">Developer tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="results.html">Results</a></li>
 <li class="toctree-l1"><a class="reference internal" href="moduledocs.html">Module Contents</a></li>
 </ul>
 
@@ -179,10 +184,6 @@
 directory change directoy <code class="docutils literal notranslate"><span class="pre">cd</span></code> to that directory. This tutorial builds up! Between each example and the previous examples, the new lines of
 code are highlighted in yellow.</p>
 </div>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">Calculating pAUC statistical tests,</p>
-</div>
 <div class="section" id="python">
 <h2>Python<a class="headerlink" href="#python" title="Permalink to this headline">¶</a></h2>
 <p>Python is a interpreted object oriented programming language. There is a large range
@@ -223,6 +224,9 @@ either <code class="docutils literal notranslate"><span class="pre">csv</span></
 <span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test1.csv&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="checking-and-exploring-loaded-data">
+<h2>Checking and exploring loaded data<a class="headerlink" href="#checking-and-exploring-loaded-data" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="processing-raw-experimental-data">
 <h2>Processing raw experimental data<a class="headerlink" href="#processing-raw-experimental-data" title="Permalink to this headline">¶</a></h2>
@@ -363,7 +367,11 @@ call <code class="docutils literal notranslate"><span class="pre">collapseCatego
 </td></tr></table></div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last"><code class="docutils literal notranslate"><span class="pre">labels==None</span></code> can be used and the bins will be automatically labelled</p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">labels=None</span></code> can be used and the bins will be automatically labelled</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The bend edges are exclusive of the low edge and inclusive of the high edge</p>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">confidence</span></code> column is relabelled to <code class="docutils literal notranslate"><span class="pre">confidence-original</span></code> and <code class="docutils literal notranslate"><span class="pre">confidence</span></code> is filled with labels. Here is an example of the raw data
 (<code class="docutils literal notranslate"><span class="pre">dr.data</span></code>) after binning.</p>
@@ -524,7 +532,8 @@ an appropriate start; line 12 yields</p>
 </tr>
 </tbody>
 </table>
-<p>There are multiple fits available and they all have the same interface they differ in the construction line</p>
+<p>There are multiple fits available and they all have the same interface they differ in
+the construction line</p>
 <div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -542,6 +551,64 @@ an appropriate start; line 12 yields</p>
 </span><span class="hll"><span class="n">mf_in</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">ModelFitIntegration</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span>
 </span></pre></div>
 </td></tr></table></div>
+</div>
+<div class="section" id="setting-initial-fit-parameters">
+<h2>Setting initial fit parameters<a class="headerlink" href="#setting-initial-fit-parameters" title="Permalink to this headline">¶</a></h2>
+<p>With data samples with large number of confidence bins the fits can take a large
+number of iterations to converge (long run times). Sensible fit parameters can be be
+estimated from the data.</p>
+<p>To estimate the target mean <span class="math notranslate nohighlight">\(\mu_t\)</span> and sigma <span class="math notranslate nohighlight">\(\sigma_t\)</span> the following relation is used</p>
+<div class="math notranslate nohighlight">
+\[Z(R_{T,i}) = \frac{Z(R_{L,i})- \mu_t}{\sigma_t}\]</div>
+<p>Rearranging gives</p>
+<div class="math notranslate nohighlight">
+\[\sigma_t Z(R_{T,i}) = Z(R_{L,i}) - \mu_s\]</div>
+<p>So there is a linear relationship between target and lure <span class="math notranslate nohighlight">\(Z\)</span> values. This can be plotted
+and a linear fit used to estimate the gradient and intercept.</p>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
+<span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test1.csv&quot;</span><span class="p">)</span>
+<span class="n">dr</span><span class="o">.</span><span class="n">collapseContinuousData</span><span class="p">(</span><span class="n">column</span> <span class="o">=</span> <span class="s2">&quot;confidence&quot;</span><span class="p">,</span><span class="n">bins</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">60</span><span class="p">,</span><span class="mi">80</span><span class="p">,</span><span class="mi">100</span><span class="p">],</span><span class="n">labels</span><span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+<span class="n">dp</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
+<span class="hll"><span class="n">dp</span><span class="o">.</span><span class="n">plotHitVsFalseAlarmRate</span><span class="p">()</span>
+</span></pre></div>
+</td></tr></table></div>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
+<span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test1.csv&quot;</span><span class="p">)</span>
+<span class="n">dr</span><span class="o">.</span><span class="n">collapseContinuousData</span><span class="p">(</span><span class="n">column</span> <span class="o">=</span> <span class="s2">&quot;confidence&quot;</span><span class="p">,</span><span class="n">bins</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">60</span><span class="p">,</span><span class="mi">80</span><span class="p">,</span><span class="mi">100</span><span class="p">],</span><span class="n">labels</span><span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+<span class="n">dp</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
+<span class="n">mf</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">ModelFitIndependentObservation</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span>
+<span class="n">mf</span><span class="o">.</span><span class="n">printParameters</span><span class="p">()</span>
+
+<span class="n">mf</span><span class="o">.</span><span class="n">setEqualVariance</span><span class="p">()</span>
+<span class="hll"><span class="n">mf</span><span class="o">.</span><span class="n">setParameterEstimates</span><span class="p">()</span>
+</span><span class="n">mf</span><span class="o">.</span><span class="n">printParameters</span><span class="p">()</span>
+
+<span class="n">mf</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">mf</span><span class="o">.</span><span class="n">printParameters</span><span class="p">()</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="checking-the-convergence-of-fit">
+<h2>Checking the convergence of fit<a class="headerlink" href="#checking-the-convergence-of-fit" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="loading-and-saving-fit-parameters-for-later-use">
+<h2>Loading and saving fit parameters for later use<a class="headerlink" href="#loading-and-saving-fit-parameters-for-later-use" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="plotting-fit-and-models">
 <h2>Plotting fit and models<a class="headerlink" href="#plotting-fit-and-models" title="Permalink to this headline">¶</a></h2>
@@ -568,8 +635,8 @@ the experimental data to the model fit.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dp</span><span class="o">.</span><span class="n">plotROC</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Data&quot;</span><span class="p">)</span>
 <span class="n">mf</span><span class="o">.</span><span class="n">plotROC</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Indep. obs. fit&quot;</span><span class="p">)</span>
 
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="n">_plt</span>
-<span class="n">_plt</span><span class="o">.</span><span class="n">legend</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">_plt</span>
+<span class="n">_plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 </pre></div>
 </div>
 <div class="figure">
@@ -648,8 +715,10 @@ dataframe, so <code class="docutils literal notranslate"><span class="pre">dp.pr
 </dd>
 </dl>
 <p><span class="math notranslate nohighlight">\(d\)</span> can also be calculated from a signal detection model so</p>
-<div class="math notranslate nohighlight">
-\[d = \frac{\mu_{T} - \mu_{L}}{ \sqrt{\frac{\sigma_T^2 + \sigma_L^2}{2}} }\]</div>
+<p>. . math</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">d</span> <span class="o">=</span> \<span class="n">frac</span><span class="p">{</span>\<span class="n">mu_</span><span class="p">{</span><span class="n">T</span><span class="p">}</span> <span class="o">-</span> \<span class="n">mu_</span><span class="p">{</span><span class="n">L</span><span class="p">}}{</span> \<span class="n">sqrt</span><span class="p">{</span>\<span class="n">frac</span><span class="p">{</span>\<span class="n">sigma_T</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> \<span class="n">sigma_L</span><span class="o">^</span><span class="mi">2</span><span class="p">}{</span><span class="mi">2</span><span class="p">}}</span> <span class="p">}</span>
+</pre></div>
+</div>
 <p>This is calculated from the fit parameters for the fits described in the previous section so</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">In [X]: mf.d</span>
 <span class="go">Out[X]: 1.6671878567242588</span>
@@ -714,7 +783,7 @@ functions belonging to <code class="docutils literal notranslate"><span class="p
   <div role="contentinfo">
     <p>
         &copy; Copyright Royal Holloway, University of London 2020 and University of Bristol 2020
-      Last updated on Feb 14, 2021.
+      Last updated on Mar 08, 2021.
 
     </p>
   </div>

@@ -86,6 +86,9 @@ Interfacing R code
 Interfacing Matlab code
 -----------------------
 
+Running the test suite
+----------------------
+
 Making the logo
 ---------------
 

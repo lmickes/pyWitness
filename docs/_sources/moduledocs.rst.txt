@@ -14,6 +14,9 @@ DataRaw
    :undoc-members:
    :show-inheritance:
 
+DataTranslator
+--------------
+
 DataProcessed 
 --------------
 

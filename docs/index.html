@@ -90,6 +90,7 @@
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials_adv.html">Advanced tutorials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials_dev.html">Developer tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="results.html">Results</a></li>
 <li class="toctree-l1"><a class="reference internal" href="moduledocs.html">Module Contents</a></li>
 </ul>
 
@@ -195,6 +196,7 @@
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="tutorials.html#python">Python</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tutorials.html#loading-raw-experimental-data">Loading raw experimental data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials.html#checking-and-exploring-loaded-data">Checking and exploring loaded data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tutorials.html#processing-raw-experimental-data">Processing raw experimental data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tutorials.html#plotting-roc-curves">Plotting ROC curves</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tutorials.html#plotting-cac-curves">Plotting CAC curves</a></li>
@@ -203,6 +205,9 @@
 <li class="toctree-l2"><a class="reference internal" href="tutorials.html#collapsing-binning-continuous-data">Collapsing (binning) continuous data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tutorials.html#calculating-pauc-and-performing-statistical-tests">Calculating pAUC and performing statistical tests</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tutorials.html#fitting-signal-detection-models-to-data">Fitting signal detection models to data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials.html#setting-initial-fit-parameters">Setting initial fit parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials.html#checking-the-convergence-of-fit">Checking the convergence of fit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials.html#loading-and-saving-fit-parameters-for-later-use">Loading and saving fit parameters for later use</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tutorials.html#plotting-fit-and-models">Plotting fit and models</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tutorials.html#d-prime-calculation">d-prime calculation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tutorials.html#writing-results-to-file">Writing results to file</a></li>
@@ -212,7 +217,9 @@
 <li class="toctree-l2"><a class="reference internal" href="tutorials_adv.html#bootstrapping-uncertainties-confidence-limits">Bootstrapping uncertainties/confidence limits</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tutorials_adv.html#loading-raw-data-excel-format">Loading raw data excel format</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tutorials_adv.html#transforming-data-into-common-format">Transforming data into common format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials_adv.html#loading-sdtlu-data">Loading SDTLU data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tutorials_adv.html#processing-data-for-a-single-condition">Processing data for a single condition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials_adv.html#statistical-pauc-comparision-between-two-conditions">Statistical (pAUC) comparision between two conditions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tutorials_adv.html#loading-processed-data">Loading processed data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tutorials_adv.html#using-instances-of-raw-data-processed-data-and-model-fits">Using instances of raw data, processed data and model fits</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tutorials_adv.html#overlaying-plots">Overlaying plots</a></li>
@@ -226,11 +233,14 @@
 <li class="toctree-l2"><a class="reference internal" href="tutorials_dev.html#running-tests">Running tests</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tutorials_dev.html#interfacing-r-code">Interfacing R code</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tutorials_dev.html#interfacing-matlab-code">Interfacing Matlab code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials_dev.html#running-the-test-suite">Running the test suite</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tutorials_dev.html#making-the-logo">Making the logo</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="results.html">Results</a></li>
 <li class="toctree-l1"><a class="reference internal" href="moduledocs.html">Module Contents</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="moduledocs.html#dataraw">DataRaw</a></li>
+<li class="toctree-l2"><a class="reference internal" href="moduledocs.html#datatranslator">DataTranslator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="moduledocs.html#dataprocessed">DataProcessed</a></li>
 <li class="toctree-l2"><a class="reference internal" href="moduledocs.html#modelfit">ModelFit</a></li>
 </ul>
@@ -266,7 +276,7 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright Royal Holloway, University of London 2020 and University of Bristol 2020
-      Last updated on Feb 14, 2021.
+      Last updated on Mar 08, 2021.
 
     </p>
   </div>

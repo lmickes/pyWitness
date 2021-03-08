@@ -29,7 +29,7 @@
   <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Developer tutorials" href="tutorials_dev.html" /> 
+    <link rel="prev" title="Results" href="results.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -90,8 +90,10 @@
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials_adv.html">Advanced tutorials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials_dev.html">Developer tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="results.html">Results</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Module Contents</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#dataraw">DataRaw</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#datatranslator">DataTranslator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#dataprocessed">DataProcessed</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#modelfit">ModelFit</a></li>
 </ul>
@@ -365,6 +367,16 @@ may be incomplete.</p>
 <dd></dd></dl>
 
 <dl class="method">
+<dt id="pyWitness.DataRaw.columnValues">
+<code class="descname">columnValues</code><span class="sig-paren">(</span><em>columnName</em><span class="sig-paren">)</span><a class="headerlink" href="#pyWitness.DataRaw.columnValues" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyWitness.DataRaw.checkColumn">
+<code class="descname">checkColumn</code><span class="sig-paren">(</span><em>columnName</em><span class="sig-paren">)</span><a class="headerlink" href="#pyWitness.DataRaw.checkColumn" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
 <dt id="pyWitness.DataRaw.collapseCategoricalData">
 <code class="descname">collapseCategoricalData</code><span class="sig-paren">(</span><em>column='confidence'</em>, <em>map={0: 30</em>, <em>10: 30</em>, <em>20: 30</em>, <em>30: 30</em>, <em>40: 30</em>, <em>50: 30</em>, <em>60: 30</em>, <em>70: 75</em>, <em>80: 75</em>, <em>90: 95</em>, <em>100: 95}</em>, <em>reload=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pyWitness.DataRaw.collapseCategoricalData" title="Permalink to this definition">¶</a></dt>
 <dd><p>Take values of column and convert to new values in map</p>
@@ -427,8 +439,13 @@ may be incomplete.</p>
 <dd></dd></dl>
 
 <dl class="method">
+<dt id="pyWitness.DataRaw.cutData">
+<code class="descname">cutData</code><span class="sig-paren">(</span><em>column=''</em>, <em>value=''</em><span class="sig-paren">)</span><a class="headerlink" href="#pyWitness.DataRaw.cutData" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
 <dt id="pyWitness.DataRaw.process">
-<code class="descname">process</code><span class="sig-paren">(</span><em>column=''</em>, <em>condition=''</em>, <em>reverseConfidence=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pyWitness.DataRaw.process" title="Permalink to this definition">¶</a></dt>
+<code class="descname">process</code><span class="sig-paren">(</span><em>column=''</em>, <em>condition=''</em>, <em>reverseConfidence=False</em>, <em>pAUCLiberal=1.0</em>, <em>levels=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyWitness.DataRaw.process" title="Permalink to this definition">¶</a></dt>
 <dd><p>Process the raw data and returns DataProcessed object</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -486,11 +503,14 @@ may be incomplete.</p>
 </dd></dl>
 
 </div>
+<div class="section" id="datatranslator">
+<h2>DataTranslator<a class="headerlink" href="#datatranslator" title="Permalink to this headline">¶</a></h2>
+</div>
 <div class="section" id="dataprocessed">
 <h2>DataProcessed<a class="headerlink" href="#dataprocessed" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="pyWitness.DataProcessed">
-<em class="property">class </em><code class="descclassname">pyWitness.</code><code class="descname">DataProcessed</code><span class="sig-paren">(</span><em>dataRaw</em>, <em>reverseConfidence=False</em>, <em>lineupSize=1</em><span class="sig-paren">)</span><a class="headerlink" href="#pyWitness.DataProcessed" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyWitness.</code><code class="descname">DataProcessed</code><span class="sig-paren">(</span><em>dataRaw</em>, <em>reverseConfidence=False</em>, <em>lineupSize=1</em>, <em>pAUCLiberal=1.0</em>, <em>levels=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyWitness.DataProcessed" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Processed data class</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -522,15 +542,13 @@ may be incomplete.</p>
 
 <dl class="method">
 <dt id="pyWitness.DataProcessed.calculateRates">
-<code class="descname">calculateRates</code><span class="sig-paren">(</span><em>reverseConfidence=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pyWitness.DataProcessed.calculateRates" title="Permalink to this definition">¶</a></dt>
+<code class="descname">calculateRates</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyWitness.DataProcessed.calculateRates" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate cumulative rates from data_pivot. Result stored in data_rates</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>reverseConfidence</strong> (<em>bool</em>) – Flag true if confidence increases with lower values</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">None</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">None</td>
 </tr>
 </tbody>
 </table>
@@ -586,6 +604,22 @@ may be incomplete.</p>
 <dd></dd></dl>
 
 <dl class="method">
+<dt id="pyWitness.DataProcessed.comparePAUC">
+<code class="descname">comparePAUC</code><span class="sig-paren">(</span><em>other</em><span class="sig-paren">)</span><a class="headerlink" href="#pyWitness.DataProcessed.comparePAUC" title="Permalink to this definition">¶</a></dt>
+<dd><p>Statistical test compare two pAUCs</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>other</strong> (<a class="reference internal" href="#pyWitness.DataProcessed" title="pyWitness.DataProcessed"><em>DataProcessed</em></a>) – object to compare against</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="pyWitness.DataProcessed.plotROC">
 <code class="descname">plotROC</code><span class="sig-paren">(</span><em>label='ROC'</em>, <em>relativeFrequencyScale=400</em>, <em>errorType='bars'</em><span class="sig-paren">)</span><a class="headerlink" href="#pyWitness.DataProcessed.plotROC" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plot the receiver operating characteristic (ROC) for the data. The symbol size is proportional to 
@@ -634,6 +668,11 @@ are also plotted.</p>
 <dl class="method">
 <dt id="pyWitness.DataProcessed.plotRAC">
 <code class="descname">plotRAC</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyWitness.DataProcessed.plotRAC" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyWitness.DataProcessed.plotHitVsFalseAlarmRate">
+<code class="descname">plotHitVsFalseAlarmRate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyWitness.DataProcessed.plotHitVsFalseAlarmRate" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -807,7 +846,7 @@ are also plotted.</p>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
       
-        <a href="tutorials_dev.html" class="btn btn-neutral" title="Developer tutorials" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="results.html" class="btn btn-neutral" title="Results" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -817,7 +856,7 @@ are also plotted.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright Royal Holloway, University of London 2020 and University of Bristol 2020
-      Last updated on Feb 14, 2021.
+      Last updated on Mar 08, 2021.
 
     </p>
   </div>
@@ -842,6 +881,7 @@ are also plotted.</p>
         <script type="text/javascript" src="_static/jquery.js"></script>
         <script type="text/javascript" src="_static/underscore.js"></script>
         <script type="text/javascript" src="_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
 
   
