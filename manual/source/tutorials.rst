@@ -194,7 +194,7 @@ Some data are not catagories for but a continuous variable.
    dp.plotROC()
 
 .. note::
-   ``labels==None`` can be used and the bins will be automatically labelled
+   ``labels=None`` can be used and the bins will be automatically labelled
 
 .. note::
    The bend edges are exclusive of the low edge and inclusive of the high edge
