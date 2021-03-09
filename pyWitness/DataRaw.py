@@ -205,6 +205,16 @@ class DataRaw :
             return False
 
 
+    def collapseTargetAbsentSuspectId(self):
+
+        '''
+        Convert targetAbsent suspectIds to targetAbsent fillerIds
+
+        :return:
+        '''
+        c = _np.logical_and(self.data['targetLineup'] == "targetAbsent", self.data['responseType'] == "suspectId")
+        self.data['responseType'][c] = "fillerId"
+
     def collapseCategoricalData(self, 
                                 column = "confidence", 
                                 map = {0:30, 10:30, 20:30, 30:30, 40:30, 50:30, 60:30, 
