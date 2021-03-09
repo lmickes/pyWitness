@@ -9,7 +9,7 @@ from .ModelFits import ModelFitEnsemble
 from .ModelFits import ModelFitBestRest
 from .ModelFits import ModelFitIntegration
 
-print("pyWitness v0.1 : Laura Mickes, Stewart Boogert")
+print("pyWitness v0.1 : Authorship - https://lmickes.github.io/pyWitness/authorship.html")
 
 import sys
 import warnings
