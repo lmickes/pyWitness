@@ -522,7 +522,7 @@ A member variable ``dPrime`` in ``DataProcessed`` is set according to
 
 :math:`d` can also be calculated from a signal detection model so
 
-. . math ::
+.. math ::
 
    d = \frac{\mu_{T} - \mu_{L}}{ \sqrt{\frac{\sigma_T^2 + \sigma_L^2}{2}} }
 
