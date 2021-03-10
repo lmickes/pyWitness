@@ -124,7 +124,7 @@ html_sidebars = {
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'pyWitnessdoc'
 
-
+html_logo = './images/pyWitnessLogo200.jpg'
 # -- Options for LaTeX output ---------------------------------------------
 
 latex_elements = {
