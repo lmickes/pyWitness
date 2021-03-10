@@ -125,6 +125,9 @@ html_sidebars = {
 htmlhelp_basename = 'pyWitnessdoc'
 
 html_logo = './images/pyWitnessLogo200.jpg'
+
+html_favicon = './images/pyWitnessFavicon.jpg'
+
 # -- Options for LaTeX output ---------------------------------------------
 
 latex_elements = {
