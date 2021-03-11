@@ -14,3 +14,5 @@ The following people have contributed to pyWitness:
 
 Citing pyWitness
 ----------------
+
+We are currently drafting a manuscript. In the meantime, if you're an early adopter, please cite this manual. 

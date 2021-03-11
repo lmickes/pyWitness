@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Tutorials &mdash; pyWitness 0.1 documentation</title>
+  <title>Tutorials &mdash; pyWitness 0.9 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0.1
+                0.9
               </div>
             
           
@@ -720,10 +720,8 @@ dataframe, so <code class="docutils literal notranslate"><span class="pre">dp.pr
 </dd>
 </dl>
 <p><span class="math notranslate nohighlight">\(d\)</span> can also be calculated from a signal detection model so</p>
-<p>. . math</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">d</span> <span class="o">=</span> \<span class="n">frac</span><span class="p">{</span>\<span class="n">mu_</span><span class="p">{</span><span class="n">T</span><span class="p">}</span> <span class="o">-</span> \<span class="n">mu_</span><span class="p">{</span><span class="n">L</span><span class="p">}}{</span> \<span class="n">sqrt</span><span class="p">{</span>\<span class="n">frac</span><span class="p">{</span>\<span class="n">sigma_T</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> \<span class="n">sigma_L</span><span class="o">^</span><span class="mi">2</span><span class="p">}{</span><span class="mi">2</span><span class="p">}}</span> <span class="p">}</span>
-</pre></div>
-</div>
+<div class="math notranslate nohighlight">
+\[d = \frac{\mu_{T} - \mu_{L}}{ \sqrt{\frac{\sigma_T^2 + \sigma_L^2}{2}} }\]</div>
 <p>This is calculated from the fit parameters for the fits described in the previous section so</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">In [X]: mf.d</span>
 <span class="go">Out[X]: 1.6671878567242588</span>
@@ -813,6 +811,7 @@ functions belonging to <code class="docutils literal notranslate"><span class="p
         <script type="text/javascript" src="_static/jquery.js"></script>
         <script type="text/javascript" src="_static/underscore.js"></script>
         <script type="text/javascript" src="_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
 
   
