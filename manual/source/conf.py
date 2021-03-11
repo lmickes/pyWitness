@@ -126,7 +126,7 @@ htmlhelp_basename = 'pyWitnessdoc'
 
 html_logo = './images/pyWitnessLogo200.jpg'
 
-html_favicon = './images/pyWitnessFavicon.jpg'
+html_favicon = './images/pyWitnessFavicon.png'
 
 # -- Options for LaTeX output ---------------------------------------------
 
