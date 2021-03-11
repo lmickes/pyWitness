@@ -11,6 +11,7 @@ import matplotlib.pyplot as _plt
 import random as _rand
 import math as _math
 from numba import jit
+import time as _time
 
 
 @jit(nopython=True)
@@ -149,7 +150,6 @@ class ModelFit(object) :
 
         return freeParams
 
-
     def resetParameters(self):
         self.lureMean.value = 0.0
         self.lureSigma.value = 1.0
@@ -256,7 +256,7 @@ class ModelFit(object) :
     def chi2(self) : 
         
         debug = self.debug
-        self.debug = True
+        self.debug = False
 
         freeParams = self.freeParameterList() 
         p0 = []
@@ -275,6 +275,21 @@ class ModelFit(object) :
             iFreeParams = iFreeParams+1
         
         return iFreeParams
+
+    @property
+    def numberDataPoints(self):
+        if self.lineupSize == 1 :
+            return 2*self.numberConditions
+        else :
+            return 3*self.numberConditions+2
+
+    @property
+    def numberDegreesOfFreedom(self):
+        return self.numberDataPoints - self.numberFreeParameters
+
+    @property
+    def chi2PerNDF(self):
+        return self.chi2/self.numberDegreesOfFreedom
 
     def generateTALineup(self):
         memoryStrength = _np.random.normal(self.lureMean, self.targetMean, self.lineupSize)
@@ -596,13 +611,24 @@ class ModelFit(object) :
 
         self.chi2_array = []
 
+        tStart = _time.perf_counter()
         opt = _optimize.minimize(chiSquared,p0, method=method, options={"maxiter":maxiter})
+        tEnd   = _time.perf_counter()
 
-        print(opt)
+        if self.debug :
+            print(opt)
 
         # Store fit output
         self.numberIterations = opt["nit"]
         self.fitStatus        = opt["message"]
+        self.timeDiff = tEnd - tStart
+
+        print("fit iterations",self.numberIterations)
+        print("fit status    ",self.fitStatus)
+        print("fit time      ",self.timeDiff)
+        print("fit chi2      ",self.chi2)
+        print("fit ndf       ",self.numberDegreesOfFreedom)
+        print("fit chi2/ndf  ",self.chi2PerNDF)
 
         # Post fit calculations
         self.calculateD()
