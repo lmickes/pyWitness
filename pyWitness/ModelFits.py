@@ -103,6 +103,9 @@ class ModelFit(object) :
 
         self.fit_parameters = None
 
+        self.set_equal_variance = False
+        self.set_unequal_variance = False
+
         # check chi2Var variable
         if chi2Var != 'expected' and chi2Var != 'observed' :
             print("chi2Var should be 'expected'|'observed'")
@@ -168,6 +171,7 @@ class ModelFit(object) :
             print('ModelFit.printParameters> ',p)
 
     def setEqualVariance(self) :
+        self.set_equal_variance = True
         self.lureMean.value = 0.0
         self.lureMean.fixed = True
         self.lureSigma.set_equal(self.targetSigma)
@@ -179,6 +183,7 @@ class ModelFit(object) :
         self.targetBetweenSigma.value = 0.1
 
     def setUnequalVariance(self) :
+        self.set_unequal_variance = True
         self.lureMean.value = 0.0
         self.lureMean.fixed = True
         self.lureSigma.value = 1.0
@@ -193,7 +198,8 @@ class ModelFit(object) :
     def setParameterEstimates(self):
 
         self.targetMean.value  = self.processedData.mu_pred
-        self.targetSigma.value = self.processedData.sigma_pred
+        if self.set_unequal_variance : 
+            self.targetSigma.value = self.processedData.sigma_pred
 
         for i in range(0,len(self.processedData.c_pred),1) :
             c_pred = _np.flip(self.processedData.c_pred.values)[i]
@@ -281,7 +287,7 @@ class ModelFit(object) :
         if self.lineupSize == 1 :
             return 2*self.numberConditions
         else :
-            return 3*self.numberConditions+2
+            return 3*self.numberConditions
 
     @property
     def numberDegreesOfFreedom(self):
