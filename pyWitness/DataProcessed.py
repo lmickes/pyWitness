@@ -726,6 +726,10 @@ class DataProcessed :
         return self.data_rates.columns.get_level_values('confidence').size
 
     @property
+    def numberLineups(self):
+        return self.numberTALineups + self.numberTPLineups
+
+    @property
     def liberalTargetAbsentSuspectId(self) :
         '''
         Returns the maximum targetAbsent suspectId rate 
