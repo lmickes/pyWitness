@@ -232,6 +232,33 @@ either <code class="docutils literal notranslate"><span class="pre">csv</span></
 </div>
 <div class="section" id="checking-and-exploring-loaded-data">
 <h2>Checking and exploring loaded data<a class="headerlink" href="#checking-and-exploring-loaded-data" title="Permalink to this headline">¶</a></h2>
+<p>It is useful to understand what columns and data values are stored in the raw data.</p>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
+<span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test1.csv&quot;</span><span class="p">)</span>
+<span class="hll"><span class="n">dr</span><span class="o">.</span><span class="n">checkData</span><span class="p">()</span>
+</span></pre></div>
+</td></tr></table></div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">DataRaw.checkData&gt;</span>
+<span class="go">DataRaw.checkData&gt; columns      : [&#39;Unnamed: 0&#39; &#39;participantId&#39; &#39;lineupSize&#39; &#39;targetLineup&#39; &#39;responseType&#39; &#39;confidence&#39; &#39;responseTime&#39;]</span>
+<span class="go">DataRaw.checkData&gt; lineupSize   : [6]</span>
+<span class="go">DataRaw.checkData&gt; targetLineup : [&#39;targetAbsent&#39; &#39;targetPresent&#39;]</span>
+<span class="go">DataRaw.checkData&gt; responseType : [&#39;fillerId&#39; &#39;rejectId&#39; &#39;suspectId&#39;]</span>
+<span class="go">DataRaw.checkData&gt; confidence   : [  0  10  20  30  40  50  60  70  80  90 100]</span>
+</pre></div>
+</div>
+<p>If the unique values for a non-mandatory column are required then this can be displayed using</p>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
+<span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test1.csv&quot;</span><span class="p">)</span>
+<span class="hll"><span class="n">dr</span><span class="o">.</span><span class="n">columnvalues</span><span class="p">(</span><span class="s2">&quot;responseTime&quot;</span><span class="p">)</span>
+</span></pre></div>
+</td></tr></table></div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">DataRaw.columnValues&gt;           : responseTime [  1159   1175   1248 ... 402689 502420 651073]</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="processing-raw-experimental-data">
 <h2>Processing raw experimental data<a class="headerlink" href="#processing-raw-experimental-data" title="Permalink to this headline">¶</a></h2>
@@ -786,7 +813,7 @@ functions belonging to <code class="docutils literal notranslate"><span class="p
   <div role="contentinfo">
     <p>
         &copy; Copyright Royal Holloway, University of London 2020 and University of Bristol 2020
-      Last updated on Mar 11, 2021.
+      Last updated on Mar 13, 2021.
 
     </p>
   </div>
@@ -811,6 +838,7 @@ functions belonging to <code class="docutils literal notranslate"><span class="p
         <script type="text/javascript" src="_static/jquery.js"></script>
         <script type="text/javascript" src="_static/underscore.js"></script>
         <script type="text/javascript" src="_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
 
   
