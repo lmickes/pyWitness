@@ -1,7 +1,7 @@
 pyWitness Documentation
 ========================
 
-pyWitness is a python package to manipulate, process, model, fit eye witness data and simulations.
+pyWitness is a python package to manipulate, process, model, fit eyewitness recognition memory data and simulations. 
 
 .. toctree::
    :maxdepth: 3
