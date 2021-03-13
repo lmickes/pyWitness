@@ -192,7 +192,7 @@ class ModelFit(object) :
         self.targetSigma.value = 1.0
         self.targetSigma.fixed = False
         self.lureBetweenSigma.set_equal(self.targetBetweenSigma)
-        self.targetBetweenSigma.fixed = True
+        self.targetBetweenSigma.fixed = False
         self.targetBetweenSigma.value = 0.1
 
     def setParameterEstimates(self):
@@ -717,11 +717,15 @@ class ModelFit(object) :
         _plt.plot(x,target,label="Target")
         _plt.plot(x,lure,label="Lure")
 
+        i = 1
+
         for t in self.thresholds :
-            _plt.axvline(t.value, linestyle='--')
+            _plt.axvline(t.value, 0, 0.9,linestyle='--')
+            _plt.text(t.value, target.max()*1.1, "$c_{0}$".format(i),ha='center')
+            i = i +1
 
         _plt.xlabel("Memory strength")
-        _plt.ylabel("Probability")
+        _plt.ylabel("Probability density")
 
         # Plot vertical range
         _plt.ylim(0,max([target.max(), lure.max()])*1.2)
@@ -747,7 +751,7 @@ class ModelFit(object) :
          pred_tpsid_array,
          pred_tpfid_array] = self.calculateFrequenciesForAllCriteria()
 
-        x = range(0,pred_tasid_array.size,1)
+        x = _np.arange(0,pred_tasid_array.size,1)+1
     
         fig = _plt.figure(constrained_layout=True)
         gs = fig.add_gridspec(3,3)
@@ -756,7 +760,7 @@ class ModelFit(object) :
         ax3 = fig.add_subplot(gs[2, 0:2])
                                     
         ax4 = fig.add_subplot(gs[0,2])
-        ax6 = fig.add_subplot(gs[1,2])
+        # ax6 = fig.add_subplot(gs[1,2])
         ax5 = fig.add_subplot(gs[2,2])
 
         # tafid fit bar
@@ -794,6 +798,8 @@ class ModelFit(object) :
                       markersize=5,
                       capsize=5)
         _plt.ylabel("TP Filler ID")
+        _plt.xlabel("Confidence bin")
+
 
         # tarid data plot
         _plt.sca(ax4)
@@ -805,6 +811,11 @@ class ModelFit(object) :
                       markersize=5,
                       capsize=5)  
         _plt.ylabel("TA Reject ID")
+        _plt.tick_params(axis='x',  # changes apply to the x-axis
+                         which='both',  # both major and minor ticks are affected
+                         bottom=False,  # ticks along the bottom edge are off
+                         top=False,  # ticks along the top edge are off
+                         labelbottom=False)  # labels along the bottom edge are off
 
         # tarid data plot
         _plt.sca(ax5)
@@ -816,6 +827,13 @@ class ModelFit(object) :
                       markersize=5,
                       capsize=5)  
         _plt.ylabel("TP Reject ID")
+        _plt.tick_params(axis='x',  # changes apply to the x-axis
+                         which='both',  # both major and minor ticks are affected
+                         bottom=False,  # ticks along the bottom edge are off
+                         top=False,  # ticks along the top edge are off
+                         labelbottom=False)  # labels along the bottom edge are off
+
+        _plt.tight_layout()
 
     def plotFitShowup(self):
 
@@ -851,6 +869,8 @@ class ModelFit(object) :
                       markersize=5,
                       capsize=5)
         _plt.ylabel("TP frequencies")
+
+        _plt.tight_layout()
 
     def plotROC(self, criterion1 = -10, criterion2 = 10, nsteps = 100, label = "Indep model" ) :
         
@@ -902,8 +922,11 @@ class ModelFit(object) :
         _plt.plot(self.chi2_array)
         _plt.axhline(self.chi2,linestyle="--")
 
-        _plt.xlabel("Chi2 evaluation number")
+        _plt.xlabel("$\\chi^2$ function evaluation number")
         _plt.ylabel("$\\chi^2$")
+
+        # Tight layout for plot
+        _plt.tight_layout()
 
 ###########################################################################################################################################
 class ModelFitIndependentObservationSimple(ModelFit) :
