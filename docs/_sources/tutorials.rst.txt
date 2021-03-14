@@ -55,6 +55,39 @@ either ``csv`` or ``excel`` format. The format of ``test1.csv`` is the same as t
 Checking and exploring loaded data
 ----------------------------------
 
+It is useful to understand what columns and data values are stored in the raw data.
+
+.. code-block :: python
+   :linenos:
+   :emphasize-lines: 3
+
+   import pyWitness
+   dr = pyWitness.DataRaw("test1.csv")
+   dr.checkData()
+
+.. code-block :: console
+
+   DataRaw.checkData>
+   DataRaw.checkData> columns      : ['Unnamed: 0' 'participantId' 'lineupSize' 'targetLineup' 'responseType' 'confidence' 'responseTime']
+   DataRaw.checkData> lineupSize   : [6]
+   DataRaw.checkData> targetLineup : ['targetAbsent' 'targetPresent']
+   DataRaw.checkData> responseType : ['fillerId' 'rejectId' 'suspectId']
+   DataRaw.checkData> confidence   : [  0  10  20  30  40  50  60  70  80  90 100]
+
+If the unique values for a non-mandatory column are required then this can be displayed using
+
+.. code-block :: python
+   :linenos:
+   :emphasize-lines: 3
+
+   import pyWitness
+   dr = pyWitness.DataRaw("test1.csv")
+   dr.columnvalues("responseTime")
+
+.. code-block :: console
+
+   DataRaw.columnValues>           : responseTime [  1159   1175   1248 ... 402689 502420 651073]
+
 
 Processing raw experimental data
 --------------------------------
