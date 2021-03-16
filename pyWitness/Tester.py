@@ -45,7 +45,30 @@ class Tester :
         # get results
         mf.printParameters()
 
-        return mf
+        workSheet.cell(10, column, value=mf.lureMean.value)
+        workSheet.cell(11, column, value=mf.lureSigma.value)
+        workSheet.cell(12, column, value=mf.targetMean.value)
+        workSheet.cell(13, column, value=mf.targetSigma.value)
+        workSheet.cell(14, column, value=mf.lureBetweenSigma.value)
+        workSheet.cell(15, column, value=mf.targetBetweenSigma.value)
+
+        # loop over conditions
+        for i in range(0,len(mf.thresholds),1) :
+            workSheet.cell(16+i, column, value=getattr(mf,"c"+str(i+1)).value)
+
+        # get other fit numbers
+        workSheet.cell(27, column, value=mf.numberIterations)
+        workSheet.cell(28, column, value=mf.timeDiff)
+        workSheet.cell(29, column, value=mf.chi2)
+        workSheet.cell(30, column, value=mf.numberDegreesOfFreedom)
+        workSheet.cell(31, column, value=mf.chi2PerNDF)
+
+        # get descriptive stats
+
+        return globals()['mf']
+
+    def saveWorkbook(self):
+        self.excelFile.save("ra.xlsx")
 
     def fillResults(self, sheet = "Sheet1", column = 1):
         pass
