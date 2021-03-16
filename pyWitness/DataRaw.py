@@ -72,6 +72,8 @@ class DataRaw :
             self.data     = _pandas.read_csv(self.fileName)
         elif self.fileName.find("xlsx") != -1 : 
             self.data     = _pandas.read_excel(self.fileName,self.excelSheet, engine='openpyxl')
+        elif self.fileName.find("sav") != -1 :
+            self.data = _pandas.read_spss(self.fileName)
 
     def setLineupSize(self,header) :
         '''
