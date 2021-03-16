@@ -57,18 +57,25 @@ class Tester :
             workSheet.cell(16+i, column, value=getattr(mf,"c"+str(i+1)).value)
 
         # get other fit numbers
-        workSheet.cell(27, column, value=mf.numberIterations)
-        workSheet.cell(28, column, value=mf.timeDiff)
-        workSheet.cell(29, column, value=mf.chi2)
-        workSheet.cell(30, column, value=mf.numberDegreesOfFreedom)
-        workSheet.cell(31, column, value=mf.chi2PerNDF)
+        workSheet.cell(31, column, value=mf.numberIterations)
+        workSheet.cell(32, column, value=mf.timeDiff)
+        workSheet.cell(33, column, value=mf.chi2)
+        workSheet.cell(34, column, value=mf.numberDegreesOfFreedom)
+        workSheet.cell(35, column, value=mf.chi2PerNDF)
 
         # get descriptive stats
+        workSheet.cell(37, column, value=dp.numberLineups)
+        workSheet.cell(38, column, value=dp.numberTALineups)
+        workSheet.cell(39, column, value=dp.numberTPLineups)
+        workSheet.cell(40, column, value=dp.data_rates.loc['targetPresent','suspectId'][-1])
+        workSheet.cell(41, column, value=dp.data_rates.loc['targetAbsent','suspectId'][-1])
+        workSheet.cell(42, column, value=dp.dPrime)
+        workSheet.cell(43, column, value=dp.pAUC)
 
         return globals()['mf']
 
-    def saveWorkbook(self):
-        self.excelFile.save("ra.xlsx")
+    def saveWorkbook(self, fileName = "tester.xlsx"):
+        self.excelFile.save(fileName)
 
     def fillResults(self, sheet = "Sheet1", column = 1):
         pass
