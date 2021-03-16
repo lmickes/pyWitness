@@ -1,0 +1,30 @@
+﻿videoRaw,Video watched. FRONTAL VIDEO or PROFILE VIDEO
+conditionVideo,"Video watched. 1 = front, 2 = profile"
+lineupRaw,"Lineup viewed. Front TA, Front TP, Right TA, Right TP, Front and Right TA, Front and Right TP."
+conditionLineup,"Lineup viewed. 1 = front, 2 = profile, 3 = front + profile."
+conditionSameDiff,"Combined condition coded. Encoding and test views. 1 = same, 2 = different, 3 = same + different"
+condition,"Condition coded. Video watched and lineup viewed. 1= front video, front lineup; 2 = front video, right lineup; 3 = front video, front + right lineup; 4 = right video, right lineup; 5 = right video, front lineup; 6 = right video, front + right lineup"
+lineup 1,"Lineup: Image presented first. The number indicates which foil face was presented;  ""perp"" indicates that the face is the perpetrator from the mock-crime video."
+lineup 2,"Lineup: Image presented second. The number indicates which foil face was presented;  ""perp"" indicates that the face is the perpetrator from the mock-crime video."
+lineup 3,"Lineup: Image presented third. The number indicates which foil face was presented;  ""perp"" indicates that the face is the perpetrator from the mock-crime video."
+lineup 4,"Lineup: Image presented fourth. The number indicates which foil face was presented;  ""perp"" indicates that the face is the perpetrator from the mock-crime video."
+lineup 5,"Lineup: Image presented fifth. The number indicates which foil face was presented;  ""perp"" indicates that the face is the perpetrator from the mock-crime video."
+lineup 6,"Lineup: Image presented sixth. The number indicates which foil face was presented;  ""perp"" indicates that the face is the perpetrator from the mock-crime video."
+lineup 7,"Lineup: Image presented seventh. The number indicates which foil face was presented;  ""perp"" indicates that the face is the perpetrator from the mock-crime video."
+lineup 8,"Lineup: Image presented eigth. The number indicates which foil face was presented;  ""perp"" indicates that the face is the perpetrator from the mock-crime video."
+lineup 9,"Lineup: Image presented ninth. The number indicates which foil face was presented;  ""perp"" indicates that the face is the perpetrator from the mock-crime video."
+decisionRaw,"Identification response: Subjects made an identification decision by selecting a number (1-9), or indicating that the perpetrator was “Not Present.”"
+targetPresentRaw,Lineup condition viewed. Target Absent or Target Present
+conditionTargetPresent,"Lineup condition viewed. 0 = Target Absent, 1 = Target Present"
+participantTargetPresent,"Identification response coded: 0 = Target Absent, 1 = Target Present "
+participantSelection,"Identification response coded: 1 = perp, 2 = filler, 3 = ""not Present"""
+accuracy,"Identification response accuracy coded: 0 = Incorrect, 1 = Correct"
+confidence,"Confidence in identification decision: ""Please rate your confidence in your decision."" Response on an 11-point Likert-type scale ranging from 0% (not at all sure) to 100% (completely certain)."
+age,Subject self-reported age.
+sex,Subject self-reported sex.
+ethnicity,Subject self-reported ethnicity.
+techRaw,Subject response video technical issue question
+techPhotos,Subject response lineup technical issue question
+ANAGRAM1_1 - 16,Subject responses to anagram filler task (anagrams 1-16)
+technical,Technical issues coded. YES = the participant reported a technical issue viewing the video or lineup
+keep,Include in final sample coded. 0 = remove from data analyses. 1 = include in data analyses.

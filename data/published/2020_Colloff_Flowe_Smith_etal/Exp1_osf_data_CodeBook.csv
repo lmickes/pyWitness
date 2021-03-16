@@ -1,0 +1,42 @@
+﻿ExperimentId,Ppt entered ID number
+ParticipantId,programme generated ppt ID number
+SexId,"Subject self-reported sex. F = female, M = Male, N = prefer not to say"
+Age,Subject self-reported age.
+EthnicityId,Subject self-reported ethnicity at the beginnig of the study.
+StartDate,Start date of experiment
+EndDate,End date of experiement
+TrialNumber,The order of the crime scenarion / lineup test (each subject completed 6)
+"Approximately what percentage of the students in the high school you attended were ""South Asian (e.g., Bangladeshi, Indian, Pakistani, Sri Lankan )"" / ""White""?","Interacial contact questionaire (asked about the contact with other-race (white or South Asian, depending on particpants ethnicity)"
+"How many ""South Asian"" / ""White"") friends did you have in High School?","Interacial contact questionaire (asked about the contact with other-race (white or South Asian, depending on particpants ethnicity)"
+"Approximately what percentage of the people in the neighborhood in which you grew up were ""South Asian"" / ""White""","Interacial contact questionaire (asked about the contact with other-race (white or South Asian, depending on particpants ethnicity)"
+"In an average week's time, approximately how many ""South Asian"" / ""White"" people do you have conversations with?","Interacial contact questionaire (asked about the contact with other-race (white or South Asian, depending on particpants ethnicity)"
+"In your area, how many ""South Asians"" / ""Whites"" do you know on a first name basis who also know you on a first name basis?","Interacial contact questionaire (asked about the contact with other-race (white or South Asian, depending on particpants ethnicity)"
+"Of your nine closest friends, how many are ""South Asian"" / ""White""","Interacial contact questionaire (asked about the contact with other-race (white or South Asian, depending on particpants ethnicity)"
+"How many times have you gone out with or dated a ""South Asian"" / ""White"") person?","Interacial contact questionaire (asked about the contact with other-race (white or South Asian, depending on particpants ethnicity)"
+"Approximately what percentage of the people that you view / interact with on social media are ""South Asian"" / ""White""","Interacial contact questionaire (asked about the contact with other-race (white or South Asian, depending on particpants ethnicity)"
+"Approximately what percentage of the people that you watch in TV programmes / movies are ""South Asian"" / ""White""","Interacial contact questionaire (asked about the contact with other-race (white or South Asian, depending on particpants ethnicity)"
+"The crime video played smoothly (played all the way through, did not buffer etc.)",Technical check question at the end of the study 
+The sequence of faces was displayed clearly (loaded promptly etc.),Technical check question at the end of the study 
+"MyRace (""How would you describe YOUR OWN race / ethnicity?"")",Subject self-reported ethnicity at the end of the study
+ParticipantPerpetrator present (yes/no),"Identification response ""Was the perpetrator in the lineup?"""
+Face picked,Identification response: Subjects made an identification decision by selecting a number (1-6)
+Confidence,"Confidence in identification decision: ""Please rate your confidence in your decision."" Response on an 11-point Likert-type scale ranging from 0% ""not confident at all"" to 100% ""absolutely confident"". "
+Face1.jpeg,"Lineup: Image presented first. The number indicates which foil face was presented; In target-present lineups, ""6"" indicates that the face is the perpetrator from the mock-crime video."
+Face2.jpeg,"Lineup: Image presented second. The number indicates which foil face was presented;  In target-present lineups, ""6"" indicates that the face is the perpetrator from the mock-crime video."
+Face3.jpeg,"Lineup: Image presented third. The number indicates which foil face was presented;   In target-present lineups, ""6"" indicates that the face is the perpetrator from the mock-crime video."
+Face4.jpeg,"Lineup: Image presented fourth. The number indicates which foil face was presented;   In target-present lineups, ""6"" indicates that the face is the perpetrator from the mock-crime video."
+Face5.jpeg,"Lineup: Image presented fifth. The number indicates which foil face was presented;   In target-present lineups, ""6"" indicates that the face is the perpetrator from the mock-crime video."
+Face6.jpeg,"Lineup: Image presented sixth. The number indicates which foil face was presented;   In target-present lineups, ""6"" indicates that the face is the perpetrator from the mock-crime video."
+AttentionCheck,"""What happened in the video that you just watched?"" Multiple choice"
+Face (.jpeg) picked,Lineup image ID'd by participant
+Correct,Partipants answer correct (1) or incorrect (0)
+SaidAbsentorPresent,"Identification response coded: absent, or present "
+IDResponse,"Identification response coded: 1 = perp, 2 = foil, 3 = reject "
+CrimeWatched,Video particpant viewed
+PerpRace,Perpetrator race in video
+SubjectRace,Subject race
+OwnRace,If the ID was Own race (perp race = subject race) or other race perp race different to subject race)
+LineupType,Was the lineup interactive or static
+AttentionCheckCorrect,"Partipants answer to attention check question correct? Yes (correct), No (incorrect)"
+CorrectSubjectRace,"Participants self-defined as White or South asian? Yes, No"
+Include,Include in final sample coded. no = remove from data analyses. Yes = include in data analyses.

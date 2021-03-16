@@ -1,0 +1,30 @@
+filename ,Location of data on first author's computer.
+subjectID,Subject number assigned by computer programme when the subject clicked on the link to start the study.
+verification ,Subject ID code randomly assigned by computer programme.
+age,Subject self-reported age.
+Gender,Subject self-reported gender.
+Ethnicity,Subject self-reported ethnicity.
+Device,Device that the subject used to complete the experiment.
+experimentDuration ,Time taken to complete the whole experiment (ms).
+videoOrder,1 = first video watched; 2 = second video watched.
+treatmentLabel ,Identifcation procedure that the subject saw: Simultaneous showup; Showup.
+videoLabel ,Mock-crime video that the subject watched: graffiti; mugging.
+targetLabel ,"Suspect that was presented in the ID task: present = guilty suspect (i.e., perpetrator from the video); absent = innocent suspect."
+face0 ,"Simultaneous showup: Image presented in the top left of the  3 x 2 array of photos in the ID task.  Showup: Image presented to the subject. The number indicates which foil face was presented;  ""perpetrator"" indicates that the face is the perpetrator from the mock-crime video; ""innocent suspect"" indicates that the face was the designated innocent suspect."
+face1 ,"Simultaneous showup: Image presented in the top middle of the  3 x 2 array of photos in the ID task. The number indicates which foil face was presented;  ""perpetrator"" indicates that the face is the perpetrator from the mock-crime video; ""innocent suspect"" indicates that the face was the designated innocent suspect."
+face2 ,"Simultaneous showup: Image presented in the top right of the  3 x 2 array of photos in the ID task. The number indicates which foil face was presented;  ""perpetrator"" indicates that the face is the perpetrator from the mock-crime video; ""innocent suspect"" indicates that the face was the designated innocent suspect."
+face3 ,"Simultaneous showup: Image presented in the bottom left of the  3 x 2 array of photos in the ID task. The number indicates which foil face was presented;  ""perpetrator"" indicates that the face is the perpetrator from the mock-crime video; ""innocent suspect"" indicates that the face was the designated innocent suspect."
+face4 ,"Simultaneous showup: Image presented in the bottom middle of the  3 x 2 array of photos in the ID task. The number indicates which foil face was presented;  ""perpetrator"" indicates that the face is the perpetrator from the mock-crime video; ""innocent suspect"" indicates that the face was the designated innocent suspect."
+face5 ,"Simultaneous showup: Image presented in the bottom right of the  3 x 2 array of photos in the ID task. The number indicates which foil face was presented;  ""perpetrator"" indicates that the face is the perpetrator from the mock-crime video; ""innocent suspect"" indicates that the face was the designated innocent suspect."
+videoCheck ,"""Did you encounter any technical problems whilst viewing the video? (e.g. wouldn't load, buffering etc.)"""
+PreIDconfidence ,"Confidence before identification decision: ""Please rate your confidence that you  would be able to recognize the perpetrator."""
+faceSelected ,"Identification response: ""Is the police suspect (highlighted in red) the person who commited the crime?"""
+confidence ,"Confidence in identification decision: ""Please rate your confidence in your decision."""
+attentionCheckSelected ,"Question that enabled us to check that they subjects were paying attention: ÒHow many poeple were in the video that you watched?"" "
+correct,"Researchers coded if faceSelected identifcation response was correct or incorrect. 1 = corrrect, 0 = incorrect"
+SaidAbsentOrPresent,Researchers coded faceSelected response - if the subject said the perpetrator was absent or present 
+videoCheck,Researchers coded. 1 = experienced technical problems while watching the video.
+attentionCheck,Researcers coded. 1 = incorrectly answered the attention check question.
+include,Researchers coded. no = removed from the final sample; yes = included in the final sample.
+,
+,

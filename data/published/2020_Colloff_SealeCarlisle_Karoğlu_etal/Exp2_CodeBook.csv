@@ -1,0 +1,31 @@
+﻿Sex,Subject self-reported sex.
+Ethnicity,Subject self-reported ethnicity.
+Ethnicity2,Subject self-reported ethnicity (more detail).
+TimeElapsed,Total time take to complete study (ms)
+EncodingConditionRaw,"Video watched. 1 = right profile, 2 = left profile"
+EncodingCondition,"Video watched. right = right profile, left = left profile"
+TargetPresent,"Lineup condition viewed. 0 = Target Absent, 1 = Target Present"
+Lineup1,"Lineup: Image presented first. ""6"" in target-present lineups is the perpetrator from the mock-crime video"
+Lineup2,"Lineup: Image presented second. ""6"" in target-present lineups is the perpetrator from the mock-crime video"
+Lineup3,"Lineup: Image presented third. ""6"" in target-present lineups is the perpetrator from the mock-crime video"
+Lineup4,"Lineup: Image presented fourth. ""6"" in target-present lineups is the perpetrator from the mock-crime video"
+Lineup5,"Lineup: Image presented fifth. ""6"" in target-present lineups is the perpetrator from the mock-crime video"
+Lineup6,"Lineup: Image presented sixth. ""6"" in target-present lineups is the perpetrator from the mock-crime video"
+Interactors,1 = Interacted during the lineup
+ParticipantTargetPresent,Identification respose. Yes = perpetrator was present in the lineup; No = Perpetrator was not present in the lineup
+ParticipantLineupSelection,"Identification response. Position of the lineup member identified. 1 = image presented in lineup1, 2 = image presented in lineup2; 3 = image presented in lineup3; 4 = image presented in lineup 4; 5 = image presented in lineup5; 6 = image presented in lineup6"
+Accuracy,"Identification response accuracy coded: 0 = Incorrect, 1 = Correct"
+ParticipantSelection,"Identification response coded: target = perp, filler = filler, reject = ""not Present"""
+Confidence,"Confidence in identification decision: ""Please rate your confidence in your decision."" Response on an 11-point Likert-type scale ranging from 0% (not at all sure) to 100% (completely certain)."
+MouseGroup,"Coded as high or ,ow interactors, based on a median split"
+MissingMouseData,0 = no missing data; 1 = missing data (9 people removed from the ANOVA analyses in the paper)
+TargetFront,Proportion of time spent viewing the perpetrator from the front
+TargetLeft,Proportion of time spent viewing the perpetrator from the left
+TargetRight,Proportion of time spent viewing the perpetrator from the right
+FrontFiller,Proportion of time spent viewing the fillers from the front
+LeftFiller,Proportion of time spent viewing the fillers from the left
+RightFiller,Proportion of time spent viewing the fillers from the right
+SameTarget,Proportion of time spent viewing the perpetrator from the same side that he was viewed at encoding
+OppTarget,Proportion of time spent viewing the perpetrator from the opposite side that he was viewed at encoding
+SameFiller,Proportion of time spent viewing the filler faces from the same side that the perpetrator was viewed at encoding
+OppFiller,Proportion of time spent viewing the filler faces from the opposite side that the perpetrator was viewed at encoding
