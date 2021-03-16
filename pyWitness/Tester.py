@@ -6,6 +6,10 @@ class Tester :
         self.excelFileName = excelFileName
         self.excelFile     = openpyxl.load_workbook(self.excelFileName)
 
+    def runAllTests(self, sheet = "Sheet1", outputFileName = "tester.xlsx") :
+        for i in range(2,self.excelFile[sheet].max_column,1) :
+            self.runTest(sheet,i)
+
     def runTest(self, sheet = "Sheet1", column = 2):
         workSheet  = self.excelFile[sheet]
         data       = workSheet.cell(1,column).value
