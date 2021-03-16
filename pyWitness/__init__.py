@@ -8,6 +8,8 @@ from .ModelFits import ModelFitIndependentObservation
 from .ModelFits import ModelFitEnsemble
 from .ModelFits import ModelFitBestRest
 from .ModelFits import ModelFitIntegration
+from .Tester    import Tester
+
 
 print("pyWitness v0.1 : Authorship - https://lmickes.github.io/pyWitness/authorship.html")
 
