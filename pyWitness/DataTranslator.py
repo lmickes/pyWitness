@@ -250,6 +250,52 @@ def published_Wilson_2018_Experiment34(fileName = "", excelSheet = "Exp3") :
     return dr
 
 #########################################################################################################
+def published_Horry_Fitzgerald_Mansour_2020(fileName = "", excelSheet = 'Sheet1') :
+
+    if fileName == "" :
+        fileName = _dir+"/../data/published/2020_Horry_Fitzgerald_Mansour/Final dataset.xlsx"
+
+    data = openExcelFile(fileName, excelSheet)
+
+    participantId = data['Participant']
+    targPresence  = data['TargPresence']
+    targetLineup  = _copy.copy(data['TargPresence'])
+    lineupType    = data['LineupType']
+    lineupSize    = _copy.copy(data['Site'])
+    responseType  = _copy.copy(data['LabOnline'])
+    confidence    = data['Confidence']
+
+    targetLineup[targPresence > 0] = 'targetPresent'
+    targetLineup[targPresence < 1] = 'targetAbsent'
+
+
+    susID         = data['SusID']
+    fillerID      = data['FillerID']
+    nonID         = data['NonID']
+
+    responseType[susID >0]    = "suspectId"
+    responseType[fillerID >0] = "fillerId"
+    responseType[nonID >0]    = "rejectId"
+    lineupSize[:] = 6
+
+    print(targetLineup)
+    dataNew = _pandas.DataFrame()
+    dataNew = dataNew.assign(participantId = participantId)
+    dataNew = dataNew.assign(targetLineup  = targetLineup)
+    dataNew = dataNew.assign(lineupType    = lineupType)
+    dataNew = dataNew.assign(lineupSize    = lineupSize)
+    dataNew = dataNew.assign(responseType  = responseType)
+    dataNew = dataNew.assign(confidence    = confidence)
+
+    # show up confidence
+    relabelConfidenceForShowups(dataNew)
+
+    dr = DataRaw('')
+    dr.data = dataNew
+    dr.checkData()
+
+    return dr
+#########################################################################################################
 def published_Akan_2020_Experiment1(fileName = "", excelSheet = 'E1') :
 
     if fileName == "" :
