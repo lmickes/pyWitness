@@ -194,6 +194,207 @@ def published_SealeCarlisle_Wetmore_Flowe_Mickes_2019_E1(fileName = "", excelShe
     return dr       
 
 #########################################################################################################
+def published_SealeCarlisle_Wetmore_Flowe_Mickes_2019_E2(fileName = "", excelSheet = "E2") :
+
+    if fileName == "" :
+        fileName = _dir+"/../data/published/2019_SealeCarlisleWetmoreFloweMickes/ESRC_Data_Archive.xlsx"
+
+    # load spreadsheet
+    data = openExcelFile(fileName, excelSheet)
+
+    # get important data
+    participantId       = data['ID number']
+    targetLineup        = data['Target-Present or Target-Absent']
+    lineupSize          = _copy.copy(data['ID number'])
+    responseType        = data['Participant Target-Present or Target-absent']
+    confidence          = data['Confidence']
+    accuracy            = data['Accuracy']
+
+    targetLineup.replace({"Target-absent":"targetAbsent", "Target-present":"targetPresent"}, inplace=True)
+    lineupSize.loc[:] = 9
+   
+    taFillerId       = _np.logical_and(_np.logical_and(targetLineup == "targetAbsent",  accuracy == 0),responseType == "Said-present")
+    taRejectId       = _np.logical_and(_np.logical_and(targetLineup == "targetAbsent",  accuracy == 1),responseType == "SSaid-absent")
+    tpFillerId       = _np.logical_and(_np.logical_and(targetLineup == "targetPresent", accuracy == 0),responseType == "Said-present")
+    tpSuspectId      = _np.logical_and(_np.logical_and(targetLineup == "targetPresent", accuracy == 1),responseType == "Said-present")
+    tpRejectId       = _np.logical_and(_np.logical_and(targetLineup == "targetPresent", accuracy == 0),responseType == "Said-absent")
+
+    responseType.loc[taFillerId]  = "fillerId"
+    responseType.loc[taRejectId]  = "rejectId"
+    responseType.loc[tpFillerId]  = "fillerId"
+    responseType.loc[tpSuspectId] = "suspectId"
+    responseType.loc[tpRejectId]  = "rejectId"
+
+    # get other data
+    condition                      = data['Condition']
+
+    dataNew = _pandas.DataFrame()
+    dataNew = dataNew.assign(participantId    = participantId)
+    dataNew = dataNew.assign(targetLineup     = targetLineup)
+    dataNew = dataNew.assign(lineupSize       = lineupSize)
+    dataNew = dataNew.assign(responseType     = responseType)
+    dataNew = dataNew.assign(confidence       = confidence)
+    dataNew = dataNew.assign(accuracy         = accuracy)
+    dataNew = dataNew.assign(condition        = condition)
+
+    dr = DataRaw('')
+    dr.data = dataNew
+    dr.checkData()
+
+    return dr       
+
+#########################################################################################################
+
+def published_SealeCarlisle_Wetmore_Flowe_Mickes_2019_E3a(fileName = "", excelSheet = "E3a") :
+
+    if fileName == "" :
+        fileName = _dir+"/../data/published/2019_SealeCarlisleWetmoreFloweMickes/ESRC_Data_Archive.xlsx"
+
+    # load spreadsheet
+    data = openExcelFile(fileName, excelSheet)
+
+    # get important data
+    participantId       = data['ID number']
+    targetLineup        = data['Target-Present or Target-Absent']
+    lineupSize          = _copy.copy(data['ID number'])
+    responseType        = data['Participant Target-Present or Target-absent']
+    confidence          = data['Confidence']
+    accuracy            = data['Accuracy']
+
+    targetLineup.replace({"Target-absent":"targetAbsent", "Target-present":"targetPresent"}, inplace=True)
+    lineupSize.loc[:] = 9
+   
+    taFillerId       = _np.logical_and(_np.logical_and(targetLineup == "targetAbsent",  accuracy == 0),responseType == "Said-present")
+    taRejectId       = _np.logical_and(_np.logical_and(targetLineup == "targetAbsent",  accuracy == 1),responseType == "SSaid-absent")
+    tpFillerId       = _np.logical_and(_np.logical_and(targetLineup == "targetPresent", accuracy == 0),responseType == "Said-present")
+    tpSuspectId      = _np.logical_and(_np.logical_and(targetLineup == "targetPresent", accuracy == 1),responseType == "Said-present")
+    tpRejectId       = _np.logical_and(_np.logical_and(targetLineup == "targetPresent", accuracy == 0),responseType == "Said-absent")
+
+    responseType.loc[taFillerId]  = "fillerId"
+    responseType.loc[taRejectId]  = "rejectId"
+    responseType.loc[tpFillerId]  = "fillerId"
+    responseType.loc[tpSuspectId] = "suspectId"
+    responseType.loc[tpRejectId]  = "rejectId"
+
+    # get other data
+    condition                      = data['Condition']
+
+    dataNew = _pandas.DataFrame()
+    dataNew = dataNew.assign(participantId    = participantId)
+    dataNew = dataNew.assign(targetLineup     = targetLineup)
+    dataNew = dataNew.assign(lineupSize       = lineupSize)
+    dataNew = dataNew.assign(responseType     = responseType)
+    dataNew = dataNew.assign(confidence       = confidence)
+    dataNew = dataNew.assign(accuracy         = accuracy)
+    dataNew = dataNew.assign(condition        = condition)
+
+    dr = DataRaw('')
+    dr.data = dataNew
+    dr.checkData()
+
+    return dr       
+
+#########################################################################################################
+def published_SealeCarlisle_Wetmore_Flowe_Mickes_2019_E3b(fileName = "", excelSheet = "E3b") :
+
+    if fileName == "" :
+        fileName = _dir+"/../data/published/2019_SealeCarlisleWetmoreFloweMickes/ESRC_Data_Archive.xlsx"
+
+    # load spreadsheet
+    data = openExcelFile(fileName, excelSheet)
+
+    # get important data
+    participantId       = data['ID number']
+    targetLineup        = data['Target-Present or Target-Absent']
+    lineupSize          = _copy.copy(data['ID number'])
+    responseType        = data['Participant Target-Present or Target-absent']
+    confidence          = data['Confidence']
+    accuracy            = data['Accuracy']
+
+    targetLineup.replace({"Target-absent":"targetAbsent", "Target-present":"targetPresent"}, inplace=True)
+    lineupSize.loc[:] = 9
+   
+    taFillerId       = _np.logical_and(_np.logical_and(targetLineup == "targetAbsent",  accuracy == 0),responseType == "Said-present")
+    taRejectId       = _np.logical_and(_np.logical_and(targetLineup == "targetAbsent",  accuracy == 1),responseType == "SSaid-absent")
+    tpFillerId       = _np.logical_and(_np.logical_and(targetLineup == "targetPresent", accuracy == 0),responseType == "Said-present")
+    tpSuspectId      = _np.logical_and(_np.logical_and(targetLineup == "targetPresent", accuracy == 1),responseType == "Said-present")
+    tpRejectId       = _np.logical_and(_np.logical_and(targetLineup == "targetPresent", accuracy == 0),responseType == "Said-absent")
+
+    responseType.loc[taFillerId]  = "fillerId"
+    responseType.loc[taRejectId]  = "rejectId"
+    responseType.loc[tpFillerId]  = "fillerId"
+    responseType.loc[tpSuspectId] = "suspectId"
+    responseType.loc[tpRejectId]  = "rejectId"
+
+    # get other data
+    condition                      = data['Condition']
+
+    dataNew = _pandas.DataFrame()
+    dataNew = dataNew.assign(participantId    = participantId)
+    dataNew = dataNew.assign(targetLineup     = targetLineup)
+    dataNew = dataNew.assign(lineupSize       = lineupSize)
+    dataNew = dataNew.assign(responseType     = responseType)
+    dataNew = dataNew.assign(confidence       = confidence)
+    dataNew = dataNew.assign(accuracy         = accuracy)
+    dataNew = dataNew.assign(condition        = condition)
+
+    dr = DataRaw('')
+    dr.data = dataNew
+    dr.checkData()
+
+    return dr       
+
+#########################################################################################################
+def published_SealeCarlisle_Wetmore_Flowe_Mickes_2019_E4(fileName = "", excelSheet = "E4") :
+
+    if fileName == "" :
+        fileName = _dir+"/../data/published/2019_SealeCarlisleWetmoreFloweMickes/ESRC_Data_Archive.xlsx"
+
+    # load spreadsheet
+    data = openExcelFile(fileName, excelSheet)
+
+    # get important data
+    participantId       = data['ID number']
+    targetLineup        = data['Target-Present or Target-Absent']
+    lineupSize          = _copy.copy(data['ID number'])
+    responseType        = data['Participant Target-Present or Target-absent']
+    confidence          = data['Confidence']
+    accuracy            = data['Accuracy']
+
+    targetLineup.replace({"Target-absent":"targetAbsent", "Target-present":"targetPresent"}, inplace=True)
+    lineupSize.replace({"6-member":6, "9-member":9}, inplace=True)
+   
+    taFillerId       = _np.logical_and(_np.logical_and(targetLineup == "targetAbsent",  accuracy == 0),responseType == "Said-present")
+    taRejectId       = _np.logical_and(_np.logical_and(targetLineup == "targetAbsent",  accuracy == 1),responseType == "SSaid-absent")
+    tpFillerId       = _np.logical_and(_np.logical_and(targetLineup == "targetPresent", accuracy == 0),responseType == "Said-present")
+    tpSuspectId      = _np.logical_and(_np.logical_and(targetLineup == "targetPresent", accuracy == 1),responseType == "Said-present")
+    tpRejectId       = _np.logical_and(_np.logical_and(targetLineup == "targetPresent", accuracy == 0),responseType == "Said-absent")
+
+    responseType.loc[taFillerId]  = "fillerId"
+    responseType.loc[taRejectId]  = "rejectId"
+    responseType.loc[tpFillerId]  = "fillerId"
+    responseType.loc[tpSuspectId] = "suspectId"
+    responseType.loc[tpRejectId]  = "rejectId"
+
+    # get other data
+    condition                      = data['Condition']
+
+    dataNew = _pandas.DataFrame()
+    dataNew = dataNew.assign(participantId    = participantId)
+    dataNew = dataNew.assign(targetLineup     = targetLineup)
+    dataNew = dataNew.assign(lineupSize       = lineupSize)
+    dataNew = dataNew.assign(responseType     = responseType)
+    dataNew = dataNew.assign(confidence       = confidence)
+    dataNew = dataNew.assign(accuracy         = accuracy)
+    dataNew = dataNew.assign(condition        = condition)
+
+    dr = DataRaw('')
+    dr.data = dataNew
+    dr.checkData()
+
+    return dr       
+
+#########################################################################################################
 def published_Morgan_2019(fileName = "", excelSheet = "Raw Data") :
 
     if fileName == "" :
