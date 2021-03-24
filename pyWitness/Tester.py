@@ -31,9 +31,13 @@ class Tester :
         for k in exclusionDict :
             dr.cutData(k,exclusionDict[k])
 
-        if condition != "" :
+        if condition != "" or condition is not None :
             conditionColumn = condition.split()[0]
             conditionValue  = condition.split()[1]
+            try : 
+                conditionValue  = int(condition.split()[1])
+            except : 
+                pass
             globals()['dp'] = dr.process(conditionColumn,conditionValue)
         else :
             globals()['dp'] = dr.process()
