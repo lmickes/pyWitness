@@ -6,7 +6,8 @@ class Tester :
         self.excelFileName = excelFileName
         self.excelFile     = openpyxl.load_workbook(self.excelFileName)
 
-    def runAllTests(self, sheet = "Sheet1", outputFileName = "tester.xlsx") :
+    def runAllTests(self, sheet = "Sheet1", outputFileName = "testOutput.xlsx") :
+        print(self.excelFile[sheet].max_column)
         for i in range(2,self.excelFile[sheet].max_column,1) :
             self.runTest(sheet,i)
 
@@ -31,9 +32,13 @@ class Tester :
         for k in exclusionDict :
             dr.cutData(k,exclusionDict[k])
 
-        if condition != "" :
+        if condition != "" or condition is not None :
             conditionColumn = condition.split()[0]
             conditionValue  = condition.split()[1]
+            try : 
+                conditionValue  = int(condition.split()[1])
+            except : 
+                pass
             globals()['dp'] = dr.process(conditionColumn,conditionValue)
         else :
             globals()['dp'] = dr.process()
