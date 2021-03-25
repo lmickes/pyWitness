@@ -93,7 +93,7 @@ def published_Colloff_2016(fileName = "", excelSheet = "Data") :
 
     return dr       
 
-#########################################################################################################
+    #########################################################################################################
 def published_SealeCarlisle_Colloff_Flowe_etal_2019(fileName = "", excelSheet = "Study 1 Laboratory Data") :
 
     if fileName == "" :
@@ -135,6 +135,58 @@ def published_SealeCarlisle_Colloff_Flowe_etal_2019(fileName = "", excelSheet = 
     dataNew = dataNew.assign(responseType     = responseType)
     dataNew = dataNew.assign(confidence       = confidence)
     dataNew = dataNew.assign(accuracy         = accuracy)
+    dataNew = dataNew.assign(exclude          = exclude)
+
+    dr = DataRaw('')
+    dr.data = dataNew
+    dr.checkData()
+
+    return dr      
+
+#########################################################################################################
+def published_SealeCarlisle_Mickes_2016(fileName = "", excelSheet = "data") :
+
+    if fileName == "" :
+        fileName = _dir+"/../data/published/2016_SealeCarlisle_Mickes/USvUKdata.xlsx"
+
+    # load spreadsheet
+    data = openExcelFile(fileName, excelSheet)
+
+    # get important data
+    participantId       = data['Subject #']
+    targetLineup        = data['Target Absent (2) or Present (1)']
+    lineupSize          = _copy.copy(data['UK (1) US (2)'])
+    condition           = data['UK (1) US (2)']
+    responseType        = data['Said Absent or Present']
+    confidence          = data['Confidence 1']
+    accuracy            = data['Which One Accuracy 1']
+
+    targetLineup.replace({"Target-absent":"targetAbsent", "Target-present":"targetPresent"}, inplace=True)
+    lineupSize.replace({"US":6, "UK":9}, inplace=True)
+   
+    taFillerId       = _np.logical_and(_np.logical_and(targetLineup == "targetAbsent",  accuracy == 0),responseType == "Present")
+    taRejectId       = _np.logical_and(_np.logical_and(targetLineup == "targetAbsent",  accuracy == 1),responseType == "Absent")
+    tpFillerId       = _np.logical_and(_np.logical_and(targetLineup == "targetPresent", accuracy == 0),responseType == "Present")
+    tpSuspectId      = _np.logical_and(_np.logical_and(targetLineup == "targetPresent", accuracy == 1),responseType == "Present")
+    tpRejectId       = _np.logical_and(_np.logical_and(targetLineup == "targetPresent", accuracy == 0),responseType == "Absent")
+
+    responseType.loc[taFillerId]  = "fillerId"
+    responseType.loc[taRejectId]  = "rejectId"
+    responseType.loc[tpFillerId]  = "fillerId"
+    responseType.loc[tpSuspectId] = "suspectId"
+    responseType.loc[tpRejectId]  = "rejectId"
+
+    # get other data
+    exclude                       = data['Validation Question Correct']
+
+    dataNew = _pandas.DataFrame()
+    dataNew = dataNew.assign(participantId    = participantId)
+    dataNew = dataNew.assign(targetLineup     = targetLineup)
+    dataNew = dataNew.assign(lineupSize       = lineupSize)
+    dataNew = dataNew.assign(responseType     = responseType)
+    dataNew = dataNew.assign(confidence       = confidence)
+    dataNew = dataNew.assign(accuracy         = accuracy)
+    dataNew = dataNew.assign(condition        = condition)
     dataNew = dataNew.assign(exclude          = exclude)
 
     dr = DataRaw('')
@@ -1246,8 +1298,6 @@ def published_2020_Colloff_Wixted_Exp1(fileName = "") :
 
     return dr
 
-#########################################################################################################
-
 def published_2020_Colloff_Wixted_Exp2(fileName = "") :
 
     if fileName == "" :
@@ -1305,8 +1355,6 @@ def published_2020_Colloff_Wixted_Exp2(fileName = "") :
     dr.checkData()
 
     return dr
-
-#########################################################################################################
 
 def published_2020_Colloff_Wixted_Exp3(fileName = "") :
 
@@ -1383,11 +1431,11 @@ def published_2020_Lucas_etal_Exp1(fileName = "", excelSheet = 'Exp 1 Data') :
     accuracy         = data['Accuracy']
     decision         = data['Decision']
     responseType     = _copy.copy(data['ID'])   # copy column
-    confidence       = data['Confidence ']
+    confidence       = data['Confidence']
 
 
     # translate data
-    targetLineup.replace({"absent":"targetAbsent", "present":"targetPresent"}, inplace=True)
+    targetLineup.replace({0:"targetAbsent", 1:"targetPresent"}, inplace=True)
     lineupSize.loc[:] = 6
 
     taFillerId       = _np.logical_and(_np.logical_and(targetLineup == "targetAbsent",  accuracy == 0),decision == 2)
@@ -1410,10 +1458,9 @@ def published_2020_Lucas_etal_Exp1(fileName = "", excelSheet = 'Exp 1 Data') :
     dataNew = dataNew.assign(participantId                  = participantId)
     dataNew = dataNew.assign(targetLineup                   = targetLineup)
     dataNew = dataNew.assign(lineupSize                     = lineupSize)
-    dataNew = dataNew.assign(decision                       = response)
     dataNew = dataNew.assign(responseType                   = responseType)
     dataNew = dataNew.assign(confidence                     = confidence)
-
+    print(responseType)
     dataNew = dataNew.assign(age                            = age)
     dataNew = dataNew.assign(gender                         = gender)
 
