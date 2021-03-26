@@ -1519,7 +1519,6 @@ def published_2020_Lucas_etal_Exp1(fileName = "", excelSheet = 'Exp 1 Data') :
     dataNew = dataNew.assign(lineupSize                     = lineupSize)
     dataNew = dataNew.assign(responseType                   = responseType)
     dataNew = dataNew.assign(confidence                     = confidence)
-    print(responseType)
     dataNew = dataNew.assign(age                            = age)
     dataNew = dataNew.assign(gender                         = gender)
 
