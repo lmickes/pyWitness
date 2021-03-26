@@ -5,13 +5,13 @@ Introduction
 Eyewitness identification research
 ----------------------------------
 
-Eyewitnesses to crimes may try to identify the perpetrator from an identification procedure. One commonly used procedure is a lineup (identity parade in the UK). A lineup comprises the police suspect and fillers, as shown in the illustration below. A lineup with an innocent suspect is a target-absent lineup, and a lineup with a guilty suspect is a target-present lineup. The eyewitness can make a filler ID from either lineup, identify the innocent suspect (from a target-absent lineup) or guilty suspect (from a target-present lineup).
+Eyewitnesses to crimes may try to identify the perpetrator from an identification procedure. One commonly used procedure is a lineup (identity parade in the UK). A lineup comprises the police suspect and fillers, as shown in the illustration below. A lineup with an innocent suspect is a target-absent lineup, and a lineup with a guilty suspect is a target-present lineup. The eyewitness can make a filler ID from either lineup, identify the innocent suspect or guilty suspect.
 
 .. figure:: images/pyWitness_Lineup.png
 
 Receiver operating characteristic (ROC) analysis measures discriminability (the ability to distinguish innocent from guilty suspects), and confidence accuracy characteristic (CAC) and response-time accuracy characteristic (RAC) analysis measure positive predictive value (the likelihood the identified suspect is guilty). pyWitness allows researchers to run these analyses. 
 
-Theories about eyewitness identification have thus far been signal detection-based. pyWitness allows researchers to compare signal detection-based model fits. 
+Theories about eyewitness identification have so far been signal detection-based. pyWitness currently allows researchers to compare thses types of model fits. 
 
 Receiver operator characteristic (ROC)
 --------------------------------------
@@ -44,7 +44,7 @@ Model fits
 Goals of pyWitness
 ------------------
 
-   * Little as possible human interaction (to reduce data manipulation, transcribing values)
+   * Little as possible human interaction (to reduce data manipulation, transcribing values and other transformations that may create errors)
    * Place to store all relevant algorithms, fits, and methods in a reproducible and documented way
    * Bin and pivot raw data to rates (the processed data)
    * Plot and compare ROC, CAC, and RAC curves
@@ -57,7 +57,7 @@ Goals of pyWitness
 Background to the pyWitness and the code
 ----------------------------------------
 
-Our goal with pyWitness is to create a consistent set of analysis tools for any eyewitness memory researcher to use for lineup data. Importantly, there is a flexible internal data format.
+Our goal with pyWitness is to create a consistent set of analysis tools for any researchers to use for lineup data and other recognition memory data. Importantly, there is a flexible internal data format.
 
 Internal data format 
 ^^^^^^^^^^^^^^^^^^^^
@@ -112,7 +112,7 @@ Minimal example data file for an experiment
 
 .. note::
   Other columns can be in the data file (e.g., labels for other experimental conditions 
-   or data, demographic data or personal differenes).
+   or data, demographic data, or personal differenes).
 
 Transforming data structures
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -149,7 +149,7 @@ Data for showups
 
 To perform an analysis of showup data, the data need to be organised differently compared to lineup data.
 rejectId for both targetAbsent and targetPresent showups need to given new confidence names. For example, if
-the data are measured on a three point confidence scale (1, 2 and 3). The subjectId for both targetPresent and
+the data are measured on a three point confidence scale (1, 2 and 3) for previously experienced ("old")items and for not previously experienced ("new") items. The subjectId for both targetPresent and
 targetAbsent confidences need to be mapped to (4, 5, 6) and rejectId needs to be given (3, 2, 1).
 
 .. note::
