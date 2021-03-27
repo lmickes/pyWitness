@@ -153,11 +153,36 @@ def published_Palmer_Sauer_Holt_2017(fileName=""):
     # load spreadsheet
     data = openCsvFile(fileName)
 
+    participantId = _np.arange(data.shape[0])
     targetLineup  = data['culprit_present']
-    repsponseType = data['id_type']
+    responseType  = data['id_type']
     confidence    = data['conf_level']
     lineupSize    = data['lineup_size']
 
+    # reverse confidence
+    targetLineup.replace({"present":"targetPresent", "absent":"targetAbsent"}, inplace=True)
+    responseType.replace({"suspect":"suspectId", "filler":"fillerId","reject":"rejectId"}, inplace=True)
+
+    confidenceFlipped = _np.flip(confidence)
+
+    confidenceMap = {}
+    for c,cf in zip(confidence,confidenceFlipped) :
+        confidenceMap[c] = cf
+
+    confidence.replace(confidenceMap, inplace=True)
+
+    dataNew = _pandas.DataFrame()
+    dataNew = dataNew.assign(participantId    = participantId)
+    dataNew = dataNew.assign(targetLineup     = targetLineup)
+    dataNew = dataNew.assign(responseType     = responseType)
+    dataNew = dataNew.assign(confidence       = confidence)
+    dataNew = dataNew.assign(lineupSize       = lineupSize)
+
+    dr = DataRaw('')
+    dr.data = dataNew
+    dr.checkData()
+
+    return dr
 
 #########################################################################################################
 def published_SealeCarlisle_Colloff_Flowe_etal_2019(fileName = "", excelSheet = "Study 1 Laboratory Data") :
