@@ -104,7 +104,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#collapsing-the-catagorical-data">Collapsing the catagorical data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#collapsing-binning-continuous-data">Collapsing (binning) continuous data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#calculating-pauc-and-performing-statistical-tests">Calculating pAUC and performing statistical tests</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#fitting-signal-detection-models-to-data">Fitting signal detection models to data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#fitting-signal-detection-based-models-to-data">Fitting signal detection-based models to data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#setting-initial-fit-parameters">Setting initial fit parameters</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#checking-the-convergence-of-fit">Checking the convergence of fit</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#loading-and-saving-fit-parameters-for-later-use">Loading and saving fit parameters for later use</a></li>
@@ -208,11 +208,11 @@ xlrd (reading/writing excel) and numba (compiler to speed up code).</p>
 <span class="go">In [1]:</span>
 </pre></div>
 </div>
-<p>Commands can now be typed in to execute python and pyWitness commands. There are some helpful tips
+<p>Commands can now be typed in to execute python and pyWitness commands. Here are some helpful tips
 to speed up inputing commands</p>
 <blockquote>
 <div><ul class="simple">
-<li>Cut and paste commands from the manual (this will reduce typos)</li>
+<li>Cut and paste commands (to reduce typos)</li>
 <li>Use the command history (up and down cursor arrows) to find commands that were used previously</li>
 <li>Use command history with search (so try <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">pyW</span></code> and then up arrow. This will search the
 command history with that command fragment and probably match with a previous <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">pyWitness</span></code></li>
@@ -272,7 +272,7 @@ needs to be called on a raw data object. This calculates the cumulative rates fr
 </span></pre></div>
 </td></tr></table></div>
 <p>Once <a class="reference external" href="./moduledocs.html#pyWitness.DataRaw.process">pyWitness.DataRaw.process</a> is called two <code class="docutils literal notranslate"><span class="pre">DataFrames</span></code> are
-created one which contains a pivot table and another that contains rates.</p>
+created. One contains a pivot table and the other contains rates.</p>
 <div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -284,7 +284,7 @@ created one which contains a pivot table and another that contains rates.</p>
 </span><span class="hll"><span class="n">dp</span><span class="o">.</span><span class="n">printRates</span><span class="p">()</span>
 </span></pre></div>
 </td></tr></table></div>
-<p>You should see the output of the <code class="docutils literal notranslate"><span class="pre">dp.printPivot()</span></code></p>
+<p>You should see the following output of the <code class="docutils literal notranslate"><span class="pre">dp.printPivot()</span></code></p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">                           confidence</span>
 <span class="go">confidence                        0    10   20    30    40    50    60    70    80    90    100</span>
 <span class="go">targetLineup  responseType</span>
@@ -295,7 +295,7 @@ created one which contains a pivot table and another that contains rates.</p>
 <span class="go">              suspectId           3.0  1.0  4.0   5.0  11.0  19.0  44.0  77.0  55.0  37.0  47.0</span>
 </pre></div>
 </div>
-<p>And you should see the following for <code class="docutils literal notranslate"><span class="pre">dp.printRates()</span></code></p>
+<p>And you should see the following output for <code class="docutils literal notranslate"><span class="pre">dp.printRates()</span></code></p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">                           confidence</span>
 <span class="go">confidence                        100       90        80        70        60        50        40        30        20        10        0</span>
 <span class="go">targetLineup  responseType</span>
@@ -353,8 +353,8 @@ created one which contains a pivot table and another that contains rates.</p>
 </div>
 <div class="section" id="collapsing-the-catagorical-data">
 <h2>Collapsing the catagorical data<a class="headerlink" href="#collapsing-the-catagorical-data" title="Permalink to this headline">¶</a></h2>
-<p>The example in this tutorial has 11 confidence levels (0, 10, 20, 30, 40, 50, 60, 70, 80, 90 and 100). Typically
-categorical confidence levels need to be binned or collapsed. This is best performed on the raw data before calling
+<p>The data used example in this tutorial has 11 confidence levels (0, 10, 20, 30, 40, 50, 60, 70, 80, 90 and 100). Often
+confidence levels need to be binned or collapsed. This is best performed on the raw data before calling
 <code class="docutils literal notranslate"><span class="pre">process()</span></code>. This is done with the <code class="docutils literal notranslate"><span class="pre">collapseCategoricalData</span></code> method of <code class="docutils literal notranslate"><span class="pre">DataRaw</span></code>. This is shown in example below,
 where the new bins are (0-60 map to 30, 70-80 to 75 and 90-100 to 95).</p>
 <div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -379,13 +379,13 @@ where the new bins are (0-60 map to 30, 70-80 to 75 and 90-100 to 95).</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">If you mess up the <code class="docutils literal notranslate"><span class="pre">collapseCategoricalData</span></code> the data might be inconsistent. To start with the original data so
+<p class="last">If you err the <code class="docutils literal notranslate"><span class="pre">collapseCategoricalData</span></code> the data might be inconsistent. To start with the original data so
 call <code class="docutils literal notranslate"><span class="pre">collapseCategoricalData</span></code> with <code class="docutils literal notranslate"><span class="pre">reload=True</span></code></p>
 </div>
 </div>
 <div class="section" id="collapsing-binning-continuous-data">
 <h2>Collapsing (binning) continuous data<a class="headerlink" href="#collapsing-binning-continuous-data" title="Permalink to this headline">¶</a></h2>
-<p>Some data are not catagories for but a continuous variable.</p>
+<p>Some data are not categorical variables but continuous variables.</p>
 <div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -423,14 +423,14 @@ call <code class="docutils literal notranslate"><span class="pre">collapseCatego
 </div>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
-<p class="last">The confidence needs to be a numerical value as ROC analysis requires a value which can be ordered.</p>
+<p class="last">Confidence needs to be a numerical value because ROC analysis requires a value that can be ordered.</p>
 </div>
 </div>
 <div class="section" id="calculating-pauc-and-performing-statistical-tests">
 <h2>Calculating pAUC and performing statistical tests<a class="headerlink" href="#calculating-pauc-and-performing-statistical-tests" title="Permalink to this headline">¶</a></h2>
-<p>pAUC is calculated when <code class="docutils literal notranslate"><span class="pre">dr.process()</span></code> is called. Simpsons rule is integrate the area
-under the ROC curve up to a maximum value. If the maximum value is between two data points linear interpolation is used
-to calculate the most liberal point.</p>
+<p>pAUC is calculated when <code class="docutils literal notranslate"><span class="pre">dr.process()</span></code> is called. Simpson’s rule integrates the area
+under the ROC curve up to a maximum value. If the maximum value is between two data points, linear interpolation is used
+to calculate the most liberal point (i.e., the lowest level of confidence).</p>
 <div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -443,8 +443,8 @@ to calculate the most liberal point.</p>
 </span></pre></div>
 </td></tr></table></div>
 </div>
-<div class="section" id="fitting-signal-detection-models-to-data">
-<h2>Fitting signal detection models to data<a class="headerlink" href="#fitting-signal-detection-models-to-data" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="fitting-signal-detection-based-models-to-data">
+<h2>Fitting signal detection-based models to data<a class="headerlink" href="#fitting-signal-detection-based-models-to-data" title="Permalink to this headline">¶</a></h2>
 <p>There are many models available in pyWitness. We’ll start with the independent observation model. To load and process
 the data is the same as before</p>
 <div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -534,7 +534,7 @@ an appropriate start; line 12 yields</p>
 <span class="go">c3 2.5659741783090464 (free)</span>
 </pre></div>
 </div>
-<p>There lots of ways to control the model</p>
+<p>There many ways to control the model</p>
 <table border="1" class="colwidths-given docutils" id="id2">
 <caption><span class="caption-text">Parameter control examples</span><a class="headerlink" href="#id2" title="Permalink to this table">¶</a></caption>
 <colgroup>
@@ -595,7 +595,7 @@ estimated from the data.</p>
 <p>Rearranging gives</p>
 <div class="math notranslate nohighlight">
 \[\sigma_t Z(R_{T,i}) = Z(R_{L,i}) - \mu_s\]</div>
-<p>So there is a linear relationship between target and lure <span class="math notranslate nohighlight">\(Z\)</span> values. This can be plotted
+<p>There is a linear relationship between target and lure <span class="math notranslate nohighlight">\(Z\)</span> values. This can be plotted
 and a linear fit used to estimate the gradient and intercept.</p>
 <div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
@@ -813,7 +813,7 @@ functions belonging to <code class="docutils literal notranslate"><span class="p
   <div role="contentinfo">
     <p>
         &copy; Copyright Royal Holloway, University of London 2020 and University of Bristol 2020
-      Last updated on Mar 13, 2021.
+      Last updated on Mar 27, 2021.
 
     </p>
   </div>

@@ -180,12 +180,12 @@
 <h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="eyewitness-identification-research">
 <h2>Eyewitness identification research<a class="headerlink" href="#eyewitness-identification-research" title="Permalink to this headline">¶</a></h2>
-<p>Eyewitnesses to crimes may try to identify the perpetrator from an identification procedure. One commonly used procedure is a lineup (identity parade in the UK). A lineup comprises the police suspect and fillers, as shown in the illustration below. A lineup with an innocent suspect is a target-absent lineup, and a lineup with a guilty suspect is a target-present lineup. The eyewitness can make a filler ID from either lineup, identify the innocent suspect (from a target-absent lineup) or guilty suspect (from a target-present lineup).</p>
+<p>Eyewitnesses to crimes may try to identify the perpetrator from an identification procedure. One commonly used procedure is a lineup (identity parade in the UK). A lineup comprises the police suspect and fillers, as shown in the illustration below. A lineup with an innocent suspect is a target-absent lineup, and a lineup with a guilty suspect is a target-present lineup. The eyewitness can make a filler ID from either lineup, identify the innocent suspect or guilty suspect.</p>
 <div class="figure">
 <img alt="_images/pyWitness_Lineup.png" src="_images/pyWitness_Lineup.png" />
 </div>
 <p>Receiver operating characteristic (ROC) analysis measures discriminability (the ability to distinguish innocent from guilty suspects), and confidence accuracy characteristic (CAC) and response-time accuracy characteristic (RAC) analysis measure positive predictive value (the likelihood the identified suspect is guilty). pyWitness allows researchers to run these analyses.</p>
-<p>Theories about eyewitness identification have thus far been signal detection-based. pyWitness allows researchers to compare signal detection-based model fits.</p>
+<p>Theories about eyewitness identification have so far been signal detection-based. pyWitness currently allows researchers to compare thses types of model fits.</p>
 </div>
 <div class="section" id="receiver-operator-characteristic-roc">
 <h2>Receiver operator characteristic (ROC)<a class="headerlink" href="#receiver-operator-characteristic-roc" title="Permalink to this headline">¶</a></h2>
@@ -230,7 +230,7 @@
 <h2>Goals of pyWitness<a class="headerlink" href="#goals-of-pywitness" title="Permalink to this headline">¶</a></h2>
 <blockquote>
 <div><ul class="simple">
-<li>Little as possible human interaction (to reduce data manipulation, transcribing values)</li>
+<li>Little as possible human interaction (to reduce data manipulation, transcribing values and other transformations that may create errors)</li>
 <li>Place to store all relevant algorithms, fits, and methods in a reproducible and documented way</li>
 <li>Bin and pivot raw data to rates (the processed data)</li>
 <li>Plot and compare ROC, CAC, and RAC curves</li>
@@ -244,7 +244,7 @@
 </div>
 <div class="section" id="background-to-the-pywitness-and-the-code">
 <h2>Background to the pyWitness and the code<a class="headerlink" href="#background-to-the-pywitness-and-the-code" title="Permalink to this headline">¶</a></h2>
-<p>Our goal with pyWitness is to create a consistent set of analysis tools for any eyewitness memory researcher to use for lineup data. Importantly, there is a flexible internal data format.</p>
+<p>Our goal with pyWitness is to create a consistent set of analysis tools for any researchers to use for lineup data and other recognition memory data. Importantly, there is a flexible internal data format.</p>
 <div class="section" id="internal-data-format">
 <h3>Internal data format<a class="headerlink" href="#internal-data-format" title="Permalink to this headline">¶</a></h3>
 <table border="1" class="colwidths-given docutils" id="id1">
@@ -323,7 +323,7 @@
 <p class="first admonition-title">Note</p>
 <dl class="last docutils">
 <dt>Other columns can be in the data file (e.g., labels for other experimental conditions</dt>
-<dd>or data, demographic data or personal differenes).</dd>
+<dd>or data, demographic data, or personal differenes).</dd>
 </dl>
 </div>
 </div>
@@ -376,7 +376,7 @@
 <h3>Data for showups<a class="headerlink" href="#data-for-showups" title="Permalink to this headline">¶</a></h3>
 <p>To perform an analysis of showup data, the data need to be organised differently compared to lineup data.
 rejectId for both targetAbsent and targetPresent showups need to given new confidence names. For example, if
-the data are measured on a three point confidence scale (1, 2 and 3). The subjectId for both targetPresent and
+the data are measured on a three point confidence scale (1, 2 and 3) for previously experienced (“old”)items and for not previously experienced (“new”) items. The subjectId for both targetPresent and
 targetAbsent confidences need to be mapped to (4, 5, 6) and rejectId needs to be given (3, 2, 1).</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -412,7 +412,7 @@ medium (2) or high (3).</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright Royal Holloway, University of London 2020 and University of Bristol 2020
-      Last updated on Mar 11, 2021.
+      Last updated on Mar 27, 2021.
 
     </p>
   </div>
@@ -437,6 +437,7 @@ medium (2) or high (3).</p>
         <script type="text/javascript" src="_static/jquery.js"></script>
         <script type="text/javascript" src="_static/underscore.js"></script>
         <script type="text/javascript" src="_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
 
   
