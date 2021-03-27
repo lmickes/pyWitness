@@ -31,10 +31,10 @@ This then lands you in a python console window
 
    In [1]:
 
-Commands can now be typed in to execute python and pyWitness commands. There are some helpful tips
+Commands can now be typed in to execute python and pyWitness commands. Here are some helpful tips
 to speed up inputing commands 
 
-   * Cut and paste commands from the manual (this will reduce typos)
+   * Cut and paste commands (to reduce typos)
    * Use the command history (up and down cursor arrows) to find commands that were used previously
    * Use command history with search (so try ``import pyW`` and then up arrow. This will search the
      command history with that command fragment and probably match with a previous ``import pyWitness``
@@ -103,7 +103,7 @@ needs to be called on a raw data object. This calculates the cumulative rates fr
    dp = dr.process()
 
 Once `pyWitness.DataRaw.process <./moduledocs.html#pyWitness.DataRaw.process>`_ is called two ``DataFrames`` are
-created one which contains a pivot table and another that contains rates.
+created. One contains a pivot table and the other contains rates.
 
 .. code-block :: python 
    :linenos:
@@ -115,7 +115,7 @@ created one which contains a pivot table and another that contains rates.
    dp.printPivot()
    dp.printRates()
 
-You should see the output of the ``dp.printPivot()``
+You should see the following output of the ``dp.printPivot()``
 
 .. code-block :: console
 
@@ -128,7 +128,7 @@ You should see the output of the ``dp.printPivot()``
                  rejectId            4.0  3.0  NaN   9.0  10.0  23.0  11.0  19.0  25.0  18.0  25.0
                  suspectId           3.0  1.0  4.0   5.0  11.0  19.0  44.0  77.0  55.0  37.0  47.0
 
-And you should see the following for ``dp.printRates()``
+And you should see the following output for ``dp.printRates()``
 
 .. code-block :: console
 
@@ -186,8 +186,8 @@ Plotting RAC curves
 Collapsing the catagorical data
 -------------------------------
 
-The example in this tutorial has 11 confidence levels (0, 10, 20, 30, 40, 50, 60, 70, 80, 90 and 100). Typically
-categorical confidence levels need to be binned or collapsed. This is best performed on the raw data before calling
+The data used example in this tutorial has 11 confidence levels (0, 10, 20, 30, 40, 50, 60, 70, 80, 90 and 100). Often
+confidence levels need to be binned or collapsed. This is best performed on the raw data before calling
 ``process()``. This is done with the ``collapseCategoricalData`` method of ``DataRaw``. This is shown in example below,
 where the new bins are (0-60 map to 30, 70-80 to 75 and 90-100 to 95).
 
@@ -208,13 +208,13 @@ where the new bins are (0-60 map to 30, 70-80 to 75 and 90-100 to 95).
    :alt: Rebinned CAC for test1.csv 
 
 .. note:: 
-   If you mess up the ``collapseCategoricalData`` the data might be inconsistent. To start with the original data so
+   If you err the ``collapseCategoricalData`` the data might be inconsistent. To start with the original data so
    call ``collapseCategoricalData`` with ``reload=True``
 
 Collapsing (binning) continuous data
 ------------------------------------
 
-Some data are not catagories for but a continuous variable.
+Some data are not categorical variables but continuous variables.
 
 .. code-block :: python
    :linenos:
@@ -252,14 +252,14 @@ The ``confidence`` column is relabelled to ``confidence-original`` and ``confide
    1045        1045           1046           6   targetAbsent     fillerId                   90          3         18185
 
 .. warning::
-   The confidence needs to be a numerical value as ROC analysis requires a value which can be ordered.
+   Confidence needs to be a numerical value because ROC analysis requires a value that can be ordered.
 
 Calculating pAUC and performing statistical tests
 -------------------------------------------------
 
-pAUC is calculated when ``dr.process()`` is called. Simpsons rule is integrate the area
-under the ROC curve up to a maximum value. If the maximum value is between two data points linear interpolation is used
-to calculate the most liberal point.
+pAUC is calculated when ``dr.process()`` is called. Simpson's rule integrates the area
+under the ROC curve up to a maximum value. If the maximum value is between two data points, linear interpolation is used
+to calculate the most liberal point (i.e., the lowest level of confidence).
 
 .. code-block :: python
    :linenos:
@@ -272,8 +272,8 @@ to calculate the most liberal point.
    print(dp.pAUC)
 
 
-Fitting signal detection models to data
----------------------------------------
+Fitting signal detection-based models to data
+---------------------------------------------
 
 There are many models available in pyWitness. We'll start with the independent observation model. To load and process
 the data is the same as before
@@ -359,7 +359,7 @@ After running the fit the parameters are updated so the output of line 15 in the
    c2 1.8627517728791307 (free)
    c3 2.5659741783090464 (free)
 
-There lots of ways to control the model
+There many ways to control the model
 
 .. list-table:: Parameter control examples
    :widths: 70 70
@@ -413,7 +413,7 @@ Rearranging gives
 
    \sigma_t Z(R_{T,i}) = Z(R_{L,i}) - \mu_s
 
-So there is a linear relationship between target and lure :math:`Z` values. This can be plotted
+There is a linear relationship between target and lure :math:`Z` values. This can be plotted
 and a linear fit used to estimate the gradient and intercept.
 
 .. code-block :: python
