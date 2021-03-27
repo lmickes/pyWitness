@@ -31,7 +31,7 @@ class Tester :
         for k in exclusionDict :
             dr.cutData(k,exclusionDict[k])
 
-        if condition != "" or condition is not None :
+        if type(condition) == str :
             conditionColumn = condition.split()[0]
             conditionValue  = condition.split()[1]
             try : 
