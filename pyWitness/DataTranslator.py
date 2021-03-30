@@ -1613,7 +1613,7 @@ def mickesMorganFuentasKazanina2021(fileName = "", excelSheet = 'pyWitness') :
 
     # translate data
     targetLineup.replace({'New':"targetAbsent", 'Old':"targetPresent"}, inplace=True)
-    responseType.replace({'New':"rejectId", 'Old':"suspectId"}, inplace=True)
+    responseType.replace({'New':"rejectId", 'Old':"suspectId", 'Old':'suspectId'}, inplace=True)
     lineupSize.loc[:] = 1
 
     # get other data
@@ -1634,9 +1634,6 @@ def mickesMorganFuentasKazanina2021(fileName = "", excelSheet = 'pyWitness') :
     dataNew = dataNew.assign(condition                      = condition)
     dataNew = dataNew.assign(group                          = group)
    
-    # show up confidence
-    relabelConfidenceForShowups(dataNew)
-
     dr = DataRaw('')
     dr.data = dataNew
     dr.checkData()
