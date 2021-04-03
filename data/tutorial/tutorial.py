@@ -14,13 +14,17 @@ def makeTest1Csv(lineupSize = 6) :
     accuracy1      = data['Accuracy']
     confidence1    = data['Confidence']
     responseTime   = data['Response Time']
-    
+    validation     = data['Validation Accuracy']
+
     targetLineup   = []
     response       = [] 
     lineupSizeList = []
 
     for pId in participantId : 
         i = pId-1 
+
+        if validation[i] == 0 :
+            continue
 
         if targetLineup1[i] == "Target Absent" : 
             targetLineup.append("targetAbsent")
@@ -41,14 +45,14 @@ def makeTest1Csv(lineupSize = 6) :
             else :
                 response.append("none")
         else : 
-            reponse.append("none")
+            response.append("none")
 
         lineupSizeList.append(lineupSize)
 
         # print(i, targetLineup[i], response1[i], accuracy1[i],response1[i])
 
     dataNew = _pandas.DataFrame()
-    dataNew['participantId'] = participantId
+    dataNew['participantId'] = participantId[validation == 1]
     dataNew['lineupSize']    = lineupSizeList
     dataNew['targetLineup']  = targetLineup
     dataNew['responseType']  = response
