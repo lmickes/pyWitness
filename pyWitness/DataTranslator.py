@@ -268,6 +268,8 @@ def published_SealeCarlisle_Wetmore_Flowe_Mickes_2019_E1(fileName = "", excelShe
 
     # get other data
     condition                      = data['Condition']
+    age                            = data['Age']
+    sex                            = data['Sex']
 
     dataNew = _pandas.DataFrame()
     dataNew = dataNew.assign(participantId    = participantId)
@@ -277,6 +279,9 @@ def published_SealeCarlisle_Wetmore_Flowe_Mickes_2019_E1(fileName = "", excelShe
     dataNew = dataNew.assign(confidence       = confidence)
     dataNew = dataNew.assign(accuracy         = accuracy)
     dataNew = dataNew.assign(condition        = condition)
+    dataNew = dataNew.assign(age              = age)
+    dataNew = dataNew.assign(sex              = sex)
+
 
     dr = DataRaw('')
     dr.data = dataNew
@@ -317,6 +322,8 @@ def published_SealeCarlisle_Wetmore_Flowe_Mickes_2019_E2(fileName = "", excelShe
 
     # get other data
     condition                      = data['Condition']
+    age                            = data['Age']
+    sex                            = data['Sex']
 
     dataNew = _pandas.DataFrame()
     dataNew = dataNew.assign(participantId    = participantId)
@@ -326,6 +333,8 @@ def published_SealeCarlisle_Wetmore_Flowe_Mickes_2019_E2(fileName = "", excelShe
     dataNew = dataNew.assign(confidence       = confidence)
     dataNew = dataNew.assign(accuracy         = accuracy)
     dataNew = dataNew.assign(condition        = condition)
+    dataNew = dataNew.assign(age              = age)
+    dataNew = dataNew.assign(sex              = sex)
 
     dr = DataRaw('')
     dr.data = dataNew
@@ -366,6 +375,8 @@ def published_SealeCarlisle_Wetmore_Flowe_Mickes_2019_E3a(fileName = "", excelSh
 
     # get other data
     condition                      = data['Condition']
+    age                            = data['Age']
+    sex                            = data['Sex']
 
     dataNew = _pandas.DataFrame()
     dataNew = dataNew.assign(participantId    = participantId)
@@ -375,6 +386,8 @@ def published_SealeCarlisle_Wetmore_Flowe_Mickes_2019_E3a(fileName = "", excelSh
     dataNew = dataNew.assign(confidence       = confidence)
     dataNew = dataNew.assign(accuracy         = accuracy)
     dataNew = dataNew.assign(condition        = condition)
+    dataNew = dataNew.assign(age              = age)
+    dataNew = dataNew.assign(sex              = sex)
 
     dr = DataRaw('')
     dr.data = dataNew
@@ -415,6 +428,8 @@ def published_SealeCarlisle_Wetmore_Flowe_Mickes_2019_E3b(fileName = "", excelSh
 
     # get other data
     condition                      = data['Condition']
+    age                            = data['Age']
+    sex                            = data['Sex']
 
     dataNew = _pandas.DataFrame()
     dataNew = dataNew.assign(participantId    = participantId)
@@ -424,6 +439,8 @@ def published_SealeCarlisle_Wetmore_Flowe_Mickes_2019_E3b(fileName = "", excelSh
     dataNew = dataNew.assign(confidence       = confidence)
     dataNew = dataNew.assign(accuracy         = accuracy)
     dataNew = dataNew.assign(condition        = condition)
+    dataNew = dataNew.assign(age              = age)
+    dataNew = dataNew.assign(sex              = sex)
 
     dr = DataRaw('')
     dr.data = dataNew
@@ -464,6 +481,8 @@ def published_SealeCarlisle_Wetmore_Flowe_Mickes_2019_E4(fileName = "", excelShe
 
     # get other data
     condition                      = data['Condition']
+    age                            = data['Age']
+    sex                            = data['Sex']
 
     dataNew = _pandas.DataFrame()
     dataNew = dataNew.assign(participantId    = participantId)
@@ -473,6 +492,8 @@ def published_SealeCarlisle_Wetmore_Flowe_Mickes_2019_E4(fileName = "", excelShe
     dataNew = dataNew.assign(confidence       = confidence)
     dataNew = dataNew.assign(accuracy         = accuracy)
     dataNew = dataNew.assign(condition        = condition)
+    dataNew = dataNew.assign(age              = age)
+    dataNew = dataNew.assign(sex              = sex)
 
     dr = DataRaw('')
     dr.data = dataNew
@@ -513,6 +534,8 @@ def published_SealeCarlisle_Wetmore_Flowe_Mickes_2019_E5(fileName = "", excelShe
 
     # get other data
     condition                      = data['Condition']
+    age                            = data['Age']
+    sex                            = data['Sex']
 
     dataNew = _pandas.DataFrame()
     dataNew = dataNew.assign(participantId    = participantId)
@@ -522,6 +545,8 @@ def published_SealeCarlisle_Wetmore_Flowe_Mickes_2019_E5(fileName = "", excelShe
     dataNew = dataNew.assign(confidence       = confidence)
     dataNew = dataNew.assign(accuracy         = accuracy)
     dataNew = dataNew.assign(condition        = condition)
+    dataNew = dataNew.assign(age              = age)
+    dataNew = dataNew.assign(sex              = sex)
 
     dr = DataRaw('')
     dr.data = dataNew
@@ -1569,3 +1594,51 @@ def published_2020_Lucas_etal_Exp1(fileName = "", excelSheet = 'Exp 1 Data') :
     return dr
 
 #########################################################################################################
+
+def mickesMorganFuentasKazanina2021(fileName = "", excelSheet = 'pyWitness') :
+
+    if fileName == "" :
+        fileName = _dir+"/../data/working/mickesMorganFuentasKazanina2021.xlsx"
+
+    # load spreadsheet
+    data = openExcelFile(fileName, excelSheet)
+
+    # get important data
+    participantId    = data['ID']
+    targetLineup     = data['target']
+    lineupSize       = _copy.copy(data['ID'])   # copy column
+    accuracy         = data['accuracy']
+    responseType     = data['on_response']
+    confidence       = data['confidence']
+
+    # translate data
+    targetLineup.replace({'New':"targetAbsent", 'Old':"targetPresent"}, inplace=True)
+    responseType.replace({'New':"rejectId", 'Old':"suspectId", 'Old':'suspectId'}, inplace=True)
+    lineupSize.loc[:] = 1
+
+    # get other data
+    age                   = data['age']
+    gender                = data['sex']
+    condition             = data['stimuli']
+    group                 = data['group']
+ 
+    dataNew = _pandas.DataFrame()
+    dataNew = dataNew.assign(participantId                  = participantId)
+    dataNew = dataNew.assign(targetLineup                   = targetLineup)
+    dataNew = dataNew.assign(lineupSize                     = lineupSize)
+    dataNew = dataNew.assign(accuracy                       = accuracy)
+    dataNew = dataNew.assign(responseType                   = responseType)
+    dataNew = dataNew.assign(confidence                     = confidence)
+    dataNew = dataNew.assign(age                            = age)
+    dataNew = dataNew.assign(gender                         = gender)
+    dataNew = dataNew.assign(condition                      = condition)
+    dataNew = dataNew.assign(group                          = group)
+   
+    dr = DataRaw('')
+    dr.data = dataNew
+    dr.checkData()
+
+    return dr
+
+#########################################################################################################
+
