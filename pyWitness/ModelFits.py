@@ -1152,7 +1152,7 @@ class ModelFitEnsemble(ModelFit) :
 
         def probFillerIDTargetAbsent(x) :
             return normpdf(x,self.lureMean.value,self.lureSigma.value)*\
-                   normcdf(x,self.lureMean.value, self.lureSigma.value)**(self.lineupSize-1)*\
+                   normcdf(x,self.lureMean.value,self.lureSigma.value)**(self.lineupSize-1)*\
                    (1-normcdf(float(c),
                               self.mean( x,self.lureMean.value, self.lureSigma.value,self.lureMean.value,self.lureSigma.value,self.lineupSize),
                               self.sigma(x,self.lureMean.value, self.lureSigma.value,self.lureMean.value,self.lureSigma.value,self.lineupSize)                              )
