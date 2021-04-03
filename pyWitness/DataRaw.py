@@ -332,6 +332,14 @@ class DataRaw :
             self.iParticipant += 1
 
     def cutData(self, column = '', value = ''):
+        '''
+
+        Data to keep
+
+        :param column:
+        :param value:
+        :return:
+        '''
         self.data = self.data.loc[self.data[column] == value]
 
     def process(self, column = '', condition = '', reverseConfidence = False, pAUCLiberal = 1.0, levels = None) :
