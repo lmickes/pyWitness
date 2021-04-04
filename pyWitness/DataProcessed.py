@@ -381,12 +381,19 @@ class DataProcessed :
             self.data_rates.drop(("targetPresent","rejectId_low"),inplace = True)
             self.data_rates.drop(("targetPresent","suspectId_high"),inplace = True)
             self.data_rates.drop(("targetPresent","suspectId_low"),inplace = True)
+            self.data_rates.drop(("zL","low"),inplace = True)
+            self.data_rates.drop(("zL","high"),inplace = True)
+            self.data_rates.drop(("zT","low"),inplace = True)
+            self.data_rates.drop(("zT","high"),inplace = True)
+            self.data_rates.drop(("dprime","low"),inplace = True)
+            self.data_rates.drop(("dprime","high"),inplace = True)
 
             try:
                 self.data_rates.drop(("confidence","low"), inplace=True)
                 self.data_rates.drop(("confidence","high"), inplace=True)
             except :
                 pass
+
 
         cac = []
         confidence = []
@@ -398,6 +405,10 @@ class DataProcessed :
         targetPresentFillerId  = []
         targetPresentRejectId  = []
         targetPresentSuspectId = []
+
+        zL                     = []
+        zT                     = []
+        dprime                 = []
 
         pAUC = []
 
@@ -432,6 +443,10 @@ class DataProcessed :
             else :
                 targetPresentFillerId.append(_np.zeros(len(dp.data_rates.loc['targetPresent','suspectId'].values)))
 
+            zL.append(dp.data_rates.loc['zL','central'].values)
+            zT.append(dp.data_rates.loc['zT','central'].values)
+            dprime.append(dp.data_rates.loc['dprime','central'].values)
+
             pAUC.append(dp.pAUC)
             
             if plotROC :
@@ -454,7 +469,11 @@ class DataProcessed :
         targetPresentRejectId  = _np.array(targetPresentRejectId)
         targetPresentSuspectId = _np.array(targetPresentSuspectId)
 
-        pAUC                   = _np.array(pAUC) 
+        zL                     = _np.array(zL)
+        zT                     = _np.array(zT)
+        dprime                 = _np.array(dprime)
+
+        pAUC                   = _np.array(pAUC)
 
         clHigh = 100.-(100.-cl)/2.0
         clLow  = (100.-clHigh)/2.0
@@ -482,6 +501,13 @@ class DataProcessed :
 
         targetPresentSuspectId_low  = _np.percentile(targetPresentSuspectId,clLow,axis=0)
         targetPresentSuspectId_high = _np.percentile(targetPresentSuspectId,clHigh,axis=0)        
+
+        zL_low                      = _np.percentile(zL,clLow,axis=0)
+        zL_high                     = _np.percentile(zL,clHigh,axis=0)
+        zT_low                      = _np.percentile(zT,clLow,axis=0)
+        zT_high                     = _np.percentile(zT,clHigh,axis=0)
+        dprime_low                  = _np.percentile(dprime,clLow,axis=0)
+        dprime_high                 = _np.percentile(dprime,clHigh,axis=0)
 
         self.pAUC_low               = _np.percentile(pAUC,clLow)
         self.pAUC_high              = _np.percentile(pAUC,clHigh)
@@ -514,6 +540,15 @@ class DataProcessed :
 
         self.data_rates = self.data_rates.append(_pandas.Series(targetPresentSuspectId_low, name = ('targetPresent','suspectId_low'), index = template.index))
         self.data_rates = self.data_rates.append(_pandas.Series(targetPresentSuspectId_high, name = ('targetPresent','suspectId_high'), index = template.index))
+
+        self.data_rates = self.data_rates.append(_pandas.Series(zL_low,  name = ('zL','low'), index = template.index))
+        self.data_rates = self.data_rates.append(_pandas.Series(zL_high, name = ('zL','high'), index = template.index))
+
+        self.data_rates = self.data_rates.append(_pandas.Series(zT_low,  name = ('zT','low'), index = template.index))
+        self.data_rates = self.data_rates.append(_pandas.Series(zT_high, name = ('zT','high'), index = template.index))
+
+        self.data_rates = self.data_rates.append(_pandas.Series(dprime_low,  name = ('dprime','low'), index = template.index))
+        self.data_rates = self.data_rates.append(_pandas.Series(dprime_high, name = ('dprime','high'), index = template.index))
 
         self.data_rates = self.data_rates.sort_index()
 
