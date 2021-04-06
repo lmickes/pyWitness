@@ -333,16 +333,19 @@ class DataProcessed :
         def p0(x, a,b) :
             return a*x+b
 
-        # TODO remove NaN
-        if self.lineupSize == 1 :
-            [self.zLzT_fitOpt, self.zLzT_fitCov] = _optimize.curve_fit(p0,zT[0:-1],zL[0:-1])
-        else :
-            [self.zLzT_fitOpt, self.zLzT_fitCov] = _optimize.curve_fit(p0, zT, zL)
+        try :
+            # TODO remove NaN
+            if self.lineupSize == 1 :
+                [self.zLzT_fitOpt, self.zLzT_fitCov] = _optimize.curve_fit(p0,zT[0:-1],zL[0:-1])
+            else :
+                [self.zLzT_fitOpt, self.zLzT_fitCov] = _optimize.curve_fit(p0, zT, zL)
 
-        # TODO think of better naming
-        self.sigma_pred = self.zLzT_fitOpt[0]
-        self.mu_pred    = -self.zLzT_fitOpt[1]
-        self.c_pred     = _special.ndtri(1 - self.data_rates.loc['targetPresent', 'suspectId']) * self.sigma_pred +self.mu_pred
+            # TODO think of better naming
+            self.sigma_pred = self.zLzT_fitOpt[0]
+            self.mu_pred    = -self.zLzT_fitOpt[1]
+            self.c_pred     = _special.ndtri(1 - self.data_rates.loc['targetPresent', 'suspectId']) * self.sigma_pred +self.mu_pred
+        except:
+            pass
 
         c = _np.array(self.data_rates.columns.get_level_values('confidence').values)
 
