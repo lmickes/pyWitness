@@ -172,25 +172,25 @@ class ModelFit(object) :
 
     def setEqualVariance(self) :
         self.set_equal_variance = True
-        self.lureMean.value = 0.0
-        self.lureMean.fixed = True
+        self.lureMean.value     = 0.0
+        self.lureMean.fixed     = True
         self.lureSigma.set_equal(self.targetSigma)
-        self.targetMean.value = 1.0
-        self.targetSigma.value = 1.0
-        self.targetSigma.fixed = True
+        self.targetMean.value   = 1.0
+        self.targetSigma.value  = 1.0
+        self.targetSigma.fixed  = True
         self.lureBetweenSigma.set_equal(self.targetBetweenSigma)
         self.targetBetweenSigma.fixed = True
         self.targetBetweenSigma.value = 0.1
 
     def setUnequalVariance(self) :
         self.set_unequal_variance = True
-        self.lureMean.value = 0.0
-        self.lureMean.fixed = True
-        self.lureSigma.value = 1.0
-        self.lureSigma.fixed = True
-        self.targetMean.value = 1.0
-        self.targetSigma.value = 1.0
-        self.targetSigma.fixed = False
+        self.lureMean.value       = 0.0
+        self.lureMean.fixed       = True
+        self.lureSigma.value      = 1.0
+        self.lureSigma.fixed      = True
+        self.targetMean.value     = 1.0
+        self.targetSigma.value    = 1.0
+        self.targetSigma.fixed    = False
         self.lureBetweenSigma.set_equal(self.targetBetweenSigma)
         self.targetBetweenSigma.fixed = False
         self.targetBetweenSigma.value = 0.1
