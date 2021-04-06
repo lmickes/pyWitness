@@ -364,12 +364,46 @@ class ModelFit(object) :
 
         nParticipants = pred_tarid+pred_tafid_array.sum() + pred_tprid+pred_tpsid_array.sum()+pred_tpfid_array.sum()
 
-        gen_tarid       = _np.round(pred_tarid/nParticipants*nGenParticipants)
-        gen_tasid_array = _np.round(pred_tasid_array/nParticipants*nGenParticipants)
-        gen_tafid_array = _np.round(pred_tafid_array/nParticipants*nGenParticipants)
-        gen_tprid       = _np.round(pred_tprid/nParticipants*nGenParticipants)
-        gen_tpsid_array = _np.round(pred_tpsid_array/nParticipants*nGenParticipants)
-        gen_tpfid_array = _np.round(pred_tpfid_array/nParticipants*nGenParticipants)
+        if nGenParticipants == -1 :
+            nGenParticipants = nParticipants
+
+        numberConfidence = len(pred_tafid_array)
+
+        numberTALineups = pred_tarid + pred_tafid_array.sum()
+        numberTPLineups = pred_tprid + pred_tpfid_array.sum() + pred_tpsid_array.sum()
+
+        prob_tarid       = pred_tarid/numberTALineups
+        prob_tafid       = pred_tafid_array/numberTALineups
+
+        prob_tprid       = pred_tprid/numberTPLineups
+        prob_tpfid       = pred_tpfid_array/numberTPLineups
+        prob_tpsid       = pred_tpsid_array/numberTPLineups
+
+        prob_ta          = _np.zeros(2*numberConfidence+1)
+        prob_tp          = _np.zeros(2*numberConfidence+1)
+
+        prob_ta[0]                                       = prob_tarid
+        prob_ta[1:(1+numberConfidence)]                  = prob_tafid
+        prob_ta[(1+numberConfidence):]                   = 0.0
+
+        prob_tp[0]                                       = prob_tprid
+        prob_tp[1:(1+numberConfidence)]                  = prob_tpfid
+        prob_tp[(1+numberConfidence):]                   = prob_tpsid
+
+        genTALineups     = numberTALineups/(numberTALineups+numberTPLineups)*nGenParticipants
+        genTPLineups     = numberTPLineups/(numberTALineups+numberTPLineups)*nGenParticipants
+
+        gen_ta           = _np.random.multinomial(genTALineups,prob_ta)
+        gen_tp           = _np.random.multinomial(genTPLineups,prob_tp)
+
+        print(gen_ta,gen_tp)
+
+        gen_tarid       = gen_ta[0]
+        gen_tafid_array = gen_ta[1:(1+numberConfidence)]
+        gen_tasid_array = gen_ta[(1+numberConfidence):]
+        gen_tprid       = gen_tp[0]
+        gen_tpfid_array = gen_tp[1:(1+numberConfidence)]
+        gen_tpsid_array = gen_tp[(1+numberConfidence):]
 
         if tasid :
             gen_tafid_array = gen_tafid_array - gen_tasid_array
@@ -450,10 +484,19 @@ class ModelFit(object) :
          pred_tpsid_array,
          pred_tpfid_array]  = self.calculateFrequenciesForAllCriteria()
 
-        nParticipants = pred_tasid_array.sum() + pred_tpsid_array.sum()
+        numberTALineups = pred_tasid_array.sum()
+        numberTPLineups = pred_tpsid_array.sum()
 
-        gen_tasid_array = pred_tasid_array/nParticipants*nGenParticipants
-        gen_tpsid_array = pred_tpsid_array/nParticipants*nGenParticipants
+        if nGenParticipants == -1 :
+            nGenParticipants = numberTALineups+numberTPLineups
+
+        genTALineups     = numberTALineups/(numberTALineups+numberTPLineups)*nGenParticipants
+        genTPLineups     = numberTPLineups/(numberTALineups+numberTPLineups)*nGenParticipants
+
+        gen_tasid_array = _np.random.multinomial(genTALineups,pred_tasid_array/numberTALineups)
+        gen_tpsid_array = _np.random.multinomial(genTPLineups,pred_tpsid_array/numberTPLineups)
+
+        print(gen_tasid_array, gen_tpsid_array)
 
         if debug :
             print('ModelFit.generateRawDataShowup> pred_tasid'.ljust(self.debugIoPadSize,' ')+":",pred_tasid_array)
