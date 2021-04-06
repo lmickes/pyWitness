@@ -347,11 +347,11 @@ class ModelFit(object) :
     def monteCarloDecision(self,pred_tafid_array, pred_tpsid_array, pred_tpfid_array, memoryStrength) :
         pass
 
-    def generateRawData(self, nGenParticipants = 10000, tasid = False):
+    def generateRawData(self, nGenParticipants = 10000, tasid = False, debug = False ):
         if self.lineupSize != 1 :
-            return self.generateRawDataLineup(nGenParticipants = nGenParticipants, tasid = tasid)
+            return self.generateRawDataLineup(nGenParticipants = nGenParticipants, tasid = tasid, debug = debug)
         else :
-            return self.generateRawDataShowup(nGenParticipants = nGenParticipants, tasid = tasid)
+            return self.generateRawDataShowup(nGenParticipants = nGenParticipants, tasid = tasid, debug = debug)
 
 
     def generateRawDataLineup(self, nGenParticipants = 10000, tasid = False, debug = False) :
