@@ -320,7 +320,7 @@ class DataRaw :
 
         if not isinstance(self.data,_pandas.DataFrame):
             self.iParticipant = 1
-            self.data = _pandas.DataFrame(columns = ['participantId','lineupSize','targetLineup','responseType','confidence'])
+            self.data = _pandas.DataFrame(columns = ['participantId','lineupSize','targetLineup','responseType','confidence'], dtype=int)
 
         for i in range(0,int(n),1) :
             self.data = self.data.append({"participantId":self.iParticipant,
@@ -328,10 +328,10 @@ class DataRaw :
                                           "targetLineup":targetLineup,
                                           "responseType":responseType,
                                           "confidence":confidence},
-                                         ignore_index=True)
+                                          ignore_index=True)
             self.iParticipant += 1
 
-    def cutData(self, column = '', value = ''):
+    def cutData(self, column = '', value = '' , option="keep"):
         '''
 
         Data to keep
@@ -340,7 +340,11 @@ class DataRaw :
         :param value:
         :return:
         '''
-        self.data = self.data.loc[self.data[column] == value]
+
+        if option == "keep" :
+            self.data = self.data.loc[self.data[column] == value]
+        elif option == "cut" :
+            self.data = self.data.loc[self.data[column] != value]
 
     def process(self, column = '', condition = '', reverseConfidence = False, pAUCLiberal = 1.0, levels = None) :
         '''
