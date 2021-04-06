@@ -150,4 +150,35 @@ def makeTest3Csv() :
 def makeTestXlsx() :
     pass
 
-    
+def generatePAUC() :
+    import pyWitness
+    import numpy
+
+    dr = pyWitness.DataRaw("test1.csv")
+    dr.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels= ["Low","Medium","High"])
+    dp = dr.process()
+    mf = pyWitness.ModelFitIndependentObservation(dp)
+    mf.setEqualVariance()
+    mf.setParameterEstimates()
+    mf.fit()
+
+    for nGen in numpy.linspace(500, 5000, 9+1) :
+        drSimulated = mf.generateRawData(nGenParticipants = nGen)
+        dpSimulated = drSimulated.process(pAUCLiberal = 0.05)
+        dpSimulated.calculateConfidenceBootstrap(nBootstraps=2000)
+        print(nGen,
+              dpSimulated.liberalTargetAbsentSuspectId,
+              dpSimulated.pAUC,
+              dpSimulated.pAUC_low,
+              dpSimulated.pAUC_high)
+
+def generatePAUCStatTest() :
+    pass
+
+
+
+
+
+
+
+
