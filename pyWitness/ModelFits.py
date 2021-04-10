@@ -396,8 +396,6 @@ class ModelFit(object) :
         gen_ta           = _np.random.multinomial(genTALineups,prob_ta)
         gen_tp           = _np.random.multinomial(genTPLineups,prob_tp)
 
-        print(gen_ta,gen_tp)
-
         gen_tarid       = gen_ta[0]
         gen_tafid_array = gen_ta[1:(1+numberConfidence)]
         gen_tasid_array = gen_ta[(1+numberConfidence):]
@@ -496,7 +494,7 @@ class ModelFit(object) :
         gen_tasid_array = _np.random.multinomial(genTALineups,pred_tasid_array/numberTALineups)
         gen_tpsid_array = _np.random.multinomial(genTPLineups,pred_tpsid_array/numberTPLineups)
 
-        print(gen_tasid_array, gen_tpsid_array)
+        # print(gen_tasid_array, gen_tpsid_array)
 
         if debug :
             print('ModelFit.generateRawDataShowup> pred_tasid'.ljust(self.debugIoPadSize,' ')+":",pred_tasid_array)

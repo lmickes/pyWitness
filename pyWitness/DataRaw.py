@@ -346,7 +346,7 @@ class DataRaw :
         elif option == "cut" :
             self.data = self.data.loc[self.data[column] != value]
 
-    def process(self, column = '', condition = '', reverseConfidence = False, pAUCLiberal = 1.0, levels = None) :
+    def process(self, column = '', condition = '', reverseConfidence = False, pAUCLiberal = 1.0, levels = None, option = "all") :
         '''
         Process the raw data and returns DataProcessed object
 
@@ -375,7 +375,8 @@ class DataRaw :
                                               reverseConfidence = reverseConfidence,
                                               lineupSize        = self.dataSelected.iloc[0]['lineupSize'],
                                               pAUCLiberal       = pAUCLiberal,
-                                              levels            = levels)
+                                              levels            = levels,
+                                              option            = option)
         return self._data_processed
 
     def writeCsv(self, fileName):

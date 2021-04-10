@@ -20,7 +20,7 @@ class DataProcessed :
     
     '''
     
-    def __init__(self, dataRaw, reverseConfidence = False, lineupSize = 1, pAUCLiberal = 1.0, levels = None) :
+    def __init__(self, dataRaw, reverseConfidence = False, lineupSize = 1, pAUCLiberal = 1.0, levels = None, option="all") :
 
         self.debugIoPadSize = 35
 
@@ -57,12 +57,14 @@ class DataProcessed :
         self.pAUCLiberal = pAUCLiberal
 
         self.calculateRates()
-        self.calculateConfidence()
-        self.calculateRelativeFrequency()
-        self.calculateCAC()
-        self.calculatePAUC(pAUCLiberal)
-        self.calculateNormalisedAUC()
         self.calculateDPrime()
+        self.calculateConfidence()
+        if option == "all" :
+            self.calculateRelativeFrequency()
+            self.calculateCAC()
+            self.calculatePAUC(pAUCLiberal)
+            self.calculateNormalisedAUC()
+            
 
         self.bootstrapped = False
 
@@ -159,10 +161,11 @@ class DataProcessed :
         try : 
             self.data_rates.loc['targetAbsent','suspectId']
         except :
-            suspectId = self.data_rates.loc['targetAbsent','fillerId']/self.lineupSize
-            suspectId.name = ("targetAbsent","suspectId")
-            self.data_rates = self.data_rates.append(suspectId)
-            self.data_rates = self.data_rates.sort_index()
+            if self.lineupSize != 1 :  # Only estimate if this is a lineup (fillers dont exist for showups)
+                suspectId = self.data_rates.loc['targetAbsent','fillerId']/self.lineupSize
+                suspectId.name = ("targetAbsent","suspectId")
+                self.data_rates = self.data_rates.append(suspectId)
+                self.data_rates = self.data_rates.sort_index()
 
     def calculateConfidence(self):
 
@@ -202,13 +205,19 @@ class DataProcessed :
         if self.lineupSize != 1 :                                                                           # SHOWUP
             cid = self.data_pivot.loc['targetPresent','suspectId']
         else :
-            cid = self.data_pivot.loc['targetPresent','suspectId'] + self.data_pivot.loc['targetPresent','rejectId']
-
+            try : 
+                cid = self.data_pivot.loc['targetPresent','suspectId'] + self.data_pivot.loc['targetPresent','rejectId']
+            except :
+                cid = self.data_pivot.loc['targetPresent','suspectId']
         try :
             if self.lineupSize != 1 :                                                                       # SHOWUP
                 fid = self.data_pivot.loc['targetAbsent','suspectId']
             else :
-                fid = self.data_pivot.loc['targetAbsent','suspectId'] + self.data_pivot.loc['targetAbsent','rejectId']
+                try :
+                    fid = self.data_pivot.loc['targetAbsent','suspectId'] + self.data_pivot.loc['targetAbsent','rejectId']
+                except :
+                    fid = self.data_pivot.loc['targetAbsent','rejectId']
+
         except KeyError :            
             fid = self.data_pivot.loc['targetAbsent','fillerId']/self.lineupSize
 
@@ -322,7 +331,10 @@ class DataProcessed :
 
     def calculateDPrime(self):
         zT = _special.ndtri(self.data_rates.loc['targetPresent','suspectId'])
-        zL = _special.ndtri(self.data_rates.loc['targetAbsent','suspectId'])
+        try :
+            zL = _special.ndtri(self.data_rates.loc['targetAbsent','suspectId'])
+        except : # only for TA showups and the participant never made a suspectId
+            zL = _special.ndtri(self.data_rates.loc['targetAbsent','rejectId'])
 
         dPrime = zT - zL
         dPrime.name = ("dprime", "central")

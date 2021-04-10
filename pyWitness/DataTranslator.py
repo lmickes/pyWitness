@@ -1595,10 +1595,10 @@ def published_2020_Lucas_etal_Exp1(fileName = "", excelSheet = 'Exp 1 Data') :
 
 #########################################################################################################
 
-def mickesMorganFuentasKazanina2021(fileName = "", excelSheet = 'pyWitness') :
+def mickesMorganFuentasKazanina2021am(fileName = "", excelSheet = 'pyWitness') :
 
     if fileName == "" :
-        fileName = _dir+"/../data/working/mickesMorganFuentasKazanina2021.xlsx"
+        fileName = _dir+"/../data/working/mickesMorganFuentasKazanina2021am.xlsx"
 
     # load spreadsheet
     data = openExcelFile(fileName, excelSheet)
@@ -1607,32 +1607,34 @@ def mickesMorganFuentasKazanina2021(fileName = "", excelSheet = 'pyWitness') :
     participantId    = data['ID']
     targetLineup     = data['target']
     lineupSize       = _copy.copy(data['ID'])   # copy column
+    responseType     = data['saidON']
     accuracy         = data['accuracy']
-    responseType     = data['on_response']
     confidence       = data['confidence']
 
     # translate data
     targetLineup.replace({'New':"targetAbsent", 'Old':"targetPresent"}, inplace=True)
-    responseType.replace({'New':"rejectId", 'Old':"suspectId", 'Old':'suspectId'}, inplace=True)
+    responseType.replace({'New':"rejectId", 'Old':"suspectId"}, inplace=True)
     lineupSize.loc[:] = 1
 
     # get other data
     age                   = data['age']
     gender                = data['sex']
-    condition             = data['stimuli']
+    condition             = data['word']
     group                 = data['group']
+    word                  = data['word']
  
     dataNew = _pandas.DataFrame()
     dataNew = dataNew.assign(participantId                  = participantId)
     dataNew = dataNew.assign(targetLineup                   = targetLineup)
     dataNew = dataNew.assign(lineupSize                     = lineupSize)
-    dataNew = dataNew.assign(accuracy                       = accuracy)
     dataNew = dataNew.assign(responseType                   = responseType)
+    dataNew = dataNew.assign(accuracy                       = accuracy)
     dataNew = dataNew.assign(confidence                     = confidence)
     dataNew = dataNew.assign(age                            = age)
     dataNew = dataNew.assign(gender                         = gender)
     dataNew = dataNew.assign(condition                      = condition)
     dataNew = dataNew.assign(group                          = group)
+    dataNew = dataNew.assign(word                           = word)
    
     dr = DataRaw('')
     dr.data = dataNew
@@ -1641,4 +1643,152 @@ def mickesMorganFuentasKazanina2021(fileName = "", excelSheet = 'pyWitness') :
     return dr
 
 #########################################################################################################
+
+def mickesMorganFuentasKazanina2021pm(fileName = "", excelSheet = 'pyWitness') :
+
+    if fileName == "" :
+        fileName = _dir+"/../data/working/mickesMorganFuentasKazanina2021pm.xlsx"
+
+    # load spreadsheet
+    data = openExcelFile(fileName, excelSheet)
+
+    # get important data
+    participantId    = data['ID']
+    targetLineup     = data['target']
+    lineupSize       = _copy.copy(data['ID'])   # copy column
+    responseType     = data['saidON']
+    accuracy         = data['accuracy']
+    confidence       = data['confidence']
+
+    # translate data
+    targetLineup.replace({'New':"targetAbsent", 'Old':"targetPresent"}, inplace=True)
+    responseType.replace({'New':"rejectId", 'Old':"suspectId"}, inplace=True)
+    lineupSize.loc[:] = 1
+
+    # get other data
+    age                   = data['age']
+    gender                = data['sex']
+    condition             = data['word']
+    group                 = data['group']
+    word                  = data['word']
+ 
+    dataNew = _pandas.DataFrame()
+    dataNew = dataNew.assign(participantId                  = participantId)
+    dataNew = dataNew.assign(targetLineup                   = targetLineup)
+    dataNew = dataNew.assign(lineupSize                     = lineupSize)
+    dataNew = dataNew.assign(responseType                   = responseType)
+    dataNew = dataNew.assign(accuracy                       = accuracy)
+    dataNew = dataNew.assign(confidence                     = confidence)
+    dataNew = dataNew.assign(age                            = age)
+    dataNew = dataNew.assign(gender                         = gender)
+    dataNew = dataNew.assign(condition                      = condition)
+    dataNew = dataNew.assign(group                          = group)
+    dataNew = dataNew.assign(word                           = word)
+   
+    dr = DataRaw('')
+    dr.data = dataNew
+    dr.checkData()
+
+    return dr
+
+#########################################################################################################
+def mickesMorganFuentasKazanina2021sleep(fileName = "", excelSheet = 'pyWitness') :
+
+    if fileName == "" :
+        fileName = _dir+"/../data/working/mickesMorganFuentasKazanina2021sleep.xlsx"
+
+    # load spreadsheet
+    data = openExcelFile(fileName, excelSheet)
+
+    # get important data
+    participantId    = data['ID']
+    targetLineup     = data['target']
+    lineupSize       = _copy.copy(data['ID'])   # copy column
+    responseType     = data['saidON']
+    accuracy         = data['accuracy']
+    confidence       = data['confidence']
+
+    # translate data
+    targetLineup.replace({'New':"targetAbsent", 'Old':"targetPresent"}, inplace=True)
+    responseType.replace({'New':"rejectId", 'Old':"suspectId"}, inplace=True)
+    lineupSize.loc[:] = 1
+
+    # get other data
+    age                   = data['age']
+    gender                = data['sex']
+    condition             = data['word']
+    group                 = data['group']
+    word                  = data['word']
+ 
+    dataNew = _pandas.DataFrame()
+    dataNew = dataNew.assign(participantId                  = participantId)
+    dataNew = dataNew.assign(targetLineup                   = targetLineup)
+    dataNew = dataNew.assign(lineupSize                     = lineupSize)
+    dataNew = dataNew.assign(responseType                   = responseType)
+    dataNew = dataNew.assign(accuracy                       = accuracy)
+    dataNew = dataNew.assign(confidence                     = confidence)
+    dataNew = dataNew.assign(age                            = age)
+    dataNew = dataNew.assign(gender                         = gender)
+    dataNew = dataNew.assign(condition                      = condition)
+    dataNew = dataNew.assign(group                          = group)
+    dataNew = dataNew.assign(word                           = word)
+   
+    dr = DataRaw('')
+    dr.data = dataNew
+    dr.checkData()
+
+    return dr
+
+#########################################################################################################
+def mickesMorganFuentasKazanina2021wake(fileName = "", excelSheet = 'pyWitness') :
+
+    if fileName == "" :
+        fileName = _dir+"/../data/working/mickesMorganFuentasKazanina2021wake.xlsx"
+
+    # load spreadsheet
+    data = openExcelFile(fileName, excelSheet)
+
+    # get important data
+    participantId    = data['ID']
+    targetLineup     = data['target']
+    lineupSize       = _copy.copy(data['ID'])   # copy column
+    responseType     = data['saidON']
+    accuracy         = data['accuracy']
+    confidence       = data['confidence']
+
+    # translate data
+    targetLineup.replace({'New':"targetAbsent", 'Old':"targetPresent"}, inplace=True)
+    responseType.replace({'New':"rejectId", 'Old':"suspectId"}, inplace=True)
+    lineupSize.loc[:] = 1
+
+    # get other data
+    age                   = data['age']
+    gender                = data['sex']
+    condition             = data['word']
+    group                 = data['group']
+    word                  = data['word']
+ 
+    dataNew = _pandas.DataFrame()
+    dataNew = dataNew.assign(participantId                  = participantId)
+    dataNew = dataNew.assign(targetLineup                   = targetLineup)
+    dataNew = dataNew.assign(lineupSize                     = lineupSize)
+    dataNew = dataNew.assign(responseType                   = responseType)
+    dataNew = dataNew.assign(accuracy                       = accuracy)
+    dataNew = dataNew.assign(confidence                     = confidence)
+    dataNew = dataNew.assign(age                            = age)
+    dataNew = dataNew.assign(gender                         = gender)
+    dataNew = dataNew.assign(condition                      = condition)
+    dataNew = dataNew.assign(group                          = group)
+    dataNew = dataNew.assign(word                           = word)
+   
+    dr = DataRaw('')
+    dr.data = dataNew
+    dr.checkData()
+
+    return dr
+
+#########################################################################################################
+
+
+
 
