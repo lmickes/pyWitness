@@ -599,7 +599,7 @@ class DataProcessed :
 
         return [D,p]
 
-    def plotROC(self, label = "ROC", relativeFrequencyScale = 400, errorType = 'bars') :
+    def plotROC(self, label = "ROC", relativeFrequencyScale = 800, errorType = 'bars') :
         '''
         Plot the receiver operating characteristic (ROC) for the data. The symbol size is proportional to 
         relative frequency. If confidence limits are calculated using calculateConfidenceBootstrap they
@@ -666,7 +666,7 @@ class DataProcessed :
         # Tight layout for plot
         _plt.tight_layout()
 
-    def plotCAC(self, label = "CAC", relativeFrequencyScale = 400, errorType = 'bars') :
+    def plotCAC(self, label = "CAC", relativeFrequencyScale = 800, errorType = 'bars') :
         '''
         Plot the confidence accuracy characteristic (CAC) for the data. The symbol size is proportional to 
         relative frequency. If confidence limits are calculated using calculateConfidenceBootstrap they
