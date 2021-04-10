@@ -616,10 +616,10 @@ class DataProcessed :
         x = _np.linspace(0,1,100)
 
         _plt.plot(x,x,"--",color="black",linewidth=1.0)
-        _plt.scatter(self.data_rates.loc['targetAbsent', 'suspectId'],
-                     self.data_rates.loc['targetPresent','suspectId'],
-                     s = self.data_rates.loc['rf','']*relativeFrequencyScale,
-                     label = label)
+        scatter = _plt.scatter(self.data_rates.loc['targetAbsent', 'suspectId'],
+                               self.data_rates.loc['targetPresent','suspectId'],
+                               s = self.data_rates.loc['rf','']*relativeFrequencyScale,
+                               label = label)
         
         # Plot errors if they have been calculated
         try : 
@@ -631,6 +631,8 @@ class DataProcessed :
                               yerr = [self.data_rates.loc['targetPresent','suspectId'] - self.data_rates.loc['targetPresent','suspectId_low'],
                                       self.data_rates.loc['targetPresent','suspectId_high']- self.data_rates.loc['targetPresent','suspectId']],
                               fmt='.',
+                              color=scatter.get_facecolor()[0],
+                              ecolor=scatter.get_facecolor()[0],
                               capsize=5)
             elif errorType == 'band' : 
                 _plt.fill_between(self.data_rates.loc['targetAbsent', 'suspectId'],
@@ -691,18 +693,22 @@ class DataProcessed :
             pass
 
         # Basic scatter plot
-        _plt.scatter(confidence,cac,s = rf*relativeFrequencyScale,label = label)
+        scatter = _plt.scatter(confidence,cac,s = rf*relativeFrequencyScale,label = label)
         
         # Plot errors if they have been calculated
         try : 
             if errorType == 'bars' : 
-                _plt.errorbar(confidence,cac,
-                              yerr = [self.data_rates.loc['cac','central']-self.data_rates.loc['cac','low'],
-                                      self.data_rates.loc['cac','high']-self.data_rates.loc['cac','central']],
-                              xerr = [self.data_rates.loc['confidence','central']-self.data_rates.loc['confidence','low'],
-                                      self.data_rates.loc['confidence','high']-self.data_rates.loc['confidence','central']],
-                              fmt='.',
-                              capsize=5)
+                scatterErr = _plt.errorbar(confidence,cac,
+                                           yerr = [self.data_rates.loc['cac','central']-self.data_rates.loc['cac','low'],
+                                                   self.data_rates.loc['cac','high']-self.data_rates.loc['cac','central']],
+                                           xerr = [self.data_rates.loc['confidence','central']-self.data_rates.loc['confidence','low'],
+                                                     self.data_rates.loc['confidence','high']-self.data_rates.loc['confidence','central']],
+                                           fmt='.',
+                                           color  = scatter.get_facecolor()[0],
+                                           ecolor = scatter.get_facecolor()[0],
+                                           capsize=5)
+
+
             elif errorType == 'band' : 
                 _plt.fill_between(confidence,
                                   self.data_rates.loc['cac','low'],
