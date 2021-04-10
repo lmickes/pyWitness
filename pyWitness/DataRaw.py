@@ -184,11 +184,12 @@ class DataRaw :
         responseType = _np.unique(self.data['responseType'])
         confidence   = _np.unique(self.data['confidence'])
 
-        print('DataRaw.checkData> columns      :',self.data.columns.values)
-        print('DataRaw.checkData> lineupSize   :',lineupSize)
-        print('DataRaw.checkData> targetLineup :',targetLineup)
-        print('DataRaw.checkData> responseType :',responseType)
-        print('DataRaw.checkData> confidence   :',confidence)
+        print('DataRaw.checkData> columns       :',self.data.columns.values)
+        print('DataRaw.checkData> lineupSize    :',lineupSize)
+        print('DataRaw.checkData> targetLineup  :',targetLineup)
+        print('DataRaw.checkData> responseType  :',responseType)
+        print('DataRaw.checkData> confidence    :',confidence)
+        print('DataRaw.checkData> number trials :',len(self.data))
 
     def columnValues(self,columnName):
 
@@ -342,9 +343,14 @@ class DataRaw :
         '''
 
         if option == "keep" :
-            self.data = self.data.loc[self.data[column] == value]
+            cut       = self.data[column] == value
+            self.data = self.data.loc[cut]
+            return (cut*1).sum()
+
         elif option == "cut" :
-            self.data = self.data.loc[self.data[column] != value]
+            cut       = self.data[column] != value
+            self.data = self.data.loc[cut]
+            return (cut*1).sum()
 
     def process(self, column = '', condition = '', reverseConfidence = False, pAUCLiberal = 1.0, levels = None, option = "all") :
         '''
