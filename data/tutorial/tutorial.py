@@ -95,18 +95,19 @@ def makeTest2DataFrame() :
     responseType[tpsid] = "suspectId"
     responseType[tprid] = "rejectId"
 
-    cut = _np.logical_and(expNumber == 1, previouslyViewedVideo == 1)
+    # cut = _np.logical_and(expNumber == 1, previouslyViewedVideo == 1)
+    cut = (expNumber == 1)
 
     dataNew = _pandas.DataFrame()
-    dataNew['participantId'] = idNumber[cut]
-    dataNew['lineupSize']    = lineupSize[cut]
-    dataNew['targetLineup']  = targetLineup[cut]
-    dataNew['responseType']  = responseType[cut]
-    dataNew['confidence']    = confidence[cut]
-    dataNew['age']           = age[cut]
-    dataNew['gender']        = gender[cut]
-    dataNew['group']         = group[cut]
-
+    dataNew['participantId']         = idNumber[cut]
+    dataNew['lineupSize']            = lineupSize[cut]
+    dataNew['targetLineup']          = targetLineup[cut]
+    dataNew['responseType']          = responseType[cut]
+    dataNew['confidence']            = confidence[cut]
+    dataNew['age']                   = age[cut]
+    dataNew['gender']                = gender[cut]
+    dataNew['group']                 = group[cut]
+    dataNew['previouslyViewedVideo'] = previouslyViewedVideo[cut]
 
     return dataNew
 
