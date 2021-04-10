@@ -1,4 +1,6 @@
 from .DataRaw import DataRaw as _DataRaw
+from .Utils import getColorOfLabeledFromGca as _getColorofLabeledFromGca
+
 import numpy as _np
 import pandas as _pandas
 import copy as _copy
@@ -792,6 +794,8 @@ class ModelFit(object) :
          pred_tpsid_array,
          pred_tpfid_array] = self.calculateFrequenciesForAllCriteria()
 
+        confidence = _np.flip(list(self.processedData.data_rates.columns.get_level_values('confidence')))
+
         x = _np.arange(0,pred_tasid_array.size,1)+1
     
         fig = _plt.figure(constrained_layout=True)
@@ -806,8 +810,8 @@ class ModelFit(object) :
 
         # tafid fit bar
         _plt.sca(ax1)
-        _plt.bar(x,pred_tafid_array, fill=False, label="Prediction")
-        _plt.errorbar(x,
+        _plt.bar(confidence,pred_tafid_array, fill=False, label="Prediction")
+        _plt.errorbar(confidence,
                       self.processedData.data_pivot.loc['targetAbsent' ,'fillerId'],
                       _np.sqrt(self.processedData.data_pivot.loc['targetAbsent' ,'fillerId']),
                       fmt='o',
@@ -820,8 +824,8 @@ class ModelFit(object) :
 
         # tasid data plot
         _plt.sca(ax2)
-        _plt.bar(x,pred_tpsid_array, fill=False)
-        _plt.errorbar(x,
+        _plt.bar(confidence,pred_tpsid_array, fill=False)
+        _plt.errorbar(confidence,
                       self.processedData.data_pivot.loc['targetPresent' ,'suspectId'],
                       _np.sqrt(self.processedData.data_pivot.loc['targetPresent' ,'suspectId']),
                       fmt='o',
@@ -831,8 +835,8 @@ class ModelFit(object) :
 
         # tpfid data plot
         _plt.sca(ax3) 
-        _plt.bar(x,pred_tpfid_array, fill=False)
-        _plt.errorbar(x,
+        _plt.bar(confidence,pred_tpfid_array, fill=False)
+        _plt.errorbar(confidence,
                       self.processedData.data_pivot.loc['targetPresent' ,'fillerId'],
                       _np.sqrt(self.processedData.data_pivot.loc['targetPresent' ,'fillerId']),
                       fmt='o',
@@ -885,13 +889,16 @@ class ModelFit(object) :
          pred_tpsid_array,
          pred_tpfid_array] = self.calculateFrequenciesForAllCriteria()
 
+        confidence = _np.flip(list(self.processedData.data_rates.columns.get_level_values('confidence')))
+
+
         x = range(0, pred_tasid_array.size, 1)
 
         fig = _plt.figure()
         _plt.subplot(2,1,1)
 
-        _plt.bar(x, pred_tasid_array, fill=False, label="Prediction")
-        _plt.errorbar(x,
+        _plt.bar(confidence, pred_tasid_array, fill=False, label="Prediction")
+        _plt.errorbar(confidence,
                       self.processedData.data_pivot.loc['targetAbsent', 'suspectId'] + self.processedData.data_pivot.loc['targetAbsent', 'rejectId'],
                       _np.sqrt(self.processedData.data_pivot.loc['targetAbsent', 'suspectId'] + self.processedData.data_pivot.loc['targetAbsent', 'rejectId']),
                       fmt='o',
@@ -902,8 +909,8 @@ class ModelFit(object) :
         _plt.legend()
 
         _plt.subplot(2,1,2)
-        _plt.bar(x, pred_tpsid_array, fill=False)
-        _plt.errorbar(x,
+        _plt.bar(confidence, pred_tpsid_array, fill=False)
+        _plt.errorbar(confidence,
                       self.processedData.data_pivot.loc['targetPresent', 'suspectId'] + self.processedData.data_pivot.loc['targetPresent', 'rejectId'],
                       _np.sqrt(self.processedData.data_pivot.loc['targetPresent', 'suspectId'] + self.processedData.data_pivot.loc['targetPresent', 'rejectId']),
                       fmt='o',
@@ -913,7 +920,7 @@ class ModelFit(object) :
 
         _plt.tight_layout()
 
-    def plotROC(self, criterion1 = -10, criterion2 = 10, nsteps = 100, label = "Indep model" ) :
+    def plotROC(self, criterion1 = -10, criterion2 = 10, nsteps = 100, label = "Indep model", colorFromLabel = "") :
         
         rate_tafid_array = []
         rate_tpfid_array = []
@@ -925,10 +932,14 @@ class ModelFit(object) :
             rate_tafid_array.append(pred_tafid/self.lineupSize/self.numberTALineups)
             rate_tpfid_array.append(pred_tpfid/self.numberTPLineups)
             rate_tpsid_array.append(pred_tpsid/self.numberTPLineups)
-            
-        _plt.plot(rate_tafid_array,rate_tpsid_array, linestyle = '--', label=label)
-            
-    def plotCAC(self, nsteps = 50, label = "Indep model") :
+
+        if colorFromLabel == "" :
+            _plt.plot(rate_tafid_array,rate_tpsid_array, linestyle = '--', label=label)
+        else :
+            fc = _getColorofLabeledFromGca(colorFromLabel)
+            _plt.plot(rate_tafid_array,rate_tpsid_array, linestyle = '--', label=label,color=fc)
+
+    def plotCAC(self, nsteps = 50, label = "Indep model", colorFromLabel = "") :
         
         # need to create look up between confidence and criterion
         confidence = self.processedData.data_rates.loc['confidence','central']
@@ -954,9 +965,15 @@ class ModelFit(object) :
         rate_tpfid_array = _np.array(rate_tpfid_array)
         rate_tpsid_array = _np.array(rate_tpsid_array)
 
-        cac = rate_tpsid_array/(rate_tpsid_array+rate_tasid_array)
 
-        _plt.plot(confidence[-1::-1], cac, linestyle = '--', label=label)
+        cac = rate_tpsid_array/(rate_tpsid_array+rate_tasid_array)
+            
+        if colorFromLabel == "" :
+            _plt.plot(confidence[-1::-1], cac, linestyle = '--', label=label)
+        else :
+            fc = _getColorofLabeledFromGca(colorFromLabel)
+            _plt.plot(confidence[-1::-1], cac, linestyle = '--', label=label,color=fc)
+
 
     def plotChi2History(self):
 
