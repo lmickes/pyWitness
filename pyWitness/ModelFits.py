@@ -757,13 +757,45 @@ class ModelFit(object) :
         target = _norm.pdf(x,self.targetMean.value, self.targetSigma.value)
         lure   = _norm.pdf(x,self.lureMean.value, self.lureSigma.value)
 
+        _plt.subplot(2,1,1)
+        _plt.plot(x,target,label="Target")
+        _plt.plot(x,lure,label="Lure")
+        _plt.ylabel("Probability density")
+
+        # lure mean
+        _plt.axvline(self.lureMean.value, 0, 0.8, linestyle='-.',color='#000000')
+        _plt.text(self.lureMean.value, target.max() * 1.1, "$\mu_l$", ha='center')
+        # lure sigma
+        _plt.axvline(self.lureMean.value-self.lureSigma.value, 0, 0.8, linestyle='-.',color='#000000')
+        _plt.text(self.lureMean.value-self.lureSigma.value/2, target.max() * 1.1 / 2, "$\sigma_l$", ha='center')
+        _plt.arrow(self.lureMean.value, target.max() * 1.1 / 3,
+                   -self.lureSigma.value, 0,
+                   length_includes_head=True,head_length=1/6,head_width=0.025,
+                   capstyle='butt',shape='full')
+
+        # target mean
+        _plt.axvline(self.targetMean.value, 0, 0.8, linestyle='-.',color='#000000')
+        _plt.text(self.targetMean.value, target.max() * 1.1, "$\mu_t$", ha='center')
+        # target sigma
+        _plt.axvline(self.targetMean.value + self.targetSigma.value, 0, 0.8, linestyle='-.',color='#000000')
+        _plt.text(self.targetMean.value + self.targetSigma.value / 2, target.max() * 1.1 / 2, "$\sigma_t$", ha='center')
+        _plt.arrow(self.targetMean.value, target.max() * 1.1 / 3,
+                   self.targetSigma.value, 0,
+                   length_includes_head=True,head_length=1/6,head_width=0.025,
+                   capstyle='butt',shape='full')
+
+
+        # Plot vertical range
+        _plt.ylim(0,max([target.max(), lure.max()])*1.25)
+
+        _plt.subplot(2,1,2)
         _plt.plot(x,target,label="Target")
         _plt.plot(x,lure,label="Lure")
 
         i = 1
 
         for t in self.thresholds :
-            _plt.axvline(t.value, 0, 0.9,linestyle='--')
+            _plt.axvline(t.value, 0, 0.8,linestyle='--',color='#000000')
             _plt.text(t.value, target.max()*1.1, "$c_{0}$".format(i),ha='center')
             i = i +1
 
@@ -771,7 +803,7 @@ class ModelFit(object) :
         _plt.ylabel("Probability density")
 
         # Plot vertical range
-        _plt.ylim(0,max([target.max(), lure.max()])*1.2)
+        _plt.ylim(0,max([target.max(), lure.max()])*1.25)
 
         # Legend
         _plt.legend()
