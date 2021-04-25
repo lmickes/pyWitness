@@ -8,6 +8,7 @@ from scipy import integrate as _integrate
 from scipy import optimize as _optimize
 from scipy import interpolate as _interpolate
 from scipy.stats import norm as _norm
+from scipy.stats import chi2 as _chi2
 import scipy.special as _sc
 import matplotlib.pyplot as _plt
 import random as _rand
@@ -670,7 +671,8 @@ class ModelFit(object) :
         # Store fit output
         self.numberIterations = opt["nit"]
         self.fitStatus        = opt["message"]
-        self.timeDiff = tEnd - tStart
+        self.timeDiff         = tEnd - tStart
+        self.pValue           = 1-_chi2.cdf(self.chi2,self.numberDegreesOfFreedom)
 
         print("fit iterations",self.numberIterations)
         print("fit status    ",self.fitStatus)
@@ -678,22 +680,26 @@ class ModelFit(object) :
         print("fit chi2      ",self.chi2)
         print("fit ndf       ",self.numberDegreesOfFreedom)
         print("fit chi2/ndf  ",self.chi2PerNDF)
+        print("fit p-value   ",self.pValue)
+
 
         # Post fit calculations
         self.calculateD()
 
         # self.thresholds = opt['x'][0:self.numberConditions]
 
-    def saveParametersToTable(self, name) :
+    def saveParametersToTable(self, name = "temp") :
 
-        if self.fit_parameters is  None :
+        if self.fit_parameters is None :
             columns = _copy.copy(self.parameterNames)
-            columns.extend(["numberIterations", "chi2", "fitStatus","d"])
-            self.fit_parameters = _pandas.DataFrame(columns = columns)
+            columns.insert(0,"name")
+            columns.extend(["numberIterations", "chi2", "fitStatus","d","p-value"])
+            self.fit_parameters = _pandas.DataFrame(columns = columns, dtype=float)
 
 
         values = {}
 
+        values["name"] = name
         for p in self.parameterNames :
             values[p] = p = getattr(self,p).value
 
@@ -702,6 +708,7 @@ class ModelFit(object) :
             values["chi2"]             = self.chi2
             values["fitStatus"]        = self.fitStatus
             values["d"]                = self.d
+            values["p-value"]          = self.pValue
         except :
             pass
 
@@ -710,15 +717,42 @@ class ModelFit(object) :
         self.fit_parameters = self.fit_parameters.append(values, ignore_index=True)
 
 
-
     def printParameterTable(self):
         print(self.fit_parameters)
 
-    def writeParameterTableCsv(self, fileName) :
-        pass
+    def writeParameterTableCsv(self, fileName = "fitParameters_temp.csv") :
+        self.fit_parameters.to_csv(fileName)
 
-    def writeParameterTableExcel(self, fileName) :
-        pass
+
+    def setParametersFromFile(self, fileName = "fitParameters_temp.csv", fitName = "temp", replace = False):
+
+        fitParameters = _pandas.read_csv(fileName)
+
+        fitParametersSeries = fitParameters.loc[fitParameters['name'] == fitName]
+
+        self.setParametersFromSeries(fitParametersSeries)
+        self.saveParametersToTable(fitName+"_Loaded")
+
+        if replace :
+            self.fit_paramters = fitParameters
+
+
+    def setParametersFromSeries(self, series):
+
+        # loop of series keys
+        for k in series.keys() :
+
+            if k == "chi2" :
+                continue
+
+            try :
+                attrib = getattr(self,k)
+                if type(attrib) == Parameter :
+                    attrib.value = series[k]
+            except AttributeError:
+                pass
+
+
 
     def calculateConfidenceBootstrap(self, nBootstraps = 200) :
         self.debug = False
@@ -783,7 +817,6 @@ class ModelFit(object) :
                    self.targetSigma.value, 0,
                    length_includes_head=True,head_length=1/6,head_width=0.025,
                    capstyle='butt',shape='full')
-
 
         # Plot vertical range
         _plt.ylim(0,max([target.max(), lure.max()])*1.25)
