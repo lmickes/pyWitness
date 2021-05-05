@@ -70,15 +70,16 @@ class Tester :
         workSheet.cell(33, column, value=mf.chi2)
         workSheet.cell(34, column, value=mf.numberDegreesOfFreedom)
         workSheet.cell(35, column, value=mf.chi2PerNDF)
+        workSheet.cell(36, column, value=mf.pValue)
 
         # get descriptive stats
-        workSheet.cell(37, column, value=dp.numberLineups)
-        workSheet.cell(38, column, value=dp.numberTALineups)
-        workSheet.cell(39, column, value=dp.numberTPLineups)
-        workSheet.cell(40, column, value=dp.data_rates.loc['targetPresent','suspectId'][-1])
-        workSheet.cell(41, column, value=dp.data_rates.loc['targetAbsent','suspectId'][-1])
-        workSheet.cell(42, column, value=dp.dPrime)
-        workSheet.cell(43, column, value=dp.pAUC)
+        workSheet.cell(38, column, value=dp.numberLineups)
+        workSheet.cell(39, column, value=dp.numberTALineups)
+        workSheet.cell(40, column, value=dp.numberTPLineups)
+        workSheet.cell(41, column, value=dp.data_rates.loc['targetPresent','suspectId'][-1])
+        workSheet.cell(42, column, value=dp.data_rates.loc['targetAbsent','suspectId'][-1])
+        workSheet.cell(43, column, value=dp.dPrime)
+        workSheet.cell(44, column, value=dp.pAUC)
 
         return globals()['mf']
 
