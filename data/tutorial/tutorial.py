@@ -23,9 +23,6 @@ def makeTest1Csv(lineupSize = 6) :
     for pId in participantId : 
         i = pId-1 
 
-        if validation[i] == 0 :
-            continue
-
         if targetLineup1[i] == "Target Absent" : 
             targetLineup.append("targetAbsent")
             if response1[i] == "Said Present" :
@@ -53,11 +50,11 @@ def makeTest1Csv(lineupSize = 6) :
 
     dataNew = _pandas.DataFrame()
     dataNew['participantId'] = participantId[validation == 1]
-    dataNew['lineupSize']    = lineupSizeList
-    dataNew['targetLineup']  = targetLineup
-    dataNew['responseType']  = response
-    dataNew['confidence']    = confidence1
-    dataNew['responseTime']  = responseTime
+    dataNew['lineupSize']    = _np.array(lineupSizeList)[validation == 1]
+    dataNew['targetLineup']  = _np.array(targetLineup)[validation == 1]
+    dataNew['responseType']  = _np.array(response)[validation == 1]
+    dataNew['confidence']    = _np.array(confidence1)[validation == 1]
+    dataNew['responseTime']  = _np.array(responseTime)[validation == 1]
 
     dataNew.to_csv("test1.csv")
 
