@@ -1986,3 +1986,361 @@ def mickesMorganFuentasKazanina2021wakeJapanese(fileName = "", excelSheet = 'pyW
 
 #########################################################################################################
 
+def RSOSam(fileName = "", excelSheet = 'RSOSam') :
+
+    if fileName == "" :
+        fileName = _dir+"/../data/working/RSOSam.xlsx"
+
+    # load spreadsheet
+    data = openExcelFile(fileName, "RSOSam")
+
+    # get important data
+    participantId    = data['Participant ID']
+    targetLineup     = data['Target Present or Target Absent Lineup']
+    lineupSize       = _copy.copy(data['Participant ID'])   # copy column
+    accuracy         = data['Accuracy']
+    response         = data['Participant Response']
+    responseType     = _copy.copy(data['Target Present or Target Absent Lineup'])   # copy column
+    confidence       = data['Confidence']
+
+    # translate data
+    targetLineup.replace({"Target Absent":"targetAbsent", "Target Present":"targetPresent"}, inplace=True)
+    lineupSize.loc[:] = 6
+
+    response.replace({"absent":"targetAbsent", "present":"targetPresent"}, inplace=True)
+
+    accuracy.replace({"Incorrect":"incorrect"}, inplace=True)
+
+    taFillerId       = _np.logical_and(_np.logical_and(targetLineup == "targetAbsent",  accuracy == "incorrect"),response == "targetPresent")
+    taRejectId       = _np.logical_and(_np.logical_and(targetLineup == "targetAbsent",  accuracy == "correct"),response == "targetAbsent")
+    tpFillerId       = _np.logical_and(_np.logical_and(targetLineup == "targetPresent", accuracy == "incorrect"),response == "targetPresent")
+    tpSuspectId      = _np.logical_and(_np.logical_and(targetLineup == "targetPresent", accuracy == "correct"),response == "targetPresent")
+    tpRejectId       = _np.logical_and(_np.logical_and(targetLineup == "targetPresent", accuracy == "incorrect"),response == "targetAbsent")
+
+    responseType.loc[taFillerId]  = "fillerId"
+    responseType.loc[taRejectId]  = "rejectId"
+    responseType.loc[tpFillerId]  = "fillerId"
+    responseType.loc[tpSuspectId] = "suspectId"
+    responseType.loc[tpRejectId]  = "rejectId"
+ 
+    dataNew = _pandas.DataFrame()
+    dataNew = dataNew.assign(participantId    = participantId)
+    dataNew = dataNew.assign(targetLineup     = targetLineup)
+    dataNew = dataNew.assign(lineupSize       = lineupSize)
+    dataNew = dataNew.assign(responseType     = responseType)
+    dataNew = dataNew.assign(confidence       = confidence)
+   
+    dr = DataRaw('')
+    dr.data = dataNew
+    dr.checkData()
+
+    return dr
+
+#########################################################################################################
+
+def RSOSpm(fileName = "", excelSheet = 'RSOSpm') :
+
+    if fileName == "" :
+        fileName = _dir+"/../data/working/RSOSpm.xlsx"
+
+    # load spreadsheet
+    data = openExcelFile(fileName, "RSOSpm")
+
+    # get important data
+    participantId    = data['Participant ID']
+    targetLineup     = data['Target Present or Target Absent Lineup']
+    lineupSize       = _copy.copy(data['Participant ID'])   # copy column
+    accuracy         = data['Accuracy']
+    response         = data['Participant Response']
+    responseType     = _copy.copy(data['Target Present or Target Absent Lineup'])   # copy column
+    confidence       = data['Confidence']
+
+    # translate data
+    targetLineup.replace({"Target Absent":"targetAbsent", "Target Present":"targetPresent"}, inplace=True)
+    lineupSize.loc[:] = 6
+
+    response.replace({"absent":"targetAbsent", "present":"targetPresent"}, inplace=True)
+
+    accuracy.replace({"Incorrect":"incorrect"}, inplace=True)
+
+    taFillerId       = _np.logical_and(_np.logical_and(targetLineup == "targetAbsent",  accuracy == "incorrect"),response == "targetPresent")
+    taRejectId       = _np.logical_and(_np.logical_and(targetLineup == "targetAbsent",  accuracy == "correct"),response == "targetAbsent")
+    tpFillerId       = _np.logical_and(_np.logical_and(targetLineup == "targetPresent", accuracy == "incorrect"),response == "targetPresent")
+    tpSuspectId      = _np.logical_and(_np.logical_and(targetLineup == "targetPresent", accuracy == "correct"),response == "targetPresent")
+    tpRejectId       = _np.logical_and(_np.logical_and(targetLineup == "targetPresent", accuracy == "incorrect"),response == "targetAbsent")
+
+    responseType.loc[taFillerId]  = "fillerId"
+    responseType.loc[taRejectId]  = "rejectId"
+    responseType.loc[tpFillerId]  = "fillerId"
+    responseType.loc[tpSuspectId] = "suspectId"
+    responseType.loc[tpRejectId]  = "rejectId"
+ 
+    dataNew = _pandas.DataFrame()
+    dataNew = dataNew.assign(participantId    = participantId)
+    dataNew = dataNew.assign(targetLineup     = targetLineup)
+    dataNew = dataNew.assign(lineupSize       = lineupSize)
+    dataNew = dataNew.assign(responseType     = responseType)
+    dataNew = dataNew.assign(confidence       = confidence)
+   
+    dr = DataRaw('')
+    dr.data = dataNew
+    dr.checkData()
+
+    return dr
+
+#########################################################################################################
+
+def RSOSsleep(fileName = "", excelSheet = 'RSOSsleep') :
+
+    if fileName == "" :
+        fileName = _dir+"/../data/working/RSOSsleep.xlsx"
+
+    # load spreadsheet
+    data = openExcelFile(fileName, "RSOSsleep")
+
+    # get important data
+    participantId    = data['Participant ID']
+    targetLineup     = data['Target Present or Target Absent Lineup']
+    lineupSize       = _copy.copy(data['Participant ID'])   # copy column
+    accuracy         = data['Accuracy']
+    response         = data['Participant Response']
+    responseType     = _copy.copy(data['Target Present or Target Absent Lineup'])   # copy column
+    confidence       = data['Confidence']
+
+    # translate data
+    targetLineup.replace({"Target Absent":"targetAbsent", "Target Present":"targetPresent"}, inplace=True)
+    lineupSize.loc[:] = 6
+
+    response.replace({"absent":"targetAbsent", "present":"targetPresent"}, inplace=True)
+
+    accuracy.replace({"Incorrect":"incorrect"}, inplace=True)
+ 
+    taFillerId       = _np.logical_and(_np.logical_and(targetLineup == "targetAbsent",  accuracy == "incorrect"),response == "targetPresent")
+    taRejectId       = _np.logical_and(_np.logical_and(targetLineup == "targetAbsent",  accuracy == "correct"),response == "targetAbsent")
+    tpFillerId       = _np.logical_and(_np.logical_and(targetLineup == "targetPresent", accuracy == "incorrect"),response == "targetPresent")
+    tpSuspectId      = _np.logical_and(_np.logical_and(targetLineup == "targetPresent", accuracy == "correct"),response == "targetPresent")
+    tpRejectId       = _np.logical_and(_np.logical_and(targetLineup == "targetPresent", accuracy == "incorrect"),response == "targetAbsent")
+
+    responseType.loc[taFillerId]  = "fillerId"
+    responseType.loc[taRejectId]  = "rejectId"
+    responseType.loc[tpFillerId]  = "fillerId"
+    responseType.loc[tpSuspectId] = "suspectId"
+    responseType.loc[tpRejectId]  = "rejectId"
+
+    dataNew = _pandas.DataFrame()
+    dataNew = dataNew.assign(participantId    = participantId)
+    dataNew = dataNew.assign(targetLineup     = targetLineup)
+    dataNew = dataNew.assign(lineupSize       = lineupSize)
+    dataNew = dataNew.assign(responseType     = responseType)
+    dataNew = dataNew.assign(confidence       = confidence)
+   
+    dr = DataRaw('')
+    dr.data = dataNew
+    dr.checkData()
+
+    return dr
+
+#########################################################################################################
+
+def RSOSwake(fileName = "", excelSheet = 'RSOSwake') :
+
+    if fileName == "" :
+        fileName = _dir+"/../data/working/RSOSwake.xlsx"
+
+    # load spreadsheet
+    data = openExcelFile(fileName, "RSOSwake")
+
+    # get important data
+    participantId    = data['Participant ID']
+    targetLineup     = data['Target Present or Target Absent Lineup']
+    lineupSize       = _copy.copy(data['Participant ID'])   # copy column
+    accuracy         = data['Accuracy']
+    response         = data['Participant Response']
+    responseType     = _copy.copy(data['Target Present or Target Absent Lineup'])   # copy column
+    confidence       = data['Confidence']
+
+    # translate data
+    targetLineup.replace({"Target Absent":"targetAbsent", "Target Present":"targetPresent"}, inplace=True)
+    lineupSize.loc[:] = 6
+
+    response.replace({"absent":"targetAbsent", "present":"targetPresent"}, inplace=True)
+
+    accuracy.replace({"Incorrect":"incorrect"}, inplace=True)
+
+    taFillerId       = _np.logical_and(_np.logical_and(targetLineup == "targetAbsent",  accuracy == "incorrect"),response == "targetPresent")
+    taRejectId       = _np.logical_and(_np.logical_and(targetLineup == "targetAbsent",  accuracy == "correct"),response == "targetAbsent")
+    tpFillerId       = _np.logical_and(_np.logical_and(targetLineup == "targetPresent", accuracy == "incorrect"),response == "targetPresent")
+    tpSuspectId      = _np.logical_and(_np.logical_and(targetLineup == "targetPresent", accuracy == "correct"),response == "targetPresent")
+    tpRejectId       = _np.logical_and(_np.logical_and(targetLineup == "targetPresent", accuracy == "incorrect"),response == "targetAbsent")
+
+    responseType.loc[taFillerId]  = "fillerId"
+    responseType.loc[taRejectId]  = "rejectId"
+    responseType.loc[tpFillerId]  = "fillerId"
+    responseType.loc[tpSuspectId] = "suspectId"
+    responseType.loc[tpRejectId]  = "rejectId"
+ 
+    dataNew = _pandas.DataFrame()
+    dataNew = dataNew.assign(participantId    = participantId)
+    dataNew = dataNew.assign(targetLineup     = targetLineup)
+    dataNew = dataNew.assign(lineupSize       = lineupSize)
+    dataNew = dataNew.assign(responseType     = responseType)
+    dataNew = dataNew.assign(confidence       = confidence)
+   
+    dr = DataRaw('')
+    dr.data = dataNew
+    dr.checkData()
+
+    return dr
+
+#########################################################################################################
+
+#########################################################################################################
+
+def mickesMorganFuentasKazanina2021emoAM(fileName = "", excelSheet = 'pyWitness') :
+
+    if fileName == "" :
+        fileName = _dir+"/../data/working/mickesMorganFuentasKazanina2021emoAM.xlsx"
+
+    # load spreadsheet
+    data = openExcelFile(fileName, excelSheet)
+
+    # get important data
+    participantId    = data['ID']
+    targetLineup     = data['target']
+    lineupSize       = _copy.copy(data['ID'])   # copy column
+    responseType     = data['saidON']
+    accuracy         = data['accuracy']
+    confidence       = data['confidence']
+
+    # translate data
+    targetLineup.replace({'New':"targetAbsent", 'Old':"targetPresent"}, inplace=True)
+    responseType.replace({'New':"rejectId", 'Old':"suspectId"}, inplace=True)
+    lineupSize.loc[:] = 1
+
+ 
+    dataNew = _pandas.DataFrame()
+    dataNew = dataNew.assign(participantId                  = participantId)
+    dataNew = dataNew.assign(targetLineup                   = targetLineup)
+    dataNew = dataNew.assign(lineupSize                     = lineupSize)
+    dataNew = dataNew.assign(responseType                   = responseType)
+    dataNew = dataNew.assign(accuracy                       = accuracy)
+    dataNew = dataNew.assign(confidence                     = confidence)
+   
+    dr = DataRaw('')
+    dr.data = dataNew
+    dr.checkData()
+
+    return dr
+
+#########################################################################################################
+
+def mickesMorganFuentasKazanina2021emoPM(fileName = "", excelSheet = 'pyWitness') :
+
+    if fileName == "" :
+        fileName = _dir+"/../data/working/mickesMorganFuentasKazanina2021emoPM.xlsx"
+
+    # load spreadsheet
+    data = openExcelFile(fileName, excelSheet)
+
+    # get important data
+    participantId    = data['ID']
+    targetLineup     = data['target']
+    lineupSize       = _copy.copy(data['ID'])   # copy column
+    responseType     = data['saidON']
+    accuracy         = data['accuracy']
+    confidence       = data['confidence']
+
+    # translate data
+    targetLineup.replace({'New':"targetAbsent", 'Old':"targetPresent"}, inplace=True)
+    responseType.replace({'New':"rejectId", 'Old':"suspectId"}, inplace=True)
+    lineupSize.loc[:] = 1
+ 
+    dataNew = _pandas.DataFrame()
+    dataNew = dataNew.assign(participantId                  = participantId)
+    dataNew = dataNew.assign(targetLineup                   = targetLineup)
+    dataNew = dataNew.assign(lineupSize                     = lineupSize)
+    dataNew = dataNew.assign(responseType                   = responseType)
+    dataNew = dataNew.assign(accuracy                       = accuracy)
+    dataNew = dataNew.assign(confidence                     = confidence)
+   
+    dr = DataRaw('')
+    dr.data = dataNew
+    dr.checkData()
+
+    return dr
+
+#########################################################################################################
+def mickesMorganFuentasKazanina2021emoSleep(fileName = "", excelSheet = 'pyWitness') :
+
+    if fileName == "" :
+        fileName = _dir+"/../data/working/mickesMorganFuentasKazanina2021emoSleep.xlsx"
+
+    # load spreadsheet
+    data = openExcelFile(fileName, excelSheet)
+
+    # get important data
+    participantId    = data['ID']
+    targetLineup     = data['target']
+    lineupSize       = _copy.copy(data['ID'])   # copy column
+    responseType     = data['saidON']
+    accuracy         = data['accuracy']
+    confidence       = data['confidence']
+
+    # translate data
+    targetLineup.replace({'New':"targetAbsent", 'Old':"targetPresent"}, inplace=True)
+    responseType.replace({'New':"rejectId", 'Old':"suspectId"}, inplace=True)
+    lineupSize.loc[:] = 1
+ 
+    dataNew = _pandas.DataFrame()
+    dataNew = dataNew.assign(participantId                  = participantId)
+    dataNew = dataNew.assign(targetLineup                   = targetLineup)
+    dataNew = dataNew.assign(lineupSize                     = lineupSize)
+    dataNew = dataNew.assign(responseType                   = responseType)
+    dataNew = dataNew.assign(accuracy                       = accuracy)
+    dataNew = dataNew.assign(confidence                     = confidence)
+   
+    dr = DataRaw('')
+    dr.data = dataNew
+    dr.checkData()
+
+    return dr
+
+#########################################################################################################
+def mickesMorganFuentasKazanina2021emoWake(fileName = "", excelSheet = 'pyWitness') :
+
+    if fileName == "" :
+        fileName = _dir+"/../data/working/mickesMorganFuentasKazanina2021emoWake.xlsx"
+
+    # load spreadsheet
+    data = openExcelFile(fileName, excelSheet)
+
+    # get important data
+    participantId    = data['ID']
+    targetLineup     = data['target']
+    lineupSize       = _copy.copy(data['ID'])   # copy column
+    responseType     = data['saidON']
+    accuracy         = data['accuracy']
+    confidence       = data['confidence']
+
+    # translate data
+    targetLineup.replace({'New':"targetAbsent", 'Old':"targetPresent"}, inplace=True)
+    responseType.replace({'New':"rejectId", 'Old':"suspectId"}, inplace=True)
+    lineupSize.loc[:] = 1
+ 
+    dataNew = _pandas.DataFrame()
+    dataNew = dataNew.assign(participantId                  = participantId)
+    dataNew = dataNew.assign(targetLineup                   = targetLineup)
+    dataNew = dataNew.assign(lineupSize                     = lineupSize)
+    dataNew = dataNew.assign(responseType                   = responseType)
+    dataNew = dataNew.assign(accuracy                       = accuracy)
+    dataNew = dataNew.assign(confidence                     = confidence)
+   
+    dr = DataRaw('')
+    dr.data = dataNew
+    dr.checkData()
+
+    return dr
+
+#########################################################################################################
+
+
