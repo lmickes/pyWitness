@@ -13,11 +13,11 @@ import scipy.special as _sc
 import matplotlib.pyplot as _plt
 import random as _rand
 import math as _math
-from numba import jit
+# from numba import jit
 import time as _time
 
 
-@jit(nopython=True)
+# @jit(nopython=True)
 def normpdf(x, mean, sigma) :
     stp = _np.sqrt(2*_np.pi)
     return 1.0/(sigma*stp)*_np.exp(-0.5*((x-mean)/sigma)**2)
@@ -638,6 +638,8 @@ class ModelFit(object) :
             self.chi2_array.append(chi2)
         except :
             pass
+        #if freeParams[0].value < freeParams[1].value/2 :
+        #    chi2 = chi2 + 100
 
         return chi2        
             
