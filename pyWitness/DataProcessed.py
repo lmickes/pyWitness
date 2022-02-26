@@ -7,6 +7,8 @@ import scipy.special as _special
 import scipy.optimize as _optimize
 import copy as _copy
 
+bPAUCNanWarning = True
+
 class DataProcessed :
     '''
     Processed data class 
@@ -23,6 +25,7 @@ class DataProcessed :
     def __init__(self, dataRaw, reverseConfidence = False, lineupSize = 1, pAUCLiberal = 1.0, levels = None, option="all") :
 
         self.debugIoPadSize = 35
+        
 
         if isinstance(dataRaw, str) :
             # could just load the data frame from csv, but want to have in exactly same format. 
@@ -319,10 +322,14 @@ class DataProcessed :
 
         self.pAUC = _integrate.simps(self.yForIntegration,self.xForIntegration)
 
-        #if _math.isnan(self.pAUC) :
-        #    print(self.xForIntegration)
-        #    print(self.yForIntegration)
-        #    print(self.pAUC)
+        global bPAUCNanWarning
+
+        if _math.isnan(self.pAUC)  and bPAUCNanWarning:
+            print("Nan found in PAUC consider rebinning the data, certainly check for the number of NANs")
+            print(self.xForIntegration)
+            print(self.yForIntegration)
+            print(self.pAUC)
+            bPAUCNanWarning = False
 
         return self.pAUC
 
@@ -524,8 +531,8 @@ class DataProcessed :
         dprime_low                  = _np.percentile(dprime,clLow,axis=0)
         dprime_high                 = _np.percentile(dprime,clHigh,axis=0)
 
-        self.pAUC_low               = _np.percentile(pAUC,clLow)
-        self.pAUC_high              = _np.percentile(pAUC,clHigh)
+        self.pAUC_low               = _np.percentile(pAUC[_np.logical_not(_np.isnan(pAUC))],clLow)
+        self.pAUC_high              = _np.percentile(pAUC[_np.logical_not(_np.isnan(pAUC))],clHigh)
         self.pAUC_array             = pAUC
 
         template = self.data_rates.loc['cac','central']
@@ -599,7 +606,7 @@ class DataProcessed :
 
         return [D,p]
 
-    def plotROC(self, label = "ROC", relativeFrequencyScale = 800, errorType = 'bars') :
+    def plotROC(self, label = "ROC", relativeFrequencyScale = 800, errorType = 'bars', color = "r") :
         '''
         Plot the receiver operating characteristic (ROC) for the data. The symbol size is proportional to 
         relative frequency. If confidence limits are calculated using calculateConfidenceBootstrap they
@@ -607,8 +614,8 @@ class DataProcessed :
 
         :param label: plot label for legends 
         :type label: str
-        :param relativeFrequencyScale: scale of relative frequncy (RF) to symbol size.
-        :type rellativeFrequencyScale: float
+        :param relativeFrequencyScale: scale of relative frequency (RF) to symbol size.
+        :type relativeFrequencyScale: float
         :rtype: None
 
         '''
@@ -619,7 +626,7 @@ class DataProcessed :
         scatter = _plt.scatter(self.data_rates.loc['targetAbsent', 'suspectId'],
                                self.data_rates.loc['targetPresent','suspectId'],
                                s = self.data_rates.loc['rf','']*relativeFrequencyScale,
-                               label = label)
+                               label = label, color = color)
         
         # Plot errors if they have been calculated
         try : 
@@ -648,7 +655,8 @@ class DataProcessed :
                               _np.zeros(self.xForIntegration.size), 
                               self.yForIntegration,
                               interpolate=True,
-                              alpha=0.25)
+                              alpha=0.25,
+                              color=scatter.get_facecolor()[0])
          
         xmin = self.data_rates.loc['targetAbsent', 'suspectId'].min()
         xmax = self.data_rates.loc['targetAbsent', 'suspectId'].max()
@@ -668,7 +676,7 @@ class DataProcessed :
         # Tight layout for plot
         _plt.tight_layout()
 
-    def plotCAC(self, label = "CAC", relativeFrequencyScale = 800, errorType = 'bars') :
+    def plotCAC(self, label = "CAC", relativeFrequencyScale = 800, errorType = 'bars', color = "r") :
         '''
         Plot the confidence accuracy characteristic (CAC) for the data. The symbol size is proportional to 
         relative frequency. If confidence limits are calculated using calculateConfidenceBootstrap they
@@ -693,7 +701,7 @@ class DataProcessed :
             pass
 
         # Basic scatter plot
-        scatter = _plt.scatter(confidence,cac,s = rf*relativeFrequencyScale,label = label)
+        scatter = _plt.scatter(confidence,cac,s = rf*relativeFrequencyScale,label = label,color = color)
         
         # Plot errors if they have been calculated
         try : 
