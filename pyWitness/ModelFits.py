@@ -182,7 +182,7 @@ class ModelFit(object) :
         self.targetSigma.value  = 1.0
         self.targetSigma.fixed  = True
         self.lureBetweenSigma.set_equal(self.targetBetweenSigma)
-        self.targetBetweenSigma.fixed = True
+        # self.targetBetweenSigma.fixed = True
         self.targetBetweenSigma.value = 0.1
 
     def setUnequalVariance(self) :
@@ -1091,6 +1091,7 @@ class ModelFitIndependentObservationSimple(ModelFit) :
 class ModelFitIndependentObservation(ModelFit) :
     def __init__(self, processedData, debug = False, integrationSigma = 8, chi2Var = 'expected') :
         ModelFit.__init__(self,processedData, debug = debug, integrationSigma = integrationSigma, chi2Var = chi2Var)
+
 
     def setEqualVariance(self) :
         super().setEqualVariance()
