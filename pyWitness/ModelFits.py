@@ -182,7 +182,7 @@ class ModelFit(object) :
         self.targetSigma.value  = 1.0
         self.targetSigma.fixed  = True
         self.lureBetweenSigma.set_equal(self.targetBetweenSigma)
-        self.targetBetweenSigma.fixed = True
+        # self.targetBetweenSigma.fixed = True
         self.targetBetweenSigma.value = 0.1
 
     def setUnequalVariance(self) :
