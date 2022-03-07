@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Advanced tutorials &mdash; pyWitness 0.9 documentation</title>
@@ -46,8 +46,7 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="licence.html">Licence &amp; Disclaimer</a></li>
-<li class="toctree-l1"><a class="reference internal" href="authorship.html">Contributors</a></li>
-<li class="toctree-l1"><a class="reference internal" href="authorship.html#citing-pywitness">Citing pyWitness</a></li>
+<li class="toctree-l1"><a class="reference internal" href="authorship.html">Authorship</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
@@ -197,7 +196,7 @@ for DataRaw.process()</p>
 <h2>Loading processed data<a class="headerlink" href="#loading-processed-data" title="Permalink to this headline"></a></h2>
 <p>You might already have processed the raw data. It is possible to load a file to perform model fits etc. The processed
 data needs to be in the following CSV format. This is basically the same format as the pivot table stored in <code class="docutils literal notranslate"><span class="pre">DataProcessed</span></code>.</p>
-<table class="docutils align-default" id="id1">
+<table class="colwidths-given docutils align-default" id="id1">
 <caption><span class="caption-text">Processed data columns and allowed values</span><a class="headerlink" href="#id1" title="Permalink to this table"></a></caption>
 <colgroup>
 <col style="width: 18%" />
@@ -297,7 +296,7 @@ data needs to be in the following CSV format. This is basically the same format 
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>If the <code class="docutils literal notranslate"><span class="pre">targetAbsent</span> <span class="pre">suspectId</span></code> row is not present it is estimated by <code class="docutils literal notranslate"><span class="pre">(targetAbsent</span> <span class="pre">fillerId)/lineupSize</span></code></p>
-</aside>
+</div>
 <p>This data is stored in <code class="docutils literal notranslate"><span class="pre">data/tutorials/test1_processed.csv</span></code></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="kn">import</span> <span class="nn">pyWitness</span>
 <span class="hll"><span class="linenos">2</span><span class="n">dp</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataProcessed</span><span class="p">(</span><span class="s2">&quot;test1_processed.csv&quot;</span><span class="p">,</span> <span class="n">lineupSize</span> <span class="o">=</span> <span class="mi">6</span><span class="p">)</span>
@@ -418,7 +417,7 @@ performed and dependence on sample size can be explored.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright Royal Holloway, University of London 2020 and University of Bristol 2020.
-      <span class="lastupdated">Last updated on Feb 24, 2022.
+      <span class="lastupdated">Last updated on Mar 07, 2022.
       </span></p>
   </div>
 
