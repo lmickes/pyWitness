@@ -89,38 +89,101 @@ Loading SDTLU data
 
 
 
-Processing data for a single condition
+Processing data for two conditions
 --------------------------------------
 
-A single data file might have multiple different experimental condtions. Imagine your data file 
-has a column labelled ``Condition`` and the values for each participant is either ``Sequential`` or 
-``Simultaneous``. To proccess only the ``Sequential`` participants the following options are required
+A single data file might have different experimental condtions. Imagine your data file 
+has a column labelled ``Condition`` and the values for each participant is either ``Control`` or 
+``Verbal``. To proccess only the ``Control`` participants the following options are required
 for DataRaw.process() 
 
 .. code-block :: python
    :linenos:
-   :emphasize-lines: 3
+   :emphasize-lines: 4
 
    import pyWitness
-   dr = pyWitness.DataRaw("test1.csv")
-   dp = dr.process("Condition","Sequential")   
+   dr = pyWitness.DataRaw("test2.csv")
+   dr.cutData(column="previouslyViewedVideo",value=1,option="keep")
+   dpControl = dr.process(column="group", condition="Control")
 
-So if you had a file with multiple conditions it would be straightforward to make multiple 
+
+If you have a file with multiple conditions it is straightforward to make multiple 
 ``DataProcessed`` for each condition, as in the following 
 
 .. code-block :: python
    :linenos:
-   :emphasize-lines: 3-4
+   :emphasize-lines: 5
 
    import pyWitness
-   dr = pyWitness.DataRaw("test1.csv")
-   dpSeq = dr.process("Condition","Sequential")   
-   dpSim = dr.process("Condition","Simultaneous")   
+   dr = pyWitness.DataRaw("test2.csv")
+   dr.cutData(column="previouslyViewedVideo",value=1,option="keep")
+   dpControl = dr.process(column="group", condition="Control")
+   dpVerbal = dr.process(column="group", condition="Verbal")   
 
 Statistical (pAUC) comparision between two conditions
 -----------------------------------------------------
 
+One way to compare pAUC values of two conditions is use the following code on the test2 data. You can check out the script we wrote called pAUCexample.py.
 
+.. code-block :: python
+   :linenos:
+
+   import pyWitness
+   dr = pyWitness.DataRaw("test2.csv")
+   dr.cutData(column="previouslyViewedVideo",value=1,option="keep")
+   dpControl = dr.process(column="group", condition="Control")
+   dpVerbal = dr.process(column="group", condition="Verbal")
+
+To find the lowest false ID rate from both conditions,
+
+.. code-block :: python
+   :linenos:
+   :emphasize-lines: 6
+
+   import pyWitness
+   dr = pyWitness.DataRaw("test2.csv")
+   dr.cutData(column="previouslyViewedVideo",value=1,option="keep")
+   dpControl = dr.process(column="group", condition="Control")
+   dpVerbal = dr.process(column="group", condition="Verbal")
+   minRate = min(dpControl.liberalTargetAbsentSuspectId,dpVerbal.liberalTargetAbsentSuspectId)
+
+You have to process the data again, with this ``minRate``
+
+.. code-block :: python
+   :linenos:
+   :emphasize-lines: 7-11
+
+   import pyWitness
+   dr = pyWitness.DataRaw("test2.csv")
+   dr.cutData(column="previouslyViewedVideo",value=1,option="keep")
+   dpControl = dr.process(column="group", condition="Control")
+   dpVerbal = dr.process(column="group", condition="Verbal")
+   minRate = min(dpControl.liberalTargetAbsentSuspectId,dpVerbal.liberalTargetAbsentSuspectId)
+   dpControl = dr.process("group","Control",pAUCLiberal=minRate)
+   dpControl.calculateConfidenceBootstrap(nBootstraps=2000)
+   dpVerbal = dr.process("group","Verbal",pAUCLiberal=minRate)
+   dpVerbal.calculateConfidenceBootstrap(nBootstraps=2000)
+   dpControl.comparePAUC(dpVerbal)
+
+To plot the ROC curves, use ``DataProcess.plotROC``
+
+.. code-block :: python
+   :linenos:
+
+   dpControl.plotROC(label = "Control data", relativeFrequencyScale=400)
+   dpVerbal.plotROC(label = "Verbal data", relativeFrequencyScale=400)
+
+.. note:: 
+   The symbol size is the relative frequency and can be changed by setting ``dp.plotROC(relativeFrequencyScale = 400)``
+
+And your plot will look like this one:
+
+.. figure:: images/test2ROCs.png
+
+The shaded regions are the pAUCs that were compared. You can see that they both used the same minimum false ID rate. The dashed colored curves represent the equal variance independent observation model (IO EV) fits . The error bars are 95% confidence intervals. The dashed black line represents chance performance.
+
+.. note:: 
+   The uncertainities can be changed by setting them to .68, for example ``dpControl.calculateConfidenceBootstrap(nBootstraps=2000,cl=68)`` and ``dpVerbal.calculateConfidenceBootstrap(nBootstraps=2000,cl=68)`` 
 
 
 Loading processed data 

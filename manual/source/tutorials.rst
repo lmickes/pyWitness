@@ -165,6 +165,8 @@ Plotting ROC curves
 .. note:: 
    The symbol size is the relative frequency and can be changed by setting ``dp.plotROC(relativeFrequencyScale = 400)``
 
+The black dashed line in the plot represents chance performance.
+
 Plotting CAC curves 
 -------------------
 
