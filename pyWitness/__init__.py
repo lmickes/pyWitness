@@ -11,14 +11,14 @@ from .ModelFits import ModelFitIntegration
 from .Tester    import Tester
 
 
-print("pyWitness v0.1 : Authorship - https://lmickes.github.io/pyWitness/authorship.html")
+print("pyWitness v1.0 : Authorship - https://lmickes.github.io/pyWitness/authorship.html")
 
 import sys
 import warnings
 
 if not sys.warnoptions:
     warnings.simplefilter("ignore")
-    print('pyWitness      : Runtime warnings are supressed')
+    print('pyWitness      : Runtime warnings are suppressed')
     print('pyWitness      : to reinstate (import warnings; warnings.simplefilter("") ')
 
 
