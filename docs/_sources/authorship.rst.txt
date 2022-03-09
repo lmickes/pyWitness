@@ -16,4 +16,6 @@ The following people have contributed to pyWitness:
 Citing pyWitness
 ----------------
 
-We are currently drafting a manuscript. In the meantime, if you're an early adopter, please cite this manual. 
+Our preprint is available:
+
+	* `Mickes, L., Seale-Carlisle, T. M., Chen, X., & Boogert, S. (2022, March 9). pyWitness 1.0: A Python eyewitness identification analysis toolkit. <https://doi.org/10.31234/osf.io/5ruks>`_
