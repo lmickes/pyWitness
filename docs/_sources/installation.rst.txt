@@ -38,7 +38,7 @@ You will need a suitable python environment.
      * ``conda install matplotlib``
      * ``conda install openpyxl``
      * ``conda install xlrd``
-     * ``conda install pyreadstat``
+     * ``conda install -c conda-forge pyreadstat``
      * ``conda install numba``
 
 
