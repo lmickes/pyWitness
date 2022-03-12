@@ -22,7 +22,6 @@ requirements:
     - openpyxl
     - xlrd
     - pyreadstat
-    - numba
 
 test:
   imports:
