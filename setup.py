@@ -12,7 +12,8 @@ setup(
                       "pandas",
                       "openpyxl",
                       "xlrd",
-                      "pyreadstat"],
+                      "pyreadstat"
+                      "Cython"],
     #setup_requires=["pytest-runner"],
     #tests_require=["pytest"],
     python_requires=">=3.7.*",
