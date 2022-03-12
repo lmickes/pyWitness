@@ -22,42 +22,32 @@ pyWitness is developed exclusively for Python 3, the numpy/scipy/matplotlib ecos
 .. warning :: 
    This tutorial assumes python is interactive python 3, with numpy and matplotlib, so the command ``ipython3 --pylab`` if you are familiar with python and have an installation replace ``ipython3 --pylab`` with your own command to start python.
 
-Installing the PYTHON environment  
----------------------------------
+Installing Python
+-----------------
 
-To get a suitable python environment: 
-
-1. Install `miniconda <https://docs.conda.io/en/latest/miniconda.html>`_ 
-2. Open a terminal (MacOS) or PowerShell (Windows) and install ipython, numpy, scipy, pandas, and matplotlib by typing each code line (or copy and paste) into your terminal or shell 
-
-     * ``conda install ipython``
-     * ``conda install numpy``
-     * ``conda install scipy``
-     * ``conda install pandas``
-     * ``conda install matplotlib``
-     * ``conda install openpyxl``
-     * ``conda install xlrd``
-     * ``conda install -c conda-forge pyreadstat``
-     * ``conda install numba``
-
-
-3. Start up python to test 
-
-     * ``ipython3 --pylab``
-     * Python should start up and input ``import numpy`` to test it's in good working order.
-
-        * Provided there are no errors ``numpy`` has been installed, you can try this with the other packages installed with ``conda``
-     
+To install pyWitness, you need to install `miniconda <https://docs.conda.io/en/latest/miniconda.html>`_ 
 
 Installing pyWitness
 --------------------
 
-There are two ways to install pyWitness: Download the ZIP file or clone the GIT repository. If you are not comfortable with GIT or do not have it installed on your computer, download the ZIP file. 
+Now you can install pyWitness in a couple different ways.
+
+1. using miniconda (the easiest installation; good for novice users)
+2. using pip (if you already have python but not miniconda)
+3. download the ZIP file (good for advanced users who want to see the code)
+4. clone the git repository (good for people who want to contribute)
 
 
-7onda install pyWitness
-pip install pyWitnessFile (would usually be pip install pyWitness)
-git (best for contributors)
+Miniconda install
+^^^^^^^^^^^^^^^^^
+Open a terminal (MacOS) or PowerShell (Windows) and install pyWitness by typing the following code line (or copy and paste) into your terminal or shell 
+
+     * ``conda install -c conda-forge -c lmickes pyWitness``
+     
+Pip install
+^^^^^^^^^^^
+      * `Download pyWitness-1.0-py3-none-any.whl <https://github.com/lmickes/pyWitness/releases/download/v1.0/pyWitness-1.0-py3-none-any.whl>`_
+      * ``pip3 install pyWitness-1.0-py3-none-any.whl``
 
 Download ZIP file
 ^^^^^^^^^^^^^^^^^
@@ -90,7 +80,7 @@ Testing it works
 ^^^^^^^^^^^^^^^^
 
 1. Open a new terminal 
-2. Start your python interpreter (``ipython3 --pylab`` on the terminal or shell)
+2. Start up python ``ipython3 --pylab`` on the terminal or shell
 3. Import pyWitness by typing this code line (or copy and paste) into your terminal or shell
 
 .. code-block :: python
@@ -98,5 +88,4 @@ Testing it works
    import pyWitness
    
 If you get "pyWitness v0.1" it's installed and you can proceed to the tutorials.
-      
 
