@@ -12,7 +12,7 @@ requirements:
     - setuptools
     - pip
     - cython
-    - numpy
+    - numpy 1.21
 
   run:
     - python
