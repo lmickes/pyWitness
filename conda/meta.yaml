@@ -11,10 +11,10 @@ requirements:
     - python
     - setuptools
     - pip
-    - cython
-    - numpy 1.21
+
 
   run:
+    - numpy 
     - python
     - ipython
     - matplotlib
@@ -22,7 +22,6 @@ requirements:
     - pandas
     - openpyxl
     - xlrd
-    - pyreadstat
 
 
 test:
