@@ -48,7 +48,7 @@ Goals of pyWitness
    * Little as possible human interaction (to reduce data manipulation, transcribing values and other transformations that may create errors)
    * Place to store all relevant algorithms, fits, and methods in a reproducible and documented way
    * Bin and pivot raw data to rates (the processed data)
-   * Plot and compare ROC, CAC, and RAC curves
+   * Plot and compare ROC, CAC, and RAC curves with relative frequencies per datapoint
    * Calculate pAUC and compute statistical comparisons
    * Perform statistical tests on CAC and RAC curves
    * Fit signal detection-based models to the processed data
