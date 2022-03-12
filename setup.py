@@ -13,7 +13,7 @@ setup(
                       "openpyxl",
                       "xlrd",
                       "pyreadstat",
-                      "Cython"],
+                      "cython"],
     #setup_requires=["pytest-runner"],
     #tests_require=["pytest"],
     python_requires=">=3.7.*",
