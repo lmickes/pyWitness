@@ -51,7 +51,7 @@ Pip install
     * ``pip3 install pyWitness-1.0-py3-none-any.whl``
 
 .. note :: 
-   This installation method works is tested and works well with Windows.
+   This installation method was tested and works well with Windows.
 
 Download ZIP file
 ^^^^^^^^^^^^^^^^^
