@@ -42,16 +42,20 @@ Miniconda install
 ^^^^^^^^^^^^^^^^^
 Open a terminal (MacOS) or PowerShell (Windows) and install pyWitness by typing the following code line (or copy and paste) into your terminal or shell 
 
+     * ``conda create --name pyWitness``
+     * ``conda activate pyWitness``
      * ``conda install -c conda-forge -c lmickes pyWitness``
      
+
+.. note :: 
+   When you restart a terminal, you'll need to activate your pyWitness environment with ``conda activate pyWitness``
+
+
 Pip install
 ^^^^^^^^^^^
 
     * `Download pyWitness-1.0-py3-none-any.whl <https://github.com/lmickes/pyWitness/releases/download/v1.0/pyWitness-1.0-py3-none-any.whl>`_
     * ``pip3 install pyWitness-1.0-py3-none-any.whl``
-
-.. note :: 
-   This installation method was tested and works well with Windows.
 
 Download ZIP file
 ^^^^^^^^^^^^^^^^^
