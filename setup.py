@@ -14,8 +14,8 @@ setup(
                       "xlrd",
                       "pyreadstat",
                       "numba"],
-    setup_requires=["pytest-runner"],
-    tests_require=["pytest"],
+    #setup_requires=["pytest-runner"],
+    #tests_require=["pytest"],
     python_requires=">=3.7.*",
 
     author='Laura Mickes',

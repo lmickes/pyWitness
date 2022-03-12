@@ -45,7 +45,7 @@ To get a suitable python environment:
 
      * ``ipython3 --pylab``
      * Python should start up and input ``import numpy`` to test it's in good working order.
-     
+
         * Provided there are no errors ``numpy`` has been installed, you can try this with the other packages installed with ``conda``
      
 
@@ -53,6 +53,11 @@ Installing pyWitness
 --------------------
 
 There are two ways to install pyWitness: Download the ZIP file or clone the GIT repository. If you are not comfortable with GIT or do not have it installed on your computer, download the ZIP file. 
+
+
+7onda install pyWitness
+pip install pyWitnessFile (would usually be pip install pyWitness)
+git (best for contributors)
 
 Download ZIP file
 ^^^^^^^^^^^^^^^^^
