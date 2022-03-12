@@ -1,0 +1,21 @@
+To do for new release/tag
+1. update git tags
+2. create release
+3. edit pyWitness/conda/meta.yaml to point to new tag
+
+
+To do the build:
+> cd pyWitness/conda
+> anaconda login
+> conda-build -c conda-forge .
+> cd ~/miniconda3/conda-bld/
+> conda convert --platform all ./osx-arm64/pywitness-v1.0-0.tar.bz2
+> anaconda upload win-64/pywitness-v1.0-0.tar.bz2 
+
+On users' end:
+> conda install -c conda-forge -c lmickes pyWitness
+
+If user has conda installed already or conflicts (e.g., incompatible numpy):
+> conda create --name pyWitness
+> conda activate pyWitness
+> conda install -c conda-forge -c lmickes pyWitness

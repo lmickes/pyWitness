@@ -6,27 +6,37 @@ source:
   git_url: https://github.com/lmickes/pyWitness
   git_rev: v1.0
 
+build: 
+  preserve_egg_dir: True
+
 requirements: 
-  build: 
+
+  build:
     - python
     - setuptools
     - pip
-
+    - cython
+    - pybind11
+    - pytz=2021.3
+    - xlrd
+    - openpyxl
+    - scipy
+    - matplotlib
+    - ipython
+    - pyreadstat
 
   run:
-    - numpy 
-    - python
-    - ipython
-    - matplotlib
-    - scipy
-    - pandas
-    - openpyxl
+    - pytz=2021.3
     - xlrd
-
+    - openpyxl
+    - pandas
+    - scipy
+    - matplotlib
+    - ipython
+    - pyreadstat
 
 test:
   imports:
-    - pyWitness
 
 about:
   home:
