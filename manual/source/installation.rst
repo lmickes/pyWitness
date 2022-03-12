@@ -46,8 +46,12 @@ Open a terminal (MacOS) or PowerShell (Windows) and install pyWitness by typing 
      
 Pip install
 ^^^^^^^^^^^
-      * `Download pyWitness-1.0-py3-none-any.whl <https://github.com/lmickes/pyWitness/releases/download/v1.0/pyWitness-1.0-py3-none-any.whl>`_
-      * ``pip3 install pyWitness-1.0-py3-none-any.whl``
+
+    * `Download pyWitness-1.0-py3-none-any.whl <https://github.com/lmickes/pyWitness/releases/download/v1.0/pyWitness-1.0-py3-none-any.whl>`_
+    * ``pip3 install pyWitness-1.0-py3-none-any.whl``
+
+.. note :: 
+   This installation method works is tested and works well with Windows.
 
 Download ZIP file
 ^^^^^^^^^^^^^^^^^
