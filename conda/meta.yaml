@@ -12,12 +12,12 @@ requirements:
     - setuptools
     - pip
     - cython
+    - numpy
 
   run:
     - python
     - ipython
     - matplotlib
-    - numpy
     - scipy
     - pandas
     - openpyxl
