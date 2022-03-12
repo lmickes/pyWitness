@@ -185,16 +185,16 @@
 <h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
 <section id="eyewitness-identification-research">
 <h2>Eyewitness identification research<a class="headerlink" href="#eyewitness-identification-research" title="Permalink to this headline">¶</a></h2>
-<p>Eyewitnesses to crimes may try to identify the perpetrator from an identification procedure. One commonly used procedure is a lineup (identity parade in the UK). A lineup comprises the police suspect and fillers, as shown in the illustration below. A lineup with an innocent suspect is a target-absent lineup, and a lineup with a guilty suspect is a target-present lineup. The eyewitness can make a filler ID from either lineup, identify the innocent suspect or guilty suspect.</p>
+<p>Eyewitnesses to crimes may try to identify the perpetrator from an identification procedure. One commonly used procedure is a lineup (identity parade in the UK). A lineup comprises the police suspect and fillers, as shown in the illustration below. A lineup with an innocent suspect is a target-absent lineup, and a lineup with a guilty suspect is a target-present lineup. The eyewitness can make a filler ID from either lineup, identify the innocent suspect (from a target-absent lineup) or guilty suspect (from a target-present lineup), or reject the lineup (declare that the perpetrator is not in the lineup).</p>
 <figure class="align-default">
 <img alt="_images/pyWitness_Lineup.png" src="_images/pyWitness_Lineup.png" />
 </figure>
 <p>Receiver operating characteristic (ROC) analysis measures discriminability (the ability to distinguish innocent from guilty suspects), and confidence accuracy characteristic (CAC) and response-time accuracy characteristic (RAC) analysis measure positive predictive value (the likelihood the identified suspect is guilty). pyWitness allows researchers to run these analyses.</p>
-<p>Theories about eyewitness identification have so far been signal detection-based. pyWitness currently allows researchers to compare thses types of model fits.</p>
+<p>Theories about eyewitness identification have so far been signal detection-based. pyWitness allows researchers to compare these types of model fits.</p>
 </section>
 <section id="receiver-operator-characteristic-roc">
 <h2>Receiver operator characteristic (ROC)<a class="headerlink" href="#receiver-operator-characteristic-roc" title="Permalink to this headline">¶</a></h2>
-<p>There are pacakges in R and MATLAB that smooth ROCS and calculate and statistically compare pAUCs.</p>
+<p>There are pacakges in R and MATLAB that smooth ROCS and calculate and statistically compare pAUC values.</p>
 <blockquote>
 <div><ul class="simple">
 <li><p><a class="reference external" href="https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-12-77">pROC: an open-source package for R and S+ to analyze and compare ROC curves</a></p></li>
@@ -228,6 +228,7 @@
 <li><p>Independent observations</p></li>
 <li><p>Integration</p></li>
 <li><p>Ensemble</p></li>
+<li><p>BEST-REST</p></li>
 </ul>
 </div></blockquote>
 </section>
@@ -418,7 +419,7 @@ medium (2) or high (3).</p>
     <p>
         &copy; Copyright Royal Holloway, University of London 2020 and University of Bristol 2020
       <span class="lastupdated">
-        Last updated on Mar 09, 2022.
+        Last updated on Mar 11, 2022.
       </span>
 
     </p>

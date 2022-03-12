@@ -5,18 +5,18 @@ Introduction
 Eyewitness identification research
 ----------------------------------
 
-Eyewitnesses to crimes may try to identify the perpetrator from an identification procedure. One commonly used procedure is a lineup (identity parade in the UK). A lineup comprises the police suspect and fillers, as shown in the illustration below. A lineup with an innocent suspect is a target-absent lineup, and a lineup with a guilty suspect is a target-present lineup. The eyewitness can make a filler ID from either lineup, identify the innocent suspect or guilty suspect.
+Eyewitnesses to crimes may try to identify the perpetrator from an identification procedure. One commonly used procedure is a lineup (identity parade in the UK). A lineup comprises the police suspect and fillers, as shown in the illustration below. A lineup with an innocent suspect is a target-absent lineup, and a lineup with a guilty suspect is a target-present lineup. The eyewitness can make a filler ID from either lineup, identify the innocent suspect (from a target-absent lineup) or guilty suspect (from a target-present lineup), or reject the lineup (declare that the perpetrator is not in the lineup).
 
 .. figure:: images/pyWitness_Lineup.png
 
 Receiver operating characteristic (ROC) analysis measures discriminability (the ability to distinguish innocent from guilty suspects), and confidence accuracy characteristic (CAC) and response-time accuracy characteristic (RAC) analysis measure positive predictive value (the likelihood the identified suspect is guilty). pyWitness allows researchers to run these analyses. 
 
-Theories about eyewitness identification have so far been signal detection-based. pyWitness currently allows researchers to compare thses types of model fits. 
+Theories about eyewitness identification have so far been signal detection-based. pyWitness allows researchers to compare these types of model fits. 
 
 Receiver operator characteristic (ROC)
 --------------------------------------
 
-There are pacakges in R and MATLAB that smooth ROCS and calculate and statistically compare pAUCs. 
+There are pacakges in R and MATLAB that smooth ROCS and calculate and statistically compare pAUC values. 
 
    * `pROC: an open-source package for R and S+ to analyze and compare ROC curves <https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-12-77>`_
    * `The ROC Toolbox: A MATLAB toolbox for analyzing ROCs derived from confidence ratings <https://link.springer.com/article/10.3758/s13428-016-0796-z>`_
@@ -40,14 +40,16 @@ Model fits
    * Independent observations
    * Integration 
    * Ensemble
+   * BEST-REST
 
 Goals of pyWitness
 ------------------
 
+   * Create a consistent set of analysis tools for any researchers to use for lineup data and other recognition memory data
    * Little as possible human interaction (to reduce data manipulation, transcribing values and other transformations that may create errors)
    * Place to store all relevant algorithms, fits, and methods in a reproducible and documented way
    * Bin and pivot raw data to rates (the processed data)
-   * Plot and compare ROC, CAC, and RAC curves
+   * Plot and compare ROC, CAC, and RAC curves with relative frequencies per datapoint
    * Calculate pAUC and compute statistical comparisons
    * Perform statistical tests on CAC and RAC curves
    * Fit signal detection-based models to the processed data
@@ -57,7 +59,7 @@ Goals of pyWitness
 Background to the pyWitness and the code
 ----------------------------------------
 
-Our goal with pyWitness is to create a consistent set of analysis tools for any researchers to use for lineup data and other recognition memory data. Importantly, there is a flexible internal data format.
+pyWitness has a flexible internal data format.
 
 Internal data format 
 ^^^^^^^^^^^^^^^^^^^^
@@ -117,7 +119,7 @@ Minimal example data file for an experiment
 Transforming data structures
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Transforming data into pyWitness format can be time consuming and error prone.
+Transforming data into pyWitness format can be time consuming and error prone. An example of transforming a data file is in the table below. We use the same structure as sdtlu. 
 
 .. list-table:: Example data file transformation (sdtlu)
    :widths: 35 35 

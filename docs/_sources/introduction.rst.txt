@@ -5,18 +5,18 @@ Introduction
 Eyewitness identification research
 ----------------------------------
 
-Eyewitnesses to crimes may try to identify the perpetrator from an identification procedure. One commonly used procedure is a lineup (identity parade in the UK). A lineup comprises the police suspect and fillers, as shown in the illustration below. A lineup with an innocent suspect is a target-absent lineup, and a lineup with a guilty suspect is a target-present lineup. The eyewitness can make a filler ID from either lineup, identify the innocent suspect or guilty suspect.
+Eyewitnesses to crimes may try to identify the perpetrator from an identification procedure. One commonly used procedure is a lineup (identity parade in the UK). A lineup comprises the police suspect and fillers, as shown in the illustration below. A lineup with an innocent suspect is a target-absent lineup, and a lineup with a guilty suspect is a target-present lineup. The eyewitness can make a filler ID from either lineup, identify the innocent suspect (from a target-absent lineup) or guilty suspect (from a target-present lineup), or reject the lineup (declare that the perpetrator is not in the lineup).
 
 .. figure:: images/pyWitness_Lineup.png
 
 Receiver operating characteristic (ROC) analysis measures discriminability (the ability to distinguish innocent from guilty suspects), and confidence accuracy characteristic (CAC) and response-time accuracy characteristic (RAC) analysis measure positive predictive value (the likelihood the identified suspect is guilty). pyWitness allows researchers to run these analyses. 
 
-Theories about eyewitness identification have so far been signal detection-based. pyWitness currently allows researchers to compare thses types of model fits. 
+Theories about eyewitness identification have so far been signal detection-based. pyWitness allows researchers to compare these types of model fits. 
 
 Receiver operator characteristic (ROC)
 --------------------------------------
 
-There are pacakges in R and MATLAB that smooth ROCS and calculate and statistically compare pAUCs. 
+There are pacakges in R and MATLAB that smooth ROCS and calculate and statistically compare pAUC values. 
 
    * `pROC: an open-source package for R and S+ to analyze and compare ROC curves <https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-12-77>`_
    * `The ROC Toolbox: A MATLAB toolbox for analyzing ROCs derived from confidence ratings <https://link.springer.com/article/10.3758/s13428-016-0796-z>`_
@@ -40,6 +40,7 @@ Model fits
    * Independent observations
    * Integration 
    * Ensemble
+   * BEST-REST
 
 Goals of pyWitness
 ------------------

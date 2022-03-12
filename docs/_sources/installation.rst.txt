@@ -6,31 +6,30 @@ Installation
 Requirements
 ------------
 
-pyWitness is developed exclusively for Python 3, the numpy/scipy/matplotlib ecosystem are used for data analysis. 
-The following packages are required:
+pyWitness is developed exclusively for Python 3, the numpy/scipy/matplotlib ecosystem are used for data analysis. The following packages are required
 
-  * python > 3.7
-  * ipython
-  * matplotlib 
-  * numpy
-  * scipy 
-  * pandas
+* python > 3.7
+* ipython
+* matplotlib 
+* numpy
+* scipy 
+*  pandas
 
 .. note :: 
-   You will have to use a terminal for inputting commands. On MacOS the program is called ``terminal`` and on Windows it
+   Use a terminal for inputting commands. On MacOS the program is called ``terminal`` and on Windows it
    is called ``PowerShell``.
 
 .. warning :: 
-   This tutorial assumes python is interactive python 3, with numpy and matplotlib, so the command ``ipython3 --pylab`` if you are 
-   familiar with python and have an installation replace ``ipython3 --pylab`` with your own command to start python
+   This tutorial assumes python is interactive python 3, with numpy and matplotlib, so the command ``ipython3 --pylab`` if you are familiar with python and have an installation replace ``ipython3 --pylab`` with your own command to start python.
 
 Installing the PYTHON environment  
 ---------------------------------
 
-You will need a suitable python environment. 
+To get a suitable python environment: 
 
 1. Install `miniconda <https://docs.conda.io/en/latest/miniconda.html>`_ 
 2. Open a terminal (MacOS) or PowerShell (Windows) and install ipython, numpy, scipy, pandas, and matplotlib by typing each code line (or copy and paste) into your terminal or shell 
+
      * ``conda install ipython``
      * ``conda install numpy``
      * ``conda install scipy``
@@ -43,16 +42,17 @@ You will need a suitable python environment.
 
 
 3. Start up python to test 
+
      * ``ipython3 --pylab``
-     * Python should start up and input ``import numpy``
+     * Python should start up and input ``import numpy`` to test it's in good working order.
+     
         * Provided there are no errors ``numpy`` has been installed, you can try this with the other packages installed with ``conda``
      
 
 Installing pyWitness
 --------------------
 
-There are two ways to install pyWitness: Download the ZIP file or clone the GIT repository. If you are not comfortable 
-with GIT or do not have it installed on your computer, download the ZIP file. 
+There are two ways to install pyWitness: Download the ZIP file or clone the GIT repository. If you are not comfortable with GIT or do not have it installed on your computer, download the ZIP file. 
 
 Download ZIP file
 ^^^^^^^^^^^^^^^^^

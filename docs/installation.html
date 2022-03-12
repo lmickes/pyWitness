@@ -5,8 +5,7 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>Installation &mdash; pyWitness 1.0 documentation</title>
@@ -177,14 +176,12 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <section id="installation">
+  <div class="section" id="installation">
 <h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
-<section id="requirements">
+<div class="section" id="requirements">
 <h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
-<p>pyWitness is developed exclusively for Python 3, the numpy/scipy/matplotlib ecosystem are used for data analysis.
-The following packages are required:</p>
-<blockquote>
-<div><ul class="simple">
+<p>pyWitness is developed exclusively for Python 3, the numpy/scipy/matplotlib ecosystem are used for data analysis. The following packages are required</p>
+<ul class="simple">
 <li><p>python &gt; 3.7</p></li>
 <li><p>ipython</p></li>
 <li><p>matplotlib</p></li>
@@ -192,25 +189,24 @@ The following packages are required:</p>
 <li><p>scipy</p></li>
 <li><p>pandas</p></li>
 </ul>
-</div></blockquote>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>You will have to use a terminal for inputting commands. On MacOS the program is called <code class="docutils literal notranslate"><span class="pre">terminal</span></code> and on Windows it
+<p>Use a terminal for inputting commands. On MacOS the program is called <code class="docutils literal notranslate"><span class="pre">terminal</span></code> and on Windows it
 is called <code class="docutils literal notranslate"><span class="pre">PowerShell</span></code>.</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>This tutorial assumes python is interactive python 3, with numpy and matplotlib, so the command <code class="docutils literal notranslate"><span class="pre">ipython3</span> <span class="pre">--pylab</span></code> if you are
-familiar with python and have an installation replace <code class="docutils literal notranslate"><span class="pre">ipython3</span> <span class="pre">--pylab</span></code> with your own command to start python</p>
+<p>This tutorial assumes python is interactive python 3, with numpy and matplotlib, so the command <code class="docutils literal notranslate"><span class="pre">ipython3</span> <span class="pre">--pylab</span></code> if you are familiar with python and have an installation replace <code class="docutils literal notranslate"><span class="pre">ipython3</span> <span class="pre">--pylab</span></code> with your own command to start python.</p>
 </div>
-</section>
-<section id="installing-the-python-environment">
+</div>
+<div class="section" id="installing-the-python-environment">
 <h2>Installing the PYTHON environment<a class="headerlink" href="#installing-the-python-environment" title="Permalink to this headline">¶</a></h2>
-<p>You will need a suitable python environment.</p>
-<ol class="arabic simple">
+<p>To get a suitable python environment:</p>
+<ol class="arabic">
 <li><p>Install <a class="reference external" href="https://docs.conda.io/en/latest/miniconda.html">miniconda</a></p></li>
-<li><dl class="simple">
-<dt>Open a terminal (MacOS) or PowerShell (Windows) and install ipython, numpy, scipy, pandas, and matplotlib by typing each code line (or copy and paste) into your terminal or shell</dt><dd><ul class="simple">
+<li><p>Open a terminal (MacOS) or PowerShell (Windows) and install ipython, numpy, scipy, pandas, and matplotlib by typing each code line (or copy and paste) into your terminal or shell</p>
+<blockquote>
+<div><ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">ipython</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">numpy</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">scipy</span></code></p></li>
@@ -221,30 +217,28 @@ familiar with python and have an installation replace <code class="docutils lite
 <li><p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">-c</span> <span class="pre">conda-forge</span> <span class="pre">pyreadstat</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">numba</span></code></p></li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
-<li><dl class="simple">
-<dt>Start up python to test</dt><dd><ul class="simple">
+<li><p>Start up python to test</p>
+<blockquote>
+<div><ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">ipython3</span> <span class="pre">--pylab</span></code></p></li>
-<li><dl class="simple">
-<dt>Python should start up and input <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">numpy</span></code></dt><dd><ul>
+<li><p>Python should start up and input <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">numpy</span></code> to test it’s in good working order.</p>
+<blockquote>
+<div><ul class="simple">
 <li><p>Provided there are no errors <code class="docutils literal notranslate"><span class="pre">numpy</span></code> has been installed, you can try this with the other packages installed with <code class="docutils literal notranslate"><span class="pre">conda</span></code></p></li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
 </ol>
-</section>
-<section id="installing-pywitness">
+</div>
+<div class="section" id="installing-pywitness">
 <h2>Installing pyWitness<a class="headerlink" href="#installing-pywitness" title="Permalink to this headline">¶</a></h2>
-<p>There are two ways to install pyWitness: Download the ZIP file or clone the GIT repository. If you are not comfortable
-with GIT or do not have it installed on your computer, download the ZIP file.</p>
-<section id="download-zip-file">
+<p>There are two ways to install pyWitness: Download the ZIP file or clone the GIT repository. If you are not comfortable with GIT or do not have it installed on your computer, download the ZIP file.</p>
+<div class="section" id="download-zip-file">
 <h3>Download ZIP file<a class="headerlink" href="#download-zip-file" title="Permalink to this headline">¶</a></h3>
 <ol class="arabic simple">
 <li><p>Download <a class="reference external" href="https://github.com/lmickes/pyWitness">pyWitness</a> (click on green code button -&gt; Download ZIP)</p></li>
@@ -255,8 +249,8 @@ with GIT or do not have it installed on your computer, download the ZIP file.</p
 </ul>
 </li>
 </ol>
-</section>
-<section id="clone-git-repository">
+</div>
+<div class="section" id="clone-git-repository">
 <h3>Clone GIT repository<a class="headerlink" href="#clone-git-repository" title="Permalink to this headline">¶</a></h3>
 <p>Open a terminal (linux in bash) and move to a suitable work directory</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/lmickes/pyWitness.git
@@ -269,8 +263,8 @@ pip3 install --editable . --user
 git pull
 </pre></div>
 </div>
-</section>
-<section id="testing-it-works">
+</div>
+<div class="section" id="testing-it-works">
 <h3>Testing it works<a class="headerlink" href="#testing-it-works" title="Permalink to this headline">¶</a></h3>
 <ol class="arabic simple">
 <li><p>Open a new terminal</p></li>
@@ -281,9 +275,9 @@ git pull
 </pre></div>
 </div>
 <p>If you get “pyWitness v0.1” it’s installed and you can proceed to the tutorials.</p>
-</section>
-</section>
-</section>
+</div>
+</div>
+</div>
 
 
            </div>
