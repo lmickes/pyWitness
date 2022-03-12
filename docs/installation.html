@@ -97,8 +97,10 @@
 <li class="toctree-l1"><a class="reference internal" href="authorship.html">Authorship</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#installing-the-python-environment">Installing the PYTHON environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installing-python">Installing Python</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#installing-pywitness">Installing pyWitness</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#miniconda-install">Miniconda install</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pip-install">Pip install</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#download-zip-file">Download ZIP file</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#clone-git-repository">Clone GIT repository</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#testing-it-works">Testing it works</a></li>
@@ -199,45 +201,37 @@ is called <code class="docutils literal notranslate"><span class="pre">PowerShel
 <p>This tutorial assumes python is interactive python 3, with numpy and matplotlib, so the command <code class="docutils literal notranslate"><span class="pre">ipython3</span> <span class="pre">--pylab</span></code> if you are familiar with python and have an installation replace <code class="docutils literal notranslate"><span class="pre">ipython3</span> <span class="pre">--pylab</span></code> with your own command to start python.</p>
 </div>
 </div>
-<div class="section" id="installing-the-python-environment">
-<h2>Installing the PYTHON environment<a class="headerlink" href="#installing-the-python-environment" title="Permalink to this headline">¶</a></h2>
-<p>To get a suitable python environment:</p>
-<ol class="arabic">
-<li><p>Install <a class="reference external" href="https://docs.conda.io/en/latest/miniconda.html">miniconda</a></p></li>
-<li><p>Open a terminal (MacOS) or PowerShell (Windows) and install ipython, numpy, scipy, pandas, and matplotlib by typing each code line (or copy and paste) into your terminal or shell</p>
-<blockquote>
-<div><ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">ipython</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">numpy</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">scipy</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">pandas</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">matplotlib</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">openpyxl</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">xlrd</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">-c</span> <span class="pre">conda-forge</span> <span class="pre">pyreadstat</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">numba</span></code></p></li>
-</ul>
-</div></blockquote>
-</li>
-<li><p>Start up python to test</p>
-<blockquote>
-<div><ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">ipython3</span> <span class="pre">--pylab</span></code></p></li>
-<li><p>Python should start up and input <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">numpy</span></code> to test it’s in good working order.</p>
-<blockquote>
-<div><ul class="simple">
-<li><p>Provided there are no errors <code class="docutils literal notranslate"><span class="pre">numpy</span></code> has been installed, you can try this with the other packages installed with <code class="docutils literal notranslate"><span class="pre">conda</span></code></p></li>
-</ul>
-</div></blockquote>
-</li>
-</ul>
-</div></blockquote>
-</li>
-</ol>
+<div class="section" id="installing-python">
+<h2>Installing Python<a class="headerlink" href="#installing-python" title="Permalink to this headline">¶</a></h2>
+<p>To install pyWitness, you need to install <a class="reference external" href="https://docs.conda.io/en/latest/miniconda.html">miniconda</a></p>
 </div>
 <div class="section" id="installing-pywitness">
 <h2>Installing pyWitness<a class="headerlink" href="#installing-pywitness" title="Permalink to this headline">¶</a></h2>
-<p>There are two ways to install pyWitness: Download the ZIP file or clone the GIT repository. If you are not comfortable with GIT or do not have it installed on your computer, download the ZIP file.</p>
+<p>Now you can install pyWitness in several ways.</p>
+<ol class="arabic simple">
+<li><p>using miniconda (the easiest installation; good for novice users)</p></li>
+<li><p>using pip (if you already have python but not miniconda)</p></li>
+<li><p>download the ZIP file (good for advanced users who want to see the code)</p></li>
+<li><p>clone the git repository (good for people who want to contribute)</p></li>
+</ol>
+<div class="section" id="miniconda-install">
+<h3>Miniconda install<a class="headerlink" href="#miniconda-install" title="Permalink to this headline">¶</a></h3>
+<p>Open a terminal (MacOS) or PowerShell (Windows) and install pyWitness by typing the following code line (or copy and paste) into your terminal or shell</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">-c</span> <span class="pre">conda-forge</span> <span class="pre">-c</span> <span class="pre">lmickes</span> <span class="pre">pyWitness</span></code></p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="pip-install">
+<h3>Pip install<a class="headerlink" href="#pip-install" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference external" href="https://github.com/lmickes/pyWitness/releases/download/v1.0/pyWitness-1.0-py3-none-any.whl">Download pyWitness-1.0-py3-none-any.whl</a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pip3</span> <span class="pre">install</span> <span class="pre">pyWitness-1.0-py3-none-any.whl</span></code></p></li>
+</ul>
+</div></blockquote>
+</div>
 <div class="section" id="download-zip-file">
 <h3>Download ZIP file<a class="headerlink" href="#download-zip-file" title="Permalink to this headline">¶</a></h3>
 <ol class="arabic simple">
@@ -268,7 +262,7 @@ git pull
 <h3>Testing it works<a class="headerlink" href="#testing-it-works" title="Permalink to this headline">¶</a></h3>
 <ol class="arabic simple">
 <li><p>Open a new terminal</p></li>
-<li><p>Start your python interpreter (<code class="docutils literal notranslate"><span class="pre">ipython3</span> <span class="pre">--pylab</span></code> on the terminal or shell)</p></li>
+<li><p>Start up python <code class="docutils literal notranslate"><span class="pre">ipython3</span> <span class="pre">--pylab</span></code> on the terminal or shell</p></li>
 <li><p>Import pyWitness by typing this code line (or copy and paste) into your terminal or shell</p></li>
 </ol>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
@@ -301,7 +295,7 @@ git pull
     <p>
         &copy; Copyright Royal Holloway, University of London 2020 and University of Bristol 2020
       <span class="lastupdated">
-        Last updated on Mar 11, 2022.
+        Last updated on Mar 12, 2022.
       </span>
 
     </p>

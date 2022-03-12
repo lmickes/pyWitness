@@ -30,7 +30,7 @@ To install pyWitness, you need to install `miniconda <https://docs.conda.io/en/l
 Installing pyWitness
 --------------------
 
-Now you can install pyWitness in a couple different ways.
+Now you can install pyWitness in several ways.
 
 1. using miniconda (the easiest installation; good for novice users)
 2. using pip (if you already have python but not miniconda)
