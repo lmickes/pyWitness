@@ -45,6 +45,7 @@ Model fits
 Goals of pyWitness
 ------------------
 
+   * Create a consistent set of analysis tools for any researchers to use for lineup data and other recognition memory data
    * Little as possible human interaction (to reduce data manipulation, transcribing values and other transformations that may create errors)
    * Place to store all relevant algorithms, fits, and methods in a reproducible and documented way
    * Bin and pivot raw data to rates (the processed data)
@@ -58,7 +59,7 @@ Goals of pyWitness
 Background to the pyWitness and the code
 ----------------------------------------
 
-Our goal with pyWitness is to create a consistent set of analysis tools for any researchers to use for lineup data and other recognition memory data. Importantly, there is a flexible internal data format.
+pyWitness has a flexible internal data format.
 
 Internal data format 
 ^^^^^^^^^^^^^^^^^^^^
@@ -118,7 +119,7 @@ Minimal example data file for an experiment
 Transforming data structures
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Transforming data into pyWitness format can be time consuming and error prone.
+Transforming data into pyWitness format can be time consuming and error prone. An example of transforming a data file is in the table below. We use the same structure as sdtlu. 
 
 .. list-table:: Example data file transformation (sdtlu)
    :widths: 35 35 
