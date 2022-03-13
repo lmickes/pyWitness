@@ -53,7 +53,7 @@ Open a terminal (MacOS) or PowerShell (Windows) and install pyWitness by typing 
      
 
 .. note :: 
-   When you restart a terminal, you'll need to activate your pyWitness environment with ``conda activate pyWitness``
+   When you start or restart a terminal, you'll need to activate your pyWitness environment with ``conda activate pyWitness``
 
 2. Pip install
 ^^^^^^^^^^^^^^
@@ -91,7 +91,7 @@ To update pyWitness you will have to pull
 Testing it works
 ^^^^^^^^^^^^^^^^
 
-1. Open a new terminal 
+1. Open a new terminal and type (or copy and paste) ``conda activate pyWitness``
 2. Start up python ``ipython3 --pylab`` on the terminal or shell
 3. Import pyWitness by typing this code line (or copy and paste) into your terminal or shell
 
