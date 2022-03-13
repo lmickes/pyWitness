@@ -44,6 +44,12 @@ to speed up inputing commands
 Loading raw experimental data
 -----------------------------
 
+Remember to activate pyWitness when you start a terminal by using this code
+
+.. code-block :: python 
+
+   conda activate pyWitness
+
 A single Python class `pyWitness.DataRaw <./moduledocs.html#pyWitness.DataRaw>`_ is used to load raw data in
 either ``csv`` or ``excel`` format. The format of ``test1.csv`` is the same as that described in the introduction.
 
