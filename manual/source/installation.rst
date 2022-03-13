@@ -92,8 +92,8 @@ Testing it works
 ^^^^^^^^^^^^^^^^
 
 1. Open a new terminal and type (or copy and paste) ``conda activate pyWitness``
-2. Start up python ``ipython3 --pylab`` on the terminal or shell
-3. Import pyWitness by typing this code line (or copy and paste) into your terminal or shell
+2. Start up python ``ipython3 --pylab`` 
+3. Import pyWitness by typing this code line (or copy and paste) 
 
 .. code-block :: python
 
