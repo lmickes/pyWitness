@@ -33,6 +33,9 @@ To use pyWitness, you'll need python. The easiest way to install python is to in
 .. note :: 
    You can also use your existing python. For example, if you have already installed anaconda, canopy, etc.
 
+.. image:: http://mickeslab.com/wp-content/uploads/2022/03/installation1miniconda.gif
+    :alt: installation miniconda
+
 Installing pyWitness
 --------------------
 
@@ -54,6 +57,9 @@ Open a terminal (MacOS) or PowerShell (Windows) and install pyWitness by typing 
 
 .. note :: 
    When you start or restart a terminal, you'll need to activate your pyWitness environment with ``conda activate pyWitness``
+
+.. image:: http://mickeslab.com/wp-content/uploads/2022/03/installation2conda.gif
+    :alt: installation conda
 
 2. Pip install
 ^^^^^^^^^^^^^^
@@ -100,4 +106,7 @@ Testing it works
    import pyWitness
    
 If you get "pyWitness v0.1" it's installed and you can proceed to the tutorials.
+
+.. image:: http://mickeslab.com/wp-content/uploads/2022/03/installation3testPyWitness.gif
+    :alt: testing the installations
 
