@@ -3,7 +3,20 @@ Tutorials
 
 Click on the `repository link <https://github.com/lmickes/pyWitness/releases/tag/v1.0>`_ to download the zip file, called **tutorialData.zip**, of the data you'll need to run through the tutorials. 
 
-Make a working directory and change directory ``cd`` to that directory to do the tutorials. 
+Make a working directory and do the tutorials in that dictectory. 
+
+.. image:: http://mickeslab.com/wp-content/uploads/2022/03/tutorial1getData.gif
+    :alt: gettng the tutorial data
+
+.. note::
+
+   In the gif above, the working directory is located at Documents/demos/. The tutorial data files were placed in the directory called "demos." Whatever you call it, when working in the terminal, you'll always need to be in that directory to complete the tutorial. 
+
+The gif also showed a few commands that you may find helpful:
+
+   * ``pwd`` to find the directory you're currently in
+   * ``cd`` to change directories
+   * ``ls`` to list files in the folder
 
 This tutorial builds up! Between each example and the previous examples, the new lines of code are highlighted in yellow. 
 
