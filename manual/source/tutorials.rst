@@ -108,7 +108,7 @@ If the unique values for a non-mandatory column are required then this can be di
 
    import pyWitness
    dr = pyWitness.DataRaw("test1.csv")
-   dr.columnvalues("responseTime")
+   dr.columnValues("responseTime")
 
 .. code-block :: console
 
