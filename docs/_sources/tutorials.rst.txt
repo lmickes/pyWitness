@@ -1,19 +1,20 @@
 Tutorials
 =========
 
-.. warning::
-   The data files used in this tutorial are stored in ``pyWitness/data/tutorial/``. It is a good idea to copy these files to your working 
-   directory change directoy ``cd`` to that directory. This tutorial builds up! Between each example and the previous examples, the new lines of 
-   code are highlighted in yellow.
+Click on the `repository link <https://github.com/lmickes/pyWitness/releases/tag/v1.0>`_ to download the zip file, called **tutorialData.zip**, of the data you'll need to run through the tutorials. 
+
+Make a working directory and change directory ``cd`` to that directory to do the tutorials. 
+
+This tutorial builds up! Between each example and the previous examples, the new lines of code are highlighted in yellow. 
 
 Python
 ------
 
-Python is a interpreted object oriented programming language. There is a large range
-of modules which python imported into python to provide extra functionality or features.
+Python is an interpreted object oriented programming language. There is a large range
+of modules that are imported into python to provide extra functionality or features.
 pyWitness uses numpy (numerical arrays), scipy (fitting and functions), pandas
 (data frames), matplotlib (plotting), openpyxl (reading/writing excel),
-xlrd (reading/writing excel) and numba (compiler to speed up code).
+xlrd (reading/writing excel), and numba (compiler to speed up code).
 
 Python is best started from a terminal/command prompt
 
