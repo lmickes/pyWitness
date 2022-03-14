@@ -70,6 +70,15 @@ then start up ipython3
 
    ipython3 --pylab
 
+and pyWitness
+
+.. code-block :: python 
+
+   import pyWitness
+
+.. image:: http://mickeslab.com/wp-content/uploads/2022/03/tutorial1rightDirectoryStartPyWitness.gif
+    :alt: gettng to the right place
+
 A single Python class `pyWitness.DataRaw <./moduledocs.html#pyWitness.DataRaw>`_ is used to load raw data in
 either ``csv`` or ``excel`` format. The format of ``test1.csv`` is the same as that described in the introduction.
 
@@ -173,6 +182,9 @@ And you should see the following output for ``dp.printRates()``
 .. note::
    In the example there is no ``suspectId`` for ``targetAbsent`` lineups. Here the ``targetAbsent.suspectId`` is estimated as ``targetAbsent.fillerId/lineupSize`` 
 
+.. image:: http://mickeslab.com/wp-content/uploads/2022/03/tutorial1rates.gif
+    :alt: gettng rates and pivots 
+
 Plotting ROC curves
 -------------------
 
@@ -207,6 +219,9 @@ Plotting CAC curves
 
 .. figure:: images/test1_cac.jpg
    :alt: CAC for test1.csv
+
+.. image:: http://mickeslab.com/wp-content/uploads/2022/03/tutorial1ROCcac.gif
+   :alt: ROC and CAC plots 
 
 Plotting RAC curves
 -------------------

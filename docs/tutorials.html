@@ -246,6 +246,11 @@ command history with that command fragment and probably match with a previous <c
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ipython3</span> <span class="o">--</span><span class="n">pylab</span>
 </pre></div>
 </div>
+<p>and pyWitness</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
+</pre></div>
+</div>
+<img alt="gettng to the right place" src="http://mickeslab.com/wp-content/uploads/2022/03/tutorial1rightDirectoryStartPyWitness.gif" />
 <p>A single Python class <a class="reference external" href="./moduledocs.html#pyWitness.DataRaw">pyWitness.DataRaw</a> is used to load raw data in
 either <code class="docutils literal notranslate"><span class="pre">csv</span></code> or <code class="docutils literal notranslate"><span class="pre">excel</span></code> format. The format of <code class="docutils literal notranslate"><span class="pre">test1.csv</span></code> is the same as that described in the introduction.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
@@ -326,6 +331,7 @@ created. One contains a pivot table and the other contains rates.</p>
 <p class="admonition-title">Note</p>
 <p>In the example there is no <code class="docutils literal notranslate"><span class="pre">suspectId</span></code> for <code class="docutils literal notranslate"><span class="pre">targetAbsent</span></code> lineups. Here the <code class="docutils literal notranslate"><span class="pre">targetAbsent.suspectId</span></code> is estimated as <code class="docutils literal notranslate"><span class="pre">targetAbsent.fillerId/lineupSize</span></code></p>
 </div>
+<img alt="gettng rates and pivots" src="http://mickeslab.com/wp-content/uploads/2022/03/tutorial1rates.gif" />
 </div>
 <div class="section" id="plotting-roc-curves">
 <h2>Plotting ROC curves<a class="headerlink" href="#plotting-roc-curves" title="Permalink to this headline">¶</a></h2>
@@ -355,6 +361,7 @@ created. One contains a pivot table and the other contains rates.</p>
 <div class="figure align-default">
 <img alt="CAC for test1.csv" src="_images/test1_cac.jpg" />
 </div>
+<img alt="ROC and CAC plots" src="http://mickeslab.com/wp-content/uploads/2022/03/tutorial1ROCcac.gif" />
 </div>
 <div class="section" id="plotting-rac-curves">
 <h2>Plotting RAC curves<a class="headerlink" href="#plotting-rac-curves" title="Permalink to this headline">¶</a></h2>
