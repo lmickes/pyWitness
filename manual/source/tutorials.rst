@@ -226,6 +226,19 @@ Plotting CAC curves
 Plotting RAC curves
 -------------------
 
+To plot RAC curves, in this version, v1.0, you have to relabel your "response time" column to "confidence" in your data file (e.g., csv, Excel). We recommend you copy and rename the relabeled file. This is clearly a workaround and will be fixed in the next version of pyWitness.
+
+Once you've changed the file, you can run the code used for plotting CAC curves. We added "RAC" to make it clear that response time, not confidence, is being analysed.
+
+.. code-block :: python 
+   :linenos:
+
+   import pyWitness
+   drRAC = pyWitness.DataRaw("test1RAC.csv")
+   dpRAC = dr.process()
+   dpRAC.plotCAC()
+
+
 Collapsing the catagorical data
 -------------------------------
 

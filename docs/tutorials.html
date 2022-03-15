@@ -365,6 +365,14 @@ created. One contains a pivot table and the other contains rates.</p>
 </div>
 <div class="section" id="plotting-rac-curves">
 <h2>Plotting RAC curves<a class="headerlink" href="#plotting-rac-curves" title="Permalink to this headline">¶</a></h2>
+<p>To plot RAC curves, in this version, v1.0, you have to relabel your “response time” column to “confidence” in your data file (e.g., csv, Excel). We recommend you copy and rename the relabeled file. This is clearly a workaround and will be fixed in the next version of pyWitness.</p>
+<p>Once you’ve changed the file, you can run the code used for plotting CAC curves. We added “RAC” to make it clear that response time, not confidence, is being analysed.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="kn">import</span> <span class="nn">pyWitness</span>
+<span class="linenos">2</span><span class="n">drRAC</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test1RAC.csv&quot;</span><span class="p">)</span>
+<span class="linenos">3</span><span class="n">dpRAC</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
+<span class="linenos">4</span><span class="n">dpRAC</span><span class="o">.</span><span class="n">plotCAC</span><span class="p">()</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="collapsing-the-catagorical-data">
 <h2>Collapsing the catagorical data<a class="headerlink" href="#collapsing-the-catagorical-data" title="Permalink to this headline">¶</a></h2>
@@ -748,7 +756,7 @@ functions belonging to <code class="docutils literal notranslate"><span class="p
     <p>
         &copy; Copyright Royal Holloway, University of London 2020 and University of Bristol 2020
       <span class="lastupdated">
-        Last updated on Mar 14, 2022.
+        Last updated on Mar 15, 2022.
       </span>
 
     </p>
