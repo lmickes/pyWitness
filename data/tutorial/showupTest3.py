@@ -46,8 +46,9 @@ def showup() :
 
 	dp.plotROC(label="test3 data",color=mplc3)
 	mf.plotROC(label="IO EV fit",colorFromLabel="test3 data")
-	_plt.savefig("test3ROC.pdf")
 	_plt.legend(loc=4)
+	_plt.savefig("test3ROC.pdf")
+
 
 #ModelFit.printParameters>  lureMean 0.000 (fixed)
 #ModelFit.printParameters>  lureSigma 1.000 (fixed targetSigma)
