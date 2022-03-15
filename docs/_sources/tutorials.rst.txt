@@ -239,13 +239,11 @@ Once you've changed the file, you can run the code used for plotting CAC curves.
    dpRAC.plotCAC()
 
 
-Collapsing the catagorical data
+Collapsing the categorical data
 -------------------------------
 
-The data used example in this tutorial has 11 confidence levels (0, 10, 20, 30, 40, 50, 60, 70, 80, 90 and 100). Often
-confidence levels need to be binned or collapsed. This is best performed on the raw data before calling
-``process()``. This is done with the ``collapseCategoricalData`` method of ``DataRaw``. This is shown in example below,
-where the new bins are (0-60 map to 30, 70-80 to 75 and 90-100 to 95).
+The dataset used in this tutorial has 11 confidence levels (0, 10, 20, 30, 40, 50, 60, 70, 80, 90 and 100). Often confidence levels need to be binned or collapsed. This is best performed on the raw data before calling
+``process()``. This is done with the ``collapseCategoricalData`` method of ``DataRaw``, and shown in example below, where the new bins are (0-60 map to 30, 70-80 to 75 and 90-100 to 95).
 
 .. code-block :: python 
    :linenos:

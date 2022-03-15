@@ -106,7 +106,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#plotting-roc-curves">Plotting ROC curves</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#plotting-cac-curves">Plotting CAC curves</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#plotting-rac-curves">Plotting RAC curves</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#collapsing-the-catagorical-data">Collapsing the catagorical data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#collapsing-the-categorical-data">Collapsing the categorical data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#collapsing-binning-continuous-data">Collapsing (binning) continuous data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#calculating-pauc-and-performing-statistical-tests">Calculating pAUC and performing statistical tests</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#fitting-signal-detection-based-models-to-data">Fitting signal detection-based models to data</a></li>
@@ -374,12 +374,10 @@ created. One contains a pivot table and the other contains rates.</p>
 </pre></div>
 </div>
 </div>
-<div class="section" id="collapsing-the-catagorical-data">
-<h2>Collapsing the catagorical data<a class="headerlink" href="#collapsing-the-catagorical-data" title="Permalink to this headline">¶</a></h2>
-<p>The data used example in this tutorial has 11 confidence levels (0, 10, 20, 30, 40, 50, 60, 70, 80, 90 and 100). Often
-confidence levels need to be binned or collapsed. This is best performed on the raw data before calling
-<code class="docutils literal notranslate"><span class="pre">process()</span></code>. This is done with the <code class="docutils literal notranslate"><span class="pre">collapseCategoricalData</span></code> method of <code class="docutils literal notranslate"><span class="pre">DataRaw</span></code>. This is shown in example below,
-where the new bins are (0-60 map to 30, 70-80 to 75 and 90-100 to 95).</p>
+<div class="section" id="collapsing-the-categorical-data">
+<h2>Collapsing the categorical data<a class="headerlink" href="#collapsing-the-categorical-data" title="Permalink to this headline">¶</a></h2>
+<p>The dataset used in this tutorial has 11 confidence levels (0, 10, 20, 30, 40, 50, 60, 70, 80, 90 and 100). Often confidence levels need to be binned or collapsed. This is best performed on the raw data before calling
+<code class="docutils literal notranslate"><span class="pre">process()</span></code>. This is done with the <code class="docutils literal notranslate"><span class="pre">collapseCategoricalData</span></code> method of <code class="docutils literal notranslate"><span class="pre">DataRaw</span></code>, and shown in example below, where the new bins are (0-60 map to 30, 70-80 to 75 and 90-100 to 95).</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="kn">import</span> <span class="nn">pyWitness</span>
 <span class="linenos">2</span><span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test1.csv&quot;</span><span class="p">)</span>
 <span class="hll"><span class="linenos">3</span><span class="n">dr</span><span class="o">.</span><span class="n">collapseCategoricalData</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s1">&#39;confidence&#39;</span><span class="p">,</span>
