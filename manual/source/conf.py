@@ -95,7 +95,7 @@ html_theme = "sphinx_rtd_theme"
 # documentation.
 #
 html_theme_options = {
-    'analytics_id': 'G-TQJEEEDRH3',  #  Provided by Google in your dashboard
+    'analytics_id': 'G-QECQT1H6PE',  #  Provided by Google in your dashboard
     'analytics_anonymize_ip': False,
 }
 
