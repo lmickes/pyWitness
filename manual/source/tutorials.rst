@@ -545,7 +545,7 @@ To compare a *CAC* plot between data and fit
    dp.plotCAC(label="Data")
    mf.plotCAC(label="Indep. obs. fit")
 
-   import matplotlib.pyplot _plt
+   import matplotlib.pyplot as _plt
    _plt.legend
 
 .. figure:: images/test1_fitDataCACComparision.jpg
@@ -560,9 +560,7 @@ To compare frequencies in each bin between data and fit
 .. figure:: images/test1_fitPlot.jpg
    :alt: Data-model comparision for test1.csv
 
-Once a fit has been performed, the model can be displayed as a function of memory strenth and includes the lure and target
-distributions and the associated criteria. This a simple command belonging to a ModelFit object can be used to
-make the plot below.
+Once a fit has been performed, the model can be displayed as a function of memory strenth and includes the lure and target distributions and the associated criteria. This a simple command belonging to a ModelFit object can be used to make the plot below.
 
 .. code-block :: python
 
@@ -624,8 +622,7 @@ This is calculated from the fit parameters for the fits described in the previou
 Writing results to file 
 -----------------------
 
-The internal dataframes can be written to either ``csv`` or ``xlsx`` file format for further analysis. There are four
-functions belonging to ``DataProcessed``.
+The internal dataframes can be written to either ``csv`` or ``xlsx`` file format for further analysis. There are four functions belonging to ``DataProcessed``.
 
    * ``writePivotExcel`` writes the pivot table to excel
    * ``writePivotCsv`` writes the pivot table to csv
@@ -649,6 +646,3 @@ The string argument for the functions is the file name.
 .. figure:: images/test1_pivot_excel.jpg
 
 .. figure:: images/test1_rates_excel.jpg
-
-
-
