@@ -190,7 +190,7 @@
 <h1>Tutorials<a class="headerlink" href="#tutorials" title="Permalink to this headline">¶</a></h1>
 <p>Click on the <a class="reference external" href="https://github.com/lmickes/pyWitness/releases/tag/v1.0">repository link</a> to download the zip file, called <strong>tutorialData.zip</strong>, of the data you’ll need to run through the tutorials.</p>
 <p>Make a working directory and do the tutorials in that dictectory.</p>
-<img alt="gettng the tutorial data" src="http://mickeslab.com/wp-content/uploads/2022/03/tutorial1getData.gif" />
+<img alt="getting the tutorial data" src="http://mickeslab.com/wp-content/uploads/2022/03/tutorial1getData.gif" />
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>In the gif above, the working directory is located at Documents/demos/. The tutorial data files were placed in the directory called “demos.” Whatever you call it, when working in the terminal, you’ll always need to be in that directory to complete the tutorial.</p>
@@ -331,7 +331,7 @@ created. One contains a pivot table and the other contains rates.</p>
 <p class="admonition-title">Note</p>
 <p>In the example there is no <code class="docutils literal notranslate"><span class="pre">suspectId</span></code> for <code class="docutils literal notranslate"><span class="pre">targetAbsent</span></code> lineups. Here the <code class="docutils literal notranslate"><span class="pre">targetAbsent.suspectId</span></code> is estimated as <code class="docutils literal notranslate"><span class="pre">targetAbsent.fillerId/lineupSize</span></code></p>
 </div>
-<img alt="gettng rates and pivots" src="http://mickeslab.com/wp-content/uploads/2022/03/tutorial1rates.gif" />
+<img alt="getting rates and pivots" src="http://mickeslab.com/wp-content/uploads/2022/03/tutorial1rates.gif" />
 </div>
 <div class="section" id="plotting-roc-curves">
 <h2>Plotting ROC curves<a class="headerlink" href="#plotting-roc-curves" title="Permalink to this headline">¶</a></h2>
@@ -635,11 +635,12 @@ the experimental data to the model fit.</p>
 <div class="figure align-default">
 <img alt="Data-model ROC comparision for test1.csv" src="_images/test1_fitDataROCComparision.jpg" />
 </div>
+<img alt="ROC data and model fit plotted" src="http://mickeslab.com/wp-content/uploads/2022/03/tutorial1fitDataROCplot.gif" />
 <p>To compare a <em>CAC</em> plot between data and fit</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dp</span><span class="o">.</span><span class="n">plotCAC</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Data&quot;</span><span class="p">)</span>
 <span class="n">mf</span><span class="o">.</span><span class="n">plotCAC</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Indep. obs. fit&quot;</span><span class="p">)</span>
 
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="n">_plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">_plt</span>
 <span class="n">_plt</span><span class="o">.</span><span class="n">legend</span>
 </pre></div>
 </div>
@@ -651,16 +652,14 @@ the experimental data to the model fit.</p>
 </pre></div>
 </div>
 <div class="figure align-default">
-<img alt="Data-model comparision for test1.csv" src="_images/test1_fitPlot.jpg" />
+<img alt="Data-model comparision for test1.csv" src="_images/test1_plotFit.jpg" />
 </div>
-<p>Once a fit has been performed, the model can be displayed as a function of memory strenth and includes the lure and target
-distributions and the associated criteria. This a simple command belonging to a ModelFit object can be used to
-make the plot below.</p>
+<p>Once a fit has been performed, the model can be displayed as a function of memory strenth and includes the lure and target distributions with means and standard deviations (top panel of plot below) and the associated criteria, c1 (low confidence), c2 (medium confidence), and c3 (high confidence) (bottom panel of plot below). This a simple command belonging to a ModelFit object can be used to make the plot below.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mf</span><span class="o">.</span><span class="n">plotModel</span><span class="p">()</span>
 </pre></div>
 </div>
 <div class="figure align-default">
-<img alt="Independent Observation model fit." src="_images/test1_model.jpg" />
+<img alt="Independent Observation model fit" src="_images/test1_plotModel.jpg" />
 </div>
 </div>
 <div class="section" id="d-prime-calculation">
@@ -705,8 +704,7 @@ dataframe, so <code class="docutils literal notranslate"><span class="pre">dp.pr
 </div>
 <div class="section" id="writing-results-to-file">
 <h2>Writing results to file<a class="headerlink" href="#writing-results-to-file" title="Permalink to this headline">¶</a></h2>
-<p>The internal dataframes can be written to either <code class="docutils literal notranslate"><span class="pre">csv</span></code> or <code class="docutils literal notranslate"><span class="pre">xlsx</span></code> file format for further analysis. There are four
-functions belonging to <code class="docutils literal notranslate"><span class="pre">DataProcessed</span></code>.</p>
+<p>The internal dataframes can be written to either <code class="docutils literal notranslate"><span class="pre">csv</span></code> or <code class="docutils literal notranslate"><span class="pre">xlsx</span></code> file format for further analysis. There are four functions belonging to <code class="docutils literal notranslate"><span class="pre">DataProcessed</span></code>.</p>
 <blockquote>
 <div><ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">writePivotExcel</span></code> writes the pivot table to excel</p></li>

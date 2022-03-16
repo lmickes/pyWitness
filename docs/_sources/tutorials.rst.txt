@@ -6,7 +6,7 @@ Click on the `repository link <https://github.com/lmickes/pyWitness/releases/tag
 Make a working directory and do the tutorials in that dictectory. 
 
 .. image:: http://mickeslab.com/wp-content/uploads/2022/03/tutorial1getData.gif
-    :alt: gettng the tutorial data
+    :alt: getting the tutorial data
 
 .. note::
 
@@ -183,7 +183,7 @@ And you should see the following output for ``dp.printRates()``
    In the example there is no ``suspectId`` for ``targetAbsent`` lineups. Here the ``targetAbsent.suspectId`` is estimated as ``targetAbsent.fillerId/lineupSize`` 
 
 .. image:: http://mickeslab.com/wp-content/uploads/2022/03/tutorial1rates.gif
-    :alt: gettng rates and pivots 
+    :alt: getting rates and pivots 
 
 Plotting ROC curves
 -------------------
@@ -538,6 +538,9 @@ To compare an *ROC* plot between data and fit
 .. figure:: images/test1_fitDataROCComparision.jpg
    :alt: Data-model ROC comparision for test1.csv
 
+.. image:: http://mickeslab.com/wp-content/uploads/2022/03/tutorial1fitDataROCplot.gif
+    :alt: ROC data and model fit plotted
+
 To compare a *CAC* plot between data and fit
 
 .. code-block :: python
@@ -545,7 +548,7 @@ To compare a *CAC* plot between data and fit
    dp.plotCAC(label="Data")
    mf.plotCAC(label="Indep. obs. fit")
 
-   import matplotlib.pyplot _plt
+   import matplotlib.pyplot as _plt
    _plt.legend
 
 .. figure:: images/test1_fitDataCACComparision.jpg
@@ -557,19 +560,17 @@ To compare frequencies in each bin between data and fit
 
    mf.plotFit()
 
-.. figure:: images/test1_fitPlot.jpg
+.. figure:: images/test1_plotFit.jpg
    :alt: Data-model comparision for test1.csv
 
-Once a fit has been performed, the model can be displayed as a function of memory strenth and includes the lure and target
-distributions and the associated criteria. This a simple command belonging to a ModelFit object can be used to
-make the plot below.
+Once a fit has been performed, the model can be displayed as a function of memory strenth and includes the lure and target distributions with means and standard deviations (top panel of plot below) and the associated criteria, c1 (low confidence), c2 (medium confidence), and c3 (high confidence) (bottom panel of plot below). This a simple command belonging to a ModelFit object can be used to make the plot below.
 
 .. code-block :: python
 
    mf.plotModel()
 
-.. figure:: images/test1_model.jpg
-   :alt: Independent Observation model fit.
+.. figure:: images/test1_plotModel.jpg
+   :alt: Independent Observation model fit
 
 
 d-prime calculation
@@ -624,8 +625,7 @@ This is calculated from the fit parameters for the fits described in the previou
 Writing results to file 
 -----------------------
 
-The internal dataframes can be written to either ``csv`` or ``xlsx`` file format for further analysis. There are four
-functions belonging to ``DataProcessed``.
+The internal dataframes can be written to either ``csv`` or ``xlsx`` file format for further analysis. There are four functions belonging to ``DataProcessed``.
 
    * ``writePivotExcel`` writes the pivot table to excel
    * ``writePivotCsv`` writes the pivot table to csv
@@ -649,6 +649,3 @@ The string argument for the functions is the file name.
 .. figure:: images/test1_pivot_excel.jpg
 
 .. figure:: images/test1_rates_excel.jpg
-
-
-
