@@ -312,8 +312,7 @@ Calculating pAUC and performing statistical tests
 -------------------------------------------------
 
 pAUC is calculated when ``dr.process()`` is called. Simpson's rule integrates the area
-under the ROC curve up to a maximum value. If the maximum value is between two data points, linear interpolation is used
-to calculate the most liberal point (i.e., the lowest level of confidence).
+under the ROC curve up to a maximum value. If the maximum value is between two data points, linear interpolation is used to calculate the most liberal point (i.e., the lowest level of confidence).
 
 .. code-block :: python
    :linenos:
@@ -325,6 +324,8 @@ to calculate the most liberal point (i.e., the lowest level of confidence).
    dp = dr.process()
    print(dp.pAUC)
 
+.. figure:: images/test1_test1_pAUC.png.
+   :alt: Screenshot of pAUC output
 
 Fitting signal detection-based models to data
 ---------------------------------------------
@@ -524,7 +525,7 @@ the experimental data to the model fit.
    mf.setEqualVariance()
    mf.fit()
 
-To compare a *ROC* plot between data and fit
+To compare an *ROC* plot between data and fit
 
 .. code-block :: python
 

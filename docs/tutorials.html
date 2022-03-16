@@ -439,14 +439,16 @@ call <code class="docutils literal notranslate"><span class="pre">collapseCatego
 <div class="section" id="calculating-pauc-and-performing-statistical-tests">
 <h2>Calculating pAUC and performing statistical tests<a class="headerlink" href="#calculating-pauc-and-performing-statistical-tests" title="Permalink to this headline">¶</a></h2>
 <p>pAUC is calculated when <code class="docutils literal notranslate"><span class="pre">dr.process()</span></code> is called. Simpson’s rule integrates the area
-under the ROC curve up to a maximum value. If the maximum value is between two data points, linear interpolation is used
-to calculate the most liberal point (i.e., the lowest level of confidence).</p>
+under the ROC curve up to a maximum value. If the maximum value is between two data points, linear interpolation is used to calculate the most liberal point (i.e., the lowest level of confidence).</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="kn">import</span> <span class="nn">pyWitness</span>
 <span class="linenos">2</span><span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test1.csv&quot;</span><span class="p">)</span>
 <span class="linenos">3</span><span class="n">dr</span><span class="o">.</span><span class="n">collapseContinuousData</span><span class="p">(</span><span class="n">column</span> <span class="o">=</span> <span class="s2">&quot;confidence&quot;</span><span class="p">,</span><span class="n">bins</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">60</span><span class="p">,</span><span class="mi">80</span><span class="p">,</span><span class="mi">100</span><span class="p">],</span><span class="n">labels</span><span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
 <span class="linenos">4</span><span class="n">dp</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
 <span class="hll"><span class="linenos">5</span><span class="nb">print</span><span class="p">(</span><span class="n">dp</span><span class="o">.</span><span class="n">pAUC</span><span class="p">)</span>
 </span></pre></div>
+</div>
+<div class="figure align-default">
+<img alt="Screenshot of pAUC output" src="images/test1_test1_pAUC.png." />
 </div>
 </div>
 <div class="section" id="fitting-signal-detection-based-models-to-data">
@@ -622,7 +624,7 @@ the experimental data to the model fit.</p>
 <span class="linenos">8</span><span class="n">mf</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>To compare a <em>ROC</em> plot between data and fit</p>
+<p>To compare an <em>ROC</em> plot between data and fit</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dp</span><span class="o">.</span><span class="n">plotROC</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Data&quot;</span><span class="p">)</span>
 <span class="n">mf</span><span class="o">.</span><span class="n">plotROC</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Indep. obs. fit&quot;</span><span class="p">)</span>
 
@@ -754,7 +756,7 @@ functions belonging to <code class="docutils literal notranslate"><span class="p
     <p>
         &copy; Copyright Royal Holloway, University of London 2020 and University of Bristol 2020
       <span class="lastupdated">
-        Last updated on Mar 15, 2022.
+        Last updated on Mar 16, 2022.
       </span>
 
     </p>
