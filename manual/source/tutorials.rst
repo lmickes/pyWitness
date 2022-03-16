@@ -77,7 +77,7 @@ and pyWitness
    import pyWitness
 
 .. image:: http://mickeslab.com/wp-content/uploads/2022/03/tutorial1rightDirectoryStartPyWitness.gif
-    :alt: gettng to the right place
+    :alt: getting to the right place
 
 A single Python class `pyWitness.DataRaw <./moduledocs.html#pyWitness.DataRaw>`_ is used to load raw data in
 either ``csv`` or ``excel`` format. The format of ``test1.csv`` is the same as that described in the introduction.
@@ -324,8 +324,8 @@ under the ROC curve up to a maximum value. If the maximum value is between two d
    dp = dr.process()
    print(dp.pAUC)
 
-.. figure:: images/test1_test1_pAUC.png.
-   :alt: Screenshot of pAUC output
+.. figure :: images/test1_pAUC.jpg
+   :alt: Data-model ROC comparision for test1.csv
 
 Fitting signal detection-based models to data
 ---------------------------------------------
