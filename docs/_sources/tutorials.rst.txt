@@ -58,7 +58,7 @@ to speed up inputing commands
 Loading raw experimental data
 -----------------------------
 
-Remember to activate pyWitness when you start a terminal by using this code
+Remember, you may need to activate pyWitness when you start a terminal by using this code
 
 .. code-block :: python 
 
@@ -150,7 +150,7 @@ created. One contains a pivot table and the other contains rates.
    dp.printPivot()
    dp.printRates()
 
-You should see the following output of the ``dp.printPivot()``
+You should see the following output of the ``dp.printPivot()``. 
 
 .. code-block :: console
 
@@ -163,7 +163,10 @@ You should see the following output of the ``dp.printPivot()``
                  rejectId            4.0  3.0  NaN   9.0  10.0  23.0  11.0  19.0  25.0  18.0  25.0
                  suspectId           3.0  1.0  4.0   5.0  11.0  19.0  44.0  77.0  55.0  37.0  47.0
 
-And you should see the following output for ``dp.printRates()``
+
+In the output above are frequencies by confidence levels for each response type. To familiarize you with the output, in the table above, 11 filler identifications were given with 30% confidence on the target-absent lineups, 66 reject identifications (i.e., "The perp is not in the lineup") given with 100% confidence on the target-absent lineups, and 47 guilty suspect identifications (from target-present lineups) given with 100% confidence. 
+
+You should also see the following output for ``dp.printRates()`` 
 
 .. code-block :: console
 
@@ -178,6 +181,8 @@ And you should see the following output for ``dp.printRates()``
    targetPresent fillerId       0.007533  0.018832  0.048964  0.080979  0.097928  0.114878  0.133710  0.141243  0.146893  0.148776  0.152542
                  rejectId       0.047081  0.080979  0.128060  0.163842  0.184557  0.227872  0.246704  0.263653       NaN  0.269303  0.276836
                  suspectId      0.088512  0.158192  0.261770  0.406780  0.489642  0.525424  0.546139  0.555556  0.563089  0.564972  0.570621
+
+In the table above, the overall false ID rate is 0.06, the overall correct ID rate is 0.57, and the overall correct rejection rate is 0.66.
 
 .. note::
    In the example there is no ``suspectId`` for ``targetAbsent`` lineups. Here the ``targetAbsent.suspectId`` is estimated as ``targetAbsent.fillerId/lineupSize`` 
@@ -261,14 +266,27 @@ The dataset used in this tutorial has 11 confidence levels (0, 10, 20, 30, 40, 5
 .. figure:: images/test1_rebinned.jpg
    :alt: Rebinned CAC for test1.csv 
 
+To rescale the axes, you can use
+
+.. code-block :: python 
+   :linenos:
+
+   import matplotlib as _plt
+   xlim(0,100)
+   ylim(0.50,1.0)
+
+and you get 
+
+.. figure:: images/test1_cacXYlims.jpg
+   :alt: CAC rescaled
+
 .. note:: 
-   If you err the ``collapseCategoricalData`` the data might be inconsistent. To start with the original data so
-   call ``collapseCategoricalData`` with ``reload=True``
+   If you err, the ``collapseCategoricalData`` the data might be inconsistent. To start with the original data so call ``collapseCategoricalData`` with ``reload=True``
 
 Collapsing (binning) continuous data
 ------------------------------------
 
-Some data are not categorical variables but continuous variables.
+Some data are not categorical variables, but continuous variables.
 
 .. code-block :: python
    :linenos:
@@ -330,8 +348,7 @@ under the ROC curve up to a maximum value. If the maximum value is between two d
 Fitting signal detection-based models to data
 ---------------------------------------------
 
-There are many models available in pyWitness. We'll start with the independent observation model. To load and process
-the data is the same as before
+There are many models available in pyWitness. We'll start with the independent observation model. To load and process the data is the same as before
 
 .. code-block :: python  
    :linenos: 
@@ -377,6 +394,9 @@ After creating the ``mf`` object (line 9) the parameters are at their default va
    c1 1.0 (free)
    c2 1.5 (free)
    c3 2.0 (free)
+
+.. image:: http://mickeslab.com/wp-content/uploads/2022/03/tutorial1modelFitPara.gif
+    :alt: Model fit details and parameters
 
 Typically you would want to control the fit parameters. ``setEqualVariance`` sets some default model which is
 an appropriate start; line 12 yields
@@ -433,7 +453,7 @@ There many ways to control the model
    * - ``mf.lureBetweenSigma.unset_equal()``
      - Release the linking of lureBetweenSigma and targetBetweenSigma
 
-There are multiple fits available and they all have the same interface they differ in
+There are multiple fits available and they all have the same interface but differ in
 the construction line
 
 .. code-block :: python
@@ -563,7 +583,7 @@ To compare frequencies in each bin between data and fit
 .. figure:: images/test1_plotFit.jpg
    :alt: Data-model comparision for test1.csv
 
-Once a fit has been performed, the model can be displayed as a function of memory strenth and includes the lure and target distributions with means and standard deviations (top panel of plot below) and the associated criteria, c1 (low confidence), c2 (medium confidence), and c3 (high confidence) (bottom panel of plot below). This a simple command belonging to a ModelFit object can be used to make the plot below.
+Once a fit has been performed, the model can be displayed as a function of memory strength and includes the lure and target distributions with means and standard deviations (top panel of plot below) and the associated criteria, c1 (low confidence), c2 (medium confidence), and c3 (high confidence) (bottom panel of plot below). This simple command belonging to a ModelFit object can be used to make the plot below.
 
 .. code-block :: python
 

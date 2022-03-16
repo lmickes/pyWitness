@@ -238,7 +238,7 @@ command history with that command fragment and probably match with a previous <c
 </div>
 <div class="section" id="loading-raw-experimental-data">
 <h2>Loading raw experimental data<a class="headerlink" href="#loading-raw-experimental-data" title="Permalink to this headline">¶</a></h2>
-<p>Remember to activate pyWitness when you start a terminal by using this code</p>
+<p>Remember, you may need to activate pyWitness when you start a terminal by using this code</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">activate</span> <span class="n">pyWitness</span>
 </pre></div>
 </div>
@@ -302,7 +302,7 @@ created. One contains a pivot table and the other contains rates.</p>
 </span><span class="hll"><span class="linenos">5</span><span class="n">dp</span><span class="o">.</span><span class="n">printRates</span><span class="p">()</span>
 </span></pre></div>
 </div>
-<p>You should see the following output of the <code class="docutils literal notranslate"><span class="pre">dp.printPivot()</span></code></p>
+<p>You should see the following output of the <code class="docutils literal notranslate"><span class="pre">dp.printPivot()</span></code>.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">                           confidence</span>
 <span class="go">confidence                        0    10   20    30    40    50    60    70    80    90    100</span>
 <span class="go">targetLineup  responseType</span>
@@ -313,7 +313,8 @@ created. One contains a pivot table and the other contains rates.</p>
 <span class="go">              suspectId           3.0  1.0  4.0   5.0  11.0  19.0  44.0  77.0  55.0  37.0  47.0</span>
 </pre></div>
 </div>
-<p>And you should see the following output for <code class="docutils literal notranslate"><span class="pre">dp.printRates()</span></code></p>
+<p>In the output above are frequencies by confidence levels for each response type. To familiarize you with the output, in the table above, 11 filler identifications were given with 30% confidence on the target-absent lineups, 66 reject identifications (i.e., “The perp is not in the lineup”) given with 100% confidence on the target-absent lineups, and 47 guilty suspect identifications (from target-present lineups) given with 100% confidence.</p>
+<p>You should also see the following output for <code class="docutils literal notranslate"><span class="pre">dp.printRates()</span></code></p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">                           confidence</span>
 <span class="go">confidence                        100       90        80        70        60        50        40        30        20        10        0</span>
 <span class="go">targetLineup  responseType</span>
@@ -327,6 +328,7 @@ created. One contains a pivot table and the other contains rates.</p>
 <span class="go">              suspectId      0.088512  0.158192  0.261770  0.406780  0.489642  0.525424  0.546139  0.555556  0.563089  0.564972  0.570621</span>
 </pre></div>
 </div>
+<p>In the table above, the overall false ID rate is 0.06, the overall correct ID rate is 0.57, and the overall correct rejection rate is 0.66.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>In the example there is no <code class="docutils literal notranslate"><span class="pre">suspectId</span></code> for <code class="docutils literal notranslate"><span class="pre">targetAbsent</span></code> lineups. Here the <code class="docutils literal notranslate"><span class="pre">targetAbsent.suspectId</span></code> is estimated as <code class="docutils literal notranslate"><span class="pre">targetAbsent.fillerId/lineupSize</span></code></p>
@@ -391,15 +393,24 @@ created. One contains a pivot table and the other contains rates.</p>
 <div class="figure align-default">
 <img alt="Rebinned CAC for test1.csv" src="_images/test1_rebinned.jpg" />
 </div>
+<p>To rescale the axes, you can use</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="nn">_plt</span>
+<span class="linenos">2</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+<span class="linenos">3</span><span class="n">ylim</span><span class="p">(</span><span class="mf">0.50</span><span class="p">,</span><span class="mf">1.0</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>and you get</p>
+<div class="figure align-default">
+<img alt="CAC rescaled" src="_images/test1_cacXYlims.jpg" />
+</div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If you err the <code class="docutils literal notranslate"><span class="pre">collapseCategoricalData</span></code> the data might be inconsistent. To start with the original data so
-call <code class="docutils literal notranslate"><span class="pre">collapseCategoricalData</span></code> with <code class="docutils literal notranslate"><span class="pre">reload=True</span></code></p>
+<p>If you err, the <code class="docutils literal notranslate"><span class="pre">collapseCategoricalData</span></code> the data might be inconsistent. To start with the original data so call <code class="docutils literal notranslate"><span class="pre">collapseCategoricalData</span></code> with <code class="docutils literal notranslate"><span class="pre">reload=True</span></code></p>
 </div>
 </div>
 <div class="section" id="collapsing-binning-continuous-data">
 <h2>Collapsing (binning) continuous data<a class="headerlink" href="#collapsing-binning-continuous-data" title="Permalink to this headline">¶</a></h2>
-<p>Some data are not categorical variables but continuous variables.</p>
+<p>Some data are not categorical variables, but continuous variables.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="kn">import</span> <span class="nn">pyWitness</span>
 <span class="linenos">2</span><span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test1.csv&quot;</span><span class="p">)</span>
 <span class="hll"><span class="linenos">3</span><span class="n">dr</span><span class="o">.</span><span class="n">collapseContinuousData</span><span class="p">(</span><span class="n">column</span> <span class="o">=</span> <span class="s2">&quot;confidence&quot;</span><span class="p">,</span><span class="n">bins</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">60</span><span class="p">,</span><span class="mi">80</span><span class="p">,</span><span class="mi">100</span><span class="p">],</span><span class="n">labels</span><span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
@@ -453,8 +464,7 @@ under the ROC curve up to a maximum value. If the maximum value is between two d
 </div>
 <div class="section" id="fitting-signal-detection-based-models-to-data">
 <h2>Fitting signal detection-based models to data<a class="headerlink" href="#fitting-signal-detection-based-models-to-data" title="Permalink to this headline">¶</a></h2>
-<p>There are many models available in pyWitness. We’ll start with the independent observation model. To load and process
-the data is the same as before</p>
+<p>There are many models available in pyWitness. We’ll start with the independent observation model. To load and process the data is the same as before</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="kn">import</span> <span class="nn">pyWitness</span>
 <span class="linenos">2</span><span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test1.csv&quot;</span><span class="p">)</span>
 <span class="linenos">3</span><span class="n">dr</span><span class="o">.</span><span class="n">collapseContinuousData</span><span class="p">(</span><span class="n">column</span> <span class="o">=</span> <span class="s2">&quot;confidence&quot;</span><span class="p">,</span><span class="n">bins</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">60</span><span class="p">,</span><span class="mi">80</span><span class="p">,</span><span class="mi">100</span><span class="p">],</span><span class="n">labels</span><span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
@@ -491,6 +501,7 @@ the data is the same as before</p>
 <span class="go">c3 2.0 (free)</span>
 </pre></div>
 </div>
+<img alt="Model fit details and parameters" src="http://mickeslab.com/wp-content/uploads/2022/03/tutorial1modelFitPara.gif" />
 <p>Typically you would want to control the fit parameters. <code class="docutils literal notranslate"><span class="pre">setEqualVariance</span></code> sets some default model which is
 an appropriate start; line 12 yields</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">lureMean 0.0 (fixed)</span>
@@ -555,7 +566,7 @@ an appropriate start; line 12 yields</p>
 </tr>
 </tbody>
 </table>
-<p>There are multiple fits available and they all have the same interface they differ in
+<p>There are multiple fits available and they all have the same interface but differ in
 the construction line</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test1.csv&quot;</span><span class="p">)</span>
 <span class="linenos">2</span><span class="n">dr</span><span class="o">.</span><span class="n">collapseContinuousData</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s2">&quot;confidence&quot;</span><span class="p">)</span>
@@ -654,7 +665,7 @@ the experimental data to the model fit.</p>
 <div class="figure align-default">
 <img alt="Data-model comparision for test1.csv" src="_images/test1_plotFit.jpg" />
 </div>
-<p>Once a fit has been performed, the model can be displayed as a function of memory strenth and includes the lure and target distributions with means and standard deviations (top panel of plot below) and the associated criteria, c1 (low confidence), c2 (medium confidence), and c3 (high confidence) (bottom panel of plot below). This a simple command belonging to a ModelFit object can be used to make the plot below.</p>
+<p>Once a fit has been performed, the model can be displayed as a function of memory strength and includes the lure and target distributions with means and standard deviations (top panel of plot below) and the associated criteria, c1 (low confidence), c2 (medium confidence), and c3 (high confidence) (bottom panel of plot below). This simple command belonging to a ModelFit object can be used to make the plot below.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mf</span><span class="o">.</span><span class="n">plotModel</span><span class="p">()</span>
 </pre></div>
 </div>
