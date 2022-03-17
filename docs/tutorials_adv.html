@@ -188,12 +188,15 @@ the bootstrap method. This method takes <span class="math notranslate nohighligh
 pyWitness can then proceed to compute any quantity (ROC, CAC, pAUC, fit parameters). This is repeated <span class="math notranslate nohighlight">\(M\)</span>
 times and the distribution of the computed quantity used to calculate a confidence interval with a user
 definable range.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="kn">import</span> <span class="nn">pyWitness</span>
-<span class="linenos">2</span><span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test1.csv&quot;</span><span class="p">)</span>
-<span class="linenos">3</span><span class="n">dp</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
-<span class="linenos">4</span><span class="n">dp</span><span class="o">.</span><span class="n">calculateConfidenceBootstrap</span><span class="p">(</span><span class="n">nBootstraps</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">cl</span><span class="o">=</span><span class="mi">95</span><span class="p">)</span>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
+<span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test1.csv&quot;</span><span class="p">)</span>
+<span class="n">dp</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
+<span class="n">dp</span><span class="o">.</span><span class="n">calculateConfidenceBootstrap</span><span class="p">(</span><span class="n">nBootstraps</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">cl</span><span class="o">=</span><span class="mi">95</span><span class="p">)</span>
 </pre></div>
-</div>
+</td></tr></table></div>
 <p>After calling <code class="docutils literal notranslate"><span class="pre">calculateConfidenceBootstrap</span></code> the rates table is populated with the 95% confidence limit
 data</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">                             confidence</span>
@@ -229,10 +232,11 @@ the confidence interval is drawn as error bars.</p>
 <div class="section" id="loading-raw-data-excel-format">
 <h2>Loading raw data excel format<a class="headerlink" href="#loading-raw-data-excel-format" title="Permalink to this headline">¶</a></h2>
 <p>If the file is in <code class="docutils literal notranslate"><span class="pre">excel</span></code> format you will need to specify which sheet the raw data is stored in</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="kn">import</span> <span class="nn">pyWitness</span>
-<span class="linenos">2</span><span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test2.xlsx&quot;</span><span class="p">,</span><span class="n">excelSheet</span> <span class="o">=</span> <span class="s2">&quot;raw data&quot;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
+<span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test2.xlsx&quot;</span><span class="p">,</span><span class="n">excelSheet</span> <span class="o">=</span> <span class="s2">&quot;raw data&quot;</span><span class="p">)</span>
 </pre></div>
-</div>
+</td></tr></table></div>
 </div>
 <div class="section" id="transforming-data-into-common-format">
 <h2>Transforming data into common format<a class="headerlink" href="#transforming-data-into-common-format" title="Permalink to this headline">¶</a></h2>
@@ -258,60 +262,87 @@ possible to replace the name of the data columns and the values stored.</p>
 has a column labelled <code class="docutils literal notranslate"><span class="pre">Condition</span></code> and the values for each participant is either <code class="docutils literal notranslate"><span class="pre">Control</span></code> or
 <code class="docutils literal notranslate"><span class="pre">Verbal</span></code>. To proccess only the <code class="docutils literal notranslate"><span class="pre">Control</span></code> participants the following options are required
 for DataRaw.process()</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="kn">import</span> <span class="nn">pyWitness</span>
-<span class="linenos">2</span><span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test2.csv&quot;</span><span class="p">)</span>
-<span class="linenos">3</span><span class="n">dr</span><span class="o">.</span><span class="n">cutData</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s2">&quot;previouslyViewedVideo&quot;</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">option</span><span class="o">=</span><span class="s2">&quot;keep&quot;</span><span class="p">)</span>
-<span class="hll"><span class="linenos">4</span><span class="n">dpControl</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s2">&quot;group&quot;</span><span class="p">,</span> <span class="n">condition</span><span class="o">=</span><span class="s2">&quot;Control&quot;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
+<span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test2.csv&quot;</span><span class="p">)</span>
+<span class="n">dr</span><span class="o">.</span><span class="n">cutData</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s2">&quot;previouslyViewedVideo&quot;</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">option</span><span class="o">=</span><span class="s2">&quot;keep&quot;</span><span class="p">)</span>
+<span class="hll"><span class="n">dpControl</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s2">&quot;group&quot;</span><span class="p">,</span> <span class="n">condition</span><span class="o">=</span><span class="s2">&quot;Control&quot;</span><span class="p">)</span>
 </span></pre></div>
-</div>
+</td></tr></table></div>
 <p>If you have a file with multiple conditions it is straightforward to make multiple
 <code class="docutils literal notranslate"><span class="pre">DataProcessed</span></code> for each condition, as in the following</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="kn">import</span> <span class="nn">pyWitness</span>
-<span class="linenos">2</span><span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test2.csv&quot;</span><span class="p">)</span>
-<span class="linenos">3</span><span class="n">dr</span><span class="o">.</span><span class="n">cutData</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s2">&quot;previouslyViewedVideo&quot;</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">option</span><span class="o">=</span><span class="s2">&quot;keep&quot;</span><span class="p">)</span>
-<span class="linenos">4</span><span class="n">dpControl</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s2">&quot;group&quot;</span><span class="p">,</span> <span class="n">condition</span><span class="o">=</span><span class="s2">&quot;Control&quot;</span><span class="p">)</span>
-<span class="hll"><span class="linenos">5</span><span class="n">dpVerbal</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s2">&quot;group&quot;</span><span class="p">,</span> <span class="n">condition</span><span class="o">=</span><span class="s2">&quot;Verbal&quot;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
+<span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test2.csv&quot;</span><span class="p">)</span>
+<span class="n">dr</span><span class="o">.</span><span class="n">cutData</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s2">&quot;previouslyViewedVideo&quot;</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">option</span><span class="o">=</span><span class="s2">&quot;keep&quot;</span><span class="p">)</span>
+<span class="n">dpControl</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s2">&quot;group&quot;</span><span class="p">,</span> <span class="n">condition</span><span class="o">=</span><span class="s2">&quot;Control&quot;</span><span class="p">)</span>
+<span class="hll"><span class="n">dpVerbal</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s2">&quot;group&quot;</span><span class="p">,</span> <span class="n">condition</span><span class="o">=</span><span class="s2">&quot;Verbal&quot;</span><span class="p">)</span>
 </span></pre></div>
-</div>
+</td></tr></table></div>
 </div>
 <div class="section" id="statistical-pauc-comparision-between-two-conditions">
 <h2>Statistical (pAUC) comparision between two conditions<a class="headerlink" href="#statistical-pauc-comparision-between-two-conditions" title="Permalink to this headline">¶</a></h2>
 <p>One way to compare pAUC values of two conditions is use the following code on the test2 data. You can check out the script we wrote called pAUCexample.py.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="kn">import</span> <span class="nn">pyWitness</span>
-<span class="linenos">2</span><span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test2.csv&quot;</span><span class="p">)</span>
-<span class="linenos">3</span><span class="n">dr</span><span class="o">.</span><span class="n">cutData</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s2">&quot;previouslyViewedVideo&quot;</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">option</span><span class="o">=</span><span class="s2">&quot;keep&quot;</span><span class="p">)</span>
-<span class="linenos">4</span><span class="n">dpControl</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s2">&quot;group&quot;</span><span class="p">,</span> <span class="n">condition</span><span class="o">=</span><span class="s2">&quot;Control&quot;</span><span class="p">)</span>
-<span class="linenos">5</span><span class="n">dpVerbal</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s2">&quot;group&quot;</span><span class="p">,</span> <span class="n">condition</span><span class="o">=</span><span class="s2">&quot;Verbal&quot;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
+<span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test2.csv&quot;</span><span class="p">)</span>
+<span class="n">dr</span><span class="o">.</span><span class="n">cutData</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s2">&quot;previouslyViewedVideo&quot;</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">option</span><span class="o">=</span><span class="s2">&quot;keep&quot;</span><span class="p">)</span>
+<span class="n">dpControl</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s2">&quot;group&quot;</span><span class="p">,</span> <span class="n">condition</span><span class="o">=</span><span class="s2">&quot;Control&quot;</span><span class="p">)</span>
+<span class="n">dpVerbal</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s2">&quot;group&quot;</span><span class="p">,</span> <span class="n">condition</span><span class="o">=</span><span class="s2">&quot;Verbal&quot;</span><span class="p">)</span>
 </pre></div>
-</div>
+</td></tr></table></div>
 <p>To find the lowest false ID rate from both conditions,</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="kn">import</span> <span class="nn">pyWitness</span>
-<span class="linenos">2</span><span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test2.csv&quot;</span><span class="p">)</span>
-<span class="linenos">3</span><span class="n">dr</span><span class="o">.</span><span class="n">cutData</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s2">&quot;previouslyViewedVideo&quot;</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">option</span><span class="o">=</span><span class="s2">&quot;keep&quot;</span><span class="p">)</span>
-<span class="linenos">4</span><span class="n">dpControl</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s2">&quot;group&quot;</span><span class="p">,</span> <span class="n">condition</span><span class="o">=</span><span class="s2">&quot;Control&quot;</span><span class="p">)</span>
-<span class="linenos">5</span><span class="n">dpVerbal</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s2">&quot;group&quot;</span><span class="p">,</span> <span class="n">condition</span><span class="o">=</span><span class="s2">&quot;Verbal&quot;</span><span class="p">)</span>
-<span class="hll"><span class="linenos">6</span><span class="n">minRate</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">dpControl</span><span class="o">.</span><span class="n">liberalTargetAbsentSuspectId</span><span class="p">,</span><span class="n">dpVerbal</span><span class="o">.</span><span class="n">liberalTargetAbsentSuspectId</span><span class="p">)</span>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
+<span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test2.csv&quot;</span><span class="p">)</span>
+<span class="n">dr</span><span class="o">.</span><span class="n">cutData</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s2">&quot;previouslyViewedVideo&quot;</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">option</span><span class="o">=</span><span class="s2">&quot;keep&quot;</span><span class="p">)</span>
+<span class="n">dpControl</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s2">&quot;group&quot;</span><span class="p">,</span> <span class="n">condition</span><span class="o">=</span><span class="s2">&quot;Control&quot;</span><span class="p">)</span>
+<span class="n">dpVerbal</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s2">&quot;group&quot;</span><span class="p">,</span> <span class="n">condition</span><span class="o">=</span><span class="s2">&quot;Verbal&quot;</span><span class="p">)</span>
+<span class="hll"><span class="n">minRate</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">dpControl</span><span class="o">.</span><span class="n">liberalTargetAbsentSuspectId</span><span class="p">,</span><span class="n">dpVerbal</span><span class="o">.</span><span class="n">liberalTargetAbsentSuspectId</span><span class="p">)</span>
 </span></pre></div>
-</div>
+</td></tr></table></div>
 <p>You have to process the data again, with this <code class="docutils literal notranslate"><span class="pre">minRate</span></code></p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span> <span class="nn">pyWitness</span>
-<span class="linenos"> 2</span><span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test2.csv&quot;</span><span class="p">)</span>
-<span class="linenos"> 3</span><span class="n">dr</span><span class="o">.</span><span class="n">cutData</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s2">&quot;previouslyViewedVideo&quot;</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">option</span><span class="o">=</span><span class="s2">&quot;keep&quot;</span><span class="p">)</span>
-<span class="linenos"> 4</span><span class="n">dpControl</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s2">&quot;group&quot;</span><span class="p">,</span> <span class="n">condition</span><span class="o">=</span><span class="s2">&quot;Control&quot;</span><span class="p">)</span>
-<span class="linenos"> 5</span><span class="n">dpVerbal</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s2">&quot;group&quot;</span><span class="p">,</span> <span class="n">condition</span><span class="o">=</span><span class="s2">&quot;Verbal&quot;</span><span class="p">)</span>
-<span class="linenos"> 6</span><span class="n">minRate</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">dpControl</span><span class="o">.</span><span class="n">liberalTargetAbsentSuspectId</span><span class="p">,</span><span class="n">dpVerbal</span><span class="o">.</span><span class="n">liberalTargetAbsentSuspectId</span><span class="p">)</span>
-<span class="hll"><span class="linenos"> 7</span><span class="n">dpControl</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="s2">&quot;group&quot;</span><span class="p">,</span><span class="s2">&quot;Control&quot;</span><span class="p">,</span><span class="n">pAUCLiberal</span><span class="o">=</span><span class="n">minRate</span><span class="p">)</span>
-</span><span class="hll"><span class="linenos"> 8</span><span class="n">dpControl</span><span class="o">.</span><span class="n">calculateConfidenceBootstrap</span><span class="p">(</span><span class="n">nBootstraps</span><span class="o">=</span><span class="mi">2000</span><span class="p">)</span>
-</span><span class="hll"><span class="linenos"> 9</span><span class="n">dpVerbal</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="s2">&quot;group&quot;</span><span class="p">,</span><span class="s2">&quot;Verbal&quot;</span><span class="p">,</span><span class="n">pAUCLiberal</span><span class="o">=</span><span class="n">minRate</span><span class="p">)</span>
-</span><span class="hll"><span class="linenos">10</span><span class="n">dpVerbal</span><span class="o">.</span><span class="n">calculateConfidenceBootstrap</span><span class="p">(</span><span class="n">nBootstraps</span><span class="o">=</span><span class="mi">2000</span><span class="p">)</span>
-</span><span class="hll"><span class="linenos">11</span><span class="n">dpControl</span><span class="o">.</span><span class="n">comparePAUC</span><span class="p">(</span><span class="n">dpVerbal</span><span class="p">)</span>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
+<span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test2.csv&quot;</span><span class="p">)</span>
+<span class="n">dr</span><span class="o">.</span><span class="n">cutData</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s2">&quot;previouslyViewedVideo&quot;</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">option</span><span class="o">=</span><span class="s2">&quot;keep&quot;</span><span class="p">)</span>
+<span class="n">dpControl</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s2">&quot;group&quot;</span><span class="p">,</span> <span class="n">condition</span><span class="o">=</span><span class="s2">&quot;Control&quot;</span><span class="p">)</span>
+<span class="n">dpVerbal</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s2">&quot;group&quot;</span><span class="p">,</span> <span class="n">condition</span><span class="o">=</span><span class="s2">&quot;Verbal&quot;</span><span class="p">)</span>
+<span class="n">minRate</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">dpControl</span><span class="o">.</span><span class="n">liberalTargetAbsentSuspectId</span><span class="p">,</span><span class="n">dpVerbal</span><span class="o">.</span><span class="n">liberalTargetAbsentSuspectId</span><span class="p">)</span>
+<span class="hll"><span class="n">dpControl</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="s2">&quot;group&quot;</span><span class="p">,</span><span class="s2">&quot;Control&quot;</span><span class="p">,</span><span class="n">pAUCLiberal</span><span class="o">=</span><span class="n">minRate</span><span class="p">)</span>
+</span><span class="hll"><span class="n">dpControl</span><span class="o">.</span><span class="n">calculateConfidenceBootstrap</span><span class="p">(</span><span class="n">nBootstraps</span><span class="o">=</span><span class="mi">2000</span><span class="p">)</span>
+</span><span class="hll"><span class="n">dpVerbal</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="s2">&quot;group&quot;</span><span class="p">,</span><span class="s2">&quot;Verbal&quot;</span><span class="p">,</span><span class="n">pAUCLiberal</span><span class="o">=</span><span class="n">minRate</span><span class="p">)</span>
+</span><span class="hll"><span class="n">dpVerbal</span><span class="o">.</span><span class="n">calculateConfidenceBootstrap</span><span class="p">(</span><span class="n">nBootstraps</span><span class="o">=</span><span class="mi">2000</span><span class="p">)</span>
+</span><span class="hll"><span class="n">dpControl</span><span class="o">.</span><span class="n">comparePAUC</span><span class="p">(</span><span class="n">dpVerbal</span><span class="p">)</span>
 </span></pre></div>
-</div>
+</td></tr></table></div>
 <p>To plot the ROC curves, use <code class="docutils literal notranslate"><span class="pre">DataProcess.plotROC</span></code></p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="n">dpControl</span><span class="o">.</span><span class="n">plotROC</span><span class="p">(</span><span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Control data&quot;</span><span class="p">,</span> <span class="n">relativeFrequencyScale</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span>
-<span class="linenos">2</span><span class="n">dpVerbal</span><span class="o">.</span><span class="n">plotROC</span><span class="p">(</span><span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Verbal data&quot;</span><span class="p">,</span> <span class="n">relativeFrequencyScale</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">dpControl</span><span class="o">.</span><span class="n">plotROC</span><span class="p">(</span><span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Control data&quot;</span><span class="p">,</span> <span class="n">relativeFrequencyScale</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span>
+<span class="n">dpVerbal</span><span class="o">.</span><span class="n">plotROC</span><span class="p">(</span><span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Verbal data&quot;</span><span class="p">,</span> <span class="n">relativeFrequencyScale</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span>
 </pre></div>
-</div>
+</td></tr></table></div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The symbol size is the relative frequency and can be changed by setting <code class="docutils literal notranslate"><span class="pre">dp.plotROC(relativeFrequencyScale</span> <span class="pre">=</span> <span class="pre">400)</span></code></p>
@@ -432,10 +463,11 @@ data needs to be in the following CSV format. This is basically the same format 
 <p>If the <code class="docutils literal notranslate"><span class="pre">targetAbsent</span> <span class="pre">suspectId</span></code> row is not present it is estimated by <code class="docutils literal notranslate"><span class="pre">(targetAbsent</span> <span class="pre">fillerId)/lineupSize</span></code></p>
 </div>
 <p>This data is stored in <code class="docutils literal notranslate"><span class="pre">data/tutorials/test1_processed.csv</span></code></p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="kn">import</span> <span class="nn">pyWitness</span>
-<span class="hll"><span class="linenos">2</span><span class="n">dp</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataProcessed</span><span class="p">(</span><span class="s2">&quot;test1_processed.csv&quot;</span><span class="p">,</span> <span class="n">lineupSize</span> <span class="o">=</span> <span class="mi">6</span><span class="p">)</span>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
+<span class="hll"><span class="n">dp</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataProcessed</span><span class="p">(</span><span class="s2">&quot;test1_processed.csv&quot;</span><span class="p">,</span> <span class="n">lineupSize</span> <span class="o">=</span> <span class="mi">6</span><span class="p">)</span>
 </span></pre></div>
-</div>
+</td></tr></table></div>
 </div>
 <div class="section" id="using-instances-of-raw-data-processed-data-and-model-fits">
 <h2>Using instances of raw data, processed data and model fits<a class="headerlink" href="#using-instances-of-raw-data-processed-data-and-model-fits" title="Permalink to this headline">¶</a></h2>
@@ -464,22 +496,35 @@ the <code class="docutils literal notranslate"><span class="pre">test1.csv</span
 <p>In general, each <code class="docutils literal notranslate"><span class="pre">plotXXX</span></code> function does not create a canvas, so to overlay plots the functions need to be called
 sequentially in order.</p>
 <p>To make a legend the plots need to be given a label. So this example is the same as the</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span> <span class="nn">pyWitness</span>
-<span class="linenos"> 2</span><span class="n">dr1</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test1.csv&quot;</span><span class="p">)</span>
-<span class="linenos"> 3</span><span class="n">dr2</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test1.csv&quot;</span><span class="p">)</span>
-<span class="linenos"> 4</span>
-<span class="linenos"> 5</span><span class="n">dr2</span><span class="o">.</span><span class="n">collapseContinuousData</span><span class="p">(</span><span class="n">column</span> <span class="o">=</span> <span class="s2">&quot;confidence&quot;</span><span class="p">,</span><span class="n">bins</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">60</span><span class="p">,</span><span class="mi">80</span><span class="p">,</span><span class="mi">100</span><span class="p">],</span><span class="n">labels</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
-<span class="linenos"> 6</span>
-<span class="linenos"> 7</span><span class="n">dp1</span> <span class="o">=</span> <span class="n">dr1</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
-<span class="linenos"> 8</span><span class="n">dp2</span> <span class="o">=</span> <span class="n">dr2</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
-<span class="linenos"> 9</span>
-<span class="hll"><span class="linenos">10</span><span class="n">dp1</span><span class="o">.</span><span class="n">plotCAC</span><span class="p">(</span><span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;11 bins&quot;</span><span class="p">)</span>
-</span><span class="hll"><span class="linenos">11</span><span class="n">dp2</span><span class="o">.</span><span class="n">plotCAC</span><span class="p">(</span><span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;3 bins&quot;</span><span class="p">)</span>
-</span><span class="hll"><span class="linenos">12</span>
-</span><span class="hll"><span class="linenos">13</span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">_plt</span>
-</span><span class="hll"><span class="linenos">14</span><span class="n">_plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
+<span class="n">dr1</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test1.csv&quot;</span><span class="p">)</span>
+<span class="n">dr2</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test1.csv&quot;</span><span class="p">)</span>
+
+<span class="n">dr2</span><span class="o">.</span><span class="n">collapseContinuousData</span><span class="p">(</span><span class="n">column</span> <span class="o">=</span> <span class="s2">&quot;confidence&quot;</span><span class="p">,</span><span class="n">bins</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">60</span><span class="p">,</span><span class="mi">80</span><span class="p">,</span><span class="mi">100</span><span class="p">],</span><span class="n">labels</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+<span class="n">dp1</span> <span class="o">=</span> <span class="n">dr1</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
+<span class="n">dp2</span> <span class="o">=</span> <span class="n">dr2</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
+
+<span class="hll"><span class="n">dp1</span><span class="o">.</span><span class="n">plotCAC</span><span class="p">(</span><span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;11 bins&quot;</span><span class="p">)</span>
+</span><span class="hll"><span class="n">dp2</span><span class="o">.</span><span class="n">plotCAC</span><span class="p">(</span><span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;3 bins&quot;</span><span class="p">)</span>
+</span><span class="hll">
+</span><span class="hll"><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">_plt</span>
+</span><span class="hll"><span class="n">_plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 </span></pre></div>
-</div>
+</td></tr></table></div>
 <div class="figure align-default">
 <img alt="CAC for test1.csv with two different binning" src="_images/test1_overlay.jpg" />
 </div>
@@ -492,40 +537,61 @@ sequentially in order.</p>
 <div class="section" id="generating-data-from-signal-detection-model">
 <h2>Generating data from signal detection model<a class="headerlink" href="#generating-data-from-signal-detection-model" title="Permalink to this headline">¶</a></h2>
 <p>Raw and processed data can be generated simply from a signal detection model.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="kn">import</span> <span class="nn">pyWitness</span>
-<span class="linenos">2</span><span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test1.csv&quot;</span><span class="p">)</span>
-<span class="linenos">3</span><span class="n">dr</span><span class="o">.</span><span class="n">collapseContinuousData</span><span class="p">(</span><span class="n">column</span> <span class="o">=</span> <span class="s2">&quot;confidence&quot;</span><span class="p">,</span><span class="n">bins</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">60</span><span class="p">,</span><span class="mi">80</span><span class="p">,</span><span class="mi">100</span><span class="p">],</span><span class="n">labels</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
-<span class="linenos">4</span><span class="n">dp</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
-<span class="linenos">5</span><span class="n">mf</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">ModelFitIndependentObservation</span><span class="p">(</span><span class="n">dp</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="linenos">6</span><span class="n">mf</span><span class="o">.</span><span class="n">setEqualVariance</span><span class="p">()</span>
-<span class="linenos">7</span><span class="n">mf</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
-<span class="hll"><span class="linenos">8</span><span class="n">dr1</span> <span class="o">=</span> <span class="n">mf</span><span class="o">.</span><span class="n">generateRawData</span><span class="p">(</span><span class="n">nGenParticipants</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
+<span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test1.csv&quot;</span><span class="p">)</span>
+<span class="n">dr</span><span class="o">.</span><span class="n">collapseContinuousData</span><span class="p">(</span><span class="n">column</span> <span class="o">=</span> <span class="s2">&quot;confidence&quot;</span><span class="p">,</span><span class="n">bins</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">60</span><span class="p">,</span><span class="mi">80</span><span class="p">,</span><span class="mi">100</span><span class="p">],</span><span class="n">labels</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="n">dp</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
+<span class="n">mf</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">ModelFitIndependentObservation</span><span class="p">(</span><span class="n">dp</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">mf</span><span class="o">.</span><span class="n">setEqualVariance</span><span class="p">()</span>
+<span class="n">mf</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="hll"><span class="n">dr1</span> <span class="o">=</span> <span class="n">mf</span><span class="o">.</span><span class="n">generateRawData</span><span class="p">(</span><span class="n">nGenParticipants</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span>
 </span></pre></div>
-</div>
+</td></tr></table></div>
 <p><code class="docutils literal notranslate"><span class="pre">dr1</span></code> is a <code class="docutils literal notranslate"><span class="pre">DataRaw</span></code> object and is simulated data for 10,000 participants. <code class="docutils literal notranslate"><span class="pre">dr1</span></code> can be used for any
 pyWitness analysis so ROC, CAC, pAUC, etc. The raw data can also be written to disk to either preserve and/or
 share with colleagues.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="hll"><span class="linenos">1</span><span class="n">dr1</span><span class="o">.</span><span class="n">writeCsv</span><span class="p">(</span><span class="s2">&quot;fileName.csv&quot;</span><span class="p">)</span>
-</span><span class="hll"><span class="linenos">2</span><span class="n">dr1</span><span class="o">.</span><span class="n">writeExcel</span><span class="p">(</span><span class="s2">&quot;fileName.xlsx&quot;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="hll"><span class="n">dr1</span><span class="o">.</span><span class="n">writeCsv</span><span class="p">(</span><span class="s2">&quot;fileName.csv&quot;</span><span class="p">)</span>
+</span><span class="hll"><span class="n">dr1</span><span class="o">.</span><span class="n">writeExcel</span><span class="p">(</span><span class="s2">&quot;fileName.xlsx&quot;</span><span class="p">)</span>
 </span></pre></div>
-</div>
+</td></tr></table></div>
 <p>So having performed a fit on <code class="docutils literal notranslate"><span class="pre">dr</span></code> and generated <code class="docutils literal notranslate"><span class="pre">dr1</span></code> a synthetic dataset</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="c1"># Need to process the synthetic data</span>
-<span class="linenos"> 2</span><span class="n">dp1</span> <span class="o">=</span> <span class="n">dr1</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
-<span class="linenos"> 3</span>
-<span class="linenos"> 4</span><span class="c1"># calculate uncertainties using bootstrap</span>
-<span class="linenos"> 5</span><span class="n">dp</span><span class="o">.</span><span class="n">calculateConfidenceBootstrap</span><span class="p">()</span>
-<span class="linenos"> 6</span><span class="n">dp1</span><span class="o">.</span><span class="n">calculateConfidenceBootstrap</span><span class="p">()</span>
-<span class="linenos"> 7</span>
-<span class="linenos"> 8</span><span class="c1"># plot ROCs</span>
-<span class="linenos"> 9</span><span class="n">dp</span><span class="o">.</span><span class="n">plotROC</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Experimental data&quot;</span><span class="p">)</span>
-<span class="linenos">10</span><span class="n">dp1</span><span class="o">.</span><span class="n">plotROC</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Simulated data&quot;</span><span class="p">)</span>
-<span class="linenos">11</span><span class="n">mf</span><span class="o">.</span><span class="n">plotROC</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Model fit&quot;</span><span class="p">)</span>
-<span class="linenos">12</span>
-<span class="linenos">13</span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">_plt</span>
-<span class="linenos">14</span><span class="n">_plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Need to process the synthetic data</span>
+<span class="n">dp1</span> <span class="o">=</span> <span class="n">dr1</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
+
+<span class="c1"># calculate uncertainties using bootstrap</span>
+<span class="n">dp</span><span class="o">.</span><span class="n">calculateConfidenceBootstrap</span><span class="p">()</span>
+<span class="n">dp1</span><span class="o">.</span><span class="n">calculateConfidenceBootstrap</span><span class="p">()</span>
+
+<span class="c1"># plot ROCs</span>
+<span class="n">dp</span><span class="o">.</span><span class="n">plotROC</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Experimental data&quot;</span><span class="p">)</span>
+<span class="n">dp1</span><span class="o">.</span><span class="n">plotROC</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Simulated data&quot;</span><span class="p">)</span>
+<span class="n">mf</span><span class="o">.</span><span class="n">plotROC</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Model fit&quot;</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">_plt</span>
+<span class="n">_plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 </pre></div>
-</div>
+</td></tr></table></div>
 <div class="figure align-default">
 <img alt="Generated data comparision example" src="_images/test1_genEx.jpg" />
 </div>

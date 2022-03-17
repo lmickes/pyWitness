@@ -181,5 +181,5 @@ texinfo_documents = [
      'Miscellaneous'),
 ]
 
-
+html_codeblock_linenos_style = "table"
 
