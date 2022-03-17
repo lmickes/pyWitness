@@ -24,6 +24,8 @@ To do the pip build:
 
 
 On users' end:
+> conda create --name pyWitness
+> conda activate pyWitness
 > conda install -c conda-forge -c lmickes pyWitness
 
 If user has conda installed already or conflicts (e.g., incompatible numpy):

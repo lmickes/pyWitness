@@ -84,11 +84,6 @@ possible to replace the name of the data columns and the values stored.
                           "rejectId":"reject",
                           "confidence":"conf_level"}))
 
-Loading SDTLU data
-------------------
-
-
-
 Processing data for two conditions
 --------------------------------------
 
@@ -184,7 +179,6 @@ The shaded regions are the pAUCs that were compared. You can see that they both 
 
 .. note:: 
    The uncertainities can be changed by setting them to .68, for example ``dpControl.calculateConfidenceBootstrap(nBootstraps=2000,cl=68)`` and ``dpVerbal.calculateConfidenceBootstrap(nBootstraps=2000,cl=68)`` 
-
 
 Loading processed data 
 ----------------------
@@ -399,7 +393,4 @@ So having performed a fit on ``dr`` and generated ``dr1`` a synthetic dataset
 Power analysis
 --------------
 
-By having the ability to generate data from a model it is possible to vary the number of generated participants.
-This is not too dissimilar to bootstrapping. Instead of generating new samples (with replacement) from the
-data, new samples with variable numbers of participants is possible. For each sample all the analysis can be
-performed and dependence on sample size can be explored.
+By having the ability to generate data from a model it is possible to vary the number of generated participants. This is not too dissimilar to bootstrapping. Instead of generating new samples (with replacement) from the data, new samples with variable numbers of participants is possible. For each sample all the analysis can be performed and dependence on sample size can be explored.

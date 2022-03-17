@@ -3,7 +3,7 @@ Tutorials
 
 Click on the `repository link <https://github.com/lmickes/pyWitness/releases/tag/v1.0>`_ to download the zip file, called **tutorialData.zip**, of the data you'll need to run through the tutorials. 
 
-Make a working directory and do the tutorials in that dictectory. 
+Make a working directory and do the tutorials in that directory. 
 
 .. image:: http://mickeslab.com/wp-content/uploads/2022/03/tutorial1getData.gif
     :alt: getting the tutorial data
@@ -64,13 +64,13 @@ Remember, you may need to activate pyWitness when you start a terminal by using 
 
    conda activate pyWitness
 
-then start up ipython3
+Start up ipython3 with
 
 .. code-block :: python 
 
    ipython3 --pylab
 
-and pyWitness
+and pyWitness with
 
 .. code-block :: python 
 
@@ -242,7 +242,6 @@ Once you've changed the file, you can run the code used for plotting CAC curves.
    drRAC = pyWitness.DataRaw("test1RAC.csv")
    dpRAC = dr.process()
    dpRAC.plotCAC()
-
 
 Collapsing the categorical data
 -------------------------------

@@ -113,8 +113,7 @@ Minimal example data file for an experiment
      - 1
 
 .. note::
-  Other columns can be in the data file (e.g., labels for other experimental conditions 
-   or data, demographic data, or personal differenes).
+   Other columns can be in the data file (e.g., labels for other experimental conditions or data, demographic data, or personal differenes).
 
 Transforming data structures
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -155,8 +154,7 @@ the data are measured on a three point confidence scale (1, 2 and 3) for previou
 targetAbsent confidences need to be mapped to (4, 5, 6) and rejectId needs to be given (3, 2, 1).
 
 .. note::
-   Confidence can be a verbal expression and needs to be mapped to a number. For example, confidence could be low (1), 
-   medium (2) or high (3).
+   Confidence can be a verbal expression and needs to be mapped to a number. For example, confidence could be low (1), medium (2) or high (3).
 
 .. note:: 
    All plots and diagrams are made using pyWitness.
