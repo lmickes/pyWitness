@@ -8,8 +8,8 @@ Contributors
 The following people have contributed to pyWitness:
 
 * `Laura Mickes,  <https://www.mickeslab.com>`_ Principal Investigator (December 2020 - ) 
-* Travis Seale-Carlisle (January 2021 - )
-* Xueqing Chen (January 2021 - )
+* `Travis Seale-Carlisle <https://www.abdn.ac.uk/psychology/people/profiles/travis.seale-carlisle/>`_ (January 2021 - )
+* `Xueqing Chen <https://research-information.bris.ac.uk/en/persons/xueqing-chen>`_ (January 2021 - )
 * `Stewart Boogert, <https://scholar.google.co.uk/citations?user=dQ00LRMAAAAJ&hl=en>`_ Lead Developer (December 2020 - )
   
 Citing pyWitness
