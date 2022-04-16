@@ -603,6 +603,7 @@ class DataProcessed :
         print('DataProcessed.comparePAUC> pAUC1'.ljust(self.debugIoPadSize,' ')+":",round(self.pAUC,4), "+/-",round(pAUC1_std,4))
         print('DataProcessed.comparePAUC> pAUC2'.ljust(self.debugIoPadSize,' ')+":",round(other.pAUC,4),"+/-",round(pAUC2_std,4))
         print('DataProcessed.comparePAUC> Z, p'.ljust(self.debugIoPadSize,' ')+":",round(D,4),round(p,4))
+        print('DataProcessed.comparePAUC> pooled sd',_np.sqrt(pAUC1_std**2 + pAUC2_std**2))
 
         return [D,p]
 
