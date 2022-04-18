@@ -332,7 +332,7 @@ class DataRaw :
                                           ignore_index=True)
             self.iParticipant += 1
 
-    def cutData(self, column = '', value = '' , option="keep"):
+    def cutData(self, column = '', value = '', option="keep"):
         '''
 
         Data to keep
@@ -342,12 +342,24 @@ class DataRaw :
         :return:
         '''
 
-        if option == "keep" :
-            cut       = self.data[column] == value
+        if type(value) == str :
+            value = [value]
+
+        if option == "keep":
+            first = True
+            for v in value :
+                c = self.data[column] == v
+                if first :
+                    cut = c
+                    first = False
+                else :
+                    cut = _np.logical_or(cut,c)
+
+                print(cut)
             self.data = self.data.loc[cut]
             return (cut*1).sum()
 
-        elif option == "cut" :
+        elif option == "cut":
             cut       = self.data[column] != value
             self.data = self.data.loc[cut]
             return (cut*1).sum()
