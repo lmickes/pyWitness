@@ -355,7 +355,6 @@ class DataRaw :
                 else :
                     cut = _np.logical_or(cut,c)
 
-                print(cut)
             self.data = self.data.loc[cut]
             return (cut*1).sum()
 
