@@ -9,6 +9,7 @@ from .ModelFits import ModelFitEnsemble
 from .ModelFits import ModelFitBestRest
 from .ModelFits import ModelFitIntegration
 from .Tester    import Tester
+from .UnitTests import UnitTests
 
 
 print("pyWitness v1.0 : Authorship - https://lmickes.github.io/pyWitness/authorship.html")
