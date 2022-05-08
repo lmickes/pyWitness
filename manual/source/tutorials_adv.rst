@@ -23,34 +23,52 @@ data
 
 .. code-block :: console
 
-                                confidence
-   confidence                            3         2         1
-   targetLineup  responseType
-   cac           central          0.956357  0.940618  0.839228
-                 high             0.972634  0.954553  0.872744
-                 low              0.941128  0.924256  0.804342
-   rf                             0.264691  0.422903  0.312406
-   targetAbsent  fillerId         0.044660  0.141748  0.335922
-                 fillerId_high    0.061102  0.165681  0.364264
-                 fillerId_low     0.030039  0.119101  0.300467
-                 rejectId         0.217476  0.473786  0.664078
-                 rejectId_high    0.246578  0.514653  0.699533
-                 rejectId_low     0.191284  0.442407  0.635736
-                 suspectId        0.007443  0.023625  0.055987
-                 suspectId_high   0.010184  0.027614  0.060711
-                 suspectId_low    0.005006  0.019850  0.050078
-   targetPresent fillerId         0.018832  0.080979  0.152542
-                 fillerId_high    0.030098  0.100959  0.178660
-                 fillerId_low     0.009258  0.062043  0.125396
-                 rejectId         0.080979  0.163842  0.276836
-                 rejectId_high    0.099837  0.190588  0.313290
-                 rejectId_low     0.062990  0.140654  0.247567
-                 suspectId        0.158192  0.406780  0.570621
-                 suspectId_high   0.182503  0.444297  0.605620
-                 suspectId_low    0.135651  0.371787  0.534313
+                                    confidence     
+   confidence                            3              2              1
+   targetLineup   responseType         
+   cac            central           0.969432314    0.955613577    0.861702128
+                  high              0.983819901    0.970698938    0.899521531
+                  low               0.94105059     0.935626002    0.813979066
+   confidence     central           95.6302521     74.86646884    45.87301587
+                  high              96.25013767    75.40578429    47.61453685
+                  low               94.97546772    74.28972828    43.55424111
+   dprime         central           1.585872911    1.940776199    1.97522081
+                  high              1.809343531    2.099687045    2.11922691
+                  low               1.284514089    1.737564624    1.794818105
+   rf                               0.256152125    0.428411633    0.315436242
+   targetAbsent   fillerId          0.031602709    0.108352144    0.284424379
+                  fillerId_high     0.049554462    0.136289305    0.318468236
+                  fillerId_low      0.015588774    0.080841041    0.235693854
+                  rejectId          0.241534989    0.521444695    0.715575621
+                  rejectId_high     0.284553948    0.569598955    0.759780844
+                  rejectId_low      0.185942697    0.47294046     0.675589358
+                  suspectId         0.005267118    0.018058691    0.047404063
+                  suspectId_high    0.008259077    0.022714884    0.053078039
+                  suspectId_low     0.002598129    0.013473507    0.039282309
+   targetPresent  fillerId          0.013422819    0.046979866    0.093959732
+                  fillerId_high     0.026205192    0.071115191    0.122404162
+                  fillerId_low      0.002289063    0.030067135    0.066295896
+                  rejectId          0.082774049    0.176733781    0.286353468
+                  rejectId_high     0.106091739    0.210159899    0.331137387
+                  rejectId_low      0.053622468    0.139138634    0.24084252
+                  suspectId         0.165548098    0.438478747    0.619686801
+                  suspectId_high    0.199176143    0.488181045    0.661739591
+                  suspectId_low     0.12179988     0.38462942     0.562197218
+   zL             central           -2.557781158   -2.095603466   -1.670562491
+                  high              -2.397262704   -2.000659299   -1.615714775
+                  low               -2.794611532   -2.21228458    -1.759094479
+   zT central                       -0.971908247   -0.154827267   0.304658319
+      high                          -0.844567857   -0.029630063   0.417215754
+      low                           -1.166049037   -0.293347212   0.156554647
 
 If a plot function (``plotROC``, ``plotCAC``) is callled after calling ``calculateConfidenceBootstrap`` then
-the confidence interval is drawn as error bars.
+the confidence interval is drawn as error bars, as shown in the ROC plot and CAC plot, respectively, below.
+
+.. figure:: images/test1ROCbinErr.png
+   :alt: ROC for test1.csv with error bars
+
+.. figure:: images/test1CACbinErr.png
+   :alt: CAC for test1.csv with error bars
 
 Loading raw data excel format
 -----------------------------
