@@ -173,9 +173,9 @@ You have to process the data again, with this ``minRate``
    dpVerbal = dr.process(column="group", condition="Verbal")
    minRate = min(dpControl.liberalTargetAbsentSuspectId,dpVerbal.liberalTargetAbsentSuspectId)
    dpControl = dr.process("group","Control",pAUCLiberal=minRate)
-   dpControl.calculateConfidenceBootstrap(nBootstraps=2000)
+   dpControl.calculateConfidenceBootstrap(nBootstraps=200)
    dpVerbal = dr.process("group","Verbal",pAUCLiberal=minRate)
-   dpVerbal.calculateConfidenceBootstrap(nBootstraps=2000)
+   dpVerbal.calculateConfidenceBootstrap(nBootstraps=200)
    dpControl.comparePAUC(dpVerbal)
 
 To plot the ROC curves, use ``DataProcess.plotROC``
@@ -193,16 +193,15 @@ And your plot will look like this one:
 
 .. figure:: images/test2ROCs.png
 
-The shaded regions are the pAUCs that were compared. You can see that they both used the same minimum false ID rate. The dashed colored curves represent the equal variance independent observation model (IO EV) fits . The error bars are 95% confidence intervals. The dashed black line represents chance performance.
+The shaded regions are the pAUCs that were compared. You can see that they both used the same minimum false ID rate. The error bars are 95% confidence intervals. The dashed black line represents chance performance.
 
 .. note:: 
-   The uncertainities can be changed by setting them to .68, for example ``dpControl.calculateConfidenceBootstrap(nBootstraps=2000,cl=68)`` and ``dpVerbal.calculateConfidenceBootstrap(nBootstraps=2000,cl=68)`` 
+   The uncertainities can be changed by setting them to .68, for example ``dpControl.calculateConfidenceBootstrap(nBootstraps=200,cl=68)`` and ``dpVerbal.calculateConfidenceBootstrap(nBootstraps=200,cl=68)`` 
 
 Loading processed data 
 ----------------------
 
-You might already have processed the raw data. It is possible to load a file to perform model fits etc. The processed
-data needs to be in the following CSV format. This is basically the same format as the pivot table stored in ``DataProcessed``.
+You might already have processed the raw data, or you only have a table of data. It is possible to load a file to perform model fits etc. The processed data need to be in the following CSV format. This is basically the same format as the pivot table stored in ``DataProcessed``.
 
 .. list-table:: Processed data columns and allowed values
    :widths: 35 15 15 15 15 15 15 15 15 15 15 15 
@@ -221,70 +220,70 @@ data needs to be in the following CSV format. This is basically the same format 
      - 90
      - 100
    * - targetAbsent fillerId 
-     - 3
+     - 2
      - 7
-     - 7
-     - 11
-     - 16
-     - 26
-     - 30
-     - 31
-     - 19
-     - 13
+     - 5
+     - 8
      - 10
+     - 20
+     - 26
+     - 20
+     - 14
+     - 8
+     - 6
    * - targetAbsent rejectId
-     - 4
+     - 2
      - 5
      - 5
      - 6
-     - 11
-     - 28
-     - 39
-     - 57
-     - 75
-     - 46
-     - 66
+     - 9
+     - 24
+     - 35
+     - 56
+     - 68
+     - 43
+     - 64
    * - targetPresent fillerId
+     - 0
+     - 0
+     - 2
+     - 3
+     - 5
+     - 6
+     - 5
+     - 10
+     - 5
+     - 4
+     - 2
+   * - targetPresent rejectId 
+     - 3
+     - 1
+     - 0
+     - 6
+     - 10
+     - 20
+     - 9
+     - 19
+     - 23
+     - 16
+     - 21
+   * - targetPresent suspectId
      - 2
      - 1
-     - 3
-     - 4
-     - 10
-     - 9
-     - 9
-     - 17
-     - 16
-     - 6
-     - 4
-   * - targetPresent rejectId 
-     - 4
-     - 3
-     - 
-     - 9
-     - 10
-     - 23
-     - 11
-     - 19
-     - 25
-     - 18
-     - 25
-   * - targetPresent suspectId
-     - 3
-     - 1
      - 4 
-     - 5
-     - 11 
-     - 19
-     - 44
-     - 77
-     - 55
-     - 37
-     - 47
+     - 4
+     - 10
+     - 18
+     - 43
+     - 68
+     - 54
+     - 33
+     - 41
 
 .. note :: 
    If the ``targetAbsent suspectId`` row is not present it is estimated by ``(targetAbsent fillerId)/lineupSize``
 
-This data is stored in ``data/tutorials/test1_processed.csv``
+The data are stored in ``data/tutorials/test1_processed.csv``
 
 .. code-block :: python
    :linenos:
@@ -345,16 +344,15 @@ To make a legend the plots need to be given a label. So this example is the same
    import matplotlib.pyplot as _plt
    _plt.legend()
 
-.. figure:: images/test1_overlay.jpg
-   :alt: CAC for test1.csv with two different binning
-
 After overlaying plots it maybe important to change the plot axis ranges this can be done with ``xlim`` and ``ylim``
 
 .. code-block :: python
 
-   xlim(0,1)
-   ylim(0,1)
+   xlim(0,100)
+   ylim(0.50,1.00)
 
+.. figure:: images/test1Overlay.jpg
+   :alt: CAC for test1.csv with two different binning
 
 Generating data from signal detection model
 -------------------------------------------

@@ -200,35 +200,53 @@ definable range.</p>
 </td></tr></table></div>
 <p>After calling <code class="docutils literal notranslate"><span class="pre">calculateConfidenceBootstrap</span></code> the rates table is populated with the 95% confidence limit
 data</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">                             confidence</span>
-<span class="go">confidence                            3         2         1</span>
-<span class="go">targetLineup  responseType</span>
-<span class="go">cac           central          0.956357  0.940618  0.839228</span>
-<span class="go">              high             0.972634  0.954553  0.872744</span>
-<span class="go">              low              0.941128  0.924256  0.804342</span>
-<span class="go">rf                             0.264691  0.422903  0.312406</span>
-<span class="go">targetAbsent  fillerId         0.044660  0.141748  0.335922</span>
-<span class="go">              fillerId_high    0.061102  0.165681  0.364264</span>
-<span class="go">              fillerId_low     0.030039  0.119101  0.300467</span>
-<span class="go">              rejectId         0.217476  0.473786  0.664078</span>
-<span class="go">              rejectId_high    0.246578  0.514653  0.699533</span>
-<span class="go">              rejectId_low     0.191284  0.442407  0.635736</span>
-<span class="go">              suspectId        0.007443  0.023625  0.055987</span>
-<span class="go">              suspectId_high   0.010184  0.027614  0.060711</span>
-<span class="go">              suspectId_low    0.005006  0.019850  0.050078</span>
-<span class="go">targetPresent fillerId         0.018832  0.080979  0.152542</span>
-<span class="go">              fillerId_high    0.030098  0.100959  0.178660</span>
-<span class="go">              fillerId_low     0.009258  0.062043  0.125396</span>
-<span class="go">              rejectId         0.080979  0.163842  0.276836</span>
-<span class="go">              rejectId_high    0.099837  0.190588  0.313290</span>
-<span class="go">              rejectId_low     0.062990  0.140654  0.247567</span>
-<span class="go">              suspectId        0.158192  0.406780  0.570621</span>
-<span class="go">              suspectId_high   0.182503  0.444297  0.605620</span>
-<span class="go">              suspectId_low    0.135651  0.371787  0.534313</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">                                 confidence</span>
+<span class="go">confidence                            3              2              1</span>
+<span class="go">targetLineup   responseType</span>
+<span class="go">cac            central           0.969432314    0.955613577    0.861702128</span>
+<span class="go">               high              0.983819901    0.970698938    0.899521531</span>
+<span class="go">               low               0.94105059     0.935626002    0.813979066</span>
+<span class="go">confidence     central           95.6302521     74.86646884    45.87301587</span>
+<span class="go">               high              96.25013767    75.40578429    47.61453685</span>
+<span class="go">               low               94.97546772    74.28972828    43.55424111</span>
+<span class="go">dprime         central           1.585872911    1.940776199    1.97522081</span>
+<span class="go">               high              1.809343531    2.099687045    2.11922691</span>
+<span class="go">               low               1.284514089    1.737564624    1.794818105</span>
+<span class="go">rf                               0.256152125    0.428411633    0.315436242</span>
+<span class="go">targetAbsent   fillerId          0.031602709    0.108352144    0.284424379</span>
+<span class="go">               fillerId_high     0.049554462    0.136289305    0.318468236</span>
+<span class="go">               fillerId_low      0.015588774    0.080841041    0.235693854</span>
+<span class="go">               rejectId          0.241534989    0.521444695    0.715575621</span>
+<span class="go">               rejectId_high     0.284553948    0.569598955    0.759780844</span>
+<span class="go">               rejectId_low      0.185942697    0.47294046     0.675589358</span>
+<span class="go">               suspectId         0.005267118    0.018058691    0.047404063</span>
+<span class="go">               suspectId_high    0.008259077    0.022714884    0.053078039</span>
+<span class="go">               suspectId_low     0.002598129    0.013473507    0.039282309</span>
+<span class="go">targetPresent  fillerId          0.013422819    0.046979866    0.093959732</span>
+<span class="go">               fillerId_high     0.026205192    0.071115191    0.122404162</span>
+<span class="go">               fillerId_low      0.002289063    0.030067135    0.066295896</span>
+<span class="go">               rejectId          0.082774049    0.176733781    0.286353468</span>
+<span class="go">               rejectId_high     0.106091739    0.210159899    0.331137387</span>
+<span class="go">               rejectId_low      0.053622468    0.139138634    0.24084252</span>
+<span class="go">               suspectId         0.165548098    0.438478747    0.619686801</span>
+<span class="go">               suspectId_high    0.199176143    0.488181045    0.661739591</span>
+<span class="go">               suspectId_low     0.12179988     0.38462942     0.562197218</span>
+<span class="go">zL             central           -2.557781158   -2.095603466   -1.670562491</span>
+<span class="go">               high              -2.397262704   -2.000659299   -1.615714775</span>
+<span class="go">               low               -2.794611532   -2.21228458    -1.759094479</span>
+<span class="go">zT central                       -0.971908247   -0.154827267   0.304658319</span>
+<span class="go">   high                          -0.844567857   -0.029630063   0.417215754</span>
+<span class="go">   low                           -1.166049037   -0.293347212   0.156554647</span>
 </pre></div>
 </div>
 <p>If a plot function (<code class="docutils literal notranslate"><span class="pre">plotROC</span></code>, <code class="docutils literal notranslate"><span class="pre">plotCAC</span></code>) is callled after calling <code class="docutils literal notranslate"><span class="pre">calculateConfidenceBootstrap</span></code> then
-the confidence interval is drawn as error bars.</p>
+the confidence interval is drawn as error bars, as shown in the ROC plot and CAC plot, respectively, below.</p>
+<div class="figure align-default">
+<img alt="ROC for test1.csv with error bars" src="_images/test1ROCbinErr.png" />
+</div>
+<div class="figure align-default">
+<img alt="CAC for test1.csv with error bars" src="_images/test1CACbinErr.png" />
+</div>
 </div>
 <div class="section" id="loading-raw-data-excel-format">
 <h2>Loading raw data excel format<a class="headerlink" href="#loading-raw-data-excel-format" title="Permalink to this headline">¶</a></h2>
@@ -332,9 +350,9 @@ for DataRaw.process()</p>
 <span class="n">dpVerbal</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s2">&quot;group&quot;</span><span class="p">,</span> <span class="n">condition</span><span class="o">=</span><span class="s2">&quot;Verbal&quot;</span><span class="p">)</span>
 <span class="n">minRate</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">dpControl</span><span class="o">.</span><span class="n">liberalTargetAbsentSuspectId</span><span class="p">,</span><span class="n">dpVerbal</span><span class="o">.</span><span class="n">liberalTargetAbsentSuspectId</span><span class="p">)</span>
 <span class="hll"><span class="n">dpControl</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="s2">&quot;group&quot;</span><span class="p">,</span><span class="s2">&quot;Control&quot;</span><span class="p">,</span><span class="n">pAUCLiberal</span><span class="o">=</span><span class="n">minRate</span><span class="p">)</span>
-</span><span class="hll"><span class="n">dpControl</span><span class="o">.</span><span class="n">calculateConfidenceBootstrap</span><span class="p">(</span><span class="n">nBootstraps</span><span class="o">=</span><span class="mi">2000</span><span class="p">)</span>
+</span><span class="hll"><span class="n">dpControl</span><span class="o">.</span><span class="n">calculateConfidenceBootstrap</span><span class="p">(</span><span class="n">nBootstraps</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
 </span><span class="hll"><span class="n">dpVerbal</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="s2">&quot;group&quot;</span><span class="p">,</span><span class="s2">&quot;Verbal&quot;</span><span class="p">,</span><span class="n">pAUCLiberal</span><span class="o">=</span><span class="n">minRate</span><span class="p">)</span>
-</span><span class="hll"><span class="n">dpVerbal</span><span class="o">.</span><span class="n">calculateConfidenceBootstrap</span><span class="p">(</span><span class="n">nBootstraps</span><span class="o">=</span><span class="mi">2000</span><span class="p">)</span>
+</span><span class="hll"><span class="n">dpVerbal</span><span class="o">.</span><span class="n">calculateConfidenceBootstrap</span><span class="p">(</span><span class="n">nBootstraps</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
 </span><span class="hll"><span class="n">dpControl</span><span class="o">.</span><span class="n">comparePAUC</span><span class="p">(</span><span class="n">dpVerbal</span><span class="p">)</span>
 </span></pre></div>
 </td></tr></table></div>
@@ -352,16 +370,15 @@ for DataRaw.process()</p>
 <div class="figure align-default">
 <img alt="_images/test2ROCs.png" src="_images/test2ROCs.png" />
 </div>
-<p>The shaded regions are the pAUCs that were compared. You can see that they both used the same minimum false ID rate. The dashed colored curves represent the equal variance independent observation model (IO EV) fits . The error bars are 95% confidence intervals. The dashed black line represents chance performance.</p>
+<p>The shaded regions are the pAUCs that were compared. You can see that they both used the same minimum false ID rate. The error bars are 95% confidence intervals. The dashed black line represents chance performance.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The uncertainities can be changed by setting them to .68, for example <code class="docutils literal notranslate"><span class="pre">dpControl.calculateConfidenceBootstrap(nBootstraps=2000,cl=68)</span></code> and <code class="docutils literal notranslate"><span class="pre">dpVerbal.calculateConfidenceBootstrap(nBootstraps=2000,cl=68)</span></code></p>
+<p>The uncertainities can be changed by setting them to .68, for example <code class="docutils literal notranslate"><span class="pre">dpControl.calculateConfidenceBootstrap(nBootstraps=200,cl=68)</span></code> and <code class="docutils literal notranslate"><span class="pre">dpVerbal.calculateConfidenceBootstrap(nBootstraps=200,cl=68)</span></code></p>
 </div>
 </div>
 <div class="section" id="loading-processed-data">
 <h2>Loading processed data<a class="headerlink" href="#loading-processed-data" title="Permalink to this headline">¶</a></h2>
-<p>You might already have processed the raw data. It is possible to load a file to perform model fits etc. The processed
-data needs to be in the following CSV format. This is basically the same format as the pivot table stored in <code class="docutils literal notranslate"><span class="pre">DataProcessed</span></code>.</p>
+<p>You might already have processed the raw data, or you only have a table of data. It is possible to load a file to perform model fits etc. The processed data need to be in the following CSV format. This is basically the same format as the pivot table stored in <code class="docutils literal notranslate"><span class="pre">DataProcessed</span></code>.</p>
 <table class="colwidths-given docutils align-default" id="id1">
 <caption><span class="caption-text">Processed data columns and allowed values</span><a class="headerlink" href="#id1" title="Permalink to this table">¶</a></caption>
 <colgroup>
@@ -393,69 +410,69 @@ data needs to be in the following CSV format. This is basically the same format 
 <td><p>100</p></td>
 </tr>
 <tr class="row-even"><td><p>targetAbsent fillerId</p></td>
-<td><p>3</p></td>
+<td><p>2</p></td>
 <td><p>7</p></td>
-<td><p>7</p></td>
-<td><p>11</p></td>
-<td><p>16</p></td>
-<td><p>26</p></td>
-<td><p>30</p></td>
-<td><p>31</p></td>
-<td><p>19</p></td>
-<td><p>13</p></td>
+<td><p>5</p></td>
+<td><p>8</p></td>
 <td><p>10</p></td>
+<td><p>20</p></td>
+<td><p>26</p></td>
+<td><p>20</p></td>
+<td><p>14</p></td>
+<td><p>8</p></td>
+<td><p>6</p></td>
 </tr>
 <tr class="row-odd"><td><p>targetAbsent rejectId</p></td>
-<td><p>4</p></td>
+<td><p>2</p></td>
 <td><p>5</p></td>
 <td><p>5</p></td>
 <td><p>6</p></td>
-<td><p>11</p></td>
-<td><p>28</p></td>
-<td><p>39</p></td>
-<td><p>57</p></td>
-<td><p>75</p></td>
-<td><p>46</p></td>
-<td><p>66</p></td>
+<td><p>9</p></td>
+<td><p>24</p></td>
+<td><p>35</p></td>
+<td><p>56</p></td>
+<td><p>68</p></td>
+<td><p>43</p></td>
+<td><p>64</p></td>
 </tr>
 <tr class="row-even"><td><p>targetPresent fillerId</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
 <td><p>2</p></td>
-<td><p>1</p></td>
 <td><p>3</p></td>
-<td><p>4</p></td>
-<td><p>10</p></td>
-<td><p>9</p></td>
-<td><p>9</p></td>
-<td><p>17</p></td>
-<td><p>16</p></td>
+<td><p>5</p></td>
 <td><p>6</p></td>
+<td><p>5</p></td>
+<td><p>10</p></td>
+<td><p>5</p></td>
 <td><p>4</p></td>
+<td><p>2</p></td>
 </tr>
 <tr class="row-odd"><td><p>targetPresent rejectId</p></td>
-<td><p>4</p></td>
-<td><p>3</p></td>
-<td></td>
-<td><p>9</p></td>
-<td><p>10</p></td>
-<td><p>23</p></td>
-<td><p>11</p></td>
-<td><p>19</p></td>
-<td><p>25</p></td>
-<td><p>18</p></td>
-<td><p>25</p></td>
-</tr>
-<tr class="row-even"><td><p>targetPresent suspectId</p></td>
 <td><p>3</p></td>
 <td><p>1</p></td>
-<td><p>4</p></td>
-<td><p>5</p></td>
-<td><p>11</p></td>
+<td><p>0</p></td>
+<td><p>6</p></td>
+<td><p>10</p></td>
+<td><p>20</p></td>
+<td><p>9</p></td>
 <td><p>19</p></td>
-<td><p>44</p></td>
-<td><p>77</p></td>
-<td><p>55</p></td>
-<td><p>37</p></td>
-<td><p>47</p></td>
+<td><p>23</p></td>
+<td><p>16</p></td>
+<td><p>21</p></td>
+</tr>
+<tr class="row-even"><td><p>targetPresent suspectId</p></td>
+<td><p>2</p></td>
+<td><p>1</p></td>
+<td><p>4</p></td>
+<td><p>4</p></td>
+<td><p>10</p></td>
+<td><p>18</p></td>
+<td><p>43</p></td>
+<td><p>68</p></td>
+<td><p>54</p></td>
+<td><p>33</p></td>
+<td><p>41</p></td>
 </tr>
 </tbody>
 </table>
@@ -463,7 +480,7 @@ data needs to be in the following CSV format. This is basically the same format 
 <p class="admonition-title">Note</p>
 <p>If the <code class="docutils literal notranslate"><span class="pre">targetAbsent</span> <span class="pre">suspectId</span></code> row is not present it is estimated by <code class="docutils literal notranslate"><span class="pre">(targetAbsent</span> <span class="pre">fillerId)/lineupSize</span></code></p>
 </div>
-<p>This data is stored in <code class="docutils literal notranslate"><span class="pre">data/tutorials/test1_processed.csv</span></code></p>
+<p>The data are stored in <code class="docutils literal notranslate"><span class="pre">data/tutorials/test1_processed.csv</span></code></p>
 <div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
 <span class="normal">2</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
 <span class="hll"><span class="n">dp</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataProcessed</span><span class="p">(</span><span class="s2">&quot;test1_processed.csv&quot;</span><span class="p">,</span> <span class="n">lineupSize</span> <span class="o">=</span> <span class="mi">6</span><span class="p">)</span>
@@ -526,13 +543,13 @@ sequentially in order.</p>
 </span><span class="hll"><span class="n">_plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 </span></pre></div>
 </td></tr></table></div>
-<div class="figure align-default">
-<img alt="CAC for test1.csv with two different binning" src="_images/test1_overlay.jpg" />
-</div>
 <p>After overlaying plots it maybe important to change the plot axis ranges this can be done with <code class="docutils literal notranslate"><span class="pre">xlim</span></code> and <code class="docutils literal notranslate"><span class="pre">ylim</span></code></p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">ylim</span><span class="p">(</span><span class="mf">0.50</span><span class="p">,</span><span class="mf">1.00</span><span class="p">)</span>
 </pre></div>
+</div>
+<div class="figure align-default">
+<img alt="CAC for test1.csv with two different binning" src="_images/test1Overlay.jpg" />
 </div>
 </div>
 <div class="section" id="generating-data-from-signal-detection-model">
@@ -625,7 +642,7 @@ share with colleagues.</p>
     <p>
         &copy; Copyright Royal Holloway, University of London 2020 and University of Bristol 2020
       <span class="lastupdated">
-        Last updated on Apr 13, 2022.
+        Last updated on May 08, 2022.
       </span>
 
     </p>

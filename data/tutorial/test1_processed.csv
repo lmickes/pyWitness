@@ -1,0 +1,6 @@
+confidence,0,10,20,30,40,50,60,70,80,90,100
+targetAbsent fillerId,2,7,5,8,10,20,26,20,14,8,6
+targetAbsent rejectId,2,5,5,6,9,24,35,56,68,43,64
+targetPresent fillerId,0,0,2,3,5,6,5,10,5,4,2
+targetPresent rejectId,3,1,0,6,10,20,9,19,23,16,21
+targetPresent suspectId,2,1,4,4,10,18,42,68,54,33,41
