@@ -30,7 +30,7 @@ class DataProcessed :
         if isinstance(dataRaw, str) :
             # could just load the data frame from csv, but want to have in exactly same format. 
 
-            data_pivot_load = _pandas.read_csv(data_pivot)
+            data_pivot_load = _pandas.read_csv(dataRaw)
 
             nrows = data_pivot_load.shape[0]
             
@@ -44,6 +44,8 @@ class DataProcessed :
                 rowLabel = data_pivot_load.iloc[i].values[0]
                 rowData  = data_pivot_load.iloc[i].values[1:] 
                 print(rowLabel, rowData)
+
+            self.data_pivot = data_pivot_load
         else :
             self.dataRaw           = dataRaw
             self.lineupSize        = lineupSize 

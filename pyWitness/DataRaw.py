@@ -342,7 +342,7 @@ class DataRaw :
         :return:
         '''
 
-        if type(value) == str :
+        if type(value) == str or type(value) == int or type(value) == float:
             value = [value]
 
         if option == "keep":

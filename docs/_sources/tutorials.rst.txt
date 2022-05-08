@@ -154,15 +154,15 @@ You should see the following output of the ``dp.printPivot()``.
 
 .. code-block :: console
 
-                              confidence                                                          
-   confidence                        0    10   20    30    40    50    60    70    80    90    100
-   targetLineup  responseType                                                                     
-   targetAbsent  fillerId            3.0  7.0  7.0  11.0  16.0  26.0  30.0  31.0  19.0  13.0  10.0
-                 rejectId            4.0  5.0  5.0   6.0  11.0  28.0  39.0  57.0  75.0  46.0  66.0
-   targetPresent fillerId            2.0  1.0  3.0   4.0  10.0   9.0   9.0  17.0  16.0   6.0   4.0
-                 rejectId            4.0  3.0  NaN   9.0  10.0  23.0  11.0  19.0  25.0  18.0  25.0
-                 suspectId           3.0  1.0  4.0   5.0  11.0  19.0  44.0  77.0  55.0  37.0  47.0
-
+                             confidence                                                         
+   confidence                        0    10   20   30    40    50    60    70    80    90    100
+   targetLineup  responseType                                                                    
+   targetAbsent  fillerId            2.0  7.0  5.0  8.0  10.0  20.0  26.0  20.0  14.0   8.0   6.0
+                 rejectId            2.0  5.0  5.0  6.0   9.0  24.0  35.0  56.0  68.0  43.0  64.0
+   targetPresent fillerId            0.0  0.0  2.0  3.0   5.0   6.0   5.0  10.0   5.0   4.0   2.0
+                 rejectId            3.0  1.0  0.0  6.0  10.0  20.0   9.0  19.0  23.0  16.0  21.0
+                 suspectId           2.0  1.0  4.0  4.0  10.0  18.0  42.0  68.0  54.0  33.0  41.0
+   total number of participants 890.0
 
 In the output above are frequencies by confidence levels for each response type. To familiarize you with the output, in the table above, 11 filler identifications were given with 30% confidence on the target-absent lineups, 66 reject identifications (i.e., "The perp is not in the lineup") given with 100% confidence on the target-absent lineups, and 47 guilty suspect identifications (from target-present lineups) given with 100% confidence. 
 
@@ -170,19 +170,22 @@ You should also see the following output for ``dp.printRates()``
 
 .. code-block :: console
 
-                              confidence                                                                                                    
-   confidence                        100       90        80        70        60        50        40        30        20        10        0  
-   targetLineup  responseType                                                                                                               
-   cac                          0.965753  0.944681  0.945559  0.937120  0.897959  0.814286  0.804878  0.731707  0.774194  0.461538  0.857143 
-   rf                           0.146660  0.118031  0.175289  0.247614  0.147664  0.070316  0.041185  0.020593  0.015570  0.006529  0.010547
-   targetAbsent  fillerId       0.019417  0.044660  0.081553  0.141748  0.200000  0.250485  0.281553  0.302913  0.316505  0.330097  0.335922
-                 rejectId       0.128155  0.217476  0.363107  0.473786  0.549515  0.603883  0.625243  0.636893  0.646602  0.656311  0.664078
-                 suspectId      0.003236  0.007443  0.013592  0.023625  0.033333  0.041748  0.046926  0.050485  0.052751  0.055016  0.055987
-   targetPresent fillerId       0.007533  0.018832  0.048964  0.080979  0.097928  0.114878  0.133710  0.141243  0.146893  0.148776  0.152542
-                 rejectId       0.047081  0.080979  0.128060  0.163842  0.184557  0.227872  0.246704  0.263653       NaN  0.269303  0.276836
-                 suspectId      0.088512  0.158192  0.261770  0.406780  0.489642  0.525424  0.546139  0.555556  0.563089  0.564972  0.570621
-
-In the table above, the overall false ID rate is 0.06, the overall correct ID rate is 0.57, and the overall correct rejection rate is 0.66.
+                           confidence                         
+                                    100        90         80         70         60         50         40         30         20         10        0  
+   targetLineup  responseType                                                                                                                         
+   cac           central         0.976190   0.961165   0.958580   0.953271   0.906475   0.843750   0.857143   0.750000   0.827586   0.461538  0.857143
+   confidence    central         100        90         80         70         60         50         40         30         20         10        0   
+   dprime        central         1.509544   1.585873   1.742686   1.940776   1.994925   1.990478   2.001534   1.990193   1.992932   1.971156  1.975221
+   rf                            0.140940   0.115213   0.189038   0.239374   0.155481   0.071588   0.039150   0.017897   0.016219   0.007271  0.007830
+   targetAbsent  fillerId        0.013544   0.031603   0.063205   0.108352   0.167043   0.212190   0.234763   0.252822   0.264108   0.279910  0.284424
+                 rejectId        0.144470   0.241535   0.395034   0.521445   0.600451   0.654628   0.674944   0.688488   0.699774   0.711061  0.715576
+                 suspectId       0.002257   0.005267   0.010534   0.018059   0.027840   0.035365   0.039127   0.042137   0.044018   0.046652  0.047404
+   targetPresent fillerId        0.004474   0.013423   0.024609   0.046980   0.058166   0.071588   0.082774   0.089485   0.093960   0.093960  0.093960
+                 rejectId        0.046980   0.082774   0.134228   0.176734   0.196868   0.241611   0.263982   0.277405   0.277405   0.279642  0.286353
+                 suspectId       0.091723   0.165548   0.286353   0.438479   0.532438   0.572707   0.595078   0.604027   0.612975   0.615213  0.619687
+   zL            central        -2.839765  -2.557781  -2.306755  -2.095603  -1.913524  -1.807208  -1.760906  -1.726409  -1.705849  -1.678225 -1.670562
+   zT            central        -1.330222  -0.971908  -0.564069  -0.154827   0.081401   0.183270   0.240628   0.263784   0.287082   0.292931  0.304658                                                                                                                                
+In the table above, the overall false ID rate is 0.047, the overall correct ID rate is 0.620, and the overall correct rejection rate is 0.716.
 
 .. note::
    In the example there is no ``suspectId`` for ``targetAbsent`` lineups. Here the ``targetAbsent.suspectId`` is estimated as ``targetAbsent.fillerId/lineupSize`` 
@@ -202,7 +205,7 @@ Plotting ROC curves
    dp = dr.process()
    dp.plotROC()
 
-.. figure:: images/test1_roc.jpg
+.. figure:: images/test1ROCnoBin.png
    :alt: ROC for test1.csv
 
 .. note:: 
@@ -222,7 +225,7 @@ Plotting CAC curves
    dp = dr.process()
    dp.plotCAC()
 
-.. figure:: images/test1_cac.jpg
+.. figure:: images/test1CACnoBin.png
    :alt: CAC for test1.csv
 
 .. image:: http://mickeslab.com/wp-content/uploads/2022/03/tutorial1ROCcac.gif
@@ -262,7 +265,7 @@ The dataset used in this tutorial has 11 confidence levels (0, 10, 20, 30, 40, 5
    dp = dr.process()
    dp.plotCAC()   
 
-.. figure:: images/test1_rebinned.jpg
+.. figure:: images/test1CACBin.png
    :alt: Rebinned CAC for test1.csv 
 
 To rescale the axes, you can use
@@ -276,7 +279,7 @@ To rescale the axes, you can use
 
 and you get 
 
-.. figure:: images/test1_cacXYlims.jpg
+.. figure:: images/test1CACBinLim.png
    :alt: CAC rescaled
 
 .. note:: 
@@ -419,19 +422,19 @@ Comparing these two fit parameters settings
    * ``lureBetweenSigma`` is fixed to ``targetBetweenSigma``
    * ``targetBetweenSigma`` is fixed to its current value
 
-After running the fit the parameters are updated so the output of line 15 in the code example gives
+After running the fit the parameters are updated so the output of line 12 in the code example gives
 
 .. code-block :: console
 
-   lureMean 0.0 (fixed)
-   lureSigma 1.0 (fixed targetSigma)
-   targetMean 1.6644667559751338 (free)
-   targetSigma 1.0 (fixed)
-   lureBetweenSigma 0.47633248791026106 (fixed targetBetweenSigma)
-   targetBetweenSigma 0.47633248791026106 (free)
-   c1 1.3610178212548698 (free)
-   c2 1.8627517728791307 (free)
-   c3 2.5659741783090464 (free)
+ModelFit.printParameters>  lureMean 0.000 (fixed)
+ModelFit.printParameters>  lureSigma 1.000 (fixed targetSigma)
+ModelFit.printParameters>  targetMean 1.798 (free)
+ModelFit.printParameters>  targetSigma 1.000 (fixed)
+ModelFit.printParameters>  lureBetweenSigma 0.605 (fixed targetBetweenSigma)
+ModelFit.printParameters>  targetBetweenSigma 0.605 (free)
+ModelFit.printParameters>  c1 1.402 (free)
+ModelFit.printParameters>  c2 1.935 (free)
+ModelFit.printParameters>  c3 2.677 (free)
 
 There many ways to control the model
 
@@ -554,7 +557,7 @@ To compare an *ROC* plot between data and fit
    import matplotlib.pyplot as _plt
    _plt.legend()
 
-.. figure:: images/test1_fitDataROCComparision.jpg
+.. figure:: images/test1ROCcomparisonBin.png
    :alt: Data-model ROC comparision for test1.csv
 
 .. image:: http://mickeslab.com/wp-content/uploads/2022/03/tutorial1fitDataROCplot.gif
@@ -568,9 +571,9 @@ To compare a *CAC* plot between data and fit
    mf.plotCAC(label="Indep. obs. fit")
 
    import matplotlib.pyplot as _plt
-   _plt.legend
+   _plt.legend()
 
-.. figure:: images/test1_fitDataCACComparision.jpg
+.. figure:: images/test1CACcomparisonBin.png
    :alt: Data-model CAC comparision for test1.csv
 
 To compare frequencies in each bin between data and fit
@@ -579,7 +582,7 @@ To compare frequencies in each bin between data and fit
 
    mf.plotFit()
 
-.. figure:: images/test1_plotFit.jpg
+.. figure:: images/testPlotFit.png
    :alt: Data-model comparision for test1.csv
 
 Once a fit has been performed, the model can be displayed as a function of memory strength and includes the lure and target distributions with means and standard deviations (top panel of plot below) and the associated criteria, c1 (low confidence), c2 (medium confidence), and c3 (high confidence) (bottom panel of plot below). This simple command belonging to a ModelFit object can be used to make the plot below.
@@ -588,7 +591,7 @@ Once a fit has been performed, the model can be displayed as a function of memor
 
    mf.plotModel()
 
-.. figure:: images/test1_plotModel.jpg
+.. figure:: images/testPlotModel.png
    :alt: Independent Observation model fit
 
 
@@ -665,6 +668,6 @@ The string argument for the functions is the file name.
    dp.writeRatesExcel("test1_rates.xlsx")
    dp.writeRatesCsv("test1_rates.csv")
 
-.. figure:: images/test1_pivot_excel.jpg
+.. figure:: images/test1PivotExcel.png
 
-.. figure:: images/test1_rates_excel.jpg
+.. figure:: images/test1RatesExcel.png
