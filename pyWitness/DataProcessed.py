@@ -71,6 +71,8 @@ class DataProcessed :
 
         self.bootstrapped = False
 
+        self.data_rates.loc['responseTime','central'] = list(self.data_rates.loc['responseTime','central'][::-1])
+
     def calculatePivot(self) : 
         ''' 
         Calculate fequency pivot table against 'confidence'
@@ -79,9 +81,9 @@ class DataProcessed :
         '''
         
         self.data_pivot = _pandas.pivot_table(self.dataRaw.dataSelected, 
-                                              columns='confidence', 
+                                              columns='responseTime',
                                               index=['targetLineup','responseType'], 
-                                              aggfunc={'confidence':'count'})
+                                              aggfunc={'responseTime':'count'})
 
         # reverse confidence
         if self.reverseConfidence :
@@ -177,12 +179,12 @@ class DataProcessed :
         '''
 
         confidence_mean = _copy.copy(self.data_rates.loc['targetPresent','suspectId'])
-        confidence_mean.name = ("confidence","central")
+        confidence_mean.name = ("responseTime","central")
 
         if self.dataRaw and self.dataRaw.collapseContinuous :
             for i in range(0,len(self.dataRaw.collapseContinuousLabels)) :
                 label = self.dataRaw.collapseContinuousLabels[i]
-                conf_label = self.dataRaw.data['confidence_original'][self.dataRaw.data['confidence'] == label]
+                conf_label = self.dataRaw.data['responseTime_original'][self.dataRaw.data['responseTime'] == label]
                 conf_mean  = conf_label.mean()
 
                 confidence_mean[len(self.dataRaw.collapseContinuousLabels)-i-1] = conf_mean
@@ -193,7 +195,7 @@ class DataProcessed :
             confidence_mean = _copy.copy(self.data_rates.loc['targetPresent', 'suspectId'])
             confidence_mean.name = ("confidence", "central")
 
-            confidence = self.data_rates.columns.get_level_values('confidence').values
+            confidence = self.data_rates.columns.get_level_values('responseTime').values
             confidence_mean[:] = confidence
 
             self.data_rates = self.data_rates.append(confidence_mean)
@@ -366,7 +368,7 @@ class DataProcessed :
         except:
             pass
 
-        c = _np.array(self.data_rates.columns.get_level_values('confidence').values)
+        c = _np.array(self.data_rates.columns.get_level_values('responseTime').values)
 
         zT_series = _pandas.Series(name=("zT","central"),data=zT)
         zL_series = _pandas.Series(name=("zL","central"),data=zL)
@@ -379,11 +381,11 @@ class DataProcessed :
             # lowest positive confidence
             posConf = _np.sort(c[c>0])
             lowPosConf = posConf[0]
-            self.dPrime = self.data_rates.loc['dprime','central']['confidence'][lowPosConf]
+            self.dPrime = self.data_rates.loc['dprime','central']['responseTime'][lowPosConf]
         else :
             conf = _np.sort(c)
             lowConf = conf[0]
-            self.dPrime = self.data_rates.loc['dprime', 'central']['confidence'][lowConf]
+            self.dPrime = self.data_rates.loc['dprime', 'central']['responseTime'][lowConf]
 
     def calculateConfidenceBootstrap(self, nBootstraps = 200, cl = 95, plotROC = False, plotCAC = False) :
         
@@ -411,8 +413,8 @@ class DataProcessed :
             self.data_rates.drop(("dprime","high"),inplace = True)
 
             try:
-                self.data_rates.drop(("confidence","low"), inplace=True)
-                self.data_rates.drop(("confidence","high"), inplace=True)
+                self.data_rates.drop(("responseTime","low"), inplace=True)
+                self.data_rates.drop(("responseTime","high"), inplace=True)
             except :
                 pass
 
@@ -445,7 +447,7 @@ class DataProcessed :
             cac.append(dp.data_rates.loc['cac','central'].values)
 
             try :
-                confidence.append(dp.data_rates.loc['confidence','central'].values)
+                confidence.append(dp.data_rates.loc['responseTime','central'].values)
             except :
                 pass
 
@@ -540,8 +542,8 @@ class DataProcessed :
         self.data_rates = self.data_rates.append(_pandas.Series(cac_high, name = ('cac','high'), index = template.index))
 
         try :
-            self.data_rates = self.data_rates.append(_pandas.Series(confidence_low, name = ('confidence','low'), index = template.index))
-            self.data_rates = self.data_rates.append(_pandas.Series(confidence_high, name = ('confidence','high'), index = template.index))
+            self.data_rates = self.data_rates.append(_pandas.Series(confidence_low, name = ('responseTime','low'), index = template.index))
+            self.data_rates = self.data_rates.append(_pandas.Series(confidence_high, name = ('responseTime','high'), index = template.index))
         except :
             pass
 
@@ -691,13 +693,13 @@ class DataProcessed :
         
         '''
 
-        confidence = self.data_rates.columns.get_level_values('confidence')
+        confidence = self.data_rates.columns.get_level_values('responseTime')
         cac        = self.data_rates.loc['cac','central']
         rf         = self.data_rates.loc['rf','']
 
         # try average confidence (if calculated)
         try :
-            confidence = self.data_rates.loc['confidence','central']
+            confidence = self.data_rates.loc['responseTime','central']
         except :
             pass
 
@@ -710,8 +712,8 @@ class DataProcessed :
                 scatterErr = _plt.errorbar(confidence,cac,
                                            yerr = [self.data_rates.loc['cac','central']-self.data_rates.loc['cac','low'],
                                                    self.data_rates.loc['cac','high']-self.data_rates.loc['cac','central']],
-                                           xerr = [self.data_rates.loc['confidence','central']-self.data_rates.loc['confidence','low'],
-                                                     self.data_rates.loc['confidence','high']-self.data_rates.loc['confidence','central']],
+                                           xerr = [self.data_rates.loc['responseTime','central']-self.data_rates.loc['responseTime','low'],
+                                                     self.data_rates.loc['responseTime','high']-self.data_rates.loc['responseTime','central']],
                                            fmt='.',
                                            color  = scatter.get_facecolor()[0],
                                            ecolor = scatter.get_facecolor()[0],
@@ -788,7 +790,7 @@ class DataProcessed :
 
         :rtype: int 
         '''
-        return self.data_rates.columns.get_level_values('confidence').size
+        return self.data_rates.columns.get_level_values('responseTime').size
 
     @property
     def numberLineups(self):
