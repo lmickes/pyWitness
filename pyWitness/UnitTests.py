@@ -12,7 +12,7 @@ class UnitTests :
                                   bins=[0, 5000, 10000, 15000, 20000, 99999],
                                   labels=[5, 4, 3, 2, 1])
 
-        self.dp = self.dr.process(reverseConfidence=False)
+        self.dp = self.dr.process(reverseConfidence=True)
 
         self.dp.printPivot()
         self.dp.printRates()
