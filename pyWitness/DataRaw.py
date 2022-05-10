@@ -363,7 +363,7 @@ class DataRaw :
             self.data = self.data.loc[cut]
             return (cut*1).sum()
 
-    def process(self, column = '', condition = '', reverseConfidence = False, pAUCLiberal = 1.0, levels = None, option = "all") :
+    def process(self, column = '', condition = '', reverseConfidence = False, pAUCLiberal = 1.0, levels = None, option = "all", dependentVariable = "confidence") :
         '''
         Process the raw data and returns DataProcessed object
 
@@ -380,6 +380,7 @@ class DataRaw :
         self.processColumn = column
         self.processCondition = condition
         self.processReverseConfidence = reverseConfidence
+        self.dependentVariable = dependentVariable
 
         if column != '' :
             self.dataSelected = self.data[self.data[column] == condition]
