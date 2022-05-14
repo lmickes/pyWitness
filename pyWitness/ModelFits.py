@@ -79,7 +79,7 @@ class Parameter(object) :
         return self.value == other.value
             
     def __float__(self) :
-        return self.value
+        return float(self.value)
 
     def __copy__(self) :
         new = Parameter(0)
