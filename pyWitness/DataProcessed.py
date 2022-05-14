@@ -22,10 +22,9 @@ class DataProcessed :
     
     '''
     
-    def __init__(self, dataRaw, reverseConfidence = False, lineupSize = 1, pAUCLiberal = 1.0, levels = None, option="all") :
+    def __init__(self, dataRaw, reverseConfidence = False, lineupSize = 1, pAUCLiberal = 1.0, levels = None, option="all", dependentVariable = "confidence") :
 
         self.debugIoPadSize = 35
-        
 
         if isinstance(dataRaw, str) :
             # could just load the data frame from csv, but want to have in exactly same format. 
@@ -45,7 +44,22 @@ class DataProcessed :
                 rowData  = data_pivot_load.iloc[i].values[1:] 
                 print(rowLabel, rowData)
 
+            data_pivot_load = data_pivot_load.drop("confidence",axis=1)
+            cols = _pandas.MultiIndex.from_product([["confidence"], [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]],names=[None,"confidence"])
+            inds = _pandas.MultiIndex.from_product([["targetAbsent","targetPresent"],["fillerId","rejectId","suspectId"]],names=['targetLineup', 'responseType'])
+            inds = inds.drop(('targetAbsent','suspectId'))
+
+            data_pivot_load.columns = cols
+            data_pivot_load.index   = inds
+
+            print(cols)
+            print(inds)
             self.data_pivot = data_pivot_load
+
+            self.lineupSize        = lineupSize
+            self.dataRaw           = None
+            self.dependentVariable = dependentVariable
+            self.reverseConfidence = reverseConfidence
         else :
             self.dataRaw           = dataRaw
             self.lineupSize        = lineupSize 
@@ -185,7 +199,11 @@ class DataProcessed :
         '''
 
         confidence_mean = _copy.copy(self.data_rates.loc['targetPresent','suspectId'])
-        confidence_mean.name = (self.dataRaw.dependentVariable,"central")
+
+        if self.dataRaw is None :
+            confidence_mean.name = (self.dependentVariable, "central")
+        else :
+            confidence_mean.name = (self.dataRaw.dependentVariable,"central")
 
         if self.dataRaw and self.dataRaw.collapseContinuous :
             for i in range(0,len(self.dataRaw.collapseContinuousLabels)) :
@@ -201,7 +219,10 @@ class DataProcessed :
             confidence_mean = _copy.copy(self.data_rates.loc['targetPresent', 'suspectId'])
             confidence_mean.name = ("confidence", "central")
 
-            confidence = self.data_rates.columns.get_level_values(self.dataRaw.dependentVariable).values
+            if self.dataRaw is None :
+                confidence = self.data_rates.columns.get_level_values(self.dependentVariable).values
+            else :
+                confidence = self.data_rates.columns.get_level_values(self.dataRaw.dependentVariable).values
             confidence_mean[:] = confidence
 
             self.data_rates = _pandas.concat([self.data_rates, _pandas.DataFrame(confidence_mean).transpose()])
@@ -345,6 +366,10 @@ class DataProcessed :
         pass
 
     def calculateDPrime(self):
+
+        if self.dataRaw is None :
+            return
+
         zT = _special.ndtri(self.data_rates.loc['targetPresent','suspectId'])
         try :
             zL = _special.ndtri(self.data_rates.loc['targetAbsent','suspectId'])
