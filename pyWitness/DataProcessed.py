@@ -117,6 +117,9 @@ class DataProcessed :
         
         self.data_rates = self.data_pivot.copy()
 
+        # rename multiindex
+        self.data_rates.index.names = ["variable", "type"]
+
         # reverse confidence
         columns = self.data_rates.columns.tolist()
         columns = columns[::-1]
@@ -172,7 +175,7 @@ class DataProcessed :
             if self.lineupSize != 1 :  # Only estimate if this is a lineup (fillers dont exist for showups)
                 suspectId = self.data_rates.loc['targetAbsent','fillerId']/self.lineupSize
                 suspectId.name = ("targetAbsent","suspectId")
-                self.data_rates = self.data_rates.append(suspectId)
+                self.data_rates = _pandas.concat([self.data_rates,_pandas.DataFrame(suspectId).transpose()])
                 self.data_rates = self.data_rates.sort_index()
 
     def calculateConfidence(self):
@@ -192,7 +195,7 @@ class DataProcessed :
 
                 confidence_mean[len(self.dataRaw.collapseContinuousLabels)-i-1] = conf_mean
 
-            self.data_rates = self.data_rates.append(confidence_mean)
+            self.data_rates = _pandas.concat([self.data_rates, _pandas.DataFrame(confidence_mean).transpose()])
             self.data_rates = self.data_rates.sort_index()
         else :
             confidence_mean = _copy.copy(self.data_rates.loc['targetPresent', 'suspectId'])
@@ -201,7 +204,7 @@ class DataProcessed :
             confidence = self.data_rates.columns.get_level_values(self.dataRaw.dependentVariable).values
             confidence_mean[:] = confidence
 
-            self.data_rates = self.data_rates.append(confidence_mean)
+            self.data_rates = _pandas.concat([self.data_rates, _pandas.DataFrame(confidence_mean).transpose()])
             self.data_rates = self.data_rates.sort_index()
 
     def calculateRelativeFrequency(self) :
@@ -231,7 +234,7 @@ class DataProcessed :
 
         rf = (cid + fid)/(cid.sum() + fid.sum())
         rf.name = ("rf","") 
-        self.data_rates = self.data_rates.append(rf)
+        self.data_rates = _pandas.concat([self.data_rates, _pandas.DataFrame(rf).transpose()])
         self.data_rates = self.data_rates.sort_index()
 
     def calculateCAC(self) :
@@ -255,7 +258,7 @@ class DataProcessed :
         
         cac = cid/(cid+fid)
         cac.name = ("cac","central")
-        self.data_rates = self.data_rates.append(cac)
+        self.data_rates = _pandas.concat([self.data_rates, _pandas.DataFrame(cac).transpose()])
         self.data_rates = self.data_rates.sort_index()
 
     def calculatePAUC(self, xmax = 1.0) :
@@ -351,7 +354,7 @@ class DataProcessed :
         dPrime = zT - zL
         dPrime.name = ("dprime", "central")
 
-        self.data_rates = self.data_rates.append(dPrime)
+        self.data_rates = _pandas.concat([self.data_rates, _pandas.DataFrame(dPrime).transpose()])
         self.data_rates = self.data_rates.sort_index()
 
         def p0(x, a,b) :
@@ -376,8 +379,8 @@ class DataProcessed :
         zT_series = _pandas.Series(name=("zT","central"),data=zT)
         zL_series = _pandas.Series(name=("zL","central"),data=zL)
 
-        self.data_rates = self.data_rates.append(zT_series)
-        self.data_rates = self.data_rates.append(zL_series)
+        self.data_rates = _pandas.concat([self.data_rates, _pandas.DataFrame(zT_series).transpose()])
+        self.data_rates = _pandas.concat([self.data_rates, _pandas.DataFrame(zL_series).transpose()])
         self.data_rates = self.data_rates.sort_index()
 
         if self.lineupSize == 1 :
@@ -542,41 +545,41 @@ class DataProcessed :
         self.pAUC_array             = pAUC
 
         template = self.data_rates.loc['cac','central']
-        self.data_rates = self.data_rates.append(_pandas.Series(cac_low, name = ('cac','low'), index = template.index))
-        self.data_rates = self.data_rates.append(_pandas.Series(cac_high, name = ('cac','high'), index = template.index))
+        self.data_rates = _pandas.concat([self.data_rates,_pandas.DataFrame(_pandas.Series(cac_low, name = ('cac','low'), index = template.index)).transpose()])
+        self.data_rates = _pandas.concat([self.data_rates,_pandas.DataFrame(_pandas.Series(cac_high, name = ('cac','high'), index = template.index)).transpose()])
 
         try :
-            self.data_rates = self.data_rates.append(_pandas.Series(confidence_low, name = (self.dataRaw.dependentVariable,'low'), index = template.index))
-            self.data_rates = self.data_rates.append(_pandas.Series(confidence_high, name = (self.dataRaw.dependentVariable,'high'), index = template.index))
+            self.data_rates = _pandas.concat([self.data_rates, _pandas.DataFrame(_pandas.Series(confidence_low, name = (self.dataRaw.dependentVariable,'low'), index = template.index)).transpose()])
+            self.data_rates = _pandas.concat([self.data_rates, _pandas.DataFrame(_pandas.Series(confidence_high, name = (self.dataRaw.dependentVariable,'high'), index = template.index)).transpose()])
         except :
             pass
 
-        self.data_rates = self.data_rates.append(_pandas.Series(targetAbsentFillerId_low, name = ('targetAbsent','fillerId_low'), index = template.index))
-        self.data_rates = self.data_rates.append(_pandas.Series(targetAbsentFillerId_high, name = ('targetAbsent','fillerId_high'), index = template.index))
+        self.data_rates = _pandas.concat([self.data_rates, _pandas.DataFrame(_pandas.Series(targetAbsentFillerId_low, name = ('targetAbsent','fillerId_low'), index = template.index)).transpose()])
+        self.data_rates = _pandas.concat([self.data_rates, _pandas.DataFrame(_pandas.Series(targetAbsentFillerId_high, name = ('targetAbsent','fillerId_high'), index = template.index)).transpose()])
 
-        self.data_rates = self.data_rates.append(_pandas.Series(targetAbsentRejectId_low, name = ('targetAbsent','rejectId_low'), index = template.index))
-        self.data_rates = self.data_rates.append(_pandas.Series(targetAbsentRejectId_high, name = ('targetAbsent','rejectId_high'), index = template.index))
+        self.data_rates = _pandas.concat([self.data_rates, _pandas.DataFrame(_pandas.Series(targetAbsentRejectId_low, name = ('targetAbsent','rejectId_low'), index = template.index)).transpose()])
+        self.data_rates = _pandas.concat([self.data_rates, _pandas.DataFrame(_pandas.Series(targetAbsentRejectId_high, name = ('targetAbsent','rejectId_high'), index = template.index)).transpose()])
 
-        self.data_rates = self.data_rates.append(_pandas.Series(targetAbsentSuspectId_low, name = ('targetAbsent','suspectId_low'), index = template.index))
-        self.data_rates = self.data_rates.append(_pandas.Series(targetAbsentSuspectId_high, name = ('targetAbsent','suspectId_high'), index = template.index))
+        self.data_rates = _pandas.concat([self.data_rates, _pandas.DataFrame(_pandas.Series(targetAbsentSuspectId_low, name = ('targetAbsent','suspectId_low'), index = template.index)).transpose()])
+        self.data_rates = _pandas.concat([self.data_rates, _pandas.DataFrame(_pandas.Series(targetAbsentSuspectId_high, name = ('targetAbsent','suspectId_high'), index = template.index)).transpose()])
 
-        self.data_rates = self.data_rates.append(_pandas.Series(targetPresentFillerId_low, name = ('targetPresent','fillerId_low'), index = template.index))
-        self.data_rates = self.data_rates.append(_pandas.Series(targetPresentFillerId_high, name = ('targetPresent','fillerId_high'), index = template.index))
+        self.data_rates = _pandas.concat([self.data_rates, _pandas.DataFrame(_pandas.Series(targetPresentFillerId_low, name = ('targetPresent','fillerId_low'), index = template.index)).transpose()])
+        self.data_rates = _pandas.concat([self.data_rates, _pandas.DataFrame(_pandas.Series(targetPresentFillerId_high, name = ('targetPresent','fillerId_high'), index = template.index)).transpose()])
 
-        self.data_rates = self.data_rates.append(_pandas.Series(targetPresentRejectId_low, name = ('targetPresent','rejectId_low'), index = template.index))
-        self.data_rates = self.data_rates.append(_pandas.Series(targetPresentRejectId_high, name = ('targetPresent','rejectId_high'), index = template.index))
+        self.data_rates = _pandas.concat([self.data_rates, _pandas.DataFrame(_pandas.Series(targetPresentRejectId_low, name = ('targetPresent','rejectId_low'), index = template.index)).transpose()])
+        self.data_rates = _pandas.concat([self.data_rates, _pandas.DataFrame(_pandas.Series(targetPresentRejectId_high, name = ('targetPresent','rejectId_high'), index = template.index)).transpose()])
 
-        self.data_rates = self.data_rates.append(_pandas.Series(targetPresentSuspectId_low, name = ('targetPresent','suspectId_low'), index = template.index))
-        self.data_rates = self.data_rates.append(_pandas.Series(targetPresentSuspectId_high, name = ('targetPresent','suspectId_high'), index = template.index))
+        self.data_rates = _pandas.concat([self.data_rates, _pandas.DataFrame(_pandas.Series(targetPresentSuspectId_low, name = ('targetPresent','suspectId_low'), index = template.index)).transpose()])
+        self.data_rates = _pandas.concat([self.data_rates, _pandas.DataFrame(_pandas.Series(targetPresentSuspectId_high, name = ('targetPresent','suspectId_high'), index = template.index)).transpose()])
 
-        self.data_rates = self.data_rates.append(_pandas.Series(zL_low,  name = ('zL','low'), index = template.index))
-        self.data_rates = self.data_rates.append(_pandas.Series(zL_high, name = ('zL','high'), index = template.index))
+        self.data_rates = _pandas.concat([self.data_rates, _pandas.DataFrame(_pandas.Series(zL_low,  name = ('zL','low'), index = template.index)).transpose()])
+        self.data_rates = _pandas.concat([self.data_rates, _pandas.DataFrame(_pandas.Series(zL_high, name = ('zL','high'), index = template.index)).transpose()])
 
-        self.data_rates = self.data_rates.append(_pandas.Series(zT_low,  name = ('zT','low'), index = template.index))
-        self.data_rates = self.data_rates.append(_pandas.Series(zT_high, name = ('zT','high'), index = template.index))
+        self.data_rates = _pandas.concat([self.data_rates, _pandas.DataFrame(_pandas.Series(zT_low,  name = ('zT','low'), index = template.index)).transpose()])
+        self.data_rates = _pandas.concat([self.data_rates, _pandas.DataFrame(_pandas.Series(zT_high, name = ('zT','high'), index = template.index)).transpose()])
 
-        self.data_rates = self.data_rates.append(_pandas.Series(dprime_low,  name = ('dprime','low'), index = template.index))
-        self.data_rates = self.data_rates.append(_pandas.Series(dprime_high, name = ('dprime','high'), index = template.index))
+        self.data_rates = _pandas.concat([self.data_rates, _pandas.DataFrame(_pandas.Series(dprime_low,  name = ('dprime','low'), index = template.index)).transpose()])
+        self.data_rates = _pandas.concat([self.data_rates, _pandas.DataFrame(_pandas.Series(dprime_high, name = ('dprime','high'), index = template.index)).transpose()])
 
         self.data_rates = self.data_rates.sort_index()
 
