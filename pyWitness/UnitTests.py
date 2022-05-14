@@ -1,15 +1,17 @@
 import pyWitness
 import matplotlib.pyplot as _plt
+from matplotlib.pyplot import *
+import unittest as _unittest
 
-class UnitTests :
+class UnitTests(_unittest.TestCase) :
     def test1DataNormal(self,fileName = "test1.csv") :
         pass
 
-    def tutorialCode1(self) :
+    def test_tutorialCode1(self) :
         import pyWitness    
         dr = pyWitness.DataRaw("test1.csv")
 
-    def tutorialCode2(self) :
+    def test_tutorialCode2(self) :
         import pyWitness    
         dr = pyWitness.DataRaw("test1.csv")
         dr.checkData()
@@ -20,37 +22,37 @@ class UnitTests :
         dr = pyWitness.DataRaw("test1.csv")
         dr.columnValues("responseTime")
 
-    def tutorialCode4 (self) :
+    def test_tutorialCode4 (self) :
         import pyWitness
         dr = pyWitness.DataRaw("test1.csv")
         dp = dr.process()
 
-    def tutorialCode5 (self) :
+    def test_tutorialCode5 (self) :
         import pyWitness
         dr = pyWitness.DataRaw("test1.csv")
         dp = dr.process()
         dp.printPivot()
         dp.printRates()
 
-    def tutorialCode6 (self) :
+    def test_tutorialCode6 (self) :
         import pyWitness
         dr = pyWitness.DataRaw("test1.csv")
         dp = dr.process()
         dp.plotROC()
 
-    def tutorialCode7 (self) :
+    def test_tutorialCode7 (self) :
         import pyWitness
         dr = pyWitness.DataRaw("test1.csv")
         dp = dr.process()
         dp.plotCAC()
 
-    def tutorialCode8 (self) :
+    def test_tutorialCode8 (self) :
         import pyWitness
         drRAC = pyWitness.DataRaw("test1RAC.csv")
         dpRAC = dr.process()
         dpRAC.plotCAC()
 
-    def tutorialCode9 (self) :
+    def test_tutorialCode9 (self) :
         import pyWitness
         dr = pyWitness.DataRaw("test1.csv")
         dr.collapseCategoricalData(column='confidence',
@@ -60,7 +62,7 @@ class UnitTests :
         dp = dr.process()
         dp.plotCAC()
 
-    def tutorialCode10 (self) :
+    def test_tutorialCode10(self) :
         import pyWitness
         dr = pyWitness.DataRaw("test1.csv")
         dr.collapseCategoricalData(column='confidence',
@@ -74,21 +76,21 @@ class UnitTests :
         xlim(0,100)
         ylim(0.50,1.0)
 
-    def tutorialCode11 (self) :
+    def test_tutorialCode11 (self) :
         import pyWitness
         dr = pyWitness.DataRaw("test1.csv")
         dr.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels= [1,2,3])
         dp = dr.process()
         dp.plotROC()
 
-    def tutorialCode12 (self) :
+    def test_tutorialCode12 (self) :
         import pyWitness
         dr = pyWitness.DataRaw("test1.csv")
         dr.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels= [1,2,3])
         dp = dr.process()
         print(dp.pAUC)
 
-    def tutorialCode13 (self) :
+    def test_tutorialCode13 (self) :
         import pyWitness
         dr = pyWitness.DataRaw("test1.csv")
         dr.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels= [1,2,3])
@@ -97,7 +99,7 @@ class UnitTests :
         mf.setEqualVariance()
         mf.fit()
 
-    def tutorialCode14 (self) :
+    def test_tutorialCode14 (self) :
         import pyWitness
         dr = pyWitness.DataRaw("test1.csv")
         dr.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels= [1,2,3])
@@ -111,7 +113,7 @@ class UnitTests :
         mf.fit()
         mf.printParameters()
 
-    def tutorialCode15 (self) :
+    def test_tutorialCode15 (self) :
         import pyWitness
         dr = pyWitness.DataRaw("test1.csv")
         dr.collapseContinuousData(column="confidence")
@@ -129,7 +131,7 @@ class UnitTests :
         dp = dr.process()
         dp.plotHitVsFalseAlarmRate()
 
-    def tutorialCode17 (self) :
+    def test_tutorialCode17 (self) :
         import pyWitness
         dr = pyWitness.DataRaw("test1.csv")
         dr.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels= [1,2,3])
@@ -144,7 +146,7 @@ class UnitTests :
         mf.fit()
         mf.printParameters()
 
-    def tutorialCode18 (self) :
+    def test_tutorialCode18 (self) :
         import pyWitness
         dr = pyWitness.DataRaw("test1.csv")
         dr.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels= None)
@@ -154,7 +156,7 @@ class UnitTests :
         mf.setEqualVariance()
         mf.fit()
 
-    def tutorialCode19 (self) :
+    def test_tutorialCode19 (self) :
         import pyWitness
         dr = pyWitness.DataRaw("test1.csv")
         dr.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels= None)
@@ -170,7 +172,7 @@ class UnitTests :
         import matplotlib.pyplot as _plt
         _plt.legend()
 
-    def tutorialCode20 (self) :
+    def test_tutorialCode20 (self) :
         import pyWitness
         dr = pyWitness.DataRaw("test1.csv")
         dr.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels= None)
@@ -192,7 +194,7 @@ class UnitTests :
         import matplotlib.pyplot as _plt
         _plt.legend()
 
-    def tutorialCode20a (self) :
+    def test_tutorialCode20a (self) :
         import pyWitness
         dr = pyWitness.DataRaw("test1.csv")
         dr.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels= None)
@@ -204,7 +206,7 @@ class UnitTests :
         #new code
         mf.plotFit()
 
-    def tutorialCode21 (self) :
+    def test_tutorialCode21 (self) :
         import pyWitness
         dr = pyWitness.DataRaw("test1.csv")
         dr.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels= None)
@@ -216,7 +218,7 @@ class UnitTests :
         #new code
         mf.plotModel()
 
-    def tutorialCode22 (self) :
+    def test_tutorialCode22 (self) :
         import pyWitness
         dr = pyWitness.DataRaw("test1.csv")
         dp = dr.process()
@@ -225,31 +227,31 @@ class UnitTests :
         dp.writeRatesExcel("test1_rates.xlsx")
         dp.writeRatesCsv("test1_rates.csv")
 
-#Advanced tutorial
-    def tutorialCode23 (self) :
+    #Advanced tutorial
+    def test_tutorialCode23 (self) :
         import pyWitness
         dr = pyWitness.DataRaw("test1.csv")
         dp = dr.process()
         dp.calculateConfidenceBootstrap(nBootstraps=200, cl=95)
 
-    def tutorialCode24 (self) :
+    def test_tutorialCode24 (self) :
         import pyWitness
-        dr = pyWitness.DataRaw("test2.xlsx",excelSheet = "raw data")
+        dr = pyWitness.DataRaw("test2.xlsx",excelSheet = "Sheet1")
     
-    def tutorialCode25 (self) :
+    def test_tutorialCode25 (self) :
         import pyWitness
         dr = pyWitness.DataRaw("test2.csv")
         dr.cutData(column="previouslyViewedVideo",value=1,option="keep")
         dpControl = dr.process(column="group", condition="Control")
     
-    def tutorialCode26 (self) :
+    def test_tutorialCode26 (self) :
         import pyWitness
         dr = pyWitness.DataRaw("test2.csv")
         dr.cutData(column="previouslyViewedVideo",value=1,option="keep")
         dpControl = dr.process(column="group", condition="Control")
         dpVerbal = dr.process(column="group", condition="Verbal")
     
-    def tutorialCode27 (self) :
+    def test_tutorialCode27 (self) :
         import pyWitness
         dr = pyWitness.DataRaw("test2.csv")
         dr.cutData(column="previouslyViewedVideo",value=1,option="keep")
@@ -257,7 +259,7 @@ class UnitTests :
         dpVerbal = dr.process(column="group", condition="Verbal")
         minRate = min(dpControl.liberalTargetAbsentSuspectId,dpVerbal.liberalTargetAbsentSuspectId)
     
-    def tutorialCode28 (self) :
+    def test_tutorialCode28 (self) :
         import pyWitness
         dr = pyWitness.DataRaw("test2.csv")
         dr.cutData(column="previouslyViewedVideo",value=1,option="keep")
@@ -270,7 +272,7 @@ class UnitTests :
         dpVerbal.calculateConfidenceBootstrap(nBootstraps=200)
         dpControl.comparePAUC(dpVerbal)
 
-    def tutorialCode29 (self) :
+    def test_tutorialCode29 (self) :
         import pyWitness
         dr = pyWitness.DataRaw("test2.csv")
         dr.cutData(column="previouslyViewedVideo",value=1,option="keep")
@@ -286,11 +288,11 @@ class UnitTests :
         dpControl.plotROC(label = "Control data", relativeFrequencyScale=400)
         dpVerbal.plotROC(label = "Verbal data", relativeFrequencyScale=400)
 
-    def tutorialCode30 (self) :
+    def test_tutorialCode30 (self) :
         import pyWitness
         dp = pyWitness.DataProcessed("test1_processed.csv", lineupSize = 6)
 
-    def tutorialCode31 (self) :
+    def test_tutorialCode31 (self) :
         import pyWitness
         dr1 = pyWitness.DataRaw("test1.csv")
         dr2 = pyWitness.DataRaw("test1.csv")
@@ -303,7 +305,7 @@ class UnitTests :
         dp1.plotCAC()
         dp2.plotCAC()
 
-    def tutorialCode32 (self) :
+    def test_tutorialCode32 (self) :
         import pyWitness
         dr1 = pyWitness.DataRaw("test1.csv")
         dr2 = pyWitness.DataRaw("test1.csv")
@@ -322,7 +324,7 @@ class UnitTests :
         xlim(0,100)
         ylim(0.50,1.00)
 
-    def tutorialCode33 (self) :
+    def test_tutorialCode33 (self) :
         import pyWitness
         dr = pyWitness.DataRaw("test1.csv")
         dr.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels=None)
@@ -332,7 +334,7 @@ class UnitTests :
         mf.fit()
         dr1 = mf.generateRawData(nGenParticipants=10000)
 
-    def tutorialCode34 (self) :
+    def test_tutorialCode34 (self) :
         import pyWitness
         dr = pyWitness.DataRaw("test1.csv")
         dr.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels=None)
@@ -345,7 +347,7 @@ class UnitTests :
         dr1.writeCsv("fileName.csv")
         dr1.writeExcel("fileName.xlsx")
 
-    def tutorialCode35 (self) :
+    def test_tutorialCode35 (self) :
         import pyWitness
         dr = pyWitness.DataRaw("test1.csv")
         dr.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels=None)
@@ -370,6 +372,7 @@ class UnitTests :
         import matplotlib.pyplot as _plt
         _plt.legend()
 
+    '''
     def test1DataConfidence(self,fileName = "test1.csv") :
         self.dr = pyWitness.DataRaw("test1.csv")
 
@@ -403,3 +406,15 @@ class UnitTests :
         self.dp.plotROC()
         _plt.figure(2)
         self.dp.plotCAC()
+    '''
+
+if __name__ == '__main__':
+    import warnings
+    warnings.simplefilter('ignore', category=FutureWarning)
+    _unittest.main(verbosity=0)
+
+
+
+    class TracingStreamResult(_testtools.StreamResult):
+        def status(self, *args, **kwargs):
+            print('{0[test_id]}: {0[test_status]}'.format(kwargs))
