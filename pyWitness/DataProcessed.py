@@ -130,7 +130,7 @@ class DataProcessed :
         self.data_rates.index.names = ["variable", "type"]
 
         # reverse confidence
-        self.data_rates.reindex(columns=self.data_rates.columns[::-1])
+        self.data_rates = self.data_rates.reindex(columns=self.data_rates.columns[::-1])
 
         # cumulative rates
         self.data_rates = self.data_rates.cumsum(1)
