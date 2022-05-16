@@ -36,13 +36,10 @@ class DataProcessed :
             # columns 
             columns = data_pivot_load.columns.values[1:]
 
-            print(columns)
-
             # loop over rows
             for i in range(0,nrows,1) : 
                 rowLabel = data_pivot_load.iloc[i].values[0]
                 rowData  = data_pivot_load.iloc[i].values[1:] 
-                print(rowLabel, rowData)
 
             data_pivot_load = data_pivot_load.drop("confidence",axis=1)
             cols = _pandas.MultiIndex.from_product([["confidence"], [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]],names=[None,"confidence"])
@@ -52,8 +49,6 @@ class DataProcessed :
             data_pivot_load.columns = cols
             data_pivot_load.index   = inds
 
-            print(cols)
-            print(inds)
             self.data_pivot = data_pivot_load
 
             self.lineupSize        = lineupSize
