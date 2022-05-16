@@ -324,12 +324,17 @@ class DataRaw :
             self.data = _pandas.DataFrame(columns = ['participantId','lineupSize','targetLineup','responseType','confidence'], dtype=int)
 
         for i in range(0,int(n),1) :
-            self.data = self.data.append({"participantId":self.iParticipant,
-                                          "lineupSize":lineupSize,
-                                          "targetLineup":targetLineup,
-                                          "responseType":responseType,
-                                          "confidence":confidence},
-                                          ignore_index=True)
+            #self.data = self.data.append({"participantId":self.iParticipant,
+            #                              "lineupSize":lineupSize,
+            #                              "targetLineup":targetLineup,
+            #                              "responseType":responseType,
+            #                              "confidence":confidence},
+            #                              ignore_index=True)
+            self.data = _pandas.concat([self.data, _pandas.DataFrame({"participantId":[self.iParticipant],
+                                                                      "lineupSize":[lineupSize],
+                                                                      "targetLineup":[targetLineup],
+                                                                      "responseType":[responseType],
+                                                                      "confidence":[confidence]})])
             self.iParticipant += 1
 
     def cutData(self, column = '', value = '', option="keep"):
