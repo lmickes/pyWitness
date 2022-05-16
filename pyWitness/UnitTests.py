@@ -48,8 +48,15 @@ class UnitTests(_unittest.TestCase) :
 
     def test_tutorialCode8 (self) :
         import pyWitness
-        drRAC = pyWitness.DataRaw("test1RAC.csv")
-        dpRAC = dr.process()
+        drRAC = pyWitness.DataRaw("test1.csv")
+        drRAC.collapseContinuousData(column="responseTime",
+                                     bins=[0, 5000, 10000, 15000, 20000, 99999],
+                                     labels=[5, 4, 3, 2, 1])
+
+        dpRAC = drRAC.process(reverseConfidence=True, dependentVariable="responseTime")
+        _plt.figure(1)
+        dpRAC.plotROC()
+        _plt.figure(2)
         dpRAC.plotCAC()
 
     def test_tutorialCode9 (self) :
