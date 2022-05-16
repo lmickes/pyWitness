@@ -14,7 +14,7 @@ class UnitTests :
         dr = pyWitness.DataRaw("test1.csv")
         dr.checkData()
    
-    #Stew - this is response time; we may need to update
+    #Stew - this is response time; 
     def tutorialCode3(self) :
         import pyWitness
         dr = pyWitness.DataRaw("test1.csv")
