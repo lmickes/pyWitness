@@ -51,9 +51,9 @@ class UnitTests(_unittest.TestCase) :
         drRAC = pyWitness.DataRaw("test1.csv")
         drRAC.collapseContinuousData(column="responseTime",
                                      bins=[0, 5000, 10000, 15000, 20000, 99999],
-                                     labels=[5, 4, 3, 2, 1])
+                                     labels=[1, 2, 3, 4, 5])
 
-        dpRAC = drRAC.process(reverseConfidence=False, dependentVariable="responseTime")
+        dpRAC = drRAC.process(reverseConfidence=True, dependentVariable="responseTime")
         _plt.figure(1)
         dpRAC.plotROC()
         _plt.figure(2)
