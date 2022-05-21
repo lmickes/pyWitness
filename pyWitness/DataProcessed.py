@@ -296,8 +296,8 @@ class DataProcessed :
         xForIntegration.append(0)
         yForIntegration.append(0)
 
-        x = self.data_rates.loc['targetAbsent', 'suspectId']
-        y = self.data_rates.loc['targetPresent','suspectId']
+        x = self.data_rates.loc['targetAbsent', 'suspectId'][_np.sort(self.data_rates.columns)[::-1]]
+        y = self.data_rates.loc['targetPresent','suspectId'][_np.sort(self.data_rates.columns)[::-1]]
         i = _np.arange(0,len(x),1)
 
         # rest of range apart from end point for integration 
