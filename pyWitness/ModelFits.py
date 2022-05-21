@@ -508,7 +508,7 @@ class ModelFit(object) :
 
         dr = _DataRaw('')
 
-        confidence = self.processedData.data_rates.columns.get_level_values('confidence').values[-1::-1]
+        confidence = self.processedData.data_rates.columns.get_level_values(self.processedData.dataRaw.dependentVariable,'central').values[-1::-1]
 
         # target absent
         for i in range(0,len(gen_tasid_array)) :
@@ -861,7 +861,7 @@ class ModelFit(object) :
          pred_tpsid_array,
          pred_tpfid_array] = self.calculateFrequenciesForAllCriteria()
 
-        confidence = _np.flip(list(self.processedData.data_rates.columns.get_level_values('confidence')))
+        confidence = _np.flip(list(self.processedData.data_rates.columns.get_level_values(self.processedData.dataRaw.dependentVariable)))
 
         x = _np.arange(0,pred_tasid_array.size,1)+1
     
@@ -956,7 +956,7 @@ class ModelFit(object) :
          pred_tpsid_array,
          pred_tpfid_array] = self.calculateFrequenciesForAllCriteria()
 
-        confidence = _np.flip(list(self.processedData.data_rates.columns.get_level_values('confidence')))
+        confidence = _np.flip(list(self.processedData.data_rates.columns.get_level_values(self.processedData.dataRaw.dependentVariable,'central')))
 
 
         x = range(0, pred_tasid_array.size, 1)
@@ -1009,7 +1009,7 @@ class ModelFit(object) :
     def plotCAC(self, nsteps = 50, label = "Indep model", colorFromLabel = "") :
         
         # need to create look up between confidence and criterion
-        confidence = self.processedData.data_rates.loc['confidence','central']
+        confidence = self.processedData.data_rates.loc[self.processedData.dataRaw.dependentVariable,'central']
 
         rate_tafid_array = []
         rate_tasid_array = []
