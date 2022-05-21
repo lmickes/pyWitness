@@ -97,9 +97,9 @@ class UnitTests(_unittest.TestCase) :
         drRAC = pyWitness.DataRaw("test1.csv")
         drRAC.collapseContinuousData(column="responseTime",
                             bins=[0, 5000, 10000, 15000, 20000, 99999],
-                                labels=[5, 4, 3, 2, 1])
+                                labels=[1, 2, 3, 4, 5])
 
-        dpRAC = drRAC.process(reverseConfidence=False, dependentVariable="responseTime")
+        dpRAC = drRAC.process(reverseConfidence=True, dependentVariable="responseTime")
         dpRAC.plotROC()
 
     def test_tutorialCode12 (self) :
@@ -114,9 +114,9 @@ class UnitTests(_unittest.TestCase) :
         drRAC = pyWitness.DataRaw("test1.csv")
         drRAC.collapseContinuousData(column="responseTime",
                             bins=[0, 5000, 10000, 15000, 20000, 99999],
-                                labels=[5, 4, 3, 2, 1])
+                                labels=[1, 2, 3, 4, 5])
 
-        dpRAC = drRAC.process(reverseConfidence=False, dependentVariable="responseTime")
+        dpRAC = drRAC.process(reverseConfidence=True, dependentVariable="responseTime")
         print(dpRAC.pAUC)
 
     def test_tutorialCode13 (self) :
@@ -133,9 +133,9 @@ class UnitTests(_unittest.TestCase) :
         drRAC = pyWitness.DataRaw("test1.csv")
         drRAC.collapseContinuousData(column="responseTime",
                             bins=[0, 5000, 10000, 15000, 20000, 99999],
-                                labels=[5, 4, 3, 2, 1])
+                                labels=[1, 2, 3, 4, 5])
 
-        dpRAC = drRAC.process(reverseConfidence=False, dependentVariable="responseTime")
+        dpRAC = drRAC.process(reverseConfidence=True, dependentVariable="responseTime")
         mfRAC = pyWitness.ModelFitIndependentObservation(dpRAC)
         mfRAC.setEqualVariance()
         mfRAC.fit()
@@ -161,9 +161,9 @@ class UnitTests(_unittest.TestCase) :
         drRAC = pyWitness.DataRaw("test1.csv")
         drRAC.collapseContinuousData(column="responseTime",
                             bins=[0, 5000, 10000, 15000, 20000, 99999],
-                                labels=[5, 4, 3, 2, 1])
+                                labels=[1, 2, 3, 4, 5])
 
-        dpRAC = drRAC.process(reverseConfidence=False, dependentVariable="responseTime")
+        dpRAC = drRAC.process(reverseConfidence=True, dependentVariable="responseTime")
         mfRAC = pyWitness.ModelFitIndependentObservation(dpRAC)
         mfRAC.setEqualVariance()
         mfRAC.fit()
@@ -185,9 +185,9 @@ class UnitTests(_unittest.TestCase) :
         drRAC = pyWitness.DataRaw("test1.csv")
         drRAC.collapseContinuousData(column="responseTime",
                         bins=[0, 5000, 10000, 15000, 20000, 99999],
-                                labels=[5, 4, 3, 2, 1])
+                                labels=[1, 2, 3, 4, 5])
 
-        dpRAC = drRAC.process(reverseConfidence=False, dependentVariable="responseTime")
+        dpRAC = drRAC.process(reverseConfidence=True, dependentVariable="responseTime")
         mfRAC = pyWitness.ModelFitIndependentObservation(dpRAC)
         mfRAC.setEqualVariance()
         mfRAC.fit()
@@ -208,8 +208,8 @@ class UnitTests(_unittest.TestCase) :
         drRAC = pyWitness.DataRaw("test1.csv")
         drRAC.collapseContinuousData(column="responseTime",
                         bins=[0, 5000, 10000, 15000, 20000, 99999],
-                                labels=[5, 4, 3, 2, 1])
-        dpRAC = drRAC.process(reverseConfidence=False, dependentVariable="responseTime")
+                                labels=[1, 2, 3, 4, 5])
+        dpRAC = drRAC.process(reverseConfidence=True, dependentVariable="responseTime")
         dpRAC.plotHitVsFalseAlarmRate()
 
     def test_tutorialCode17 (self) :
@@ -232,8 +232,8 @@ class UnitTests(_unittest.TestCase) :
         drRAC = pyWitness.DataRaw("test1.csv")
         drRAC.collapseContinuousData(column="responseTime",
                         bins=[0, 5000, 10000, 15000, 20000, 99999],
-                                labels=[5, 4, 3, 2, 1])
-        dpRAC = drRAC.process(reverseConfidence=False, dependentVariable="responseTime")
+                                labels=[1, 2, 3, 4, 5])
+        dpRAC = drRAC.process(reverseConfidence=True, dependentVariable="responseTime")
         mfRAC = pyWitness.ModelFitIndependentObservation(dpRAC)
         mfRAC.printParameters()
 
@@ -259,8 +259,8 @@ class UnitTests(_unittest.TestCase) :
         drRAC = pyWitness.DataRaw("test1.csv")
         drRAC.collapseContinuousData(column="responseTime",
                         bins=[0, 5000, 10000, 15000, 20000, 99999],
-                                labels=[5, 4, 3, 2, 1])
-        dpRAC = drRAC.process(reverseConfidence=False, dependentVariable="responseTime")
+                                labels=[1, 2, 3, 4, 5])
+        dpRAC = drRAC.process(reverseConfidence=True, dependentVariable="responseTime")
         dpRAC.calculateConfidenceBootstrap(nBootstraps=200)
         mfRAC = pyWitness.ModelFitIndependentObservation(dpRAC)
         mfRAC.setEqualVariance()
@@ -284,8 +284,8 @@ class UnitTests(_unittest.TestCase) :
         drRAC = pyWitness.DataRaw("test1.csv")
         drRAC.collapseContinuousData(column="responseTime",
                     bins=[0, 5000, 10000, 15000, 20000, 99999],
-                            labels=[5, 4, 3, 2, 1])
-        dpRAC = drRAC.process(reverseConfidence=False, dependentVariable="responseTime")
+                            labels=[1, 2, 3, 4, 5])
+        dpRAC = drRAC.process(reverseConfidence=True, dependentVariable="responseTime")
 
         dpRAC.calculateConfidenceBootstrap(nBootstraps=200)
         mfRAC = pyWitness.ModelFitIndependentObservation(dpRAC)
@@ -322,8 +322,8 @@ class UnitTests(_unittest.TestCase) :
         drRAC = pyWitness.DataRaw("test1.csv")
         drRAC.collapseContinuousData(column="responseTime",
                         bins=[0, 5000, 10000, 15000, 20000, 99999],
-                                labels=[5, 4, 3, 2, 1])
-        dpRAC = drRAC.process(reverseConfidence=False, dependentVariable="responseTime") 
+                                labels=[1, 2, 3, 4, 5])
+        dpRAC = drRAC.process(reverseConfidence=True, dependentVariable="responseTime") 
         dpRAC.calculateConfidenceBootstrap(nBootstraps=200)
         mfRAC = pyWitness.ModelFitIndependentObservation(dpRAC)
         mfRAC.setEqualVariance()
@@ -356,8 +356,8 @@ class UnitTests(_unittest.TestCase) :
         drRAC = pyWitness.DataRaw("test1.csv")
         drRAC.collapseContinuousData(column="responseTime",
                         bins=[0, 5000, 10000, 15000, 20000, 99999],
-                                labels=[5, 4, 3, 2, 1])
-        dpRAC = drRAC.process(reverseConfidence=False, dependentVariable="responseTime") 
+                                labels=[1, 2, 3, 4, 5])
+        dpRAC = drRAC.process(reverseConfidence=True, dependentVariable="responseTime") 
         dpRAC.calculateConfidenceBootstrap(nBootstraps=200)
         mfRAC = pyWitness.ModelFitIndependentObservation(dpRAC)
         mfRAC.setEqualVariance()
@@ -382,8 +382,8 @@ class UnitTests(_unittest.TestCase) :
         drRAC = pyWitness.DataRaw("test1.csv")
         drRAC.collapseContinuousData(column="responseTime",
                         bins=[0, 5000, 10000, 15000, 20000, 99999],
-                                labels=[5, 4, 3, 2, 1])
-        dpRAC = drRAC.process(reverseConfidence=False, dependentVariable="responseTime")
+                                labels=[1, 2, 3, 4, 5])
+        dpRAC = drRAC.process(reverseConfidence=True, dependentVariable="responseTime")
         dpRAC.calculateConfidenceBootstrap(nBootstraps=200)
         mfRAC = pyWitness.ModelFitIndependentObservation(dpRAC)
         mfRAC.setEqualVariance()
@@ -405,8 +405,8 @@ class UnitTests(_unittest.TestCase) :
         drRAC = pyWitness.DataRaw("test1.csv")
         drRAC.collapseContinuousData(column="responseTime",
                         bins=[0, 5000, 10000, 15000, 20000, 99999],
-                                labels=[5, 4, 3, 2, 1])
-        dpRAC = drRAC.process(reverseConfidence=False, dependentVariable="responseTime")
+                                labels=[1, 2, 3, 4, 5])
+        dpRAC = drRAC.process(reverseConfidence=True, dependentVariable="responseTime")
         dpRAC.writePivotExcel("test1_pivot.xlsx")
         dpRAC.writePivotCsv("test1_pivot.csv")
         dpRAC.writeRatesExcel("test1_rates.xlsx")
@@ -498,17 +498,18 @@ class UnitTests(_unittest.TestCase) :
         dp1.plotCAC()
         dp2.plotCAC()
 
-        #barf
     def test_tutorialCode31dv (self) :
         import pyWitness
         dr1RAC = pyWitness.DataRaw("test1.csv")
         dr2RAC = pyWitness.DataRaw("test1.csv")
-
+        dr1RAC.collapseContinuousData(column="responseTime",
+                        bins=[0, 10000, 15000, 20000, 99999],
+                                labels=[1, 2, 3, 4])
         dr2RAC.collapseContinuousData(column="responseTime",
                         bins=[0, 5000, 10000, 15000, 20000, 99999],
-                                labels=[5, 4, 3, 2, 1])
-        dp1RAC = dr1RAC.process(reverseConfidence=False, dependentVariable="responseTime")
-        dp2RAC = dr2RAC.process(reverseConfidence=False, dependentVariable="responseTime")
+                                labels=[1, 2, 3, 4, 5])
+        dp1RAC = dr1RAC.process(reverseConfidence=True, dependentVariable="responseTime")
+        dp2RAC = dr2RAC.process(reverseConfidence=True, dependentVariable="responseTime")
         dp1RAC.calculateConfidenceBootstrap(nBootstraps=200)
         dp2RAC.calculateConfidenceBootstrap(nBootstraps=200)
         dp1RAC.plotCAC()
@@ -533,26 +534,28 @@ class UnitTests(_unittest.TestCase) :
         xlim(0,100)
         ylim(0.50,1.00)
 
-        #barf
     def test_tutorialCode32dv (self) :
         import pyWitness
         dr1RAC = pyWitness.DataRaw("test1.csv")
         dr2RAC = pyWitness.DataRaw("test1.csv")
+        dr1RAC.collapseContinuousData(column="responseTime",
+                        bins=[0, 10000, 15000, 20000, 99999],
+                                labels=[1, 2, 3, 4])
         dr2RAC.collapseContinuousData(column="responseTime",
                         bins=[0, 5000, 10000, 15000, 20000, 99999],
-                                labels=[5, 4, 3, 2, 1])
+                                labels=[1, 2, 3, 4, 5])
 
-        dp1RAC = dr1RAC.process(reverseConfidence=False, dependentVariable="responseTime")
-        dp2RAC = dr2RAC.process(reverseConfidence=False, dependentVariable="responseTime")
+        dp1RAC = dr1RAC.process(reverseConfidence=True, dependentVariable="responseTime")
+        dp2RAC = dr2RAC.process(reverseConfidence=True, dependentVariable="responseTime")
 
-        dp1RAC.plotCAC(label = "11 bins")
-        dp2RAC.plotCAC(label = "3 bins")
+        dp1RAC.plotCAC(label = "4 bins")
+        dp2RAC.plotCAC(label = "5 bins")
 
         import matplotlib.pyplot as _plt
         _plt.legend()
 
-        #xlim(0,6)
-        #ylim(0.00,1.00)
+        xlim(0,50000)
+        ylim(0.50,1.0)
 
     def test_tutorialCode33 (self) :
         import pyWitness
@@ -564,12 +567,13 @@ class UnitTests(_unittest.TestCase) :
         mf.fit()
         dr1 = mf.generateRawData(nGenParticipants=10000)
 
-        #barf
     def test_tutorialCode33dv (self) :
         import pyWitness
         drRAC = pyWitness.DataRaw("test1.csv")
-        drRAC.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels=None)
-        dpRAC = drRAC.process(reverseConfidence=False, dependentVariable="responseTime")
+        drRAC.collapseContinuousData(column="responseTime",
+                        bins=[0, 5000, 10000, 15000, 20000, 99999],
+                                labels=[1, 2, 3, 4, 5])
+        dpRAC = drRAC.process(reverseConfidence=True, dependentVariable="responseTime")
         mfRAC = pyWitness.ModelFitIndependentObservation(dpRAC, debug=True)
         mfRAC.setEqualVariance()
         mfRAC.fit()
@@ -591,8 +595,10 @@ class UnitTests(_unittest.TestCase) :
     def test_tutorialCode34dv (self) :
         import pyWitness
         drRAC = pyWitness.DataRaw("test1.csv")
-        drRAC.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels=None)
-        dpRAC = drRAC.process()
+        drRAC.collapseContinuousData(column="responseTime",
+                        bins=[0, 5000, 10000, 15000, 20000, 99999],
+                                labels=[1, 2, 3, 4, 5])
+        dpRAC = drRAC.process(reverseConfidence=True, dependentVariable="responseTime")
         mfRAC = pyWitness.ModelFitIndependentObservation(dpRAC, debug=True)
         mfRAC.setEqualVariance()
         mfRAC.fit()
@@ -629,8 +635,10 @@ class UnitTests(_unittest.TestCase) :
     def test_tutorialCode35dv (self) :
         import pyWitness
         drRAC = pyWitness.DataRaw("test1.csv")
-        drRAC.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels=None)
-        dpRAC = drRAC.process()
+        drRAC.collapseContinuousData(column="responseTime",
+                        bins=[0, 5000, 10000, 15000, 20000, 99999],
+                                labels=[1, 2, 3, 4, 5])
+        dpRAC = drRAC.process(reverseConfidence=True, dependentVariable="responseTime")
         mfRAC = pyWitness.ModelFitIndependentObservation(dpRAC, debug=True)
         mfRAC.setEqualVariance()
         mfRAC.fit()
