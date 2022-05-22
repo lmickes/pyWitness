@@ -11,6 +11,8 @@ class UnitTests(_unittest.TestCase) :
         import pyWitness    
         dr = pyWitness.DataRaw("test1.csv")
 
+        assert len(dr.data) == 890, "test_tutorialCode1 wrong number of participants"
+
     def test_tutorialCode2(self) :
         import pyWitness    
         dr = pyWitness.DataRaw("test1.csv")
@@ -26,6 +28,12 @@ class UnitTests(_unittest.TestCase) :
         import pyWitness
         dr = pyWitness.DataRaw("test1.csv")
         dp = dr.process()
+
+        assert dp.data_pivot.loc[("targetAbsent","fillerId"),("confidence",0)] == 2, "test_tutorialCode4 wrong targetAbsent fillerId confidence 0"
+        assert dp.data_pivot.loc[("targetPresent","fillerId"),("confidence",80)] == 5, "test_tutorialCode4 wrong targetPresent fillerId confidence 80"
+
+        assert dp.data_rates.loc[("cac","central"),("confidence",0)] == 0.8571428571428571, "test_tutorialCode4 wrong cac central confidence 0"
+        assert dp.data_rates.loc[("confidence","central"),("confidence",0)] == 0.0, "test_tutorialCode4 wrong cac central confidence 0"
 
     def test_tutorialCode5 (self) :
         import pyWitness
