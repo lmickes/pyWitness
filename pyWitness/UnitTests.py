@@ -31,9 +31,15 @@ class UnitTests(_unittest.TestCase) :
 
         assert dp.data_pivot.loc[("targetAbsent","fillerId"),("confidence",0)] == 2, "test_tutorialCode4 wrong targetAbsent fillerId confidence 0"
         assert dp.data_pivot.loc[("targetPresent","fillerId"),("confidence",80)] == 5, "test_tutorialCode4 wrong targetPresent fillerId confidence 80"
-
-        assert dp.data_rates.loc[("cac","central"),("confidence",0)] == 0.8571428571428571, "test_tutorialCode4 wrong cac central confidence 0"
-        assert dp.data_rates.loc[("confidence","central"),("confidence",0)] == 0.0, "test_tutorialCode4 wrong cac central confidence 0"
+        assert dp.data_rates.loc[("dprime","central"),("confidence",0)] == 1.9752208100241062, "test_tutorialCode4 wrong dprime central confidence 0"
+        assert dp.data_rates.loc[("rf",""),("confidence",0)] == 0.007829977628635347, "test_tutorialCode4 wrong rf confidence 0"
+        assert dp.data_rates.loc[("targetAbsent","fillerId"),("confidence",0)] == 0.28442437923250563, "test_tutorialCode4 wrong targetAbsent fillerId confidence 0"
+        assert dp.data_rates.loc[("targetAbsent","rejectId"),("confidence",0)] == 0.7155756207674944, "test_tutorialCode4 wrong targetAbsent rejectId confidence 0"
+        assert dp.data_rates.loc[("targetPresent","fillerId"),("confidence",0)] == 0.09395973154362416, "test_tutorialCode4 wrong targetPresent fillerId confidence 0"
+        assert dp.data_rates.loc[("targetPresent","rejectId"),("confidence",0)] == 0.28635346756152125, "test_tutorialCode4 wrong targetPresent rejectId confidence 0"
+        assert dp.data_rates.loc[("targetPresent","suspectId"),("confidence",0)] == 0.6196868008948546, "test_tutorialCode4 wrong targetPresent suspectId confidence 0"
+        assert dp.data_rates.loc[("zL","central"),("confidence",0)] == -1.6705624914099477, "test_tutorialCode4 wrong zL central confidence 0"
+        assert dp.data_rates.loc[("zT","central"),("confidence",0)] == 0.3046583186141586, "test_tutorialCode4 wrong zT central confidence 0"
 
     def test_tutorialCode5 (self) :
         import pyWitness
@@ -116,6 +122,8 @@ class UnitTests(_unittest.TestCase) :
         dr.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels= [1,2,3])
         dp = dr.process()
         print(dp.pAUC)
+
+        assert dp.pAUC == 0.020750138845233933, "test_tutorialCode12 wrong pAUC"   
 
     def test_tutorialCode12dv (self) :
         import pyWitness
@@ -235,6 +243,8 @@ class UnitTests(_unittest.TestCase) :
         mf.fit()
         mf.printParameters()
 
+        assert mf.targetMean.value == 1.7976601843420954, "test_tutorialCode17 wrong mf targetMean"
+
     def test_tutorialCode17dv (self) :
         import pyWitness
         drRAC = pyWitness.DataRaw("test1.csv")
@@ -312,6 +322,13 @@ class UnitTests(_unittest.TestCase) :
         mf = pyWitness.ModelFitIndependentObservation(dp)
         mf.setEqualVariance()
         mf.fit()
+
+        assert mf.pValue == 0.035660197825222784, "test_tutorialCode20 wrong mf p-value"
+        assert mf.d == 1.7976601843420954, "test_tutorialCode20 wrong mf d"
+        assert mf.c1.value == 1.4017022884785224, "test_tutorialCode20 wrong mf c1"
+        assert mf.c2.value == 1.93548009449426, "test_tutorialCode20 wrong mf c2"
+        assert mf.c3.value == 1.93548009449426, "test_tutorialCode20 wrong mf c3"
+
  
         dp.plotROC(label="Data")
         mf.plotROC(label="Indep. obs. fit")
