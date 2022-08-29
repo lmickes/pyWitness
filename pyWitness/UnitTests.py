@@ -18,11 +18,14 @@ class UnitTests(_unittest.TestCase) :
         dr = pyWitness.DataRaw("test1.csv")
         dr.checkData()
 
-    #Stew - this is response time; 
-    def tutorialCode3(self) :
+    def test_tutorialCode3(self) :
         import pyWitness
         dr = pyWitness.DataRaw("test1.csv")
         dr.columnValues("responseTime")
+
+    def test_tutorialCode3_1(self):
+        import pyWitness
+        dr = pyWitness.DataRaw("test1.xlsx","test1")
 
     def test_tutorialCode4 (self) :
         import pyWitness
@@ -142,7 +145,9 @@ class UnitTests(_unittest.TestCase) :
         dp = dr.process()
         mf = pyWitness.ModelFitIndependentObservation(dp)
         mf.setEqualVariance()
+        mf.setParameterEstimates()
         mf.fit()
+        mf.printParameters()
 
     def test_tutorialCode13dv (self) :
         import pyWitness

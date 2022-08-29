@@ -124,6 +124,16 @@ If the unique values for a non-mandatory column are required then this can be di
    DataRaw.columnValues>           : responseTime [  1159   1175   1248 ... 402689 502420 651073]
 
 
+It is possible also to load Excel files 
+
+.. code-block :: python
+   :linenos:
+
+   import pyWitness 
+   dr = pyWitness.DataRaw("test1.xlsx","test1")
+
+The second argument is the sheet name within the workbook
+
 Processing raw experimental data
 --------------------------------
 To process the raw data the function `pyWitness.DataRaw.process <./moduledocs.html#pyWitness.DataRaw.process>`_
@@ -185,6 +195,7 @@ You should also see the following output for ``dp.printRates()``
                  suspectId       0.091723   0.165548   0.286353   0.438479   0.532438   0.572707   0.595078   0.604027   0.612975   0.615213  0.619687
    zL            central        -2.839765  -2.557781  -2.306755  -2.095603  -1.913524  -1.807208  -1.760906  -1.726409  -1.705849  -1.678225 -1.670562
    zT            central        -1.330222  -0.971908  -0.564069  -0.154827   0.081401   0.183270   0.240628   0.263784   0.287082   0.292931  0.304658                                                                                                                                
+
 In the table above, the overall false ID rate is 0.047, the overall correct ID rate is 0.620, and the overall correct rejection rate is 0.716.
 
 .. note::
@@ -296,7 +307,7 @@ Some data are not categorical variables, but continuous variables.
 
    import pyWitness
    dr = pyWitness.DataRaw("test1.csv")
-   dr.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels= [1,2,3])
+   dr.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels= ["Low","Medium","High"])
    dp = dr.process()
    dp.plotROC()
 
@@ -350,7 +361,8 @@ under the ROC curve up to a maximum value. If the maximum value is between two d
 Fitting signal detection-based models to data
 ---------------------------------------------
 
-There are many models available in pyWitness. We'll start with the independent observation model. To load and process the data is the same as before
+There are many models available in pyWitness. We'll start with the independent observation model. To load and process the data is the same as before (lines 1-4), the fitting
+part is new and the code is highlighted (lines 5-7).
 
 .. code-block :: python  
    :linenos: 
@@ -364,7 +376,25 @@ There are many models available in pyWitness. We'll start with the independent o
    mf.setEqualVariance()
    mf.fit()
 
-Line 9 sets the parameters for the fit. To display the fit parameters there is a function printParameters so
+Line 5 constructs a fit object, line 6 sets the model parameters to equal variance and line 7 starts the minimiser. The
+output from the fit (execution of line 7) is something like the following
+
+.. code-block :: console
+
+   fit iterations 223
+   fit status     Optimization terminated successfully.
+   fit time       9.376720442
+   fit chi2       10.300411274463407
+   fit ndf        4
+   fit chi2/ndf   2.5751028186158518
+   fit p-value    0.035660197825222784
+
+
+.. image:: http://mickeslab.com/wp-content/uploads/2022/03/tutorial1modelFitPara.gif
+    :alt: Model fit details and parameters
+
+To clearly see how the fitting works, the following code is the same as above but
+with ``mf.printParameters()`` on lines 6, 9, and 12.
 
 .. code-block :: python
    :linenos:
@@ -397,9 +427,6 @@ After creating the ``mf`` object (line 9) the parameters are at their default va
    c2 1.5 (free)
    c3 2.0 (free)
 
-.. image:: http://mickeslab.com/wp-content/uploads/2022/03/tutorial1modelFitPara.gif
-    :alt: Model fit details and parameters
-
 Typically you would want to control the fit parameters. ``setEqualVariance`` sets some default model which is
 an appropriate start; line 12 yields
 
@@ -426,15 +453,15 @@ After running the fit the parameters are updated so the output of line 12 in the
 
 .. code-block :: console
 
-ModelFit.printParameters>  lureMean 0.000 (fixed)
-ModelFit.printParameters>  lureSigma 1.000 (fixed targetSigma)
-ModelFit.printParameters>  targetMean 1.798 (free)
-ModelFit.printParameters>  targetSigma 1.000 (fixed)
-ModelFit.printParameters>  lureBetweenSigma 0.605 (fixed targetBetweenSigma)
-ModelFit.printParameters>  targetBetweenSigma 0.605 (free)
-ModelFit.printParameters>  c1 1.402 (free)
-ModelFit.printParameters>  c2 1.935 (free)
-ModelFit.printParameters>  c3 2.677 (free)
+   ModelFit.printParameters>  lureMean 0.000 (fixed)
+   ModelFit.printParameters>  lureSigma 1.000 (fixed targetSigma)
+   ModelFit.printParameters>  targetMean 1.798 (free)
+   ModelFit.printParameters>  targetSigma 1.000 (fixed)
+   ModelFit.printParameters>  lureBetweenSigma 0.605 (fixed targetBetweenSigma)
+   ModelFit.printParameters>  targetBetweenSigma 0.605 (free)
+   ModelFit.printParameters>  c1 1.402 (free)
+   ModelFit.printParameters>  c2 1.935 (free)
+   ModelFit.printParameters>  c3 2.677 (free)
 
 There many ways to control the model
 
@@ -522,11 +549,12 @@ and a linear fit used to estimate the gradient and intercept.
    mf.fit()
    mf.printParameters()
 
-Checking the convergence of fit
--------------------------------
+..
+  Checking the convergence of fit
+  -------------------------------
+  Loading and saving fit parameters for later use
+  -----------------------------------------------
 
-Loading and saving fit parameters for later use
------------------------------------------------
 
 
 Plotting fit and models

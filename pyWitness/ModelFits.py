@@ -1047,7 +1047,7 @@ class ModelFit(object) :
         _plt.plot(self.chi2_array)
         _plt.axhline(self.chi2,linestyle="--")
 
-        _plt.xlabel("$\\chi^2$ function evaluation number")
+        _plt.xlabel("$\\chi^2$ function evaluation iteration")
         _plt.ylabel("$\\chi^2$")
 
         # Tight layout for plot
