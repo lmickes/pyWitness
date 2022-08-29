@@ -803,8 +803,12 @@ class DataProcessed :
     def printPivot(self) :
         print(self.data_pivot)
         print("total number of participants",self.data_pivot.sum().sum())
+
     def printRates(self) :
         print(self.data_rates)
+
+    def printDescriptiveStats(self):
+        pass
 
     @property
     def numberConditions(self) :
