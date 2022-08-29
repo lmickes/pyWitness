@@ -244,6 +244,7 @@ class UnitTests(_unittest.TestCase) :
         mf.printParameters()
 
         assert mf.targetMean.value == 1.7976601843420954, "test_tutorialCode17 wrong mf targetMean"
+        #assert targetBetweenSigma ==
 
     def test_tutorialCode17dv (self) :
         import pyWitness
