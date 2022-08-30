@@ -360,6 +360,9 @@ Once you've changed the file, you can run the code used for plotting CAC curves.
                         labels=[1, 2, 3, 4, 5])
         dpRAC = drRAC.process(reverseConfidence=True,dependentVariable="responseTime")
         dpRAC.plotCAC()
+        
+.. figure :: images/test1RAC.png
+   :alt: RAC for test1
 
 Fitting signal detection-based models to data
 ---------------------------------------------
