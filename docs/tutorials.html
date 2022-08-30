@@ -105,14 +105,12 @@
 <li class="toctree-l2"><a class="reference internal" href="#processing-raw-experimental-data">Processing raw experimental data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#plotting-roc-curves">Plotting ROC curves</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#plotting-cac-curves">Plotting CAC curves</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#plotting-rac-curves">Plotting RAC curves</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#collapsing-the-categorical-data">Collapsing the categorical data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#collapsing-binning-continuous-data">Collapsing (binning) continuous data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#calculating-pauc-and-performing-statistical-tests">Calculating pAUC and performing statistical tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#plotting-rac-curves">Plotting RAC curves</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#fitting-signal-detection-based-models-to-data">Fitting signal detection-based models to data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#setting-initial-fit-parameters">Setting initial fit parameters</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#checking-the-convergence-of-fit">Checking the convergence of fit</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#loading-and-saving-fit-parameters-for-later-use">Loading and saving fit parameters for later use</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#plotting-fit-and-models">Plotting fit and models</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#d-prime-calculation">d-prime calculation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#writing-results-to-file">Writing results to file</a></li>
@@ -285,9 +283,16 @@ either <code class="docutils literal notranslate"><span class="pre">csv</span></
 <span class="hll"><span class="n">dr</span><span class="o">.</span><span class="n">columnValues</span><span class="p">(</span><span class="s2">&quot;responseTime&quot;</span><span class="p">)</span>
 </span></pre></div>
 </td></tr></table></div>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">DataRaw.columnValues&gt;           : responseTime [  1159   1175   1248 ... 402689 502420 651073]</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">DataRaw.columnValues&gt;           : responseTime [  1159   1296   1326 ... 161703 502420 651073]</span>
 </pre></div>
 </div>
+<p>It is possible also to load Excel files</p>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
+<span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test1.xlsx&quot;</span><span class="p">,</span><span class="s2">&quot;test1&quot;</span><span class="p">)</span>
+</pre></div>
+</td></tr></table></div>
+<p>The second argument is the sheet name within the workbook</p>
 </div>
 <div class="section" id="processing-raw-experimental-data">
 <h2>Processing raw experimental data<a class="headerlink" href="#processing-raw-experimental-data" title="Permalink to this headline">¶</a></h2>
@@ -386,20 +391,6 @@ created. One contains a pivot table and the other contains rates.</p>
 <img alt="CAC for test1.csv" src="_images/test1CACnoBin.png" />
 </div>
 <img alt="ROC and CAC plots" src="http://mickeslab.com/wp-content/uploads/2022/03/tutorial1ROCcac.gif" />
-</div>
-<div class="section" id="plotting-rac-curves">
-<h2>Plotting RAC curves<a class="headerlink" href="#plotting-rac-curves" title="Permalink to this headline">¶</a></h2>
-<p>To plot RAC curves, in this version, v1.0, you have to relabel your “response time” column to “confidence” in your data file (e.g., csv, Excel). We recommend you copy and rename the relabeled file. This is clearly a workaround and will be fixed in the next version of pyWitness.</p>
-<p>Once you’ve changed the file, you can run the code used for plotting CAC curves. We added “RAC” to make it clear that response time, not confidence, is being analysed.</p>
-<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
-<span class="normal">2</span>
-<span class="normal">3</span>
-<span class="normal">4</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
-<span class="n">drRAC</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test1RAC.csv&quot;</span><span class="p">)</span>
-<span class="n">dpRAC</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
-<span class="n">dpRAC</span><span class="o">.</span><span class="n">plotCAC</span><span class="p">()</span>
-</pre></div>
-</td></tr></table></div>
 </div>
 <div class="section" id="collapsing-the-categorical-data">
 <h2>Collapsing the categorical data<a class="headerlink" href="#collapsing-the-categorical-data" title="Permalink to this headline">¶</a></h2>
@@ -504,9 +495,30 @@ under the ROC curve up to a maximum value. If the maximum value is between two d
 <img alt="Data-model ROC comparision for test1.csv" src="_images/test1_pAUC.jpg" />
 </div>
 </div>
+<div class="section" id="plotting-rac-curves">
+<h2>Plotting RAC curves<a class="headerlink" href="#plotting-rac-curves" title="Permalink to this headline">¶</a></h2>
+<p>To plot RAC curves, in this version, v1.0, you have to relabel your “response time” column to “confidence” in your data file (e.g., csv, Excel). We recommend you copy and rename the relabeled file. This is clearly a workaround and will be fixed in the next version of pyWitness.</p>
+<p>Once you’ve changed the file, you can run the code used for plotting CAC curves. We added “RAC” to make it clear that response time, not confidence, is being analysed.</p>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span> <span class="kn">import</span> <span class="nn">pyWitness</span>
+     <span class="n">drRAC</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test1.csv&quot;</span><span class="p">)</span>
+     <span class="n">drRAC</span><span class="o">.</span><span class="n">collapseContinuousData</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s2">&quot;responseTime&quot;</span><span class="p">,</span>
+                 <span class="n">bins</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5000</span><span class="p">,</span> <span class="mi">10000</span><span class="p">,</span> <span class="mi">15000</span><span class="p">,</span> <span class="mi">20000</span><span class="p">,</span> <span class="mi">99999</span><span class="p">],</span>
+                     <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+     <span class="n">dpRAC</span> <span class="o">=</span> <span class="n">drRAC</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">reverseConfidence</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">dependentVariable</span><span class="o">=</span><span class="s2">&quot;responseTime&quot;</span><span class="p">)</span>
+     <span class="n">dpRAC</span><span class="o">.</span><span class="n">plotCAC</span><span class="p">()</span>
+</pre></div>
+</td></tr></table></div>
+</div>
 <div class="section" id="fitting-signal-detection-based-models-to-data">
 <h2>Fitting signal detection-based models to data<a class="headerlink" href="#fitting-signal-detection-based-models-to-data" title="Permalink to this headline">¶</a></h2>
-<p>There are many models available in pyWitness. We’ll start with the independent observation model. To load and process the data is the same as before</p>
+<p>There are many models available in pyWitness. We’ll start with the independent observation model. To load and process the data is the same as before (lines 1-4), the fitting
+part is new and the code is highlighted (lines 5-7).</p>
 <div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
 <span class="normal">2</span>
 <span class="normal">3</span>
@@ -522,7 +534,20 @@ under the ROC curve up to a maximum value. If the maximum value is between two d
 </span><span class="hll"><span class="n">mf</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </span></pre></div>
 </td></tr></table></div>
-<p>Line 9 sets the parameters for the fit. To display the fit parameters there is a function printParameters so</p>
+<p>Line 5 constructs a fit object, line 6 sets the model parameters to equal variance and line 7 starts the minimiser. The
+output from the fit (execution of line 7) is something like the following</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">fit iterations 223</span>
+<span class="go">fit status     Optimization terminated successfully.</span>
+<span class="go">fit time       9.376720442</span>
+<span class="go">fit chi2       10.300411274463407</span>
+<span class="go">fit ndf        4</span>
+<span class="go">fit chi2/ndf   2.5751028186158518</span>
+<span class="go">fit p-value    0.035660197825222784</span>
+</pre></div>
+</div>
+<img alt="Model fit details and parameters" src="http://mickeslab.com/wp-content/uploads/2022/03/tutorial1modelFitPara.gif" />
+<p>To clearly see how the fitting works, the following code is the same as above but
+with <code class="docutils literal notranslate"><span class="pre">mf.printParameters()</span></code> on lines 6, 9, and 12.</p>
 <div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
 <span class="normal"> 2</span>
 <span class="normal"> 3</span>
@@ -560,7 +585,6 @@ under the ROC curve up to a maximum value. If the maximum value is between two d
 <span class="go">c3 2.0 (free)</span>
 </pre></div>
 </div>
-<img alt="Model fit details and parameters" src="http://mickeslab.com/wp-content/uploads/2022/03/tutorial1modelFitPara.gif" />
 <p>Typically you would want to control the fit parameters. <code class="docutils literal notranslate"><span class="pre">setEqualVariance</span></code> sets some default model which is
 an appropriate start; line 12 yields</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">lureMean 0.0 (fixed)</span>
@@ -584,18 +608,17 @@ an appropriate start; line 12 yields</p>
 </ul>
 </div></blockquote>
 <p>After running the fit the parameters are updated so the output of line 12 in the code example gives</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">ModelFit.printParameters&gt;  lureMean 0.000 (fixed)</span>
+<span class="go">ModelFit.printParameters&gt;  lureSigma 1.000 (fixed targetSigma)</span>
+<span class="go">ModelFit.printParameters&gt;  targetMean 1.798 (free)</span>
+<span class="go">ModelFit.printParameters&gt;  targetSigma 1.000 (fixed)</span>
+<span class="go">ModelFit.printParameters&gt;  lureBetweenSigma 0.605 (fixed targetBetweenSigma)</span>
+<span class="go">ModelFit.printParameters&gt;  targetBetweenSigma 0.605 (free)</span>
+<span class="go">ModelFit.printParameters&gt;  c1 1.402 (free)</span>
+<span class="go">ModelFit.printParameters&gt;  c2 1.935 (free)</span>
+<span class="go">ModelFit.printParameters&gt;  c3 2.677 (free)</span>
 </pre></div>
 </div>
-<p>ModelFit.printParameters&gt;  lureMean 0.000 (fixed)
-ModelFit.printParameters&gt;  lureSigma 1.000 (fixed targetSigma)
-ModelFit.printParameters&gt;  targetMean 1.798 (free)
-ModelFit.printParameters&gt;  targetSigma 1.000 (fixed)
-ModelFit.printParameters&gt;  lureBetweenSigma 0.605 (fixed targetBetweenSigma)
-ModelFit.printParameters&gt;  targetBetweenSigma 0.605 (free)
-ModelFit.printParameters&gt;  c1 1.402 (free)
-ModelFit.printParameters&gt;  c2 1.935 (free)
-ModelFit.printParameters&gt;  c3 2.677 (free)</p>
 <p>There many ways to control the model</p>
 <table class="colwidths-given docutils align-default" id="id2">
 <caption><span class="caption-text">Parameter control examples</span><a class="headerlink" href="#id2" title="Permalink to this table">¶</a></caption>
@@ -626,6 +649,7 @@ ModelFit.printParameters&gt;  c3 2.677 (free)</p>
 </tr>
 </tbody>
 </table>
+<p>#MICKES are these command lines meant to be run?</p>
 <p>There are multiple fits available and they all have the same interface but differ in
 the construction line</p>
 <div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
@@ -670,6 +694,9 @@ and a linear fit used to estimate the gradient and intercept.</p>
 <span class="hll"><span class="n">dp</span><span class="o">.</span><span class="n">plotHitVsFalseAlarmRate</span><span class="p">()</span>
 </span></pre></div>
 </td></tr></table></div>
+<div class="figure align-default">
+<img alt="Hit rate vs. false alarm rate for test1.csv" src="_images/HvFA.png" />
+</div>
 <div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
 <span class="normal"> 2</span>
 <span class="normal"> 3</span>
@@ -697,12 +724,6 @@ and a linear fit used to estimate the gradient and intercept.</p>
 <span class="n">mf</span><span class="o">.</span><span class="n">printParameters</span><span class="p">()</span>
 </pre></div>
 </td></tr></table></div>
-</div>
-<div class="section" id="checking-the-convergence-of-fit">
-<h2>Checking the convergence of fit<a class="headerlink" href="#checking-the-convergence-of-fit" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="loading-and-saving-fit-parameters-for-later-use">
-<h2>Loading and saving fit parameters for later use<a class="headerlink" href="#loading-and-saving-fit-parameters-for-later-use" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="plotting-fit-and-models">
 <h2>Plotting fit and models<a class="headerlink" href="#plotting-fit-and-models" title="Permalink to this headline">¶</a></h2>
@@ -873,7 +894,7 @@ dataframe, so <code class="docutils literal notranslate"><span class="pre">dp.pr
     <p>
         &copy; Copyright Royal Holloway, University of London 2020 and University of Bristol 2020
       <span class="lastupdated">
-        Last updated on May 05, 2022.
+        Last updated on Aug 30, 2022.
       </span>
 
     </p>

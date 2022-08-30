@@ -121,7 +121,7 @@ If the unique values for a non-mandatory column are required then this can be di
 
 .. code-block :: console
 
-   DataRaw.columnValues>           : responseTime [  1159   1175   1248 ... 402689 502420 651073]
+   DataRaw.columnValues>           : responseTime [  1159   1296   1326 ... 161703 502420 651073]
 
 
 It is possible also to load Excel files 
@@ -242,21 +242,6 @@ Plotting CAC curves
 .. image:: http://mickeslab.com/wp-content/uploads/2022/03/tutorial1ROCcac.gif
    :alt: ROC and CAC plots 
 
-Plotting RAC curves
--------------------
-
-To plot RAC curves, in this version, v1.0, you have to relabel your "response time" column to "confidence" in your data file (e.g., csv, Excel). We recommend you copy and rename the relabeled file. This is clearly a workaround and will be fixed in the next version of pyWitness.
-
-Once you've changed the file, you can run the code used for plotting CAC curves. We added "RAC" to make it clear that response time, not confidence, is being analysed.
-
-.. code-block :: python 
-   :linenos:
-
-   import pyWitness
-   drRAC = pyWitness.DataRaw("test1RAC.csv")
-   dpRAC = dr.process()
-   dpRAC.plotCAC()
-
 Collapsing the categorical data
 -------------------------------
 
@@ -307,7 +292,7 @@ Some data are not categorical variables, but continuous variables.
 
    import pyWitness
    dr = pyWitness.DataRaw("test1.csv")
-   dr.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels= ["Low","Medium","High"])
+   dr.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels= [1,2,3])
    dp = dr.process()
    dp.plotROC()
 
@@ -357,6 +342,24 @@ under the ROC curve up to a maximum value. If the maximum value is between two d
 
 .. figure :: images/test1_pAUC.jpg
    :alt: Data-model ROC comparision for test1.csv
+
+Plotting RAC curves
+-------------------
+
+To plot RAC curves, in this version, v1.0, you have to relabel your "response time" column to "confidence" in your data file (e.g., csv, Excel). We recommend you copy and rename the relabeled file. This is clearly a workaround and will be fixed in the next version of pyWitness.
+
+Once you've changed the file, you can run the code used for plotting CAC curves. We added "RAC" to make it clear that response time, not confidence, is being analysed.
+
+.. code-block :: python 
+   :linenos:
+
+    import pyWitness
+        drRAC = pyWitness.DataRaw("test1.csv")
+        drRAC.collapseContinuousData(column="responseTime",
+                    bins=[0, 5000, 10000, 15000, 20000, 99999],
+                        labels=[1, 2, 3, 4, 5])
+        dpRAC = drRAC.process(reverseConfidence=True,dependentVariable="responseTime")
+        dpRAC.plotCAC()
 
 Fitting signal detection-based models to data
 ---------------------------------------------
@@ -482,6 +485,8 @@ There many ways to control the model
    * - ``mf.lureBetweenSigma.unset_equal()``
      - Release the linking of lureBetweenSigma and targetBetweenSigma
 
+#MICKES are these command lines meant to be run?
+
 There are multiple fits available and they all have the same interface but differ in
 the construction line
 
@@ -530,6 +535,8 @@ and a linear fit used to estimate the gradient and intercept.
    dp = dr.process()
    dp.plotHitVsFalseAlarmRate()
 
+.. figure:: images/HvFA.png
+   :alt: Hit rate vs. false alarm rate for test1.csv
 
 .. code-block :: python
    :linenos:
