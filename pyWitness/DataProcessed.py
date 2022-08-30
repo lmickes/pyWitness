@@ -808,7 +808,13 @@ class DataProcessed :
         print(self.data_rates)
 
     def printDescriptiveStats(self):
-        pass
+        print('Number of lineups',self.numberLineups)
+        print('Number of target-absent lineups',self.numberTALineups)
+        print('Number of target-present lineups',self.numberTPLineups)
+        print('Correct ID rate',self.data_rates.loc[("targetPresent", "suspectId")].max())
+        print('False ID rate',self.data_rates.loc[("targetAbsent", "suspectId")].max())
+        print('dPrime',self.dPrime)
+        print('pAUC',self.pAUC)
 
     @property
     def numberConditions(self) :
