@@ -794,11 +794,11 @@ class DataProcessed :
         _plt.plot(zT,zL,"o",label="Data")
         _plt.plot(zT_pred,zL_pred,"--",label="Linear fit")
 
-        _plt.grid(True)
-        _plt.tight_layout()
+        # _plt.grid(True)
         _plt.legend()
         _plt.xlabel("$Z_{\\rm HR}$")
         _plt.ylabel("$Z_{\\rm FAR}$")
+        _plt.tight_layout()
 
     def printPivot(self) :
         print(self.data_pivot)
