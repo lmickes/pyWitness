@@ -108,6 +108,7 @@ It is useful to understand what columns and data values are stored in the raw da
    DataRaw.checkData> targetLineup : ['targetAbsent' 'targetPresent']
    DataRaw.checkData> responseType : ['fillerId' 'rejectId' 'suspectId']
    DataRaw.checkData> confidence   : [  0  10  20  30  40  50  60  70  80  90 100]
+   DataRaw.checkData> number trials : 890
 
 If the unique values for a non-mandatory column are required then this can be displayed using
 
@@ -132,7 +133,7 @@ It is possible also to load Excel files
    import pyWitness 
    dr = pyWitness.DataRaw("test1.xlsx","test1")
 
-The second argument is the sheet name within the workbook
+The second argument is the sheet name within the workbook (in the example above, it's "test1").
 
 Processing raw experimental data
 --------------------------------
@@ -174,35 +175,58 @@ You should see the following output of the ``dp.printPivot()``.
                  suspectId           2.0  1.0  4.0  4.0  10.0  18.0  42.0  68.0  54.0  33.0  41.0
    total number of participants 890.0
 
-In the output above are frequencies by confidence levels for each response type. To familiarize you with the output, in the table above, 11 filler identifications were given with 30% confidence on the target-absent lineups, 66 reject identifications (i.e., "The perp is not in the lineup") given with 100% confidence on the target-absent lineups, and 47 guilty suspect identifications (from target-present lineups) given with 100% confidence. 
+In the output above are frequencies by confidence levels for each response type. To familiarize you with the output, in the table above, 8 filler identifications were given with 30% confidence on the target-absent lineups, 64 reject identifications (i.e., "The perp is not in the lineup") given with 100% confidence on the target-absent lineups, and 41 guilty suspect identifications (from target-present lineups) given with 100% confidence. 
 
-You should also see the following output for ``dp.printRates()`` 
-
+You should also see the following output for ``dp.printRates()``                                                                       
+   
 .. code-block :: console
 
-                           confidence                         
-                                    100        90         80         70         60         50         40         30         20         10        0  
-   targetLineup  responseType                                                                                                                         
-   cac           central         0.976190   0.961165   0.958580   0.953271   0.906475   0.843750   0.857143   0.750000   0.827586   0.461538  0.857143
-   confidence    central         100        90         80         70         60         50         40         30         20         10        0   
-   dprime        central         1.509544   1.585873   1.742686   1.940776   1.994925   1.990478   2.001534   1.990193   1.992932   1.971156  1.975221
-   rf                            0.140940   0.115213   0.189038   0.239374   0.155481   0.071588   0.039150   0.017897   0.016219   0.007271  0.007830
-   targetAbsent  fillerId        0.013544   0.031603   0.063205   0.108352   0.167043   0.212190   0.234763   0.252822   0.264108   0.279910  0.284424
-                 rejectId        0.144470   0.241535   0.395034   0.521445   0.600451   0.654628   0.674944   0.688488   0.699774   0.711061  0.715576
-                 suspectId       0.002257   0.005267   0.010534   0.018059   0.027840   0.035365   0.039127   0.042137   0.044018   0.046652  0.047404
-   targetPresent fillerId        0.004474   0.013423   0.024609   0.046980   0.058166   0.071588   0.082774   0.089485   0.093960   0.093960  0.093960
-                 rejectId        0.046980   0.082774   0.134228   0.176734   0.196868   0.241611   0.263982   0.277405   0.277405   0.279642  0.286353
-                 suspectId       0.091723   0.165548   0.286353   0.438479   0.532438   0.572707   0.595078   0.604027   0.612975   0.615213  0.619687
-   zL            central        -2.839765  -2.557781  -2.306755  -2.095603  -1.913524  -1.807208  -1.760906  -1.726409  -1.705849  -1.678225 -1.670562
-   zT            central        -1.330222  -0.971908  -0.564069  -0.154827   0.081401   0.183270   0.240628   0.263784   0.287082   0.292931  0.304658                                                                                                                                
+                        confidence                                                                                                               
+    confidence                     0          10         20         30         40         50         60         70         80         90          100
+    variable      type                                                                                                                               
+    cac           central     0.857143   0.461538   0.827586   0.750000   0.857143   0.843750   0.906475   0.953271   0.958580   0.961165    0.976190
+    confidence    central     0          10         20         30         40         50         60         70         80             90          100 
+    dprime        central     1.975221   1.971156   1.992932   1.990193   2.001534   1.990478   1.994925   1.940776   1.742686   1.585873    1.509544
+    rf                        0.007830   0.007271   0.016219   0.017897   0.039150   0.071588   0.155481   0.239374   0.189038   0.115213    0.140940
+    targetAbsent  fillerId    0.284424   0.279910   0.264108   0.252822   0.234763   0.212190   0.167043   0.108352   0.063205   0.031603    0.013544
+                  rejectId    0.715576   0.711061   0.699774   0.688488   0.674944   0.654628   0.600451   0.521445   0.395034   0.241535    0.144470
+                  suspectId   0.047404   0.046652   0.044018   0.042137   0.039127   0.035365   0.027840   0.018059   0.010534   0.005267    0.002257
+    targetPresent fillerId    0.093960   0.093960   0.093960   0.089485   0.082774   0.071588   0.058166   0.046980   0.024609   0.013423    0.004474
+                  rejectId    0.286353   0.279642   0.277405   0.277405   0.263982   0.241611   0.196868   0.176734   0.134228   0.082774    0.046980
+                  suspectId   0.619687   0.615213   0.612975   0.604027   0.595078   0.572707   0.532438   0.438479   0.286353   0.165548    0.091723
+    zL            central    -1.670562  -1.678225  -1.705849  -1.726409  -1.760906  -1.807208  -1.913524  -2.095603  -2.306755  -2.557781   -2.839765
+    zT            central     0.304658   0.292931   0.287082   0.263784   0.240628   0.183270   0.081401  -0.154827  -0.564069  -0.971908   -1.330222
+
 
 In the table above, the overall false ID rate is 0.047, the overall correct ID rate is 0.620, and the overall correct rejection rate is 0.716.
 
 .. note::
    In the example there is no ``suspectId`` for ``targetAbsent`` lineups. Here the ``targetAbsent.suspectId`` is estimated as ``targetAbsent.fillerId/lineupSize`` 
-
+   
 .. image:: http://mickeslab.com/wp-content/uploads/2022/03/tutorial1rates.gif
     :alt: getting rates and pivots 
+   
+To see overall descriptive statistics, use 
+
+.. code-block :: python 
+   :linenos:
+
+    import pyWitness
+    dr = pyWitness.DataRaw("test1.csv")
+    dp = dr.process()
+    dp.printDescriptiveStats()
+
+and you'll see this output:
+
+.. code-block :: console
+
+    Number of lineups                    890.0
+    Number of target-absent lineups      443.0
+    Number of target-present lineups     447.0
+    Correct ID rate                        0.6196868008948546
+    False ID rate                          0.0474040632054176
+    dPrime                                 1.9752208100241062
+    pAUC                                   0.02066155955774986
 
 Plotting ROC curves
 -------------------
@@ -300,26 +324,7 @@ Some data are not categorical variables, but continuous variables.
    ``labels=None`` can be used and the bins will be automatically labelled
 
 .. note::
-   The bend edges are exclusive of the low edge and inclusive of the high edge
-
-
-The ``confidence`` column is relabelled to ``confidence-original`` and ``confidence`` is filled with labels. Here is an example of the raw data
-(``dr.data``) after binning.
-
-.. code-block :: console
-
-         Unnamed: 0  participantId  lineupSize   targetLineup responseType  confidence_original confidence  responseTime
-   0              0              1           6   targetAbsent     fillerId                   60          1          8330
-   1              1              2           6   targetAbsent     fillerId                   70          2         27624
-   2              2              3           6  targetPresent    suspectId                   60          1          3140
-   3              3              4           6   targetAbsent     rejectId                   80          2          8833
-   4              4              5           6  targetPresent    suspectId                   70          2          9810
-   ...          ...            ...         ...            ...          ...                  ...        ...           ...
-   1041        1041           1042           6  targetPresent    suspectId                   70          2         24910
-   1042        1042           1043           6  targetPresent    suspectId                   70          2         15683
-   1043        1043           1044           6   targetAbsent     fillerId                   70          2          1175
-   1044        1044           1045           6  targetPresent    suspectId                   70          2          2308
-   1045        1045           1046           6   targetAbsent     fillerId                   90          3         18185
+   The bin edges are exclusive of the low edge and inclusive of the high edge
 
 .. warning::
    Confidence needs to be a numerical value because ROC analysis requires a value that can be ordered.
@@ -346,20 +351,19 @@ under the ROC curve up to a maximum value. If the maximum value is between two d
 Plotting RAC curves
 -------------------
 
-To plot RAC curves, in this version, v1.0, you have to relabel your "response time" column to "confidence" in your data file (e.g., csv, Excel). We recommend you copy and rename the relabeled file. This is clearly a workaround and will be fixed in the next version of pyWitness.
-
-Once you've changed the file, you can run the code used for plotting CAC curves. We added "RAC" to make it clear that response time, not confidence, is being analysed.
+To perform analyses with a different variable than confidence, for example, response time, use the following code. The important change is highlighted. 
 
 .. code-block :: python 
    :linenos:
-
+   :emphasize-lines: 4
+    
     import pyWitness
-        drRAC = pyWitness.DataRaw("test1.csv")
-        drRAC.collapseContinuousData(column="responseTime",
-                    bins=[0, 5000, 10000, 15000, 20000, 99999],
-                        labels=[1, 2, 3, 4, 5])
-        dpRAC = drRAC.process(reverseConfidence=True,dependentVariable="responseTime")
-        dpRAC.plotCAC()
+    drRAC = pyWitness.DataRaw("test1.csv")
+    drRAC.collapseContinuousData(column="responseTime",bins=[0, 5000, 10000, 15000, 20000, 99999],labels=[1, 2, 3, 4, 5])
+    dpRAC = drRAC.process(reverseConfidence=True,dependentVariable="responseTime")
+    dpRAC.plotCAC()
+        
+The plot will look like this:
         
 .. figure :: images/test1RAC.png
    :alt: RAC for test1
@@ -680,7 +684,7 @@ This is calculated from the fit parameters for the fits described in the previou
 .. code-block :: console
 
    In [X]: mf.d
-   Out[X]: 1.6671878567242588
+   Out[X]: 1.7976601843420954
 
 Writing results to file 
 -----------------------

@@ -273,6 +273,7 @@ either <code class="docutils literal notranslate"><span class="pre">csv</span></
 <span class="go">DataRaw.checkData&gt; targetLineup : [&#39;targetAbsent&#39; &#39;targetPresent&#39;]</span>
 <span class="go">DataRaw.checkData&gt; responseType : [&#39;fillerId&#39; &#39;rejectId&#39; &#39;suspectId&#39;]</span>
 <span class="go">DataRaw.checkData&gt; confidence   : [  0  10  20  30  40  50  60  70  80  90 100]</span>
+<span class="go">DataRaw.checkData&gt; number trials : 890</span>
 </pre></div>
 </div>
 <p>If the unique values for a non-mandatory column are required then this can be displayed using</p>
@@ -292,7 +293,7 @@ either <code class="docutils literal notranslate"><span class="pre">csv</span></
 <span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test1.xlsx&quot;</span><span class="p">,</span><span class="s2">&quot;test1&quot;</span><span class="p">)</span>
 </pre></div>
 </td></tr></table></div>
-<p>The second argument is the sheet name within the workbook</p>
+<p>The second argument is the sheet name within the workbook (in the example above, it’s “test1”).</p>
 </div>
 <div class="section" id="processing-raw-experimental-data">
 <h2>Processing raw experimental data<a class="headerlink" href="#processing-raw-experimental-data" title="Permalink to this headline">¶</a></h2>
@@ -330,23 +331,23 @@ created. One contains a pivot table and the other contains rates.</p>
 <span class="go">total number of participants 890.0</span>
 </pre></div>
 </div>
-<p>In the output above are frequencies by confidence levels for each response type. To familiarize you with the output, in the table above, 11 filler identifications were given with 30% confidence on the target-absent lineups, 66 reject identifications (i.e., “The perp is not in the lineup”) given with 100% confidence on the target-absent lineups, and 47 guilty suspect identifications (from target-present lineups) given with 100% confidence.</p>
+<p>In the output above are frequencies by confidence levels for each response type. To familiarize you with the output, in the table above, 8 filler identifications were given with 30% confidence on the target-absent lineups, 64 reject identifications (i.e., “The perp is not in the lineup”) given with 100% confidence on the target-absent lineups, and 41 guilty suspect identifications (from target-present lineups) given with 100% confidence.</p>
 <p>You should also see the following output for <code class="docutils literal notranslate"><span class="pre">dp.printRates()</span></code></p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">                        confidence</span>
-<span class="go">                                 100        90         80         70         60         50         40         30         20         10        0</span>
-<span class="go">targetLineup  responseType</span>
-<span class="go">cac           central         0.976190   0.961165   0.958580   0.953271   0.906475   0.843750   0.857143   0.750000   0.827586   0.461538  0.857143</span>
-<span class="go">confidence    central         100        90         80         70         60         50         40         30         20         10        0</span>
-<span class="go">dprime        central         1.509544   1.585873   1.742686   1.940776   1.994925   1.990478   2.001534   1.990193   1.992932   1.971156  1.975221</span>
-<span class="go">rf                            0.140940   0.115213   0.189038   0.239374   0.155481   0.071588   0.039150   0.017897   0.016219   0.007271  0.007830</span>
-<span class="go">targetAbsent  fillerId        0.013544   0.031603   0.063205   0.108352   0.167043   0.212190   0.234763   0.252822   0.264108   0.279910  0.284424</span>
-<span class="go">              rejectId        0.144470   0.241535   0.395034   0.521445   0.600451   0.654628   0.674944   0.688488   0.699774   0.711061  0.715576</span>
-<span class="go">              suspectId       0.002257   0.005267   0.010534   0.018059   0.027840   0.035365   0.039127   0.042137   0.044018   0.046652  0.047404</span>
-<span class="go">targetPresent fillerId        0.004474   0.013423   0.024609   0.046980   0.058166   0.071588   0.082774   0.089485   0.093960   0.093960  0.093960</span>
-<span class="go">              rejectId        0.046980   0.082774   0.134228   0.176734   0.196868   0.241611   0.263982   0.277405   0.277405   0.279642  0.286353</span>
-<span class="go">              suspectId       0.091723   0.165548   0.286353   0.438479   0.532438   0.572707   0.595078   0.604027   0.612975   0.615213  0.619687</span>
-<span class="go">zL            central        -2.839765  -2.557781  -2.306755  -2.095603  -1.913524  -1.807208  -1.760906  -1.726409  -1.705849  -1.678225 -1.670562</span>
-<span class="go">zT            central        -1.330222  -0.971908  -0.564069  -0.154827   0.081401   0.183270   0.240628   0.263784   0.287082   0.292931  0.304658</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">                    confidence</span>
+<span class="go">confidence                     0          10         20         30         40         50         60         70         80         90          100</span>
+<span class="go">variable      type</span>
+<span class="go">cac           central     0.857143   0.461538   0.827586   0.750000   0.857143   0.843750   0.906475   0.953271   0.958580   0.961165    0.976190</span>
+<span class="go">confidence    central     0          10         20         30         40         50         60         70         80             90          100</span>
+<span class="go">dprime        central     1.975221   1.971156   1.992932   1.990193   2.001534   1.990478   1.994925   1.940776   1.742686   1.585873    1.509544</span>
+<span class="go">rf                        0.007830   0.007271   0.016219   0.017897   0.039150   0.071588   0.155481   0.239374   0.189038   0.115213    0.140940</span>
+<span class="go">targetAbsent  fillerId    0.284424   0.279910   0.264108   0.252822   0.234763   0.212190   0.167043   0.108352   0.063205   0.031603    0.013544</span>
+<span class="go">              rejectId    0.715576   0.711061   0.699774   0.688488   0.674944   0.654628   0.600451   0.521445   0.395034   0.241535    0.144470</span>
+<span class="go">              suspectId   0.047404   0.046652   0.044018   0.042137   0.039127   0.035365   0.027840   0.018059   0.010534   0.005267    0.002257</span>
+<span class="go">targetPresent fillerId    0.093960   0.093960   0.093960   0.089485   0.082774   0.071588   0.058166   0.046980   0.024609   0.013423    0.004474</span>
+<span class="go">              rejectId    0.286353   0.279642   0.277405   0.277405   0.263982   0.241611   0.196868   0.176734   0.134228   0.082774    0.046980</span>
+<span class="go">              suspectId   0.619687   0.615213   0.612975   0.604027   0.595078   0.572707   0.532438   0.438479   0.286353   0.165548    0.091723</span>
+<span class="go">zL            central    -1.670562  -1.678225  -1.705849  -1.726409  -1.760906  -1.807208  -1.913524  -2.095603  -2.306755  -2.557781   -2.839765</span>
+<span class="go">zT            central     0.304658   0.292931   0.287082   0.263784   0.240628   0.183270   0.081401  -0.154827  -0.564069  -0.971908   -1.330222</span>
 </pre></div>
 </div>
 <p>In the table above, the overall false ID rate is 0.047, the overall correct ID rate is 0.620, and the overall correct rejection rate is 0.716.</p>
@@ -355,6 +356,26 @@ created. One contains a pivot table and the other contains rates.</p>
 <p>In the example there is no <code class="docutils literal notranslate"><span class="pre">suspectId</span></code> for <code class="docutils literal notranslate"><span class="pre">targetAbsent</span></code> lineups. Here the <code class="docutils literal notranslate"><span class="pre">targetAbsent.suspectId</span></code> is estimated as <code class="docutils literal notranslate"><span class="pre">targetAbsent.fillerId/lineupSize</span></code></p>
 </div>
 <img alt="getting rates and pivots" src="http://mickeslab.com/wp-content/uploads/2022/03/tutorial1rates.gif" />
+<p>To see overall descriptive statistics, use</p>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span> <span class="kn">import</span> <span class="nn">pyWitness</span>
+ <span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test1.csv&quot;</span><span class="p">)</span>
+ <span class="n">dp</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
+ <span class="n">dp</span><span class="o">.</span><span class="n">printDescriptiveStats</span><span class="p">()</span>
+</pre></div>
+</td></tr></table></div>
+<p>and you’ll see this output:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">Number of lineups                    890.0</span>
+<span class="go">Number of target-absent lineups      443.0</span>
+<span class="go">Number of target-present lineups     447.0</span>
+<span class="go">Correct ID rate                        0.6196868008948546</span>
+<span class="go">False ID rate                          0.0474040632054176</span>
+<span class="go">dPrime                                 1.9752208100241062</span>
+<span class="go">pAUC                                   0.02066155955774986</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="plotting-roc-curves">
 <h2>Plotting ROC curves<a class="headerlink" href="#plotting-roc-curves" title="Permalink to this headline">¶</a></h2>
@@ -453,23 +474,7 @@ created. One contains a pivot table and the other contains rates.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The bend edges are exclusive of the low edge and inclusive of the high edge</p>
-</div>
-<p>The <code class="docutils literal notranslate"><span class="pre">confidence</span></code> column is relabelled to <code class="docutils literal notranslate"><span class="pre">confidence-original</span></code> and <code class="docutils literal notranslate"><span class="pre">confidence</span></code> is filled with labels. Here is an example of the raw data
-(<code class="docutils literal notranslate"><span class="pre">dr.data</span></code>) after binning.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">      Unnamed: 0  participantId  lineupSize   targetLineup responseType  confidence_original confidence  responseTime</span>
-<span class="go">0              0              1           6   targetAbsent     fillerId                   60          1          8330</span>
-<span class="go">1              1              2           6   targetAbsent     fillerId                   70          2         27624</span>
-<span class="go">2              2              3           6  targetPresent    suspectId                   60          1          3140</span>
-<span class="go">3              3              4           6   targetAbsent     rejectId                   80          2          8833</span>
-<span class="go">4              4              5           6  targetPresent    suspectId                   70          2          9810</span>
-<span class="go">...          ...            ...         ...            ...          ...                  ...        ...           ...</span>
-<span class="go">1041        1041           1042           6  targetPresent    suspectId                   70          2         24910</span>
-<span class="go">1042        1042           1043           6  targetPresent    suspectId                   70          2         15683</span>
-<span class="go">1043        1043           1044           6   targetAbsent     fillerId                   70          2          1175</span>
-<span class="go">1044        1044           1045           6  targetPresent    suspectId                   70          2          2308</span>
-<span class="go">1045        1045           1046           6   targetAbsent     fillerId                   90          3         18185</span>
-</pre></div>
+<p>The bin edges are exclusive of the low edge and inclusive of the high edge</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -497,23 +502,19 @@ under the ROC curve up to a maximum value. If the maximum value is between two d
 </div>
 <div class="section" id="plotting-rac-curves">
 <h2>Plotting RAC curves<a class="headerlink" href="#plotting-rac-curves" title="Permalink to this headline">¶</a></h2>
-<p>To plot RAC curves, in this version, v1.0, you have to relabel your “response time” column to “confidence” in your data file (e.g., csv, Excel). We recommend you copy and rename the relabeled file. This is clearly a workaround and will be fixed in the next version of pyWitness.</p>
-<p>Once you’ve changed the file, you can run the code used for plotting CAC curves. We added “RAC” to make it clear that response time, not confidence, is being analysed.</p>
+<p>To perform analyses with a different variable than confidence, for example, response time, use the following code. The important change is highlighted.</p>
 <div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
 <span class="normal">2</span>
 <span class="normal">3</span>
 <span class="normal">4</span>
-<span class="normal">5</span>
-<span class="normal">6</span>
-<span class="normal">7</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span> <span class="kn">import</span> <span class="nn">pyWitness</span>
-     <span class="n">drRAC</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test1.csv&quot;</span><span class="p">)</span>
-     <span class="n">drRAC</span><span class="o">.</span><span class="n">collapseContinuousData</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s2">&quot;responseTime&quot;</span><span class="p">,</span>
-                 <span class="n">bins</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5000</span><span class="p">,</span> <span class="mi">10000</span><span class="p">,</span> <span class="mi">15000</span><span class="p">,</span> <span class="mi">20000</span><span class="p">,</span> <span class="mi">99999</span><span class="p">],</span>
-                     <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
-     <span class="n">dpRAC</span> <span class="o">=</span> <span class="n">drRAC</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">reverseConfidence</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">dependentVariable</span><span class="o">=</span><span class="s2">&quot;responseTime&quot;</span><span class="p">)</span>
-     <span class="n">dpRAC</span><span class="o">.</span><span class="n">plotCAC</span><span class="p">()</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span> <span class="kn">import</span> <span class="nn">pyWitness</span>
+ <span class="n">drRAC</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test1.csv&quot;</span><span class="p">)</span>
+ <span class="n">drRAC</span><span class="o">.</span><span class="n">collapseContinuousData</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s2">&quot;responseTime&quot;</span><span class="p">,</span><span class="n">bins</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5000</span><span class="p">,</span> <span class="mi">10000</span><span class="p">,</span> <span class="mi">15000</span><span class="p">,</span> <span class="mi">20000</span><span class="p">,</span> <span class="mi">99999</span><span class="p">],</span><span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+<span class="hll"> <span class="n">dpRAC</span> <span class="o">=</span> <span class="n">drRAC</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">reverseConfidence</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">dependentVariable</span><span class="o">=</span><span class="s2">&quot;responseTime&quot;</span><span class="p">)</span>
+</span> <span class="n">dpRAC</span><span class="o">.</span><span class="n">plotCAC</span><span class="p">()</span>
 </pre></div>
 </td></tr></table></div>
+<p>The plot will look like this:</p>
 <div class="figure align-default">
 <img alt="RAC for test1" src="_images/test1RAC.png" />
 </div>
@@ -835,7 +836,7 @@ dataframe, so <code class="docutils literal notranslate"><span class="pre">dp.pr
 \[d = \frac{\mu_{T} - \mu_{L}}{ \sqrt{\frac{\sigma_T^2 + \sigma_L^2}{2}} }\]</div>
 <p>This is calculated from the fit parameters for the fits described in the previous section so</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">In [X]: mf.d</span>
-<span class="go">Out[X]: 1.6671878567242588</span>
+<span class="go">Out[X]: 1.7976601843420954</span>
 </pre></div>
 </div>
 </div>
@@ -897,7 +898,7 @@ dataframe, so <code class="docutils literal notranslate"><span class="pre">dp.pr
     <p>
         &copy; Copyright Royal Holloway, University of London 2020 and University of Bristol 2020
       <span class="lastupdated">
-        Last updated on Aug 30, 2022.
+        Last updated on Aug 31, 2022.
       </span>
 
     </p>
