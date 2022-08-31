@@ -861,8 +861,8 @@ class ModelFit(object) :
          pred_tpsid_array,
          pred_tpfid_array] = self.calculateFrequenciesForAllCriteria()
 
-        confidence = _np.flip(list(self.processedData.data_rates.columns.get_level_values(self.processedData.dependentVariable)))
-
+        # confidence = _np.flip(list(self.processedData.data_rates.columns.get_level_values(self.processedData.dependentVariable)))
+        confidence = list(self.processedData.data_pivot.loc['targetAbsent', 'fillerId'].axes[0].droplevel())
         x = _np.arange(0,pred_tasid_array.size,1)+1
     
         fig = _plt.figure(constrained_layout=True)
@@ -887,6 +887,8 @@ class ModelFit(object) :
                       label="Data")
         _plt.ylabel("TA Filler ID")
 
+        ax1.xaxis.set_major_locator(_plt.MaxNLocator(integer=True))
+
         _plt.legend()
 
         # tasid data plot
@@ -900,6 +902,8 @@ class ModelFit(object) :
                       capsize=5)
         _plt.ylabel("TP Suspect ID")
 
+        ax2.xaxis.set_major_locator(_plt.MaxNLocator(integer=True))
+
         # tpfid data plot
         _plt.sca(ax3) 
         _plt.bar(confidence,pred_tpfid_array, fill=False)
@@ -912,6 +916,7 @@ class ModelFit(object) :
         _plt.ylabel("TP Filler ID")
         _plt.xlabel("Confidence bin")
 
+        ax3.xaxis.set_major_locator(_plt.MaxNLocator(integer=True))
 
         # tarid data plot
         _plt.sca(ax4)
