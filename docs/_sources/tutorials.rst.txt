@@ -492,8 +492,6 @@ There many ways to control the model
    * - ``mf.lureBetweenSigma.unset_equal()``
      - Release the linking of lureBetweenSigma and targetBetweenSigma
 
-#MICKES are these command lines meant to be run?
-
 There are multiple fits available and they all have the same interface but differ in
 the construction line
 
