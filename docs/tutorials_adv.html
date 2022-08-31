@@ -200,43 +200,43 @@ definable range.</p>
 </td></tr></table></div>
 <p>After calling <code class="docutils literal notranslate"><span class="pre">calculateConfidenceBootstrap</span></code> the rates table is populated with the 95% confidence limit
 data</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">                                 confidence</span>
-<span class="go">confidence                            3              2              1</span>
-<span class="go">targetLineup   responseType</span>
-<span class="go">cac            central           0.969432314    0.955613577    0.861702128</span>
-<span class="go">               high              0.983819901    0.970698938    0.899521531</span>
-<span class="go">               low               0.94105059     0.935626002    0.813979066</span>
-<span class="go">confidence     central           95.6302521     74.86646884    45.87301587</span>
-<span class="go">               high              96.25013767    75.40578429    47.61453685</span>
-<span class="go">               low               94.97546772    74.28972828    43.55424111</span>
-<span class="go">dprime         central           1.585872911    1.940776199    1.97522081</span>
-<span class="go">               high              1.809343531    2.099687045    2.11922691</span>
-<span class="go">               low               1.284514089    1.737564624    1.794818105</span>
-<span class="go">rf                               0.256152125    0.428411633    0.315436242</span>
-<span class="go">targetAbsent   fillerId          0.031602709    0.108352144    0.284424379</span>
-<span class="go">               fillerId_high     0.049554462    0.136289305    0.318468236</span>
-<span class="go">               fillerId_low      0.015588774    0.080841041    0.235693854</span>
-<span class="go">               rejectId          0.241534989    0.521444695    0.715575621</span>
-<span class="go">               rejectId_high     0.284553948    0.569598955    0.759780844</span>
-<span class="go">               rejectId_low      0.185942697    0.47294046     0.675589358</span>
-<span class="go">               suspectId         0.005267118    0.018058691    0.047404063</span>
-<span class="go">               suspectId_high    0.008259077    0.022714884    0.053078039</span>
-<span class="go">               suspectId_low     0.002598129    0.013473507    0.039282309</span>
-<span class="go">targetPresent  fillerId          0.013422819    0.046979866    0.093959732</span>
-<span class="go">               fillerId_high     0.026205192    0.071115191    0.122404162</span>
-<span class="go">               fillerId_low      0.002289063    0.030067135    0.066295896</span>
-<span class="go">               rejectId          0.082774049    0.176733781    0.286353468</span>
-<span class="go">               rejectId_high     0.106091739    0.210159899    0.331137387</span>
-<span class="go">               rejectId_low      0.053622468    0.139138634    0.24084252</span>
-<span class="go">               suspectId         0.165548098    0.438478747    0.619686801</span>
-<span class="go">               suspectId_high    0.199176143    0.488181045    0.661739591</span>
-<span class="go">               suspectId_low     0.12179988     0.38462942     0.562197218</span>
-<span class="go">zL             central           -2.557781158   -2.095603466   -1.670562491</span>
-<span class="go">               high              -2.397262704   -2.000659299   -1.615714775</span>
-<span class="go">               low               -2.794611532   -2.21228458    -1.759094479</span>
-<span class="go">zT central                       -0.971908247   -0.154827267   0.304658319</span>
-<span class="go">   high                          -0.844567857   -0.029630063   0.417215754</span>
-<span class="go">   low                           -1.166049037   -0.293347212   0.156554647</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">                                      confidence</span>
+<span class="go">confidence                            1          2          3</span>
+<span class="go">variable      type</span>
+<span class="go">cac           central          0.861702   0.955614   0.969432</span>
+<span class="go">              high             0.898148   0.969998   0.982672</span>
+<span class="go">              low              0.819782   0.934552   0.946858</span>
+<span class="go">confidence    central         45.873016  74.866469  95.630252</span>
+<span class="go">              high            47.962794  75.440947  96.258406</span>
+<span class="go">              low             44.128214  74.301501  94.949277</span>
+<span class="go">dprime        central          1.975221   1.940776   1.585873</span>
+<span class="go">              high             2.120760   2.101158   1.834337</span>
+<span class="go">              low              1.815447   1.753813   1.328038</span>
+<span class="go">rf                             0.315436   0.428412   0.256152</span>
+<span class="go">targetAbsent  fillerId         0.284424   0.108352   0.031603</span>
+<span class="go">              fillerId_high    0.321175   0.134259   0.048269</span>
+<span class="go">              fillerId_low     0.240872   0.082314   0.016915</span>
+<span class="go">              rejectId         0.715576   0.521445   0.241535</span>
+<span class="go">              rejectId_high    0.752949   0.560668   0.277414</span>
+<span class="go">              rejectId_low     0.672739   0.472804   0.202311</span>
+<span class="go">              suspectId        0.047404   0.018059   0.005267</span>
+<span class="go">              suspectId_high   0.053529   0.022377   0.008045</span>
+<span class="go">              suspectId_low    0.040145   0.013719   0.002819</span>
+<span class="go">targetPresent fillerId         0.093960   0.046980   0.013423</span>
+<span class="go">              fillerId_high    0.118805   0.067776   0.024778</span>
+<span class="go">              fillerId_low     0.067489   0.025640   0.002278</span>
+<span class="go">              rejectId         0.286353   0.176734   0.082774</span>
+<span class="go">              rejectId_high    0.329399   0.211019   0.106384</span>
+<span class="go">              rejectId_low     0.238167   0.140321   0.055782</span>
+<span class="go">              suspectId        0.619687   0.438479   0.165548</span>
+<span class="go">              suspectId_high   0.668216   0.493503   0.196507</span>
+<span class="go">              suspectId_low    0.567298   0.392393   0.128108</span>
+<span class="go">zL            central         -1.670562  -2.095603  -2.557781</span>
+<span class="go">              high            -1.611559  -2.006968  -2.406877</span>
+<span class="go">              low             -1.749027  -2.205230  -2.768544</span>
+<span class="go">zT            central          0.304658  -0.154827  -0.971908</span>
+<span class="go">              high             0.434992  -0.016287  -0.854162</span>
+<span class="go">              low              0.169499  -0.273088  -1.135387</span>
 </pre></div>
 </div>
 <p>If a plot function (<code class="docutils literal notranslate"><span class="pre">plotROC</span></code>, <code class="docutils literal notranslate"><span class="pre">plotCAC</span></code>) is callled after calling <code class="docutils literal notranslate"><span class="pre">calculateConfidenceBootstrap</span></code> then
@@ -642,7 +642,7 @@ share with colleagues.</p>
     <p>
         &copy; Copyright Royal Holloway, University of London 2020 and University of Bristol 2020
       <span class="lastupdated">
-        Last updated on Aug 28, 2022.
+        Last updated on Aug 31, 2022.
       </span>
 
     </p>
