@@ -36,11 +36,11 @@ def forestPlot(fileName):
 	_plt.axvline(mean,color = "black")
 	_plt.axvline(mean - _np.sqrt(var),color = "black",linestyle = "dotted")
 	_plt.axvline(mean + _np.sqrt(var),color = "black",linestyle = "dotted")
-	_plt.xlim(-0.025,0.025)
+	_plt.xlim(-0.04,0.04)
 	_plt.xlabel("pAUC difference")
 	#_plt.legend(loc=2)
 	_plt.tight_layout()
 	
-	_plt.savefig("sexForestPlot.pdf")
+	_plt.savefig("ForestPlot.pdf")
 
 	return data

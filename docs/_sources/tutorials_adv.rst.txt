@@ -351,7 +351,7 @@ After overlaying plots it maybe important to change the plot axis ranges this ca
    xlim(0,100)
    ylim(0.50,1.00)
 
-.. figure:: images/test1Overlay.jpg
+.. figure:: images/test1Overlay.png
    :alt: CAC for test1.csv with two different binning
 
 Generating data from signal detection model
@@ -383,7 +383,7 @@ share with colleagues.
    dr1.writeCsv("fileName.csv")
    dr1.writeExcel("fileName.xlsx")
 
-So having performed a fit on ``dr`` and generated ``dr1`` a synthetic dataset
+Having performed a fit on ``dr`` and generated ``dr1`` a synthetic dataset
 
 .. code-block :: python
    :linenos:
@@ -403,7 +403,7 @@ So having performed a fit on ``dr`` and generated ``dr1`` a synthetic dataset
    import matplotlib.pyplot as _plt
    _plt.legend()
 
-.. figure:: images/test1_genEx.jpg
+.. figure:: images/test1GenEx.png
    :alt: Generated data comparision example
 
 Power analysis
