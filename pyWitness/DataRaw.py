@@ -236,6 +236,13 @@ class DataRaw :
         :rtype: None        
         '''
 
+        # dict (list in R) cannot have numbers as keys
+        newMap = {}
+        for k in map :
+            newMap[int(k)] = map[k]
+
+        map = newMap
+
         # if the data need reloading?
         if reload : 
             self.loadData()
