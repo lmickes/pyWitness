@@ -21,6 +21,9 @@ pyWitness is developed exclusively in Python 3. The installation methods detaile
 
 .. warning :: 
    Our tutorial assumes python is interactive python 3, with numpy and matplotlib, so the command ``ipython3 --pylab`` if you are familiar with python and have an installation replace ``ipython3 --pylab`` with your own command to start python.
+   
+.. note :: 
+   If you plan on using R, you still need to install the packages.
 
 Installing Python
 -----------------
