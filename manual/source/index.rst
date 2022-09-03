@@ -9,6 +9,7 @@ pyWitness is a python package to manipulate, process, model, fit eyewitness reco
    licence
    authorship
    installation
+   usingR
    introduction
    tutorials
    tutorials_adv

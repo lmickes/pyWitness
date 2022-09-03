@@ -1,41 +1,23 @@
-=======
-Using R
-=======
+======================
+Using pyWitness from R
+======================
 
-
-Words about R
--------------
-
-pyWitness is developed exclusively in Python 3. The installation methods detailed below automatically install the following required packages:  
-
-* you want bullets? You got bullets.
-
-.. note :: 
-   want to write a note? here's your chance!
 
 .. warning :: 
-   Red alert! There's a warning.
-   
-.. note :: 
-   If you plan on using R, you still need to install the packages.
+   You still need to follow the python installation instructions as the package is fundamentally python which is just called from R
+ 
+pyWitness is developed exclusively in Python 3, so to use it in R we need to install a library to interface with python (reticulate). First install reticulate in R
 
-Installing Python
------------------
+     * ``install.packages("reticulate")``
 
-Want to link... <https://docs.conda.io/en/latest/miniconda.html>`_ 
+Then it should be possible to import the python
+
+     * ``pyw <- import("pyWitness")``
+
+If this causes an import error, you might need to point to your conda version of pytohn
+
+     * ``use_python("USRHOME/opt/miniconda3/bin/python")``
 
 
-.. image:: http://mickeslab.com/wp-content/uploads/2022/03/installation1miniconda.gif
-    :alt: installation miniconda
-
-
-
-.. code-block :: python
-
-   words
-   
-If you get "pyWitness v0.1" it's installed and you can proceed to the tutorials.
-
-.. image:: http://mickeslab.com/wp-content/uploads/2022/03/installation3testPyWitness.gif
-    :alt: testing the installations
-
+.. warning :: 
+   If you want to use pyWitness in jupyter labbook there are some issues with python output which might go to the terminal and not to the notebook. Similar for the plots, which will open but not inline in the notebook
