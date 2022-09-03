@@ -1,80 +1,45 @@
-
-
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Advanced tutorials &mdash; pyWitness 1.0 documentation</title>
-  
-
-  
-  
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="_static/code-tabs.css" type="text/css" />
     <link rel="shortcut icon" href="_static/pyWitnessFavicon.png"/>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
-  
-  
-
-  
-  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/code-tabs.js"></script>
         <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-
-    
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+    <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Developer tutorials" href="tutorials_dev.html" />
     <link rel="prev" title="Tutorials" href="tutorials.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
             <a href="index.html" class="icon icon-home"> pyWitness
-          
-
-          
-            
             <img src="_static/pyWitnessLogo200.jpg" class="logo" alt="Logo"/>
-          
           </a>
-
-          
-            
-            
               <div class="version">
                 1.0
               </div>
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -82,17 +47,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="licence.html">Licence &amp; Disclaimer</a></li>
 <li class="toctree-l1"><a class="reference internal" href="authorship.html">Authorship</a></li>
@@ -118,147 +73,109 @@
 <li class="toctree-l1"><a class="reference internal" href="support.html">Support</a></li>
 </ul>
 
-            
-          
         </div>
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">pyWitness</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="index.html">Docs</a> &raquo;</li>
-        
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
       <li>Advanced tutorials</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-            
             <a href="_sources/tutorials_adv.rst.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
-  <div class="section" id="advanced-tutorials">
-<h1>Advanced tutorials<a class="headerlink" href="#advanced-tutorials" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="bootstrapping-uncertainties-confidence-limits">
-<h2>Bootstrapping uncertainties/confidence limits<a class="headerlink" href="#bootstrapping-uncertainties-confidence-limits" title="Permalink to this headline">¶</a></h2>
+             
+  <section id="advanced-tutorials">
+<h1>Advanced tutorials<a class="headerlink" href="#advanced-tutorials" title="Permalink to this heading"></a></h1>
+<section id="bootstrapping-uncertainties-confidence-limits">
+<h2>Bootstrapping uncertainties/confidence limits<a class="headerlink" href="#bootstrapping-uncertainties-confidence-limits" title="Permalink to this heading"></a></h2>
 <p>To create confidence limits on binned cumulative, statistical measures and parameters, pyWitness uses
 the bootstrap method. This method takes <span class="math notranslate nohighlight">\(N\)</span> random participants from the original data <em>with replacement</em>.
 pyWitness can then proceed to compute any quantity (ROC, CAC, pAUC, fit parameters). This is repeated <span class="math notranslate nohighlight">\(M\)</span>
 times and the distribution of the computed quantity used to calculate a confidence interval with a user
 definable range.</p>
-<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<div class="highlight-python notranslate"><div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
 <span class="normal">2</span>
 <span class="normal">3</span>
-<span class="normal">4</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
+<span class="normal">4</span></pre></div></td><td class="code"><div><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
 <span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test1.csv&quot;</span><span class="p">)</span>
 <span class="n">dp</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
 <span class="n">dp</span><span class="o">.</span><span class="n">calculateConfidenceBootstrap</span><span class="p">(</span><span class="n">nBootstraps</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">cl</span><span class="o">=</span><span class="mi">95</span><span class="p">)</span>
-</pre></div>
-</td></tr></table></div>
+</pre></div></td></tr></table></div>
+</div>
 <p>After calling <code class="docutils literal notranslate"><span class="pre">calculateConfidenceBootstrap</span></code> the rates table is populated with the 95% confidence limit
 data</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">                                 confidence</span>
-<span class="go">confidence                            3              2              1</span>
-<span class="go">targetLineup   responseType</span>
-<span class="go">cac            central           0.969432314    0.955613577    0.861702128</span>
-<span class="go">               high              0.983819901    0.970698938    0.899521531</span>
-<span class="go">               low               0.94105059     0.935626002    0.813979066</span>
-<span class="go">confidence     central           95.6302521     74.86646884    45.87301587</span>
-<span class="go">               high              96.25013767    75.40578429    47.61453685</span>
-<span class="go">               low               94.97546772    74.28972828    43.55424111</span>
-<span class="go">dprime         central           1.585872911    1.940776199    1.97522081</span>
-<span class="go">               high              1.809343531    2.099687045    2.11922691</span>
-<span class="go">               low               1.284514089    1.737564624    1.794818105</span>
-<span class="go">rf                               0.256152125    0.428411633    0.315436242</span>
-<span class="go">targetAbsent   fillerId          0.031602709    0.108352144    0.284424379</span>
-<span class="go">               fillerId_high     0.049554462    0.136289305    0.318468236</span>
-<span class="go">               fillerId_low      0.015588774    0.080841041    0.235693854</span>
-<span class="go">               rejectId          0.241534989    0.521444695    0.715575621</span>
-<span class="go">               rejectId_high     0.284553948    0.569598955    0.759780844</span>
-<span class="go">               rejectId_low      0.185942697    0.47294046     0.675589358</span>
-<span class="go">               suspectId         0.005267118    0.018058691    0.047404063</span>
-<span class="go">               suspectId_high    0.008259077    0.022714884    0.053078039</span>
-<span class="go">               suspectId_low     0.002598129    0.013473507    0.039282309</span>
-<span class="go">targetPresent  fillerId          0.013422819    0.046979866    0.093959732</span>
-<span class="go">               fillerId_high     0.026205192    0.071115191    0.122404162</span>
-<span class="go">               fillerId_low      0.002289063    0.030067135    0.066295896</span>
-<span class="go">               rejectId          0.082774049    0.176733781    0.286353468</span>
-<span class="go">               rejectId_high     0.106091739    0.210159899    0.331137387</span>
-<span class="go">               rejectId_low      0.053622468    0.139138634    0.24084252</span>
-<span class="go">               suspectId         0.165548098    0.438478747    0.619686801</span>
-<span class="go">               suspectId_high    0.199176143    0.488181045    0.661739591</span>
-<span class="go">               suspectId_low     0.12179988     0.38462942     0.562197218</span>
-<span class="go">zL             central           -2.557781158   -2.095603466   -1.670562491</span>
-<span class="go">               high              -2.397262704   -2.000659299   -1.615714775</span>
-<span class="go">               low               -2.794611532   -2.21228458    -1.759094479</span>
-<span class="go">zT central                       -0.971908247   -0.154827267   0.304658319</span>
-<span class="go">   high                          -0.844567857   -0.029630063   0.417215754</span>
-<span class="go">   low                           -1.166049037   -0.293347212   0.156554647</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">                                      confidence</span>
+<span class="go">confidence                            1          2          3</span>
+<span class="go">variable      type</span>
+<span class="go">cac           central          0.861702   0.955614   0.969432</span>
+<span class="go">              high             0.898148   0.969998   0.982672</span>
+<span class="go">              low              0.819782   0.934552   0.946858</span>
+<span class="go">confidence    central         45.873016  74.866469  95.630252</span>
+<span class="go">              high            47.962794  75.440947  96.258406</span>
+<span class="go">              low             44.128214  74.301501  94.949277</span>
+<span class="go">dprime        central          1.975221   1.940776   1.585873</span>
+<span class="go">              high             2.120760   2.101158   1.834337</span>
+<span class="go">              low              1.815447   1.753813   1.328038</span>
+<span class="go">rf                             0.315436   0.428412   0.256152</span>
+<span class="go">targetAbsent  fillerId         0.284424   0.108352   0.031603</span>
+<span class="go">              fillerId_high    0.321175   0.134259   0.048269</span>
+<span class="go">              fillerId_low     0.240872   0.082314   0.016915</span>
+<span class="go">              rejectId         0.715576   0.521445   0.241535</span>
+<span class="go">              rejectId_high    0.752949   0.560668   0.277414</span>
+<span class="go">              rejectId_low     0.672739   0.472804   0.202311</span>
+<span class="go">              suspectId        0.047404   0.018059   0.005267</span>
+<span class="go">              suspectId_high   0.053529   0.022377   0.008045</span>
+<span class="go">              suspectId_low    0.040145   0.013719   0.002819</span>
+<span class="go">targetPresent fillerId         0.093960   0.046980   0.013423</span>
+<span class="go">              fillerId_high    0.118805   0.067776   0.024778</span>
+<span class="go">              fillerId_low     0.067489   0.025640   0.002278</span>
+<span class="go">              rejectId         0.286353   0.176734   0.082774</span>
+<span class="go">              rejectId_high    0.329399   0.211019   0.106384</span>
+<span class="go">              rejectId_low     0.238167   0.140321   0.055782</span>
+<span class="go">              suspectId        0.619687   0.438479   0.165548</span>
+<span class="go">              suspectId_high   0.668216   0.493503   0.196507</span>
+<span class="go">              suspectId_low    0.567298   0.392393   0.128108</span>
+<span class="go">zL            central         -1.670562  -2.095603  -2.557781</span>
+<span class="go">              high            -1.611559  -2.006968  -2.406877</span>
+<span class="go">              low             -1.749027  -2.205230  -2.768544</span>
+<span class="go">zT            central          0.304658  -0.154827  -0.971908</span>
+<span class="go">              high             0.434992  -0.016287  -0.854162</span>
+<span class="go">              low              0.169499  -0.273088  -1.135387</span>
 </pre></div>
 </div>
 <p>If a plot function (<code class="docutils literal notranslate"><span class="pre">plotROC</span></code>, <code class="docutils literal notranslate"><span class="pre">plotCAC</span></code>) is callled after calling <code class="docutils literal notranslate"><span class="pre">calculateConfidenceBootstrap</span></code> then
 the confidence interval is drawn as error bars, as shown in the ROC plot and CAC plot, respectively, below.</p>
-<div class="figure align-default">
+<figure class="align-default">
 <img alt="ROC for test1.csv with error bars" src="_images/test1ROCbinErr.png" />
-</div>
-<div class="figure align-default">
+</figure>
+<figure class="align-default">
 <img alt="CAC for test1.csv with error bars" src="_images/test1CACbinErr.png" />
-</div>
-</div>
-<div class="section" id="loading-raw-data-excel-format">
-<h2>Loading raw data excel format<a class="headerlink" href="#loading-raw-data-excel-format" title="Permalink to this headline">¶</a></h2>
+</figure>
+</section>
+<section id="loading-raw-data-excel-format">
+<h2>Loading raw data excel format<a class="headerlink" href="#loading-raw-data-excel-format" title="Permalink to this heading"></a></h2>
 <p>If the file is in <code class="docutils literal notranslate"><span class="pre">excel</span></code> format you will need to specify which sheet the raw data is stored in</p>
-<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
-<span class="normal">2</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
+<div class="highlight-python notranslate"><div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span></pre></div></td><td class="code"><div><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
 <span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test2.xlsx&quot;</span><span class="p">,</span><span class="n">excelSheet</span> <span class="o">=</span> <span class="s2">&quot;raw data&quot;</span><span class="p">)</span>
-</pre></div>
-</td></tr></table></div>
+</pre></div></td></tr></table></div>
 </div>
-<div class="section" id="transforming-data-into-common-format">
-<h2>Transforming data into common format<a class="headerlink" href="#transforming-data-into-common-format" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="transforming-data-into-common-format">
+<h2>Transforming data into common format<a class="headerlink" href="#transforming-data-into-common-format" title="Permalink to this heading"></a></h2>
 <p>The raw experimental data does not have to be in the internal format used by pyWitness. As the data is loaded is it
 possible to replace the name of the data columns and the values stored.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
@@ -274,66 +191,66 @@ possible to replace the name of the data columns and the values stored.</p>
                        <span class="s2">&quot;confidence&quot;</span><span class="p">:</span><span class="s2">&quot;conf_level&quot;</span><span class="p">}))</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="processing-data-for-two-conditions">
-<h2>Processing data for two conditions<a class="headerlink" href="#processing-data-for-two-conditions" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="processing-data-for-two-conditions">
+<h2>Processing data for two conditions<a class="headerlink" href="#processing-data-for-two-conditions" title="Permalink to this heading"></a></h2>
 <p>A single data file might have different experimental condtions. Imagine your data file
 has a column labelled <code class="docutils literal notranslate"><span class="pre">Condition</span></code> and the values for each participant is either <code class="docutils literal notranslate"><span class="pre">Control</span></code> or
 <code class="docutils literal notranslate"><span class="pre">Verbal</span></code>. To proccess only the <code class="docutils literal notranslate"><span class="pre">Control</span></code> participants the following options are required
 for DataRaw.process()</p>
-<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<div class="highlight-python notranslate"><div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
 <span class="normal">2</span>
 <span class="normal">3</span>
-<span class="normal">4</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
+<span class="normal">4</span></pre></div></td><td class="code"><div><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
 <span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test2.csv&quot;</span><span class="p">)</span>
 <span class="n">dr</span><span class="o">.</span><span class="n">cutData</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s2">&quot;previouslyViewedVideo&quot;</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">option</span><span class="o">=</span><span class="s2">&quot;keep&quot;</span><span class="p">)</span>
 <span class="hll"><span class="n">dpControl</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s2">&quot;group&quot;</span><span class="p">,</span> <span class="n">condition</span><span class="o">=</span><span class="s2">&quot;Control&quot;</span><span class="p">)</span>
-</span></pre></div>
-</td></tr></table></div>
+</span></pre></div></td></tr></table></div>
+</div>
 <p>If you have a file with multiple conditions it is straightforward to make multiple
 <code class="docutils literal notranslate"><span class="pre">DataProcessed</span></code> for each condition, as in the following</p>
-<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<div class="highlight-python notranslate"><div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
 <span class="normal">2</span>
 <span class="normal">3</span>
 <span class="normal">4</span>
-<span class="normal">5</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
 <span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test2.csv&quot;</span><span class="p">)</span>
 <span class="n">dr</span><span class="o">.</span><span class="n">cutData</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s2">&quot;previouslyViewedVideo&quot;</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">option</span><span class="o">=</span><span class="s2">&quot;keep&quot;</span><span class="p">)</span>
 <span class="n">dpControl</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s2">&quot;group&quot;</span><span class="p">,</span> <span class="n">condition</span><span class="o">=</span><span class="s2">&quot;Control&quot;</span><span class="p">)</span>
 <span class="hll"><span class="n">dpVerbal</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s2">&quot;group&quot;</span><span class="p">,</span> <span class="n">condition</span><span class="o">=</span><span class="s2">&quot;Verbal&quot;</span><span class="p">)</span>
-</span></pre></div>
-</td></tr></table></div>
+</span></pre></div></td></tr></table></div>
 </div>
-<div class="section" id="statistical-pauc-comparision-between-two-conditions">
-<h2>Statistical (pAUC) comparision between two conditions<a class="headerlink" href="#statistical-pauc-comparision-between-two-conditions" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="statistical-pauc-comparision-between-two-conditions">
+<h2>Statistical (pAUC) comparision between two conditions<a class="headerlink" href="#statistical-pauc-comparision-between-two-conditions" title="Permalink to this heading"></a></h2>
 <p>One way to compare pAUC values of two conditions is use the following code on the test2 data. You can check out the script we wrote called pAUCexample.py.</p>
-<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<div class="highlight-python notranslate"><div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
 <span class="normal">2</span>
 <span class="normal">3</span>
 <span class="normal">4</span>
-<span class="normal">5</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
 <span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test2.csv&quot;</span><span class="p">)</span>
 <span class="n">dr</span><span class="o">.</span><span class="n">cutData</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s2">&quot;previouslyViewedVideo&quot;</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">option</span><span class="o">=</span><span class="s2">&quot;keep&quot;</span><span class="p">)</span>
 <span class="n">dpControl</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s2">&quot;group&quot;</span><span class="p">,</span> <span class="n">condition</span><span class="o">=</span><span class="s2">&quot;Control&quot;</span><span class="p">)</span>
 <span class="n">dpVerbal</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s2">&quot;group&quot;</span><span class="p">,</span> <span class="n">condition</span><span class="o">=</span><span class="s2">&quot;Verbal&quot;</span><span class="p">)</span>
-</pre></div>
-</td></tr></table></div>
+</pre></div></td></tr></table></div>
+</div>
 <p>To find the lowest false ID rate from both conditions,</p>
-<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<div class="highlight-python notranslate"><div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
 <span class="normal">2</span>
 <span class="normal">3</span>
 <span class="normal">4</span>
 <span class="normal">5</span>
-<span class="normal">6</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
+<span class="normal">6</span></pre></div></td><td class="code"><div><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
 <span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test2.csv&quot;</span><span class="p">)</span>
 <span class="n">dr</span><span class="o">.</span><span class="n">cutData</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s2">&quot;previouslyViewedVideo&quot;</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">option</span><span class="o">=</span><span class="s2">&quot;keep&quot;</span><span class="p">)</span>
 <span class="n">dpControl</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s2">&quot;group&quot;</span><span class="p">,</span> <span class="n">condition</span><span class="o">=</span><span class="s2">&quot;Control&quot;</span><span class="p">)</span>
 <span class="n">dpVerbal</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s2">&quot;group&quot;</span><span class="p">,</span> <span class="n">condition</span><span class="o">=</span><span class="s2">&quot;Verbal&quot;</span><span class="p">)</span>
 <span class="hll"><span class="n">minRate</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">dpControl</span><span class="o">.</span><span class="n">liberalTargetAbsentSuspectId</span><span class="p">,</span><span class="n">dpVerbal</span><span class="o">.</span><span class="n">liberalTargetAbsentSuspectId</span><span class="p">)</span>
-</span></pre></div>
-</td></tr></table></div>
+</span></pre></div></td></tr></table></div>
+</div>
 <p>You have to process the data again, with this <code class="docutils literal notranslate"><span class="pre">minRate</span></code></p>
-<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<div class="highlight-python notranslate"><div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
 <span class="normal"> 2</span>
 <span class="normal"> 3</span>
 <span class="normal"> 4</span>
@@ -343,7 +260,7 @@ for DataRaw.process()</p>
 <span class="normal"> 8</span>
 <span class="normal"> 9</span>
 <span class="normal">10</span>
-<span class="normal">11</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
+<span class="normal">11</span></pre></div></td><td class="code"><div><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
 <span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test2.csv&quot;</span><span class="p">)</span>
 <span class="n">dr</span><span class="o">.</span><span class="n">cutData</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s2">&quot;previouslyViewedVideo&quot;</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">option</span><span class="o">=</span><span class="s2">&quot;keep&quot;</span><span class="p">)</span>
 <span class="n">dpControl</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s2">&quot;group&quot;</span><span class="p">,</span> <span class="n">condition</span><span class="o">=</span><span class="s2">&quot;Control&quot;</span><span class="p">)</span>
@@ -354,33 +271,33 @@ for DataRaw.process()</p>
 </span><span class="hll"><span class="n">dpVerbal</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="s2">&quot;group&quot;</span><span class="p">,</span><span class="s2">&quot;Verbal&quot;</span><span class="p">,</span><span class="n">pAUCLiberal</span><span class="o">=</span><span class="n">minRate</span><span class="p">)</span>
 </span><span class="hll"><span class="n">dpVerbal</span><span class="o">.</span><span class="n">calculateConfidenceBootstrap</span><span class="p">(</span><span class="n">nBootstraps</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
 </span><span class="hll"><span class="n">dpControl</span><span class="o">.</span><span class="n">comparePAUC</span><span class="p">(</span><span class="n">dpVerbal</span><span class="p">)</span>
-</span></pre></div>
-</td></tr></table></div>
+</span></pre></div></td></tr></table></div>
+</div>
 <p>To plot the ROC curves, use <code class="docutils literal notranslate"><span class="pre">DataProcess.plotROC</span></code></p>
-<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
-<span class="normal">2</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">dpControl</span><span class="o">.</span><span class="n">plotROC</span><span class="p">(</span><span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Control data&quot;</span><span class="p">,</span> <span class="n">relativeFrequencyScale</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span></pre></div></td><td class="code"><div><pre><span></span><span class="n">dpControl</span><span class="o">.</span><span class="n">plotROC</span><span class="p">(</span><span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Control data&quot;</span><span class="p">,</span> <span class="n">relativeFrequencyScale</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span>
 <span class="n">dpVerbal</span><span class="o">.</span><span class="n">plotROC</span><span class="p">(</span><span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Verbal data&quot;</span><span class="p">,</span> <span class="n">relativeFrequencyScale</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span>
-</pre></div>
-</td></tr></table></div>
+</pre></div></td></tr></table></div>
+</div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The symbol size is the relative frequency and can be changed by setting <code class="docutils literal notranslate"><span class="pre">dp.plotROC(relativeFrequencyScale</span> <span class="pre">=</span> <span class="pre">400)</span></code></p>
 </div>
 <p>And your plot will look like this one:</p>
-<div class="figure align-default">
+<figure class="align-default">
 <img alt="_images/test2ROCs.png" src="_images/test2ROCs.png" />
-</div>
+</figure>
 <p>The shaded regions are the pAUCs that were compared. You can see that they both used the same minimum false ID rate. The error bars are 95% confidence intervals. The dashed black line represents chance performance.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The uncertainities can be changed by setting them to .68, for example <code class="docutils literal notranslate"><span class="pre">dpControl.calculateConfidenceBootstrap(nBootstraps=200,cl=68)</span></code> and <code class="docutils literal notranslate"><span class="pre">dpVerbal.calculateConfidenceBootstrap(nBootstraps=200,cl=68)</span></code></p>
 </div>
-</div>
-<div class="section" id="loading-processed-data">
-<h2>Loading processed data<a class="headerlink" href="#loading-processed-data" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="loading-processed-data">
+<h2>Loading processed data<a class="headerlink" href="#loading-processed-data" title="Permalink to this heading"></a></h2>
 <p>You might already have processed the raw data, or you only have a table of data. It is possible to load a file to perform model fits etc. The processed data need to be in the following CSV format. This is basically the same format as the pivot table stored in <code class="docutils literal notranslate"><span class="pre">DataProcessed</span></code>.</p>
-<table class="colwidths-given docutils align-default" id="id1">
-<caption><span class="caption-text">Processed data columns and allowed values</span><a class="headerlink" href="#id1" title="Permalink to this table">¶</a></caption>
+<table class="docutils align-default" id="id1">
+<caption><span class="caption-text">Processed data columns and allowed values</span><a class="headerlink" href="#id1" title="Permalink to this table"></a></caption>
 <colgroup>
 <col style="width: 18%" />
 <col style="width: 8%" />
@@ -481,14 +398,14 @@ for DataRaw.process()</p>
 <p>If the <code class="docutils literal notranslate"><span class="pre">targetAbsent</span> <span class="pre">suspectId</span></code> row is not present it is estimated by <code class="docutils literal notranslate"><span class="pre">(targetAbsent</span> <span class="pre">fillerId)/lineupSize</span></code></p>
 </div>
 <p>The data are stored in <code class="docutils literal notranslate"><span class="pre">data/tutorials/test1_processed.csv</span></code></p>
-<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
-<span class="normal">2</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
+<div class="highlight-python notranslate"><div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span></pre></div></td><td class="code"><div><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
 <span class="hll"><span class="n">dp</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataProcessed</span><span class="p">(</span><span class="s2">&quot;test1_processed.csv&quot;</span><span class="p">,</span> <span class="n">lineupSize</span> <span class="o">=</span> <span class="mi">6</span><span class="p">)</span>
-</span></pre></div>
-</td></tr></table></div>
+</span></pre></div></td></tr></table></div>
 </div>
-<div class="section" id="using-instances-of-raw-data-processed-data-and-model-fits">
-<h2>Using instances of raw data, processed data and model fits<a class="headerlink" href="#using-instances-of-raw-data-processed-data-and-model-fits" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="using-instances-of-raw-data-processed-data-and-model-fits">
+<h2>Using instances of raw data, processed data and model fits<a class="headerlink" href="#using-instances-of-raw-data-processed-data-and-model-fits" title="Permalink to this heading"></a></h2>
 <p>Using an object orientated approach allows multiple instances (objects) to be created and manipulated. This allows many
 different data file variations on the processed data and model fits to be manipulated simultanuously in a single
 Python session.</p>
@@ -508,13 +425,13 @@ the <code class="docutils literal notranslate"><span class="pre">test1.csv</span
 <span class="n">dp2</span><span class="o">.</span><span class="n">plotCAC</span><span class="p">()</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="overlaying-plots">
-<h2>Overlaying plots<a class="headerlink" href="#overlaying-plots" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="overlaying-plots">
+<h2>Overlaying plots<a class="headerlink" href="#overlaying-plots" title="Permalink to this heading"></a></h2>
 <p>In general, each <code class="docutils literal notranslate"><span class="pre">plotXXX</span></code> function does not create a canvas, so to overlay plots the functions need to be called
 sequentially in order.</p>
 <p>To make a legend the plots need to be given a label. So this example is the same as the</p>
-<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<div class="highlight-python notranslate"><div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
 <span class="normal"> 2</span>
 <span class="normal"> 3</span>
 <span class="normal"> 4</span>
@@ -527,7 +444,7 @@ sequentially in order.</p>
 <span class="normal">11</span>
 <span class="normal">12</span>
 <span class="normal">13</span>
-<span class="normal">14</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
+<span class="normal">14</span></pre></div></td><td class="code"><div><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
 <span class="n">dr1</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test1.csv&quot;</span><span class="p">)</span>
 <span class="n">dr2</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test1.csv&quot;</span><span class="p">)</span>
 
@@ -541,28 +458,28 @@ sequentially in order.</p>
 </span><span class="hll">
 </span><span class="hll"><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">_plt</span>
 </span><span class="hll"><span class="n">_plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-</span></pre></div>
-</td></tr></table></div>
+</span></pre></div></td></tr></table></div>
+</div>
 <p>After overlaying plots it maybe important to change the plot axis ranges this can be done with <code class="docutils literal notranslate"><span class="pre">xlim</span></code> and <code class="docutils literal notranslate"><span class="pre">ylim</span></code></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
 <span class="n">ylim</span><span class="p">(</span><span class="mf">0.50</span><span class="p">,</span><span class="mf">1.00</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="figure align-default">
+<figure class="align-default">
 <img alt="CAC for test1.csv with two different binning" src="_images/test1Overlay.png" />
-</div>
-</div>
-<div class="section" id="generating-data-from-signal-detection-model">
-<h2>Generating data from signal detection model<a class="headerlink" href="#generating-data-from-signal-detection-model" title="Permalink to this headline">¶</a></h2>
+</figure>
+</section>
+<section id="generating-data-from-signal-detection-model">
+<h2>Generating data from signal detection model<a class="headerlink" href="#generating-data-from-signal-detection-model" title="Permalink to this heading"></a></h2>
 <p>Raw and processed data can be generated simply from a signal detection model.</p>
-<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<div class="highlight-python notranslate"><div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
 <span class="normal">2</span>
 <span class="normal">3</span>
 <span class="normal">4</span>
 <span class="normal">5</span>
 <span class="normal">6</span>
 <span class="normal">7</span>
-<span class="normal">8</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
+<span class="normal">8</span></pre></div></td><td class="code"><div><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
 <span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;test1.csv&quot;</span><span class="p">)</span>
 <span class="n">dr</span><span class="o">.</span><span class="n">collapseContinuousData</span><span class="p">(</span><span class="n">column</span> <span class="o">=</span> <span class="s2">&quot;confidence&quot;</span><span class="p">,</span><span class="n">bins</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">60</span><span class="p">,</span><span class="mi">80</span><span class="p">,</span><span class="mi">100</span><span class="p">],</span><span class="n">labels</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 <span class="n">dp</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
@@ -570,18 +487,18 @@ sequentially in order.</p>
 <span class="n">mf</span><span class="o">.</span><span class="n">setEqualVariance</span><span class="p">()</span>
 <span class="n">mf</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 <span class="hll"><span class="n">dr1</span> <span class="o">=</span> <span class="n">mf</span><span class="o">.</span><span class="n">generateRawData</span><span class="p">(</span><span class="n">nGenParticipants</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span>
-</span></pre></div>
-</td></tr></table></div>
+</span></pre></div></td></tr></table></div>
+</div>
 <p><code class="docutils literal notranslate"><span class="pre">dr1</span></code> is a <code class="docutils literal notranslate"><span class="pre">DataRaw</span></code> object and is simulated data for 10,000 participants. <code class="docutils literal notranslate"><span class="pre">dr1</span></code> can be used for any
 pyWitness analysis so ROC, CAC, pAUC, etc. The raw data can also be written to disk to either preserve and/or
 share with colleagues.</p>
-<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
-<span class="normal">2</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="hll"><span class="n">dr1</span><span class="o">.</span><span class="n">writeCsv</span><span class="p">(</span><span class="s2">&quot;fileName.csv&quot;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span></pre></div></td><td class="code"><div><pre><span></span><span class="hll"><span class="n">dr1</span><span class="o">.</span><span class="n">writeCsv</span><span class="p">(</span><span class="s2">&quot;fileName.csv&quot;</span><span class="p">)</span>
 </span><span class="hll"><span class="n">dr1</span><span class="o">.</span><span class="n">writeExcel</span><span class="p">(</span><span class="s2">&quot;fileName.xlsx&quot;</span><span class="p">)</span>
-</span></pre></div>
-</td></tr></table></div>
+</span></pre></div></td></tr></table></div>
+</div>
 <p>Having performed a fit on <code class="docutils literal notranslate"><span class="pre">dr</span></code> and generated <code class="docutils literal notranslate"><span class="pre">dr1</span></code> a synthetic dataset</p>
-<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<div class="highlight-python notranslate"><div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
 <span class="normal"> 2</span>
 <span class="normal"> 3</span>
 <span class="normal"> 4</span>
@@ -594,7 +511,7 @@ share with colleagues.</p>
 <span class="normal">11</span>
 <span class="normal">12</span>
 <span class="normal">13</span>
-<span class="normal">14</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Need to process the synthetic data</span>
+<span class="normal">14</span></pre></div></td><td class="code"><div><pre><span></span><span class="c1"># Need to process the synthetic data</span>
 <span class="n">dp1</span> <span class="o">=</span> <span class="n">dr1</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
 
 <span class="c1"># calculate uncertainties using bootstrap</span>
@@ -608,80 +525,71 @@ share with colleagues.</p>
 
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">_plt</span>
 <span class="n">_plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-</pre></div>
-</td></tr></table></div>
-<div class="figure align-default">
+</pre></div></td></tr></table></div>
+</div>
+<figure class="align-default">
 <img alt="Generated data comparision example" src="_images/test1GenEx.png" />
-</div>
-</div>
-<div class="section" id="power-analysis">
-<h2>Power analysis<a class="headerlink" href="#power-analysis" title="Permalink to this headline">¶</a></h2>
+</figure>
+</section>
+<section id="power-analysis">
+<h2>Power analysis<a class="headerlink" href="#power-analysis" title="Permalink to this heading"></a></h2>
 <p>By having the ability to generate data from a model it is possible to vary the number of generated participants. This is not too dissimilar to bootstrapping. Instead of generating new samples (with replacement) from the data, new samples with variable numbers of participants is possible. For each sample all the analysis can be performed and dependence on sample size can be explored.</p>
+<div class="highlight-python notranslate"><div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div><pre><span></span> <span class="k">for</span> <span class="n">nGen</span> <span class="ow">in</span> <span class="n">numpy</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="mi">5000</span><span class="p">,</span> <span class="mi">9</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="p">:</span>
+     <span class="n">drSimulated</span> <span class="o">=</span> <span class="n">mf</span><span class="o">.</span><span class="n">generateRawData</span><span class="p">(</span><span class="n">nGenParticipants</span> <span class="o">=</span> <span class="n">nGen</span><span class="p">)</span>
+     <span class="n">dpSimulated</span> <span class="o">=</span> <span class="n">drSimulated</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
+     <span class="n">dpSimulated</span><span class="o">.</span><span class="n">calculateConfidenceBootstrap</span><span class="p">(</span><span class="n">nBootstraps</span><span class="o">=</span><span class="mi">2000</span><span class="p">)</span>
+     <span class="nb">print</span><span class="p">(</span><span class="n">nGen</span><span class="p">,</span> <span class="n">dpSimulated</span><span class="o">.</span><span class="n">liberalTargetAbsentSuspectId</span><span class="p">,</span><span class="n">dpSimulated</span><span class="o">.</span><span class="n">pAUC</span><span class="p">,</span> <span class="n">dpSimulated</span><span class="o">.</span><span class="n">pAUC_low</span><span class="p">,</span> <span class="n">dpSimulated</span><span class="o">.</span><span class="n">pAUC_high</span><span class="p">)</span>
+</pre></div></td></tr></table></div>
 </div>
-</div>
+</section>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="tutorials_dev.html" class="btn btn-neutral float-right" title="Developer tutorials" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="tutorials.html" class="btn btn-neutral float-left" title="Tutorials" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="tutorials.html" class="btn btn-neutral float-left" title="Tutorials" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="tutorials_dev.html" class="btn btn-neutral float-right" title="Developer tutorials" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &copy; Copyright Royal Holloway, University of London 2020 and University of Bristol 2020
-      <span class="lastupdated">
-        Last updated on May 09, 2022.
-      </span>
-
-    </p>
+    <p>&#169; Copyright Royal Holloway, University of London 2020 and University of Bristol 2020.
+      <span class="lastupdated">Last updated on Sep 03, 2022.
+      </span></p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
-
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
   </script>
-
-  
-  
-    
     <!-- Theme Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QECQT1H6PE"></script>
     <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
 
-    ga('create', 'G-QECQT1H6PE', 'auto');
-    ga('send', 'pageview');
-    </script>
-
-    
-   
+      gtag('config', 'G-QECQT1H6PE', {
+          'anonymize_ip': false,
+      });
+    </script> 
 
 </body>
 </html>

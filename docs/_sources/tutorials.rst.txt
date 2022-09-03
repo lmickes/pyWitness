@@ -82,23 +82,40 @@ and pyWitness with
 A single Python class `pyWitness.DataRaw <./moduledocs.html#pyWitness.DataRaw>`_ is used to load raw data in
 either ``csv`` or ``excel`` format. The format of ``test1.csv`` is the same as that described in the introduction.
 
-.. code-block :: python 
+.. tabs::
 
-   import pyWitness
-   dr = pyWitness.DataRaw("test1.csv")
+    .. code-tab:: python
+
+       import pyWitness
+       dr = pyWitness.DataRaw("test1.csv")
+
+    .. code-tab:: R
+
+       pyw <- import("pyWitness")
 
 Checking and exploring loaded data
 ----------------------------------
 
 It is useful to understand what columns and data values are stored in the raw data.
 
-.. code-block :: python
-   :linenos:
-   :emphasize-lines: 3
+.. tabs::
 
-   import pyWitness
-   dr = pyWitness.DataRaw("test1.csv")
-   dr.checkData()
+    .. code-tab:: python
+       :linenos:
+       :emphasize-lines: 3
+
+        import pyWitness
+        dr = pyWitness.DataRaw("test1.csv")
+        dr.checkData()
+   
+    .. code-tab:: R
+       :linenos:
+       :emphasize-lines: 3
+       
+        pyw <- pyw <- import("pyWitness")
+        dr <- pyw$DataRaw("./test1.csv")
+        dr$checkData()
+
 
 .. code-block :: console
 
@@ -112,13 +129,24 @@ It is useful to understand what columns and data values are stored in the raw da
 
 If the unique values for a non-mandatory column are required then this can be displayed using
 
-.. code-block :: python
-   :linenos:
-   :emphasize-lines: 3
+.. tabs::
 
-   import pyWitness
-   dr = pyWitness.DataRaw("test1.csv")
-   dr.columnValues("responseTime")
+    .. code-tab:: python
+       :linenos:
+       :emphasize-lines: 3
+
+       import pyWitness
+       dr = pyWitness.DataRaw("test1.csv")
+       dr.columnValues("responseTime")
+
+    .. code-tab:: R
+       :linenos:
+       :emphasize-lines: 3
+       
+       pyw <- import("pyWitness")
+       dr <- pyw$DataRaw("./test1.csv")
+       dr$columnValues("responseTime")
+
 
 .. code-block :: console
 
@@ -127,11 +155,18 @@ If the unique values for a non-mandatory column are required then this can be di
 
 It is possible also to load Excel files 
 
-.. code-block :: python
-   :linenos:
+.. tabs::
 
-   import pyWitness 
-   dr = pyWitness.DataRaw("test1.xlsx","test1")
+    .. code-tab:: python
+
+       import pyWitness 
+       dr = pyWitness.DataRaw("test1.xlsx","test1")
+
+    .. code-tab:: R
+       
+       pyw <- import("pyWitness")
+       dr <- pyw$DataRaw("test1.xlsx","test1")
+
 
 The second argument is the sheet name within the workbook (in the example above, it's "test1").
 
@@ -140,26 +175,49 @@ Processing raw experimental data
 To process the raw data the function `pyWitness.DataRaw.process <./moduledocs.html#pyWitness.DataRaw.process>`_
 needs to be called on a raw data object. This calculates the cumulative rates from the raw data.
 
-.. code-block :: python 
-   :linenos:
-   :emphasize-lines: 3
+.. tabs::
 
-   import pyWitness
-   dr = pyWitness.DataRaw("test1.csv")
-   dp = dr.process()
+    .. code-tab:: python
+       :linenos:
+       :emphasize-lines: 3
+
+       import pyWitness
+       dr = pyWitness.DataRaw("test1.csv")
+       dp = dr.process()
+
+    .. code-tab:: R
+       :linenos:
+       :emphasize-lines: 3
+
+       pyw <- import("pyWitness")
+       dr <- pyw$DataRaw("./test1.csv")
+       dp <- dr$process()
 
 Once `pyWitness.DataRaw.process <./moduledocs.html#pyWitness.DataRaw.process>`_ is called two ``DataFrames`` are
 created. One contains a pivot table and the other contains rates.
 
-.. code-block :: python 
-   :linenos:
-   :emphasize-lines: 4-5
+.. tabs::
 
-   import pyWitness
-   dr = pyWitness.DataRaw("test1.csv")
-   dp = dr.process()
-   dp.printPivot()
-   dp.printRates()
+    .. code-tab:: python
+       :linenos:
+       :emphasize-lines: 4-5
+
+       import pyWitness
+       dr = pyWitness.DataRaw("test1.csv")
+       dp = dr.process()
+       dp.printPivot()
+       dp.printRates()
+
+    .. code-tab:: R
+       :linenos:
+       :emphasize-lines: 4-5
+       
+       pyw <- import("pyWitness")
+       dr <- pyw$DataRaw("./test1.csv")
+       dp <- dr$process()
+       dp$printPivot()
+       dp$printRates()
+
 
 You should see the following output of the ``dp.printPivot()``. 
 
@@ -208,13 +266,22 @@ In the table above, the overall false ID rate is 0.047, the overall correct ID r
    
 To see overall descriptive statistics, use 
 
-.. code-block :: python 
-   :linenos:
+.. tabs::
 
-    import pyWitness
-    dr = pyWitness.DataRaw("test1.csv")
-    dp = dr.process()
-    dp.printDescriptiveStats()
+    .. code-tab:: python
+
+        import pyWitness
+        dr = pyWitness.DataRaw("test1.csv")
+        dp = dr.process()
+        dp.printDescriptiveStats()
+        
+    .. code-tab:: R
+       
+       pyw <- import("pyWitness")
+       dr <- pyw$DataRaw("./test1.csv")
+       dp <- dr$process()
+       dp$printDescriptiveStats()
+
 
 and you'll see this output:
 
@@ -231,14 +298,28 @@ and you'll see this output:
 Plotting ROC curves
 -------------------
 
-.. code-block :: python 
-   :linenos:
-   :emphasize-lines: 4
+.. tabs::
 
-   import pyWitness
-   dr = pyWitness.DataRaw("test1.csv")
-   dp = dr.process()
-   dp.plotROC()
+    .. code-tab:: python
+       :linenos:
+       :emphasize-lines: 4
+       
+        import pyWitness
+        dr = pyWitness.DataRaw("test1.csv")
+        dp = dr.process()
+        dp.plotROC()
+       
+    .. code-tab:: R
+       :linenos:
+       :emphasize-lines: 4-5
+       
+        pyw <- import("pyWitness")
+        dr <- pyw$DataRaw("./test1.csv")
+        dp <- dr$process()
+        dp$plotROC()
+        mpl$pyplot$show()
+
+
 
 .. figure:: images/test1ROCnoBin.png
    :alt: ROC for test1.csv
@@ -251,14 +332,27 @@ The black dashed line in the plot represents chance performance.
 Plotting CAC curves 
 -------------------
 
-.. code-block :: python 
-   :linenos:
-   :emphasize-lines: 4
+.. tabs::
 
-   import pyWitness
-   dr = pyWitness.DataRaw("test1.csv")
-   dp = dr.process()
-   dp.plotCAC()
+    .. code-tab:: python
+       :linenos:
+       :emphasize-lines: 4
+       
+       import pyWitness
+       dr = pyWitness.DataRaw("test1.csv")
+       dp = dr.process()
+       dp.plotCAC()
+       
+    .. code-tab:: R
+       :linenos:
+       :emphasize-lines: 4-5       
+       
+       pyw <- import("pyWitness")
+       dr <- pyw$DataRaw("./test1.csv")
+       dp <- dr$process()
+       dp$plotCAC()
+       mpl$pyplot$show()
+
 
 .. figure:: images/test1CACnoBin.png
    :alt: CAC for test1.csv
@@ -272,31 +366,57 @@ Collapsing the categorical data
 The dataset used in this tutorial has 11 confidence levels (0, 10, 20, 30, 40, 50, 60, 70, 80, 90 and 100). Often confidence levels need to be binned or collapsed. This is best performed on the raw data before calling
 ``process()``. This is done with the ``collapseCategoricalData`` method of ``DataRaw``, and shown in example below, where the new bins are (0-60 map to 30, 70-80 to 75 and 90-100 to 95).
 
-.. code-block :: python 
-   :linenos:
-   :emphasize-lines: 3-6
+.. tabs::
+
+    .. code-tab:: python
+       :linenos:
+       :emphasize-lines: 3-6
   
-   import pyWitness
-   dr = pyWitness.DataRaw("test1.csv")
-   dr.collapseCategoricalData(column='confidence',
+       import pyWitness
+       dr = pyWitness.DataRaw("test1.csv")
+       dr.collapseCategoricalData(column='confidence',
                               map={0: 30, 10: 30, 20: 30, 30: 30, 40: 30, 50: 30, 60: 30, 
                                    70: 75, 80: 75, 
                                    90: 95, 100: 95})
-   dp = dr.process()
-   dp.plotCAC()   
+       dp = dr.process()
+       dp.plotCAC()   
+       
+    .. code-tab:: R
+       :linenos:
+       :emphasize-lines: 3-7      
+       
+       pyw <- import("pyWitness")
+       dr <- pyw$DataRaw("./test1.csv")
+       dr$collapseCategoricalData(column='confidence',map=list("0"=30, "10"=30, "20"=30, "30"=30,               "40"=30,"50"=30, "60"=30,"70"=75, "80"=75,"90"=95, "100"=95))
+       dp <- dr$process()
+       dp$plotCAC()
+       mpl$pyplot$show()
+       
 
 .. figure:: images/test1CACBin.png
    :alt: Rebinned CAC for test1.csv 
 
 To rescale the axes, you can use
 
-.. code-block :: python 
-   :linenos:
+.. tabs::
 
-   import matplotlib as _plt
-   xlim(0,100)
-   ylim(0.50,1.0)
+    .. code-tab:: python
 
+       import matplotlib as _plt
+       xlim(0,100)
+       ylim(0.50,1.0)
+
+    .. code-tab:: R
+    
+       pyw <- import("pyWitness")
+       dr <- pyw$DataRaw("./test1.csv")
+       dr$collapseCategoricalData(column='confidence',map=list("0"=30, "10"=30, "20"=30, "30"=30,               "40"=30,"50"=30, "60"=30,"70"=75, "80"=75,"90"=95, "100"=95))
+       dp <- dr$process()
+       dp$plotCAC()
+       invisible(mpl$pyplot$ylim(0.50,1.0))
+       mpl$pyplot$show()
+       
+       
 and you get 
 
 .. figure:: images/test1CACBinLim.png
@@ -310,15 +430,30 @@ Collapsing (binning) continuous data
 
 Some data are not categorical variables, but continuous variables.
 
-.. code-block :: python
-   :linenos:
-   :emphasize-lines: 3
+.. tabs::
 
-   import pyWitness
-   dr = pyWitness.DataRaw("test1.csv")
-   dr.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels= [1,2,3])
-   dp = dr.process()
-   dp.plotROC()
+    .. code-tab:: python
+       :linenos:
+       :emphasize-lines: 3
+
+       import pyWitness
+       dr = pyWitness.DataRaw("test1.csv")
+       dr.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels= [1,2,3])
+       dp = dr.process()
+       dp.plotROC()
+       
+    .. code-tab:: R
+       :linenos:
+       :emphasize-lines: 3
+       
+        pyw <- import("pyWitness")
+        dr <- pyw$DataRaw("./test1.csv")
+        dr$collapseContinuousData(column = "confidence", bins = c(-1,60,80,100),labels= c(1,2,3))
+        dp <- dr$process()
+        dp$plotROC()
+        mpl$pyplot$show()
+        
+        
 
 .. note::
    ``labels=None`` can be used and the bins will be automatically labelled
@@ -335,15 +470,28 @@ Calculating pAUC and performing statistical tests
 pAUC is calculated when ``dr.process()`` is called. Simpson's rule integrates the area
 under the ROC curve up to a maximum value. If the maximum value is between two data points, linear interpolation is used to calculate the most liberal point (i.e., the lowest level of confidence).
 
-.. code-block :: python
-   :linenos:
-   :emphasize-lines: 5
+.. tabs::
 
-   import pyWitness
-   dr = pyWitness.DataRaw("test1.csv")
-   dr.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels= [1,2,3])
-   dp = dr.process()
-   print(dp.pAUC)
+    .. code-tab:: python
+       :linenos:
+       :emphasize-lines: 5
+
+       import pyWitness
+       dr = pyWitness.DataRaw("test1.csv")
+       dr.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels= [1,2,3])
+       dp = dr.process()
+       print(dp.pAUC)
+       
+    .. code-tab:: R
+       :linenos:
+       :emphasize-lines: 5
+       
+       pyw <- import("pyWitness")
+       dr <- pyw$DataRaw("./test1.csv")
+       dr$collapseContinuousData(column = "confidence",bins = c(-1,60,80,100),labels= c(1,2,3))
+       dp <- dr$process()
+       print(dp$pAUC)
+
 
 .. figure :: images/test1_pAUC.jpg
    :alt: Data-model ROC comparision for test1.csv
@@ -353,15 +501,33 @@ Plotting RAC curves
 
 To perform analyses with a different variable than confidence, for example, response time, use the following code. The important change is highlighted. 
 
-.. code-block :: python 
-   :linenos:
-   :emphasize-lines: 4
+.. tabs::
+
+    .. code-tab:: python
+       :linenos:
+       :emphasize-lines: 4
     
-    import pyWitness
-    drRAC = pyWitness.DataRaw("test1.csv")
-    drRAC.collapseContinuousData(column="responseTime",bins=[0, 5000, 10000, 15000, 20000, 99999],labels=[1, 2, 3, 4, 5])
-    dpRAC = drRAC.process(reverseConfidence=True,dependentVariable="responseTime")
-    dpRAC.plotCAC()
+        import pyWitness
+        drRAC = pyWitness.DataRaw("test1.csv")
+        drRAC.collapseContinuousData(column="responseTime",bins=[0, 5000, 10000, 15000, 20000, 99999],labels=[1, 2, 3, 4, 5])
+        dpRAC = drRAC.process(reverseConfidence=True,dependentVariable="responseTime")
+        dpRAC.plotCAC()
+        
+    .. code-tab:: R
+       :linenos:
+       :emphasize-lines: 5
+       
+       pyw <- import("pyWitness")
+       drRAC <- pyw$DataRaw("./test1.csv")
+       drRAC$collapseContinuousData(column="responseTime",
+                    bins=c(0, 5000, 10000, 15000, 20000, 99999),labels=c(1, 2, 3, 4, 5))
+       dpRAC <- drRAC$process(reverseConfidence=TRUE,dependentVariable="responseTime")
+       dpRAC$plotCAC()
+       invisible(mpl$pyplot$xlabel("Response Time"))
+       invisible(mpl$pyplot$ylim(.50,1.0))
+       invisible(mpl$pyplot$savefig("test1RAC.png"))
+       invisible(mpl$pyplot$savefig("test1RAC.pdf"))
+        
         
 The plot will look like this:
         
@@ -374,17 +540,31 @@ Fitting signal detection-based models to data
 There are many models available in pyWitness. We'll start with the independent observation model. To load and process the data is the same as before (lines 1-4), the fitting
 part is new and the code is highlighted (lines 5-7).
 
-.. code-block :: python  
-   :linenos: 
-   :emphasize-lines: 5-7
+.. tabs::
 
-   import pyWitness
-   dr = pyWitness.DataRaw("test1.csv")
-   dr.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels= [1,2,3])
-   dp = dr.process()
-   mf = pyWitness.ModelFitIndependentObservation(dp)
-   mf.setEqualVariance()
-   mf.fit()
+    .. code-tab:: python
+       :linenos:
+       :emphasize-lines: 5-7
+
+       import pyWitness
+       dr = pyWitness.DataRaw("test1.csv")
+       dr.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels= [1,2,3])
+       dp = dr.process()
+       mf = pyWitness.ModelFitIndependentObservation(dp)
+       mf.setEqualVariance()
+       mf.fit()
+       
+    .. code-tab:: R
+       :linenos:
+       :emphasize-lines: 5-7
+       
+       pyw <- import("pyWitness",convert=TRUE)
+       dr <- pyw$DataRaw("./test1.csv")
+       dr$collapseContinuousData(column = "confidence",bins = c(-1,60,80,100),labels= c(1,2,3))
+       dp <- dr$process()
+       mf <- pyw$ModelFitIndependentObservation(dp)
+       mf$setEqualVariance()
+       mf$fit()
 
 Line 5 constructs a fit object, line 6 sets the model parameters to equal variance and line 7 starts the minimiser. The
 output from the fit (execution of line 7) is something like the following
@@ -406,22 +586,43 @@ output from the fit (execution of line 7) is something like the following
 To clearly see how the fitting works, the following code is the same as above but
 with ``mf.printParameters()`` on lines 6, 9, and 12.
 
-.. code-block :: python
-   :linenos:
-   :emphasize-lines: 6,9,12
+.. tabs::
 
-   import pyWitness
-   dr = pyWitness.DataRaw("test1.csv")
-   dr.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels= [1,2,3])
-   dp = dr.process()
-   mf = pyWitness.ModelFitIndependentObservation(dp)
-   mf.printParameters()
+    .. code-tab:: python
+       :linenos:
+       :emphasize-lines: 6,9,12
 
-   mf.setEqualVariance()
-   mf.printParameters()
+       import pyWitness
+       dr = pyWitness.DataRaw("test1.csv")
+       dr.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels= [1,2,3])
+       dp = dr.process()
+       mf = pyWitness.ModelFitIndependentObservation(dp)
+       mf.printParameters()
 
-   mf.fit()
-   mf.printParameters()
+       mf.setEqualVariance()
+       mf.printParameters()
+
+       mf.fit()
+       mf.printParameters()
+       
+    .. code-tab:: R
+       :linenos:
+       :emphasize-lines: 6,9,12     
+       
+       pyw <- import("pyWitness")
+       dr <- pyw$DataRaw("./test1.csv")
+       dr$collapseContinuousData(column = "confidence",bins = c(-1,60,80,100),labels= c(1,2,3))
+       dp <- dr$process()
+       mf <- pyw$ModelFitIndependentObservation(dp)
+       mf$printParameters()
+
+       mf$setEqualVariance()
+       mf$printParameters()
+
+       mf$fit()
+       mf$printParameters()
+
+
 
 After creating the ``mf`` object (line 9) the parameters are at their default values and free
 
@@ -495,18 +696,34 @@ There many ways to control the model
 There are multiple fits available and they all have the same interface but differ in
 the construction line
 
-.. code-block :: python
-   :linenos:
-   :emphasize-lines: 5-8
+.. tabs::
 
-   dr = pyWitness.DataRaw("test1.csv")
-   dr.collapseContinuousData(column="confidence")
-   dp = dr.process()
+    .. code-tab:: python
+       :linenos:
+       :emphasize-lines: 5-8
 
-   mf_io = pyWitness.ModelFitIndependentObservation(dp)
-   mf_br = pyWitness.ModelFitBestRest(dp)
-   mf_en = pyWitness.ModelFitEnsemble(dp)
-   mf_in = pyWitness.ModelFitIntegration(dp)
+       dr = pyWitness.DataRaw("test1.csv")
+       dr.collapseContinuousData(column="confidence")
+       dp = dr.process()
+        
+       mf_io = pyWitness.ModelFitIndependentObservation(dp)
+       mf_br = pyWitness.ModelFitBestRest(dp)
+       mf_en = pyWitness.ModelFitEnsemble(dp)
+       mf_in = pyWitness.ModelFitIntegration(dp)
+       
+       
+    .. code-tab:: R
+       :linenos:
+       :emphasize-lines: 5-8
+       
+       pyw <- import("pyWitness")
+       dr <- pyw$DataRaw("./test1.csv")
+       dp <- dr$process()
+       
+       mf_io <- pyw$ModelFitIndependentObservation(dp)
+       mf_br <- pyw$ModelFitBestRest(dp)
+       mf_en <- pyw$ModelFitEnsemble(dp)
+       mf_in <- pyw$ModelFitIntegration(dp)
 
 Setting initial fit parameters
 ------------------------------
@@ -530,36 +747,71 @@ Rearranging gives
 There is a linear relationship between target and lure :math:`Z` values. This can be plotted
 and a linear fit used to estimate the gradient and intercept.
 
-.. code-block :: python
-   :linenos:
-   :emphasize-lines: 5
+.. tabs::
 
-   import pyWitness
-   dr = pyWitness.DataRaw("test1.csv")
-   dr.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels= [1,2,3])
-   dp = dr.process()
-   dp.plotHitVsFalseAlarmRate()
+    .. code-tab:: python
+       :linenos:
+       :emphasize-lines: 5
+
+       import pyWitness
+       dr = pyWitness.DataRaw("test1.csv")
+       dr.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels= [1,2,3])
+       dp = dr.process()
+       dp.plotHitVsFalseAlarmRate()
+       
+    .. code-tab:: R
+       :linenos:
+       :emphasize-lines: 5
+       
+       pyw <- import("pyWitness")
+       dr <- pyw$DataRaw("./test1.csv")
+       dr$collapseContinuousData(column = "confidence",bins = c(-1,60,80,100),labels = c(1,2,3))
+       dp <- dr$process()
+       dp$plotHitVsFalseAlarmRate()
+       invisible(mpl$pyplot$savefig("HvFA.png"))
+       
+       
 
 .. figure:: images/HvFA.png
    :alt: Hit rate vs. false alarm rate for test1.csv
 
-.. code-block :: python
-   :linenos:
-   :emphasize-lines: 9
+.. tabs::
 
-   import pyWitness
-   dr = pyWitness.DataRaw("test1.csv")
-   dr.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels= [1,2,3])
-   dp = dr.process()
-   mf = pyWitness.ModelFitIndependentObservation(dp)
-   mf.printParameters()
+    .. code-tab:: python
+       :linenos:
+       :emphasize-lines: 9
 
-   mf.setEqualVariance()
-   mf.setParameterEstimates()
-   mf.printParameters()
+       import pyWitness
+       dr = pyWitness.DataRaw("test1.csv")
+       dr.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels= [1,2,3])
+       dp = dr.process()
+       mf = pyWitness.ModelFitIndependentObservation(dp)
+       mf.printParameters()
 
-   mf.fit()
-   mf.printParameters()
+       mf.setEqualVariance()
+       mf.setParameterEstimates()
+       mf.printParameters()
+
+       mf.fit()
+       mf.printParameters()
+
+    .. code-tab:: R
+       :linenos:
+       :emphasize-lines: 8
+
+       pyw <- import("pyWitness")
+       dr <- pyw$DataRaw("./test1.csv")
+       dr$collapseContinuousData(column = "confidence",bins = c(-1,60,80,100),labels = c(1,2,3))
+       dp <- dr$process()
+       mf <- pyw$ModelFitIndependentObservation(dp)
+
+       mf$setEqualVariance()
+       mf$setParameterEstimates()
+       mf$printParameters()
+       
+       mf$fit()
+       mf$printParameters()
+
 
 ..
   Checking the convergence of fit
@@ -575,27 +827,59 @@ Plotting fit and models
 It is important to understand the performance of a given particular fit. The following plot compares
 the experimental data to the model fit.
 
-.. code-block :: python
-   :linenos:
+.. tabs::
 
-   import pyWitness
-   dr = pyWitness.DataRaw("test1.csv")
-   dr.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels= None)
-   dp = dr.process()
-   dp.calculateConfidenceBootstrap(nBootstraps=200)
-   mf = pyWitness.ModelFitIndependentObservation(dp)
-   mf.setEqualVariance()
-   mf.fit()
+    .. code-tab:: python
+
+       import pyWitness
+       dr = pyWitness.DataRaw("test1.csv")
+       dr.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels= None)
+       dp = dr.process()
+       dp.calculateConfidenceBootstrap(nBootstraps=200)
+       mf = pyWitness.ModelFitIndependentObservation(dp)
+       mf.setEqualVariance()
+       mf.fit()
+
+    .. code-tab:: R
+    
+       pyw <- import("pyWitness")
+       dr <- pyw$DataRaw("./test1.csv")
+       dr$collapseContinuousData(column = "confidence",bins = c(-1,60,80,100),labels = c(1,2,3))
+       dp <- dr$process()
+       dp$calculateConfidenceBootstrap(nBootstraps=as.integer(200))
+       mf <- pyw$ModelFitIndependentObservation(dp)
+       mf$setEqualVariance()
+       mf$fit()
+       
+       
 
 To compare an *ROC* plot between data and fit
 
-.. code-block :: python
+.. tabs::
 
-   dp.plotROC(label="Data")
-   mf.plotROC(label="Indep. obs. fit")
+    .. code-tab:: python
 
-   import matplotlib.pyplot as _plt
-   _plt.legend()
+       dp.plotROC(label="Data")
+       mf.plotROC(label="Indep. obs. fit")
+
+       import matplotlib.pyplot as _plt
+       _plt.legend()
+
+    .. code-tab:: R
+    
+        pyw <- import("pyWitness")
+        dr <- pyw$DataRaw("./test1.csv")
+        dr$collapseContinuousData(column = "confidence",bins = c(-1,60,80,100),labels = c(1,2,3))
+        dp <- dr$process()
+        dp$calculateConfidenceBootstrap(nBootstraps=as.integer(200))
+        mf <- pyw$ModelFitIndependentObservation(dp)
+        mf$setEqualVariance()
+        mf$fit()
+        dp$plotROC(label="Data")
+        mf$plotROC(label="Indep. obs. fit")
+        mpl$pyplot$legend()
+        mpl$pyplot$show()
+
 
 .. figure:: images/test1ROCcomparisonBin.png
    :alt: Data-model ROC comparision for test1.csv
@@ -605,32 +889,55 @@ To compare an *ROC* plot between data and fit
 
 To compare a *CAC* plot between data and fit
 
-.. code-block :: python
+.. tabs::
 
-   dp.plotCAC(label="Data")
-   mf.plotCAC(label="Indep. obs. fit")
+    .. code-tab:: python
+    
+       dp.plotCAC(label="Data")
+       mf.plotCAC(label="Indep. obs. fit")
 
-   import matplotlib.pyplot as _plt
-   _plt.legend()
+       import matplotlib.pyplot as _plt
+       _plt.legend()
+
+    .. code-tab:: R
+
+        dp$plotCAC(label="Data")
+        mf$plotCAC(label="Indep. obs. fit")
+
+        mpl$pyplot$legend()
 
 .. figure:: images/test1CACcomparisonBin.png
    :alt: Data-model CAC comparision for test1.csv
 
 To compare frequencies in each bin between data and fit
 
-.. code-block :: python
+.. tabs::
 
-   mf.plotFit()
+    .. code-tab:: python
 
+       mf.plotFit()
+       
+    .. code-tab:: R      
+        
+       mf$plotFit()
+       
+       
 .. figure:: images/testPlotFit.png
    :alt: Data-model comparision for test1.csv
 
 Once a fit has been performed, the model can be displayed as a function of memory strength and includes the lure and target distributions with means and standard deviations (top panel of plot below) and the associated criteria, c1 (low confidence), c2 (medium confidence), and c3 (high confidence) (bottom panel of plot below). This simple command belonging to a ModelFit object can be used to make the plot below.
 
-.. code-block :: python
+.. tabs::
 
-   mf.plotModel()
+    .. code-tab:: python
 
+       mf.plotModel()
+
+    .. code-tab:: R
+    
+       mf$plotModel()    
+    
+    
 .. figure:: images/testPlotModel.png
    :alt: Independent Observation model fit
 
@@ -696,17 +1003,31 @@ The internal dataframes can be written to either ``csv`` or ``xlsx`` file format
 
 The string argument for the functions is the file name. 
 
-.. code-block :: python 
-   :linenos:
-   :emphasize-lines: 4-7
+.. tabs::
+
+    .. code-tab:: python
+       :linenos:
+       :emphasize-lines: 4-7
    
-   import pyWitness
-   dr = pyWitness.DataRaw("test1.csv")
-   dp = dr.process()  
-   dp.writePivotExcel("test1_pivot.xlsx")
-   dp.writePivotCsv("test1_pivot.csv")
-   dp.writeRatesExcel("test1_rates.xlsx")
-   dp.writeRatesCsv("test1_rates.csv")
+       import pyWitness
+       dr = pyWitness.DataRaw("test1.csv")
+       dp = dr.process()  
+       dp.writePivotExcel("test1_pivot.xlsx")
+       dp.writePivotCsv("test1_pivot.csv")
+       dp.writeRatesExcel("test1_rates.xlsx")
+       dp.writeRatesCsv("test1_rates.csv")
+      
+    .. code-tab:: R
+       :linenos:
+       :emphasize-lines: 4-7     
+       
+       pyw <- import("pyWitness")
+       dr <- pyw$DataRaw("./test1.csv")
+       dp <- dr$process()
+       dp$writePivotExcel("test1_pivot.xlsx")
+       dp$writePivotCsv("test1_pivot.csv")
+       dp$writeRatesExcel("test1_rates.xlsx")
+       dp$writeRatesCsv("test1_rates.csv")
 
 .. figure:: images/test1PivotExcel.png
 

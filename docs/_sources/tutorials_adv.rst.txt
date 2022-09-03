@@ -410,3 +410,12 @@ Power analysis
 --------------
 
 By having the ability to generate data from a model it is possible to vary the number of generated participants. This is not too dissimilar to bootstrapping. Instead of generating new samples (with replacement) from the data, new samples with variable numbers of participants is possible. For each sample all the analysis can be performed and dependence on sample size can be explored.
+
+.. code-block :: python
+   :linenos:
+   
+    for nGen in numpy.linspace(500, 5000, 9+1) :
+        drSimulated = mf.generateRawData(nGenParticipants = nGen)
+        dpSimulated = drSimulated.process()
+        dpSimulated.calculateConfidenceBootstrap(nBootstraps=2000)
+        print(nGen, dpSimulated.liberalTargetAbsentSuspectId,dpSimulated.pAUC, dpSimulated.pAUC_low, dpSimulated.pAUC_high)
