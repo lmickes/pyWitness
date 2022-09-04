@@ -1021,13 +1021,13 @@ The string argument for the functions is the file name.
        :linenos:
        :emphasize-lines: 4-7     
        
-       pyw <- import("pyWitness")
-       dr <- pyw$DataRaw("./test1.csv")
-       dp <- dr$process()
-       dp$writePivotExcel("test1_pivot.xlsx")
-       dp$writePivotCsv("test1_pivot.csv")
-       dp$writeRatesExcel("test1_rates.xlsx")
-       dp$writeRatesCsv("test1_rates.csv")
+        pyw <- import("pyWitness")
+        dr <- pyw$DataRaw("./test1.csv")
+        dp <- dr$process()
+        dp$writePivotExcel("./test1_pivot.xlsx")
+        dp$writePivotCsv("./test1_pivot.csv")
+        dp$writeRatesExcel("./test1_rates.xlsx")
+        dp$writeRatesCsv("./test1_rates.csv")
 
 .. figure:: images/test1PivotExcel.png
 
