@@ -1,10 +1,10 @@
 package: 
   name: pywitness
-  version: v1.0
+  version: 1.1
 
 source: 
   git_url: https://github.com/lmickes/pyWitness
-  git_rev: v1.0
+  git_rev: v1.1
 
 build: 
   preserve_egg_dir: True
