@@ -10,13 +10,24 @@ pyWitness can then proceed to compute any quantity (ROC, CAC, pAUC, fit paramete
 times and the distribution of the computed quantity used to calculate a confidence interval with a user
 definable range.
 
-.. code-block :: python
-   :linenos:
+.. tabs::
 
-   import pyWitness
-   dr = pyWitness.DataRaw("test1.csv")
-   dp = dr.process()
-   dp.calculateConfidenceBootstrap(nBootstraps=200, cl=95)
+    .. code-tab:: python
+
+       import pyWitness
+       dr = pyWitness.DataRaw("test1.csv")
+       dp = dr.process()
+       dp.calculateConfidenceBootstrap(nBootstraps=200, cl=95)
+       dp.printRates()
+       
+    .. code-tab:: R
+    
+       pyw <- import("pyWitness")
+       dr <- pyw$DataRaw("./test1.csv")
+       dr$collapseContinuousData(column = "confidence",bins = c(-1,60,80,100),labels=py_none())
+       dp <- dr$process()
+       dp$calculateConfidenceBootstrap(nBootstraps=as.integer(200), cl=95)
+       dp$printRates()
 
 After calling ``calculateConfidenceBootstrap`` the rates table is populated with the 95% confidence limit
 data
@@ -64,8 +75,48 @@ data
 If a plot function (``plotROC``, ``plotCAC``) is callled after calling ``calculateConfidenceBootstrap`` then
 the confidence interval is drawn as error bars, as shown in the ROC plot and CAC plot, respectively, below.
 
+.. tabs::
+
+    .. code-tab:: python
+
+       import pyWitness
+       dr = pyWitness.DataRaw("test1.csv")
+       dp = dr.process()
+       dp.calculateConfidenceBootstrap(nBootstraps=200, cl=95)
+       dp.plotROC()
+       
+    .. code-tab:: R
+    
+       pyw <- import("pyWitness")
+       dr <- pyw$DataRaw("./test1.csv")
+       dr$collapseContinuousData(column = "confidence",bins = c(-1,60,80,100),labels=py_none())
+       dp <- dr$process()
+       dp$calculateConfidenceBootstrap(nBootstraps=as.integer(200), cl=95)
+       dp$plotROC()
+       
+
 .. figure:: images/test1ROCbinErr.png
    :alt: ROC for test1.csv with error bars
+
+.. tabs::
+
+    .. code-tab:: python
+
+       import pyWitness
+       dr = pyWitness.DataRaw("test1.csv")
+       dp = dr.process()
+       dp.calculateConfidenceBootstrap(nBootstraps=200, cl=95)
+       dp.plotCAC()
+       
+    .. code-tab:: R
+    
+       pyw <- import("pyWitness")
+       dr <- pyw$DataRaw("./test1.csv")
+       dr$collapseContinuousData(column = "confidence",bins = c(-1,60,80,100),labels=py_none())
+       dp <- dr$process()
+       dp$calculateConfidenceBootstrap(nBootstraps=as.integer(200), cl=95)
+       dp$plotCAC()
+       
 
 .. figure:: images/test1CACbinErr.png
    :alt: CAC for test1.csv with error bars
@@ -75,12 +126,20 @@ Loading raw data excel format
 
 If the file is in ``excel`` format you will need to specify which sheet the raw data is stored in 
 
-.. code-block :: python 
-   :linenos:
 
-   import pyWitness
-   dr = pyWitness.DataRaw("test2.xlsx",excelSheet = "raw data")
+.. tabs::
 
+    .. code-tab:: python
+
+       import pyWitness
+       dr = pyWitness.DataRaw("test2.xlsx",excelSheet = "raw data")
+
+    .. code-tab:: R
+    
+       pyw <- import("pyWitness")
+       dr <- pyw$DataRaw("./test2.xlsx",excelSheet = "raw data")
+       
+       
 
 Transforming data into common format
 ------------------------------------
@@ -88,19 +147,35 @@ Transforming data into common format
 The raw experimental data does not have to be in the internal format used by pyWitness. As the data is loaded is it
 possible to replace the name of the data columns and the values stored.
 
-.. code-block :: python 
+.. tabs::
 
-   import pyWitness
-   dr = pyWitness.DataRaw("test2.csv",
-                          dataMapping = {"lineupSize":"lineup_size",
-                                         "targetLineup":"culprit_present",
-                          "targetPresent":"present",
-                          "targetAbsent":"absent",
-                          "responseType":"id_type",
-                          "suspectId":"suspect",
-                          "fillerId":"filler",
-                          "rejectId":"reject",
-                          "confidence":"conf_level"}))
+    .. code-tab:: python
+
+       import pyWitness
+       dr = pyWitness.DataRaw("test2.csv",
+                              dataMapping = {"lineupSize":"lineup_size",
+                                             "targetLineup":"culprit_present",
+                              "targetPresent":"present",
+                              "targetAbsent":"absent",
+                              "responseType":"id_type",
+                              "suspectId":"suspect",
+                              "fillerId":"filler",
+                              "rejectId":"reject",
+                              "confidence":"conf_level"}))
+                              
+    .. code-tab:: R
+    
+       pyw <- import("pyWitness")
+       dr <- pyw$DataRaw("./test2.csv",
+                               dataMapping = list("lineupSize"="lineup_size",
+                                              "targetLineup"="culprit_present",
+                                              "targetPresent"="present",
+                                              "targetAbsent"="absent",
+                                              "responseType"="id_type",
+                                              "suspectId"="suspect",
+                                              "fillerId"="filler",
+                                              "rejectId"="reject",
+                                              "confidence"="conf_level"))
 
 Processing data for two conditions
 --------------------------------------
@@ -110,81 +185,159 @@ has a column labelled ``Condition`` and the values for each participant is eithe
 ``Verbal``. To proccess only the ``Control`` participants the following options are required
 for DataRaw.process() 
 
-.. code-block :: python
-   :linenos:
-   :emphasize-lines: 4
+.. tabs::
 
-   import pyWitness
-   dr = pyWitness.DataRaw("test2.csv")
-   dr.cutData(column="previouslyViewedVideo",value=1,option="keep")
-   dpControl = dr.process(column="group", condition="Control")
+    .. code-tab:: python
+       :linenos:
+       :emphasize-lines: 4
 
+       import pyWitness
+       dr = pyWitness.DataRaw("test2.csv")
+       dr.cutData(column="previouslyViewedVideo",value=1,option="keep")
+       dpControl = dr.process(column="group", condition="Control")
+
+    .. code-tab:: R
+       :linenos:
+       :emphasize-lines: 4
+       
+       pyw <- import("pyWitness")
+       dr <- pyw$DataRaw("./test2.csv")
+       dr$cutData(column="previouslyViewedVideo",value=1,option="keep")
+       dpControl = dr$process(column="group", condition="Control")
+       
+       
 
 If you have a file with multiple conditions it is straightforward to make multiple 
 ``DataProcessed`` for each condition, as in the following 
 
-.. code-block :: python
-   :linenos:
-   :emphasize-lines: 5
+.. tabs::
 
-   import pyWitness
-   dr = pyWitness.DataRaw("test2.csv")
-   dr.cutData(column="previouslyViewedVideo",value=1,option="keep")
-   dpControl = dr.process(column="group", condition="Control")
-   dpVerbal = dr.process(column="group", condition="Verbal")   
+    .. code-tab:: python
+       :linenos:
+       :emphasize-lines: 5
+
+       import pyWitness
+       dr = pyWitness.DataRaw("test2.csv")
+       dr.cutData(column="previouslyViewedVideo",value=1,option="keep")
+       dpControl = dr.process(column="group", condition="Control")
+       dpVerbal = dr.process(column="group", condition="Verbal")   
+       
+    .. code-tab:: R
+       :linenos:
+       :emphasize-lines: 5
+       
+       pyw <- import("pyWitness")
+       dr <- pyw$DataRaw("./test2.csv")
+       dr$cutData(column="previouslyViewedVideo",value=1,option="keep")
+       dpControl <- dr$process(column="group", condition="Control")
+       dpVerbal <- dr$process(column="group", condition="Verbal")
+       
 
 Statistical (pAUC) comparision between two conditions
 -----------------------------------------------------
 
 One way to compare pAUC values of two conditions is use the following code on the test2 data. You can check out the script we wrote called pAUCexample.py.
 
-.. code-block :: python
-   :linenos:
+.. tabs::
 
-   import pyWitness
-   dr = pyWitness.DataRaw("test2.csv")
-   dr.cutData(column="previouslyViewedVideo",value=1,option="keep")
-   dpControl = dr.process(column="group", condition="Control")
-   dpVerbal = dr.process(column="group", condition="Verbal")
+    .. code-tab:: python
+
+       import pyWitness
+       dr = pyWitness.DataRaw("test2.csv")
+       dr.cutData(column="previouslyViewedVideo",value=1,option="keep")
+       dpControl = dr.process(column="group", condition="Control")
+       dpVerbal = dr.process(column="group", condition="Verbal")
+       
+    .. code-tab:: R
+
+       pyw <- import("pyWitness")
+       dr <- pyw$DataRaw("./test2.csv")
+       dr$cutData(column="previouslyViewedVideo",value=1,option="keep")
+       dpControl <- dr$process(column="group", condition="Control")
+       dpVerbal <- dr$process(column="group", condition="Verbal")
+ 
+       
 
 To find the lowest false ID rate from both conditions,
 
-.. code-block :: python
-   :linenos:
-   :emphasize-lines: 6
+.. tabs::
 
-   import pyWitness
-   dr = pyWitness.DataRaw("test2.csv")
-   dr.cutData(column="previouslyViewedVideo",value=1,option="keep")
-   dpControl = dr.process(column="group", condition="Control")
-   dpVerbal = dr.process(column="group", condition="Verbal")
-   minRate = min(dpControl.liberalTargetAbsentSuspectId,dpVerbal.liberalTargetAbsentSuspectId)
+    .. code-tab:: python
+       :linenos:
+       :emphasize-lines: 6
+
+       import pyWitness
+       dr = pyWitness.DataRaw("test2.csv")
+       dr.cutData(column="previouslyViewedVideo",value=1,option="keep")
+       dpControl = dr.process(column="group", condition="Control")
+       dpVerbal = dr.process(column="group", condition="Verbal")
+       minRate = min(dpControl.liberalTargetAbsentSuspectId,dpVerbal.liberalTargetAbsentSuspectId)
+       
+    .. code-tab:: R
+       :linenos:
+       :emphasize-lines: 6
+       
+       pyw <- import("pyWitness")
+       dr <- pyw$DataRaw("./test2.csv")
+       dr$cutData(column="previouslyViewedVideo",value=1,option="keep")
+       dpControl <- dr$process(column="group", condition="Control")
+       dpVerbal <- dr$process(column="group", condition="Verbal")
+       minRate <- min(dpControl$liberalTargetAbsentSuspectId,dpVerbal$liberalTargetAbsentSuspectId)
+
+
 
 You have to process the data again, with this ``minRate``
 
-.. code-block :: python
-   :linenos:
-   :emphasize-lines: 7-11
+.. tabs::
 
-   import pyWitness
-   dr = pyWitness.DataRaw("test2.csv")
-   dr.cutData(column="previouslyViewedVideo",value=1,option="keep")
-   dpControl = dr.process(column="group", condition="Control")
-   dpVerbal = dr.process(column="group", condition="Verbal")
-   minRate = min(dpControl.liberalTargetAbsentSuspectId,dpVerbal.liberalTargetAbsentSuspectId)
-   dpControl = dr.process("group","Control",pAUCLiberal=minRate)
-   dpControl.calculateConfidenceBootstrap(nBootstraps=200)
-   dpVerbal = dr.process("group","Verbal",pAUCLiberal=minRate)
-   dpVerbal.calculateConfidenceBootstrap(nBootstraps=200)
-   dpControl.comparePAUC(dpVerbal)
+    .. code-tab:: python
+       :linenos:
+       :emphasize-lines: 7-11
+
+       import pyWitness
+       dr = pyWitness.DataRaw("test2.csv")
+       dr.cutData(column="previouslyViewedVideo",value=1,option="keep")
+       dpControl = dr.process(column="group", condition="Control")
+       dpVerbal = dr.process(column="group", condition="Verbal")
+       minRate = min(dpControl.liberalTargetAbsentSuspectId,dpVerbal.liberalTargetAbsentSuspectId)
+       dpControl = dr.process("group","Control",pAUCLiberal=minRate)
+       dpControl.calculateConfidenceBootstrap(nBootstraps=200)
+       dpVerbal = dr.process("group","Verbal",pAUCLiberal=minRate)
+       dpVerbal.calculateConfidenceBootstrap(nBootstraps=200)
+       dpControl.comparePAUC(dpVerbal)
+
+    .. code-tab:: R
+       :linenos:
+       :emphasize-lines: 7-11
+       
+       pyw <- import("pyWitness")
+       dr <- pyw$DataRaw("./test2.csv")
+       dr$cutData(column="previouslyViewedVideo",value=1,option="keep")
+       dpControl = dr$process(column="group", condition="Control")
+       dpVerbal = dr$process(column="group", condition="Verbal")
+       minRate = min(dpControl$liberalTargetAbsentSuspectId,dpVerbal$liberalTargetAbsentSuspectId)
+       dpControl = dr$process("group","Control",pAUCLiberal=minRate)
+       dpControl$calculateConfidenceBootstrap(nBootstraps=as.integer(200))
+       dpVerbal = dr$process("group","Verbal",pAUCLiberal=minRate)
+       dpVerbal$calculateConfidenceBootstrap(nBootstraps=as.integer(200))
+       dpControl$comparePAUC(dpVerbal)
+       
 
 To plot the ROC curves, use ``DataProcess.plotROC``
 
-.. code-block :: python
-   :linenos:
+.. tabs::
 
-   dpControl.plotROC(label = "Control data", relativeFrequencyScale=400)
-   dpVerbal.plotROC(label = "Verbal data", relativeFrequencyScale=400)
+    .. code-tab:: python
+
+       dpControl.plotROC(label = "Control data", relativeFrequencyScale=400)
+       dpVerbal.plotROC(label = "Verbal data", relativeFrequencyScale=400)
+  
+    .. code-tab:: R
+       
+       dpControl$plotROC(label = "Control data", relativeFrequencyScale=400)
+       dpVerbal$plotROC(label = "Verbal data", relativeFrequencyScale=400)
+       
+       
 
 .. note:: 
    The symbol size is the relative frequency and can be changed by setting ``dp.plotROC(relativeFrequencyScale = 400)``
@@ -285,12 +438,23 @@ You might already have processed the raw data, or you only have a table of data.
 
 The data are stored in ``data/tutorials/test1_processed.csv``
 
-.. code-block :: python
-   :linenos:
-   :emphasize-lines: 2
+.. tabs::
 
-   import pyWitness
-   dp = pyWitness.DataProcessed("test1_processed.csv", lineupSize = 6)
+    .. code-tab:: python
+       :linenos:
+       :emphasize-lines: 2
+
+       import pyWitness
+       dp = pyWitness.DataProcessed("test1_processed.csv", lineupSize = 6)
+       
+    .. code-tab:: R
+       :linenos:
+       :emphasize-lines: 2  
+       
+       pyw <- import("pyWitness")
+       dp = pyw$DataProcessed("./test1_processed.csv", lineupSize = 6)
+       
+       
    
 Using instances of raw data, processed data and model fits
 ----------------------------------------------------------
@@ -303,20 +467,37 @@ A good example is collapsing data, one might want to check the effect of rebinni
 the ``test1.csv`` is processed twice, once with the original binning (``dr1`` and ``dp1``) and one with 3 confidence bins
 (``dr2`` and ``dp2``)
 
-.. code-block :: python
+.. tabs::
 
-   import pyWitness
-   dr1 = pyWitness.DataRaw("test1.csv")
-   dr2 = pyWitness.DataRaw("test1.csv")
-   
-   dr2.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels=None)
+    .. code-tab:: python
+    
+       import pyWitness
+       dr1 = pyWitness.DataRaw("test1.csv")
+       dr2 = pyWitness.DataRaw("test1.csv")
 
-   dp1 = dr1.process()
-   dp2 = dr2.process()
+       dr2.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels=None)
 
-   dp1.plotCAC()   
-   dp2.plotCAC()
+       dp1 = dr1.process()
+       dp2 = dr2.process()
 
+       dp1.plotCAC()   
+       dp2.plotCAC()
+
+    .. code-tab:: R
+    
+       pyw <- import("pyWitness")
+       dr1 <- pyw$DataRaw("./test1.csv")
+       dr2 <- pyw$DataRaw("./test1.csv")
+
+       dr2$collapseContinuousData(column = "confidence",bins = c(-1,60,80,100),labels=py_none())
+
+       dp1 <- dr1$process()
+       dp2 <- dr2$process()
+
+       dp1$plotCAC()
+       dp2$plotCAC()
+    
+    
 Overlaying plots
 ----------------
 
@@ -325,31 +506,61 @@ sequentially in order.
 
 To make a legend the plots need to be given a label. So this example is the same as the 
 
-.. code-block :: python
-   :linenos:
-   :emphasize-lines: 10-14
+.. tabs::
 
-   import pyWitness
-   dr1 = pyWitness.DataRaw("test1.csv")
-   dr2 = pyWitness.DataRaw("test1.csv")
+    .. code-tab:: python
+       :linenos:
+       :emphasize-lines: 10-14
+
+       import pyWitness
+       dr1 = pyWitness.DataRaw("test1.csv")
+       dr2 = pyWitness.DataRaw("test1.csv")
    
-   dr2.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels=None)
+       dr2.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels=None)
 
-   dp1 = dr1.process()
-   dp2 = dr2.process()
+       dp1 = dr1.process()
+       dp2 = dr2.process()
 
-   dp1.plotCAC(label = "11 bins")   
-   dp2.plotCAC(label = "3 bins")
-   
-   import matplotlib.pyplot as _plt
-   _plt.legend()
+       dp1.plotCAC(label = "11 bins")   
+       dp2.plotCAC(label = "3 bins")
+
+       import matplotlib.pyplot as _plt
+       _plt.legend()
+
+    .. code-tab:: R
+    
+       pyw <- import("pyWitness")
+       dr1 <- pyw$DataRaw("./test1.csv")
+       dr2 <- pyw$DataRaw("./test1.csv")
+
+       dr2$collapseContinuousData(column = "confidence",bins = c(-1,60,80,100),labels=py_none())
+
+       dp1 <- dr1$process()
+       dp2 <- dr2$process()
+
+       dp1$plotCAC(label="11 bins")
+       dp2$plotCAC(label = "3 bins")
+
+
+       mpl$pyplot$legend()
+       invisible(mpl$pyplot$ylim(0.50,1.00))
+    
+
 
 After overlaying plots it maybe important to change the plot axis ranges this can be done with ``xlim`` and ``ylim``
 
-.. code-block :: python
+.. tabs::
 
-   xlim(0,100)
-   ylim(0.50,1.00)
+    .. code-tab:: python
+
+       xlim(0,100)
+       ylim(0.50,1.00)
+
+    .. code-tab:: R
+    
+       invisible(mpl$pyplot$xlim(0,100))
+       invisible(mpl$pyplot$ylim(0.50,1.0))
+    
 
 .. figure:: images/test1Overlay.png
    :alt: CAC for test1.csv with two different binning
@@ -359,49 +570,98 @@ Generating data from signal detection model
 
 Raw and processed data can be generated simply from a signal detection model.
 
-.. code-block :: python
-   :linenos:
-   :emphasize-lines: 8
 
-   import pyWitness
-   dr = pyWitness.DataRaw("test1.csv")
-   dr.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels=None)
-   dp = dr.process()
-   mf = pyWitness.ModelFitIndependentObservation(dp, debug=True)
-   mf.setEqualVariance()
-   mf.fit()
-   dr1 = mf.generateRawData(nGenParticipants=10000)
+.. tabs::
+
+    .. code-tab:: python
+       :linenos:
+       :emphasize-lines: 8
+
+       import pyWitness
+       dr = pyWitness.DataRaw("test1.csv")
+       dr.collapseContinuousData(column = "confidence",bins = [-1,60,80,100],labels=None)
+       dp = dr.process()
+       mf = pyWitness.ModelFitIndependentObservation(dp, debug=True)
+       mf.setEqualVariance()
+       mf.fit()
+       dr1 = mf.generateRawData(nGenParticipants=10000)
+
+    .. code-tab:: R
+       :linenos:
+       :emphasize-lines: 8
+       
+       pyw <- import("pyWitness")
+       dr <- pyw$DataRaw("./test1.csv")
+       dr$collapseContinuousData(column = "confidence",bins = c(-1,60,80,100),labels=py_none())
+       dp <- dr1$process()
+       mf <- pyw$ModelFitIndependentObservation(dp, debug=TRUE)
+       mf$setEqualVariance()
+       mf$fit()
+       dr1 = mf$generateRawData(nGenParticipants=10000)
+       
+       
 
 ``dr1`` is a ``DataRaw`` object and is simulated data for 10,000 participants. ``dr1`` can be used for any
 pyWitness analysis so ROC, CAC, pAUC, etc. The raw data can also be written to disk to either preserve and/or
 share with colleagues.
 
-.. code-block :: python
-   :linenos:
-   :emphasize-lines: 1-2
+.. tabs::
 
-   dr1.writeCsv("fileName.csv")
-   dr1.writeExcel("fileName.xlsx")
+    .. code-tab:: python
+       :linenos:
+       :emphasize-lines: 1-2
+
+       dr1.writeCsv("fileName.csv")
+       dr1.writeExcel("fileName.xlsx")
+       
+    .. code-tab:: R
+       :linenos:
+       :emphasize-lines: 1-2
+       
+       dr1$writeCsv("./fileName.csv")
+       dr1$writeExcel("./fileName.xlsx")
+       
+       
 
 Having performed a fit on ``dr`` and generated ``dr1`` a synthetic dataset
 
-.. code-block :: python
-   :linenos:
+.. tabs::
 
-   # Need to process the synthetic data
-   dp1 = dr1.process()
+    .. code-tab:: python
 
-   # calculate uncertainties using bootstrap
-   dp.calculateConfidenceBootstrap()
-   dp1.calculateConfidenceBootstrap()
+       # Need to process the synthetic data
+       dp1 = dr1.process()
 
-   # plot ROCs
-   dp.plotROC(label="Experimental data")
-   dp1.plotROC(label="Simulated data")
-   mf.plotROC(label="Model fit")
+       # calculate uncertainties using bootstrap
+       dp.calculateConfidenceBootstrap()
+       dp1.calculateConfidenceBootstrap()
 
-   import matplotlib.pyplot as _plt
-   _plt.legend()
+       # plot ROCs
+       dp.plotROC(label="Experimental data")
+       dp1.plotROC(label="Simulated data")
+       mf.plotROC(label="Model fit")
+
+       import matplotlib.pyplot as _plt
+       _plt.legend()
+       
+    .. code-tab:: R
+    
+       # Need to process the synthetic data
+       dp1 <- dr1$process()
+
+       # calculate uncertainties using bootstrap
+       dp$calculateConfidenceBootstrap()
+       dp1$calculateConfidenceBootstrap()
+
+       # plot ROCs
+       dp$plotROC(label="Experimental data")
+       dp1$plotROC(label="Simulated data")
+       mf$plotROC(label="Model fit")
+
+       mpl$pyplot$legend()
+       mpl$pyplot$show()
+       
+
 
 .. figure:: images/test1GenEx.png
    :alt: Generated data comparision example
@@ -411,11 +671,16 @@ Power analysis
 
 By having the ability to generate data from a model it is possible to vary the number of generated participants. This is not too dissimilar to bootstrapping. Instead of generating new samples (with replacement) from the data, new samples with variable numbers of participants is possible. For each sample all the analysis can be performed and dependence on sample size can be explored.
 
-.. code-block :: python
-   :linenos:
+.. tabs::
+
+    .. code-tab:: python
    
-    for nGen in numpy.linspace(500, 5000, 9+1) :
-        drSimulated = mf.generateRawData(nGenParticipants = nGen)
-        dpSimulated = drSimulated.process()
-        dpSimulated.calculateConfidenceBootstrap(nBootstraps=2000)
-        print(nGen, dpSimulated.liberalTargetAbsentSuspectId,dpSimulated.pAUC, dpSimulated.pAUC_low, dpSimulated.pAUC_high)
+        for nGen in numpy.linspace(500, 5000, 9+1) :
+            drSimulated = mf.generateRawData(nGenParticipants = nGen)
+            dpSimulated = drSimulated.process()
+            dpSimulated.calculateConfidenceBootstrap(nBootstraps=2000)
+            print(nGen, dpSimulated.liberalTargetAbsentSuspectId,dpSimulated.pAUC, dpSimulated.pAUC_low, dpSimulated.pAUC_high)
+            
+    .. code-tab:: R
+    
+    

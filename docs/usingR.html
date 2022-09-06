@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Support &mdash; pyWitness 1.0 documentation</title>
+  <title>Using pyWitness from R &mdash; pyWitness 1.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
@@ -22,7 +22,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Module Contents" href="moduledocs.html" /> 
+    <link rel="next" title="Introduction" href="introduction.html" />
+    <link rel="prev" title="Installation" href="installation.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -48,17 +49,14 @@
 <li class="toctree-l1"><a class="reference internal" href="licence.html">Licence &amp; Disclaimer</a></li>
 <li class="toctree-l1"><a class="reference internal" href="authorship.html">Authorship</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="usingR.html">Using pyWitness from R</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Using pyWitness from R</a></li>
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials_adv.html">Advanced tutorials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials_dev.html">Developer tutorials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="results.html">Results</a></li>
 <li class="toctree-l1"><a class="reference internal" href="moduledocs.html">Module Contents</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Support</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#talk-to-us">Talk to us</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="support.html">Support</a></li>
 </ul>
 
         </div>
@@ -75,9 +73,9 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Support</li>
+      <li>Using pyWitness from R</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="_sources/support.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/usingR.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -85,18 +83,33 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="support">
-<h1>Support<a class="headerlink" href="#support" title="Permalink to this headline"></a></h1>
-<div class="section" id="talk-to-us">
-<h2>Talk to us<a class="headerlink" href="#talk-to-us" title="Permalink to this headline"></a></h2>
-<p><a class="reference external" href="https://github.com/lmickes/pyWitness/issues">Get in touch with us</a></p>
-<ul class="simple">
-<li><p>to report issues</p></li>
-<li><p>for help and assistance</p></li>
-<li><p>to request features</p></li>
-<li><p>to request tutorial material</p></li>
-<li><p>etc.</p></li>
+  <div class="section" id="using-pywitness-from-r">
+<h1>Using pyWitness from R<a class="headerlink" href="#using-pywitness-from-r" title="Permalink to this headline"></a></h1>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>You still need to follow the python installation instructions as the package is fundamentally python which is just called from R</p>
+</div>
+<p>pyWitness is developed exclusively in Python 3, so to use it in R we need to install a library to interface with python (reticulate). First install reticulate in R</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">install.packages(&quot;reticulate&quot;)</span></code></p></li>
 </ul>
+</div></blockquote>
+<p>Then it should be possible to import the python</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">pyw</span> <span class="pre">&lt;-</span> <span class="pre">import(&quot;pyWitness&quot;)</span></code></p></li>
+</ul>
+</div></blockquote>
+<p>If this causes an import error, you might need to point to your conda version of pytohn</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">use_python(&quot;USRHOME/opt/miniconda3/bin/python&quot;)</span></code></p></li>
+</ul>
+</div></blockquote>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If you want to use pyWitness in jupyter labbook there are some issues with python output which might go to the terminal and not to the notebook. Similar for the plots, which will open but not inline in the notebook</p>
 </div>
 </div>
 
@@ -104,7 +117,8 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="moduledocs.html" class="btn btn-neutral float-left" title="Module Contents" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="installation.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="introduction.html" class="btn btn-neutral float-right" title="Introduction" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
