@@ -17,13 +17,13 @@ pyWitness is developed exclusively in Python 3. The installation methods detaile
 
 .. note :: 
    Use a terminal for inputting commands. On MacOS the program is called **terminal** and on Windows it
-   is called **PowerShell**.
+   is called **PowerShell**. If you are using anaconda or miniconda on Windows you need to start the **Anaconda Powershell prompt**
 
 .. warning :: 
    Our tutorial assumes python is interactive python 3, with numpy and matplotlib, so the command ``ipython3 --pylab`` if you are familiar with python and have an installation replace ``ipython3 --pylab`` with your own command to start python.
    
-.. note :: 
-   If you plan on using R, you still need to install the packages.
+.. warning :: 
+   If you plan on using R, you still need to follow the installation instructions below. then follow the R specific instructions on this page :ref:`pywitnessr`.
 
 Installing Python
 -----------------
@@ -51,7 +51,13 @@ Now you can install pyWitness in several ways.
 
 1. Miniconda install
 ^^^^^^^^^^^^^^^^^^^^
-Open a terminal (MacOS) or PowerShell (Windows) and install pyWitness by typing the following code line (or copy and paste) into your terminal or shell 
+
+.. warning :: 
+
+   In Windows you will have to open an Anaconda Powershell Prompt (from the Windows start menu) 
+
+
+Open a terminal (MacOS) or Anaconda PowerShell prompt (Windows) and install pyWitness by typing the following code line (or copy and paste) into your terminal or shell 
 
      * ``conda create --name pyWitness``
      * ``conda activate pyWitness``
@@ -67,7 +73,18 @@ Open a terminal (MacOS) or PowerShell (Windows) and install pyWitness by typing 
 2. Pip install
 ^^^^^^^^^^^^^^
 
-    * Download `pyWitness-1.0-py3-none-any.whl <https://github.com/lmickes/pyWitness/releases/download/v1.0/pyWitness-1.0-py3-none-any.whl>`_
+
+First download the package
+
+    * Download `pyWitness-1.1-py3-none-any.whl <https://github.com/lmickes/pyWitness/releases/download/v1.1/pyWitness-1.1-py3-none-any.whl>`_
+
+.. warning ::
+
+   In Windows you will have to open an Anaconda Powershell prompt (from the Windows start menu) before running pip
+
+Then in your terminal (MacOS) or Anaconda Powershell prompt (Windows) 
+
+
     * ``pip3 install pyWitness-1.0-py3-none-any.whl``
 
 3. Download ZIP file
@@ -112,4 +129,19 @@ If you get "pyWitness v0.1" it's installed and you can proceed to the tutorials.
 
 .. image:: http://mickeslab.com/wp-content/uploads/2022/03/installation3testPyWitness.gif
     :alt: testing the installations
+
+Trying it out without installing anything!
+------------------------------------------
+
+1. Binder can be used to try out the code without installing anything on your computer. 
+2. Click the following link (launch binder)
+
+.. image:: https://mybinder.org/badge_logo.svg
+ :target: https://mybinder.org/v2/gh/lmickes/pyWitness/main
+
+3. Then it should open a browser with a notebook interface
+
+.. note::
+   Be patient, binder could take time to start up (**seriously**, a long time, maybe a cup of tea or coffee), don't click back, don't get impatient. It is building a virutal computer for you in docker and using jupyter-hub. 
+
 

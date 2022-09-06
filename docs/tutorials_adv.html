@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Advanced tutorials &mdash; pyWitness 1.0 documentation</title>
+  <title>Advanced tutorials &mdash; pyWitness 1.1 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
@@ -17,6 +18,7 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
         <script src="_static/code-tabs.js"></script>
         <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -36,7 +38,7 @@
             <img src="_static/pyWitnessLogo200.jpg" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.0
+                1.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -96,10 +98,10 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="advanced-tutorials">
-<h1>Advanced tutorials<a class="headerlink" href="#advanced-tutorials" title="Permalink to this headline"></a></h1>
-<div class="section" id="bootstrapping-uncertainties-confidence-limits">
-<h2>Bootstrapping uncertainties/confidence limits<a class="headerlink" href="#bootstrapping-uncertainties-confidence-limits" title="Permalink to this headline"></a></h2>
+  <section id="advanced-tutorials">
+<h1>Advanced tutorials<a class="headerlink" href="#advanced-tutorials" title="Permalink to this heading"></a></h1>
+<section id="bootstrapping-uncertainties-confidence-limits">
+<h2>Bootstrapping uncertainties/confidence limits<a class="headerlink" href="#bootstrapping-uncertainties-confidence-limits" title="Permalink to this heading"></a></h2>
 <p>To create confidence limits on binned cumulative, statistical measures and parameters, pyWitness uses
 the bootstrap method. This method takes <span class="math notranslate nohighlight">\(N\)</span> random participants from the original data <em>with replacement</em>.
 pyWitness can then proceed to compute any quantity (ROC, CAC, pAUC, fit parameters). This is repeated <span class="math notranslate nohighlight">\(M\)</span>
@@ -190,9 +192,9 @@ R</li></ul><div class="tab codetab selected" data-id="0">
 <span class="n">dp</span><span class="o">$</span><span class="nf">plotROC</span><span class="p">()</span>
 </pre></div>
 </div>
-</div></div><div class="figure align-default">
+</div></div><figure class="align-default">
 <img alt="ROC for test1.csv with error bars" src="_images/test1ROCbinErr.png" />
-</div>
+</figure>
 <div class="tabs docutils container" data-tabgroup="">
 <ul class="tabbar">
 <li class="tabbutton selected" data-id="0" onclick="sphinx_code_tabs_onclick(this)">
@@ -214,12 +216,12 @@ R</li></ul><div class="tab codetab selected" data-id="0">
 <span class="n">dp</span><span class="o">$</span><span class="nf">plotCAC</span><span class="p">()</span>
 </pre></div>
 </div>
-</div></div><div class="figure align-default">
+</div></div><figure class="align-default">
 <img alt="CAC for test1.csv with error bars" src="_images/test1CACbinErr.png" />
-</div>
-</div>
-<div class="section" id="loading-raw-data-excel-format">
-<h2>Loading raw data excel format<a class="headerlink" href="#loading-raw-data-excel-format" title="Permalink to this headline"></a></h2>
+</figure>
+</section>
+<section id="loading-raw-data-excel-format">
+<h2>Loading raw data excel format<a class="headerlink" href="#loading-raw-data-excel-format" title="Permalink to this heading"></a></h2>
 <p>If the file is in <code class="docutils literal notranslate"><span class="pre">excel</span></code> format you will need to specify which sheet the raw data is stored in</p>
 <div class="tabs docutils container" data-tabgroup="">
 <ul class="tabbar">
@@ -235,9 +237,9 @@ R</li></ul><div class="tab codetab selected" data-id="0">
 <span class="n">dr</span> <span class="o">&lt;-</span> <span class="n">pyw</span><span class="o">$</span><span class="nf">DataRaw</span><span class="p">(</span><span class="s">&quot;./test2.xlsx&quot;</span><span class="p">,</span><span class="n">excelSheet</span> <span class="o">=</span> <span class="s">&quot;raw data&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-</div></div></div>
-<div class="section" id="transforming-data-into-common-format">
-<h2>Transforming data into common format<a class="headerlink" href="#transforming-data-into-common-format" title="Permalink to this headline"></a></h2>
+</div></div></section>
+<section id="transforming-data-into-common-format">
+<h2>Transforming data into common format<a class="headerlink" href="#transforming-data-into-common-format" title="Permalink to this heading"></a></h2>
 <p>The raw experimental data does not have to be in the internal format used by pyWitness. As the data is loaded is it
 possible to replace the name of the data columns and the values stored.</p>
 <div class="tabs docutils container" data-tabgroup="">
@@ -272,9 +274,9 @@ R</li></ul><div class="tab codetab selected" data-id="0">
                                        <span class="s">&quot;confidence&quot;</span><span class="o">=</span><span class="s">&quot;conf_level&quot;</span><span class="p">))</span>
 </pre></div>
 </div>
-</div></div></div>
-<div class="section" id="processing-data-for-two-conditions">
-<h2>Processing data for two conditions<a class="headerlink" href="#processing-data-for-two-conditions" title="Permalink to this headline"></a></h2>
+</div></div></section>
+<section id="processing-data-for-two-conditions">
+<h2>Processing data for two conditions<a class="headerlink" href="#processing-data-for-two-conditions" title="Permalink to this heading"></a></h2>
 <p>A single data file might have different experimental condtions. Imagine your data file
 has a column labelled <code class="docutils literal notranslate"><span class="pre">Condition</span></code> and the values for each participant is either <code class="docutils literal notranslate"><span class="pre">Control</span></code> or
 <code class="docutils literal notranslate"><span class="pre">Verbal</span></code>. To proccess only the <code class="docutils literal notranslate"><span class="pre">Control</span></code> participants the following options are required
@@ -333,9 +335,9 @@ R</li></ul><div class="tab codetab selected" data-id="0">
 <span class="hll"><span class="n">dpVerbal</span> <span class="o">&lt;-</span> <span class="n">dr</span><span class="o">$</span><span class="nf">process</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s">&quot;group&quot;</span><span class="p">,</span> <span class="n">condition</span><span class="o">=</span><span class="s">&quot;Verbal&quot;</span><span class="p">)</span>
 </span></pre></div></td></tr></table></div>
 </div>
-</div></div></div>
-<div class="section" id="statistical-pauc-comparision-between-two-conditions">
-<h2>Statistical (pAUC) comparision between two conditions<a class="headerlink" href="#statistical-pauc-comparision-between-two-conditions" title="Permalink to this headline"></a></h2>
+</div></div></section>
+<section id="statistical-pauc-comparision-between-two-conditions">
+<h2>Statistical (pAUC) comparision between two conditions<a class="headerlink" href="#statistical-pauc-comparision-between-two-conditions" title="Permalink to this heading"></a></h2>
 <p>One way to compare pAUC values of two conditions is use the following code on the test2 data. You can check out the script we wrote called pAUCexample.py.</p>
 <div class="tabs docutils container" data-tabgroup="">
 <ul class="tabbar">
@@ -463,19 +465,19 @@ R</li></ul><div class="tab codetab selected" data-id="0">
 <p>The symbol size is the relative frequency and can be changed by setting <code class="docutils literal notranslate"><span class="pre">dp.plotROC(relativeFrequencyScale</span> <span class="pre">=</span> <span class="pre">400)</span></code></p>
 </div>
 <p>And your plot will look like this one:</p>
-<div class="figure align-default">
+<figure class="align-default">
 <img alt="_images/test2ROCs.png" src="_images/test2ROCs.png" />
-</div>
+</figure>
 <p>The shaded regions are the pAUCs that were compared. You can see that they both used the same minimum false ID rate. The error bars are 95% confidence intervals. The dashed black line represents chance performance.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The uncertainities can be changed by setting them to .68, for example <code class="docutils literal notranslate"><span class="pre">dpControl.calculateConfidenceBootstrap(nBootstraps=200,cl=68)</span></code> and <code class="docutils literal notranslate"><span class="pre">dpVerbal.calculateConfidenceBootstrap(nBootstraps=200,cl=68)</span></code></p>
 </div>
-</div>
-<div class="section" id="loading-processed-data">
-<h2>Loading processed data<a class="headerlink" href="#loading-processed-data" title="Permalink to this headline"></a></h2>
+</section>
+<section id="loading-processed-data">
+<h2>Loading processed data<a class="headerlink" href="#loading-processed-data" title="Permalink to this heading"></a></h2>
 <p>You might already have processed the raw data, or you only have a table of data. It is possible to load a file to perform model fits etc. The processed data need to be in the following CSV format. This is basically the same format as the pivot table stored in <code class="docutils literal notranslate"><span class="pre">DataProcessed</span></code>.</p>
-<table class="colwidths-given docutils align-default" id="id1">
+<table class="docutils align-default" id="id1">
 <caption><span class="caption-text">Processed data columns and allowed values</span><a class="headerlink" href="#id1" title="Permalink to this table"></a></caption>
 <colgroup>
 <col style="width: 18%" />
@@ -593,9 +595,9 @@ R</li></ul><div class="tab codetab selected" data-id="0">
 <span class="hll"><span class="n">dp</span> <span class="o">=</span> <span class="n">pyw</span><span class="o">$</span><span class="nf">DataProcessed</span><span class="p">(</span><span class="s">&quot;./test1_processed.csv&quot;</span><span class="p">,</span> <span class="n">lineupSize</span> <span class="o">=</span> <span class="m">6</span><span class="p">)</span>
 </span></pre></div></td></tr></table></div>
 </div>
-</div></div></div>
-<div class="section" id="using-instances-of-raw-data-processed-data-and-model-fits">
-<h2>Using instances of raw data, processed data and model fits<a class="headerlink" href="#using-instances-of-raw-data-processed-data-and-model-fits" title="Permalink to this headline"></a></h2>
+</div></div></section>
+<section id="using-instances-of-raw-data-processed-data-and-model-fits">
+<h2>Using instances of raw data, processed data and model fits<a class="headerlink" href="#using-instances-of-raw-data-processed-data-and-model-fits" title="Permalink to this heading"></a></h2>
 <p>Using an object orientated approach allows multiple instances (objects) to be created and manipulated. This allows many
 different data file variations on the processed data and model fits to be manipulated simultanuously in a single
 Python session.</p>
@@ -634,9 +636,9 @@ R</li></ul><div class="tab codetab selected" data-id="0">
 <span class="n">dp2</span><span class="o">$</span><span class="nf">plotCAC</span><span class="p">()</span>
 </pre></div>
 </div>
-</div></div></div>
-<div class="section" id="overlaying-plots">
-<h2>Overlaying plots<a class="headerlink" href="#overlaying-plots" title="Permalink to this headline"></a></h2>
+</div></div></section>
+<section id="overlaying-plots">
+<h2>Overlaying plots<a class="headerlink" href="#overlaying-plots" title="Permalink to this heading"></a></h2>
 <p>In general, each <code class="docutils literal notranslate"><span class="pre">plotXXX</span></code> function does not create a canvas, so to overlay plots the functions need to be called
 sequentially in order.</p>
 <p>To make a legend the plots need to be given a label. So this example is the same as the</p>
@@ -707,12 +709,12 @@ R</li></ul><div class="tab codetab selected" data-id="0">
 <span class="nf">invisible</span><span class="p">(</span><span class="n">mpl</span><span class="o">$</span><span class="n">pyplot</span><span class="o">$</span><span class="nf">ylim</span><span class="p">(</span><span class="m">0.50</span><span class="p">,</span><span class="m">1.0</span><span class="p">))</span>
 </pre></div>
 </div>
-</div></div><div class="figure align-default">
+</div></div><figure class="align-default">
 <img alt="CAC for test1.csv with two different binning" src="_images/test1Overlay.png" />
-</div>
-</div>
-<div class="section" id="generating-data-from-signal-detection-model">
-<h2>Generating data from signal detection model<a class="headerlink" href="#generating-data-from-signal-detection-model" title="Permalink to this headline"></a></h2>
+</figure>
+</section>
+<section id="generating-data-from-signal-detection-model">
+<h2>Generating data from signal detection model<a class="headerlink" href="#generating-data-from-signal-detection-model" title="Permalink to this heading"></a></h2>
 <p>Raw and processed data can be generated simply from a signal detection model.</p>
 <div class="tabs docutils container" data-tabgroup="">
 <ul class="tabbar">
@@ -812,12 +814,12 @@ R</li></ul><div class="tab codetab selected" data-id="0">
 <span class="n">mpl</span><span class="o">$</span><span class="n">pyplot</span><span class="o">$</span><span class="nf">show</span><span class="p">()</span>
 </pre></div>
 </div>
-</div></div><div class="figure align-default">
+</div></div><figure class="align-default">
 <img alt="Generated data comparision example" src="_images/test1GenEx.png" />
-</div>
-</div>
-<div class="section" id="power-analysis">
-<h2>Power analysis<a class="headerlink" href="#power-analysis" title="Permalink to this headline"></a></h2>
+</figure>
+</section>
+<section id="power-analysis">
+<h2>Power analysis<a class="headerlink" href="#power-analysis" title="Permalink to this heading"></a></h2>
 <p>By having the ability to generate data from a model it is possible to vary the number of generated participants. This is not too dissimilar to bootstrapping. Instead of generating new samples (with replacement) from the data, new samples with variable numbers of participants is possible. For each sample all the analysis can be performed and dependence on sample size can be explored.</p>
 <div class="tabs docutils container" data-tabgroup="">
 <ul class="tabbar">
@@ -835,8 +837,8 @@ R</li></ul><div class="tab codetab selected" data-id="0">
 <div class="highlight-R notranslate"><div class="highlight"><pre><span></span>
 </pre></div>
 </div>
-</div></div></div>
-</div>
+</div></div></section>
+</section>
 
 
            </div>
@@ -850,7 +852,7 @@ R</li></ul><div class="tab codetab selected" data-id="0">
 
   <div role="contentinfo">
     <p>&#169; Copyright Royal Holloway, University of London 2020 and University of Bristol 2020.
-      <span class="lastupdated">Last updated on Sep 04, 2022.
+      <span class="lastupdated">Last updated on Sep 06, 2022.
       </span></p>
   </div>
 
