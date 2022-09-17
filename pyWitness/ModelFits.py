@@ -1103,6 +1103,13 @@ class ModelFitIndependentObservation(ModelFit) :
         self.targetBetweenSigma.fixed = False
         self.targetBetweenSigma.value = 0.3
 
+    def setUnequalVariance(self) :
+        super().setUnequalVariance()
+
+        self.targetBetweenSigma.fixed = False
+        self.targetBetweenSigma.value = 0.3
+
+
     def monteCarloDecision(self,pred_tafid_array, pred_tpsid_array, pred_tpfid_array, memoryStrength) :
         pass
 
