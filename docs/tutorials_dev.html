@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Developer tutorials &mdash; pyWitness 1.1 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -18,13 +17,12 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
         <script src="_static/code-tabs.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Results" href="results.html" />
+    <link rel="next" title="Module Contents" href="moduledocs.html" />
     <link rel="prev" title="Advanced tutorials" href="tutorials_adv.html" /> 
 </head>
 
@@ -65,7 +63,6 @@
 <li class="toctree-l2"><a class="reference internal" href="#making-the-logo">Making the logo</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="results.html">Results</a></li>
 <li class="toctree-l1"><a class="reference internal" href="moduledocs.html">Module Contents</a></li>
 <li class="toctree-l1"><a class="reference internal" href="support.html">Support</a></li>
 </ul>
@@ -94,10 +91,10 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="developer-tutorials">
-<h1>Developer tutorials<a class="headerlink" href="#developer-tutorials" title="Permalink to this heading"></a></h1>
-<section id="making-a-new-likelihood-model">
-<h2>Making a new likelihood  model<a class="headerlink" href="#making-a-new-likelihood-model" title="Permalink to this heading"></a></h2>
+  <div class="section" id="developer-tutorials">
+<h1>Developer tutorials<a class="headerlink" href="#developer-tutorials" title="Permalink to this headline"></a></h1>
+<div class="section" id="making-a-new-likelihood-model">
+<h2>Making a new likelihood  model<a class="headerlink" href="#making-a-new-likelihood-model" title="Permalink to this headline"></a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
 <span class="normal"> 2</span>
 <span class="normal"> 3</span>
@@ -229,46 +226,46 @@
          <span class="k">return</span> <span class="n">_np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">pred_tafid</span><span class="p">,</span> <span class="n">pred_tpsid</span><span class="p">,</span> <span class="n">pred_tpfid</span><span class="p">])</span>
 </pre></div></td></tr></table></div>
 </div>
-</section>
-<section id="making-a-new-monte-carlo-decision-rule">
-<h2>Making a new Monte Carlo decision rule<a class="headerlink" href="#making-a-new-monte-carlo-decision-rule" title="Permalink to this heading"></a></h2>
-</section>
-<section id="running-tests">
-<h2>Running tests<a class="headerlink" href="#running-tests" title="Permalink to this heading"></a></h2>
-</section>
-<section id="interfacing-r-code">
-<h2>Interfacing R code<a class="headerlink" href="#interfacing-r-code" title="Permalink to this heading"></a></h2>
-</section>
-<section id="interfacing-matlab-code">
-<h2>Interfacing Matlab code<a class="headerlink" href="#interfacing-matlab-code" title="Permalink to this heading"></a></h2>
-</section>
-<section id="running-the-test-suite">
-<h2>Running the test suite<a class="headerlink" href="#running-the-test-suite" title="Permalink to this heading"></a></h2>
-</section>
-<section id="making-the-logo">
-<h2>Making the logo<a class="headerlink" href="#making-the-logo" title="Permalink to this heading"></a></h2>
+</div>
+<div class="section" id="making-a-new-monte-carlo-decision-rule">
+<h2>Making a new Monte Carlo decision rule<a class="headerlink" href="#making-a-new-monte-carlo-decision-rule" title="Permalink to this headline"></a></h2>
+</div>
+<div class="section" id="running-tests">
+<h2>Running tests<a class="headerlink" href="#running-tests" title="Permalink to this headline"></a></h2>
+</div>
+<div class="section" id="interfacing-r-code">
+<h2>Interfacing R code<a class="headerlink" href="#interfacing-r-code" title="Permalink to this headline"></a></h2>
+</div>
+<div class="section" id="interfacing-matlab-code">
+<h2>Interfacing Matlab code<a class="headerlink" href="#interfacing-matlab-code" title="Permalink to this headline"></a></h2>
+</div>
+<div class="section" id="running-the-test-suite">
+<h2>Running the test suite<a class="headerlink" href="#running-the-test-suite" title="Permalink to this headline"></a></h2>
+</div>
+<div class="section" id="making-the-logo">
+<h2>Making the logo<a class="headerlink" href="#making-the-logo" title="Permalink to this headline"></a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
 <span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;./test1.csv&quot;</span><span class="p">)</span>
 <span class="n">dp</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
 <span class="n">dp</span><span class="o">.</span><span class="n">calculateConfidenceBootstrap</span><span class="p">(</span><span class="n">nBootstraps</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span><span class="n">plotROC</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
-</section>
-</section>
+</div>
+</div>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="tutorials_adv.html" class="btn btn-neutral float-left" title="Advanced tutorials" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="results.html" class="btn btn-neutral float-right" title="Results" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="moduledocs.html" class="btn btn-neutral float-right" title="Module Contents" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
     <p>&#169; Copyright Royal Holloway, University of London 2020 and University of Bristol 2020.
-      <span class="lastupdated">Last updated on Sep 06, 2022.
+      <span class="lastupdated">Last updated on Sep 19, 2022.
       </span></p>
   </div>
 
