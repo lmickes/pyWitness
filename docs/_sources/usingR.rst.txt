@@ -1,3 +1,5 @@
+.. _pywitnessr:
+
 ======================
 Using pyWitness from R
 ======================

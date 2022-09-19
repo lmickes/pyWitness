@@ -1,7 +1,9 @@
 Tutorials
 =========
 
-Click on the `repository link <https://github.com/lmickes/pyWitness/releases/tag/v1.0>`_ to download the zip file, called **tutorialData.zip**, of the data you'll need to run through the tutorials. 
+.. note::
+   
+   Click on the `repository link <https://github.com/lmickes/pyWitness/releases/tag/v1.1>`_ to download the zip file, called **tutorialData.zip**, of the data you'll need to run through the tutorials. 
 
 Make a working directory and do the tutorials in that directory. 
 

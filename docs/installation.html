@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Installation &mdash; pyWitness 1.0 documentation</title>
+  <title>Installation &mdash; pyWitness 1.1 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
@@ -17,6 +18,7 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
         <script src="_static/code-tabs.js"></script>
     <script src="_static/js/theme.js"></script>
@@ -35,7 +37,7 @@
             <img src="_static/pyWitnessLogo200.jpg" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.0
+                1.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -59,6 +61,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#testing-it-works">Testing it works</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#trying-it-out-without-installing-anything">Trying it out without installing anything!</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="usingR.html">Using pyWitness from R</a></li>
@@ -95,10 +98,10 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="installation">
-<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline"></a></h1>
-<div class="section" id="requirements">
-<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline"></a></h2>
+  <section id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this heading"></a></h1>
+<section id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this heading"></a></h2>
 <p>pyWitness is developed exclusively in Python 3. The installation methods detailed below automatically install the following required packages:</p>
 <ul class="simple">
 <li><p>python &gt; 3.7</p></li>
@@ -111,19 +114,19 @@
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Use a terminal for inputting commands. On MacOS the program is called <strong>terminal</strong> and on Windows it
-is called <strong>PowerShell</strong>.</p>
+is called <strong>PowerShell</strong>. If you are using anaconda or miniconda on Windows you need to start the <strong>Anaconda Powershell prompt</strong></p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>Our tutorial assumes python is interactive python 3, with numpy and matplotlib, so the command <code class="docutils literal notranslate"><span class="pre">ipython3</span> <span class="pre">--pylab</span></code> if you are familiar with python and have an installation replace <code class="docutils literal notranslate"><span class="pre">ipython3</span> <span class="pre">--pylab</span></code> with your own command to start python.</p>
 </div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>If you plan on using R, you still need to install the packages.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If you plan on using R, you still need to follow the installation instructions below. then follow the R specific instructions on this page <a class="reference internal" href="usingR.html#pywitnessr"><span class="std std-ref">Using pyWitness from R</span></a>.</p>
 </div>
-</div>
-<div class="section" id="installing-python">
-<h2>Installing Python<a class="headerlink" href="#installing-python" title="Permalink to this headline"></a></h2>
+</section>
+<section id="installing-python">
+<h2>Installing Python<a class="headerlink" href="#installing-python" title="Permalink to this heading"></a></h2>
 <p>To use pyWitness, you’ll need python. The easiest way to install python is to install <a class="reference external" href="https://docs.conda.io/en/latest/miniconda.html">miniconda</a></p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -134,9 +137,9 @@ is called <strong>PowerShell</strong>.</p>
 <p>You can also use your existing python. For example, if you have already installed anaconda, canopy, etc.</p>
 </div>
 <img alt="installation miniconda" src="http://mickeslab.com/wp-content/uploads/2022/03/installation1miniconda.gif" />
-</div>
-<div class="section" id="installing-pywitness">
-<h2>Installing pyWitness<a class="headerlink" href="#installing-pywitness" title="Permalink to this headline"></a></h2>
+</section>
+<section id="installing-pywitness">
+<h2>Installing pyWitness<a class="headerlink" href="#installing-pywitness" title="Permalink to this heading"></a></h2>
 <p>Now you can install pyWitness in several ways.</p>
 <ol class="arabic simple">
 <li><p>Use miniconda (good for users who want an easy installation)</p></li>
@@ -144,9 +147,13 @@ is called <strong>PowerShell</strong>.</p>
 <li><p>Download the ZIP file (good for advanced users who want to see the code)</p></li>
 <li><p>Clone the git repository (good for users who want to contribute)</p></li>
 </ol>
-<div class="section" id="miniconda-install">
-<h3>1. Miniconda install<a class="headerlink" href="#miniconda-install" title="Permalink to this headline"></a></h3>
-<p>Open a terminal (MacOS) or PowerShell (Windows) and install pyWitness by typing the following code line (or copy and paste) into your terminal or shell</p>
+<section id="miniconda-install">
+<h3>1. Miniconda install<a class="headerlink" href="#miniconda-install" title="Permalink to this heading"></a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>In Windows you will have to open an Anaconda Powershell Prompt (from the Windows start menu)</p>
+</div>
+<p>Open a terminal (MacOS) or Anaconda PowerShell prompt (Windows) and install pyWitness by typing the following code line (or copy and paste) into your terminal or shell</p>
 <blockquote>
 <div><ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">create</span> <span class="pre">--name</span> <span class="pre">pyWitness</span></code></p></li>
@@ -159,18 +166,28 @@ is called <strong>PowerShell</strong>.</p>
 <p>When you start or restart a terminal, you’ll need to activate your pyWitness environment with <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">activate</span> <span class="pre">pyWitness</span></code></p>
 </div>
 <img alt="installation conda" src="http://mickeslab.com/wp-content/uploads/2022/03/installation2conda.gif" />
-</div>
-<div class="section" id="pip-install">
-<h3>2. Pip install<a class="headerlink" href="#pip-install" title="Permalink to this headline"></a></h3>
+</section>
+<section id="pip-install">
+<h3>2. Pip install<a class="headerlink" href="#pip-install" title="Permalink to this heading"></a></h3>
+<p>First download the package</p>
 <blockquote>
 <div><ul class="simple">
-<li><p>Download <a class="reference external" href="https://github.com/lmickes/pyWitness/releases/download/v1.0/pyWitness-1.0-py3-none-any.whl">pyWitness-1.0-py3-none-any.whl</a></p></li>
+<li><p>Download <a class="reference external" href="https://github.com/lmickes/pyWitness/releases/download/v1.1/pyWitness-1.1-py3-none-any.whl">pyWitness-1.1-py3-none-any.whl</a></p></li>
+</ul>
+</div></blockquote>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>In Windows you will have to open an Anaconda Powershell prompt (from the Windows start menu) before running pip</p>
+</div>
+<p>Then in your terminal (MacOS) or Anaconda Powershell prompt (Windows)</p>
+<blockquote>
+<div><ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">pip3</span> <span class="pre">install</span> <span class="pre">pyWitness-1.0-py3-none-any.whl</span></code></p></li>
 </ul>
 </div></blockquote>
-</div>
-<div class="section" id="download-zip-file">
-<h3>3. Download ZIP file<a class="headerlink" href="#download-zip-file" title="Permalink to this headline"></a></h3>
+</section>
+<section id="download-zip-file">
+<h3>3. Download ZIP file<a class="headerlink" href="#download-zip-file" title="Permalink to this heading"></a></h3>
 <ol class="arabic simple">
 <li><p>Download <a class="reference external" href="https://github.com/lmickes/pyWitness">pyWitness</a> (click on green code button -&gt; Download ZIP)</p></li>
 <li><p>Unpack ZIP file to a directory of your choosing</p></li>
@@ -180,9 +197,9 @@ is called <strong>PowerShell</strong>.</p>
 </ul>
 </li>
 </ol>
-</div>
-<div class="section" id="clone-git-repository">
-<h3>4. Clone GIT repository<a class="headerlink" href="#clone-git-repository" title="Permalink to this headline"></a></h3>
+</section>
+<section id="clone-git-repository">
+<h3>4. Clone GIT repository<a class="headerlink" href="#clone-git-repository" title="Permalink to this heading"></a></h3>
 <p>Open a terminal (linux in bash) and move to a suitable work directory</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/lmickes/pyWitness.git
 <span class="nb">cd</span> pyWitness
@@ -194,9 +211,9 @@ pip3 install --editable . --user
 git pull
 </pre></div>
 </div>
-</div>
-<div class="section" id="testing-it-works">
-<h3>Testing it works<a class="headerlink" href="#testing-it-works" title="Permalink to this headline"></a></h3>
+</section>
+<section id="testing-it-works">
+<h3>Testing it works<a class="headerlink" href="#testing-it-works" title="Permalink to this heading"></a></h3>
 <ol class="arabic simple">
 <li><p>Open a new terminal and type (or copy and paste) <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">activate</span> <span class="pre">pyWitness</span></code></p></li>
 <li><p>Start up python <code class="docutils literal notranslate"><span class="pre">ipython3</span> <span class="pre">--pylab</span></code></p></li>
@@ -207,9 +224,24 @@ git pull
 </div>
 <p>If you get “pyWitness v0.1” it’s installed and you can proceed to the tutorials.</p>
 <img alt="testing the installations" src="http://mickeslab.com/wp-content/uploads/2022/03/installation3testPyWitness.gif" />
+</section>
+</section>
+<section id="trying-it-out-without-installing-anything">
+<h2>Trying it out without installing anything!<a class="headerlink" href="#trying-it-out-without-installing-anything" title="Permalink to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>Binder can be used to try out the code without installing anything on your computer.</p></li>
+<li><p>Click the following link (launch binder)</p></li>
+</ol>
+<a class="reference external image-reference" href="https://mybinder.org/v2/gh/lmickes/pyWitness/main"><img alt="https://mybinder.org/badge_logo.svg" src="https://mybinder.org/badge_logo.svg" /></a>
+<ol class="arabic simple" start="3">
+<li><p>Then it should open a browser with a notebook interface</p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Be patient, binder could take time to start up (<strong>seriously</strong>, a long time, maybe a cup of tea or coffee), don’t click back, don’t get impatient. It is building a virutal computer for you in docker and using jupyter-hub.</p>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
@@ -223,7 +255,7 @@ git pull
 
   <div role="contentinfo">
     <p>&#169; Copyright Royal Holloway, University of London 2020 and University of Bristol 2020.
-      <span class="lastupdated">Last updated on Sep 04, 2022.
+      <span class="lastupdated">Last updated on Sep 06, 2022.
       </span></p>
   </div>
 
