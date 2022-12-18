@@ -12,7 +12,7 @@ from .Tester    import Tester
 from .UnitTests import UnitTests
 
 
-print("pyWitness v1.0 : Authorship - https://lmickes.github.io/pyWitness/authorship.html")
+print("pyWitness v1.1 : Authorship - https://lmickes.github.io/pyWitness/authorship.html")
 
 import sys
 import warnings
