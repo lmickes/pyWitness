@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Tutorials &mdash; pyWitness 1.1 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -17,7 +18,9 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
         <script src="_static/code-tabs.js"></script>
         <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
@@ -72,6 +75,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials_adv.html">Advanced tutorials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials_dev.html">Developer tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="results.html">Results</a></li>
 <li class="toctree-l1"><a class="reference internal" href="moduledocs.html">Module Contents</a></li>
 <li class="toctree-l1"><a class="reference internal" href="support.html">Support</a></li>
 </ul>
@@ -89,8 +93,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Tutorials</li>
+      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">Tutorials</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/tutorials.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -100,8 +104,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="tutorials">
-<h1>Tutorials<a class="headerlink" href="#tutorials" title="Permalink to this headline"></a></h1>
+  <section id="tutorials">
+<h1>Tutorials<a class="headerlink" href="#tutorials" title="Permalink to this heading"></a></h1>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Click on the <a class="reference external" href="https://github.com/lmickes/pyWitness/releases/tag/v1.1">repository link</a> to download the zip file, called <strong>tutorialData.zip</strong>, of the data you’ll need to run through the tutorials.</p>
@@ -121,8 +125,8 @@
 </ul>
 </div></blockquote>
 <p>This tutorial builds up! Between each example and the previous examples, the new lines of code are highlighted in yellow.</p>
-<div class="section" id="python">
-<h2>Python<a class="headerlink" href="#python" title="Permalink to this headline"></a></h2>
+<section id="python">
+<h2>Python<a class="headerlink" href="#python" title="Permalink to this heading"></a></h2>
 <p>Python is an interpreted object oriented programming language. There is a large range
 of modules that are imported into python to provide extra functionality or features.
 pyWitness uses numpy (numerical arrays), scipy (fitting and functions), pandas
@@ -152,9 +156,9 @@ command history with that command fragment and probably match with a previous <c
 <li><p>To get help on a command, type the function and then <code class="docutils literal notranslate"><span class="pre">?</span></code> for example, <code class="docutils literal notranslate"><span class="pre">dp.plotROC?</span></code></p></li>
 </ul>
 </div></blockquote>
-</div>
-<div class="section" id="loading-raw-experimental-data">
-<h2>Loading raw experimental data<a class="headerlink" href="#loading-raw-experimental-data" title="Permalink to this headline"></a></h2>
+</section>
+<section id="loading-raw-experimental-data">
+<h2>Loading raw experimental data<a class="headerlink" href="#loading-raw-experimental-data" title="Permalink to this heading"></a></h2>
 <p>Remember, you may need to activate pyWitness when you start a terminal by using this code</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">activate</span> <span class="n">pyWitness</span>
 </pre></div>
@@ -183,9 +187,9 @@ R</li></ul><div class="tab codetab selected" data-id="0">
 <div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="n">pyw</span> <span class="o">&lt;-</span> <span class="nf">import</span><span class="p">(</span><span class="s">&quot;pyWitness&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-</div></div></div>
-<div class="section" id="checking-and-exploring-loaded-data">
-<h2>Checking and exploring loaded data<a class="headerlink" href="#checking-and-exploring-loaded-data" title="Permalink to this headline"></a></h2>
+</div></div></section>
+<section id="checking-and-exploring-loaded-data">
+<h2>Checking and exploring loaded data<a class="headerlink" href="#checking-and-exploring-loaded-data" title="Permalink to this heading"></a></h2>
 <p>It is useful to understand what columns and data values are stored in the raw data.</p>
 <div class="tabs docutils container" data-tabgroup="">
 <ul class="tabbar">
@@ -256,9 +260,9 @@ R</li></ul><div class="tab codetab selected" data-id="0">
 </pre></div>
 </div>
 </div></div><p>The second argument is the sheet name within the workbook (in the example above, it’s “test1”).</p>
-</div>
-<div class="section" id="processing-raw-experimental-data">
-<h2>Processing raw experimental data<a class="headerlink" href="#processing-raw-experimental-data" title="Permalink to this headline"></a></h2>
+</section>
+<section id="processing-raw-experimental-data">
+<h2>Processing raw experimental data<a class="headerlink" href="#processing-raw-experimental-data" title="Permalink to this heading"></a></h2>
 <p>To process the raw data the function <a class="reference external" href="./moduledocs.html#pyWitness.DataRaw.process">pyWitness.DataRaw.process</a>
 needs to be called on a raw data object. This calculates the cumulative rates from the raw data.</p>
 <div class="tabs docutils container" data-tabgroup="">
@@ -377,9 +381,9 @@ R</li></ul><div class="tab codetab selected" data-id="0">
 <span class="go">pAUC                                   0.02066155955774986</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="plotting-roc-curves">
-<h2>Plotting ROC curves<a class="headerlink" href="#plotting-roc-curves" title="Permalink to this headline"></a></h2>
+</section>
+<section id="plotting-roc-curves">
+<h2>Plotting ROC curves<a class="headerlink" href="#plotting-roc-curves" title="Permalink to this heading"></a></h2>
 <div class="tabs docutils container" data-tabgroup="">
 <ul class="tabbar">
 <li class="tabbutton selected" data-id="0" onclick="sphinx_code_tabs_onclick(this)">
@@ -406,17 +410,17 @@ R</li></ul><div class="tab codetab selected" data-id="0">
 </span><span class="hll"> <span class="n">mpl</span><span class="o">$</span><span class="n">pyplot</span><span class="o">$</span><span class="nf">show</span><span class="p">()</span>
 </span></pre></div></td></tr></table></div>
 </div>
-</div></div><div class="figure align-default">
+</div></div><figure class="align-default">
 <img alt="ROC for test1.csv" src="_images/test1ROCnoBin.png" />
-</div>
+</figure>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The symbol size is the relative frequency and can be changed by setting <code class="docutils literal notranslate"><span class="pre">dp.plotROC(relativeFrequencyScale</span> <span class="pre">=</span> <span class="pre">400)</span></code></p>
 </div>
 <p>The black dashed line in the plot represents chance performance.</p>
-</div>
-<div class="section" id="plotting-cac-curves">
-<h2>Plotting CAC curves<a class="headerlink" href="#plotting-cac-curves" title="Permalink to this headline"></a></h2>
+</section>
+<section id="plotting-cac-curves">
+<h2>Plotting CAC curves<a class="headerlink" href="#plotting-cac-curves" title="Permalink to this heading"></a></h2>
 <div class="tabs docutils container" data-tabgroup="">
 <ul class="tabbar">
 <li class="tabbutton selected" data-id="0" onclick="sphinx_code_tabs_onclick(this)">
@@ -443,13 +447,13 @@ R</li></ul><div class="tab codetab selected" data-id="0">
 </span><span class="hll"><span class="n">mpl</span><span class="o">$</span><span class="n">pyplot</span><span class="o">$</span><span class="nf">show</span><span class="p">()</span>
 </span></pre></div></td></tr></table></div>
 </div>
-</div></div><div class="figure align-default">
+</div></div><figure class="align-default">
 <img alt="CAC for test1.csv" src="_images/test1CACnoBin.png" />
-</div>
+</figure>
 <img alt="ROC and CAC plots" src="http://mickeslab.com/wp-content/uploads/2022/03/tutorial1ROCcac.gif" />
-</div>
-<div class="section" id="collapsing-the-categorical-data">
-<h2>Collapsing the categorical data<a class="headerlink" href="#collapsing-the-categorical-data" title="Permalink to this headline"></a></h2>
+</section>
+<section id="collapsing-the-categorical-data">
+<h2>Collapsing the categorical data<a class="headerlink" href="#collapsing-the-categorical-data" title="Permalink to this heading"></a></h2>
 <p>The dataset used in this tutorial has 11 confidence levels (0, 10, 20, 30, 40, 50, 60, 70, 80, 90 and 100). Often confidence levels need to be binned or collapsed. This is best performed on the raw data before calling
 <code class="docutils literal notranslate"><span class="pre">process()</span></code>. This is done with the <code class="docutils literal notranslate"><span class="pre">collapseCategoricalData</span></code> method of <code class="docutils literal notranslate"><span class="pre">DataRaw</span></code>, and shown in example below, where the new bins are (0-60 map to 30, 70-80 to 75 and 90-100 to 95).</p>
 <div class="tabs docutils container" data-tabgroup="">
@@ -488,9 +492,9 @@ R</li></ul><div class="tab codetab selected" data-id="0">
 </span><span class="hll"><span class="n">mpl</span><span class="o">$</span><span class="n">pyplot</span><span class="o">$</span><span class="nf">show</span><span class="p">()</span>
 </span></pre></div></td></tr></table></div>
 </div>
-</div></div><div class="figure align-default">
+</div></div><figure class="align-default">
 <img alt="Rebinned CAC for test1.csv" src="_images/test1CACBin.png" />
-</div>
+</figure>
 <p>To rescale the axes, you can use</p>
 <div class="tabs docutils container" data-tabgroup="">
 <ul class="tabbar">
@@ -513,16 +517,16 @@ R</li></ul><div class="tab codetab selected" data-id="0">
 </pre></div>
 </div>
 </div></div><p>and you get</p>
-<div class="figure align-default">
+<figure class="align-default">
 <img alt="CAC rescaled" src="_images/test1CACBinLim.png" />
-</div>
+</figure>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>If you err, the <code class="docutils literal notranslate"><span class="pre">collapseCategoricalData</span></code> the data might be inconsistent. To start with the original data so call <code class="docutils literal notranslate"><span class="pre">collapseCategoricalData</span></code> with <code class="docutils literal notranslate"><span class="pre">reload=True</span></code></p>
 </div>
-</div>
-<div class="section" id="collapsing-binning-continuous-data">
-<h2>Collapsing (binning) continuous data<a class="headerlink" href="#collapsing-binning-continuous-data" title="Permalink to this headline"></a></h2>
+</section>
+<section id="collapsing-binning-continuous-data">
+<h2>Collapsing (binning) continuous data<a class="headerlink" href="#collapsing-binning-continuous-data" title="Permalink to this heading"></a></h2>
 <p>Some data are not categorical variables, but continuous variables.</p>
 <div class="tabs docutils container" data-tabgroup="">
 <ul class="tabbar">
@@ -566,9 +570,9 @@ R</li></ul><div class="tab codetab selected" data-id="0">
 <p class="admonition-title">Warning</p>
 <p>Confidence needs to be a numerical value because ROC analysis requires a value that can be ordered.</p>
 </div>
-</div>
-<div class="section" id="calculating-pauc-and-performing-statistical-tests">
-<h2>Calculating pAUC and performing statistical tests<a class="headerlink" href="#calculating-pauc-and-performing-statistical-tests" title="Permalink to this headline"></a></h2>
+</section>
+<section id="calculating-pauc-and-performing-statistical-tests">
+<h2>Calculating pAUC and performing statistical tests<a class="headerlink" href="#calculating-pauc-and-performing-statistical-tests" title="Permalink to this heading"></a></h2>
 <p>pAUC is calculated when <code class="docutils literal notranslate"><span class="pre">dr.process()</span></code> is called. Simpson’s rule integrates the area
 under the ROC curve up to a maximum value. If the maximum value is between two data points, linear interpolation is used to calculate the most liberal point (i.e., the lowest level of confidence).</p>
 <div class="tabs docutils container" data-tabgroup="">
@@ -599,12 +603,12 @@ R</li></ul><div class="tab codetab selected" data-id="0">
 <span class="hll"><span class="nf">print</span><span class="p">(</span><span class="n">dp</span><span class="o">$</span><span class="n">pAUC</span><span class="p">)</span>
 </span></pre></div></td></tr></table></div>
 </div>
-</div></div><div class="figure align-default">
+</div></div><figure class="align-default">
 <img alt="Data-model ROC comparision for test1.csv" src="_images/test1_pAUC.jpg" />
-</div>
-</div>
-<div class="section" id="plotting-rac-curves">
-<h2>Plotting RAC curves<a class="headerlink" href="#plotting-rac-curves" title="Permalink to this headline"></a></h2>
+</figure>
+</section>
+<section id="plotting-rac-curves">
+<h2>Plotting RAC curves<a class="headerlink" href="#plotting-rac-curves" title="Permalink to this heading"></a></h2>
 <p>To perform analyses with a different variable than confidence, for example, response time, use the following code. The important change is highlighted.</p>
 <div class="tabs docutils container" data-tabgroup="">
 <ul class="tabbar">
@@ -645,12 +649,12 @@ R</li></ul><div class="tab codetab selected" data-id="0">
 </pre></div></td></tr></table></div>
 </div>
 </div></div><p>The plot will look like this:</p>
-<div class="figure align-default">
+<figure class="align-default">
 <img alt="RAC for test1" src="_images/test1RAC.png" />
-</div>
-</div>
-<div class="section" id="fitting-signal-detection-based-models-to-data">
-<h2>Fitting signal detection-based models to data<a class="headerlink" href="#fitting-signal-detection-based-models-to-data" title="Permalink to this headline"></a></h2>
+</figure>
+</section>
+<section id="fitting-signal-detection-based-models-to-data">
+<h2>Fitting signal detection-based models to data<a class="headerlink" href="#fitting-signal-detection-based-models-to-data" title="Permalink to this heading"></a></h2>
 <p>There are many models available in pyWitness. We’ll start with the independent observation model. To load and process the data is the same as before (lines 1-4), the fitting
 part is new and the code is highlighted (lines 5-7).</p>
 <div class="tabs docutils container" data-tabgroup="">
@@ -877,9 +881,9 @@ R</li></ul><div class="tab codetab selected" data-id="0">
 </span><span class="hll"><span class="n">mf_in</span> <span class="o">&lt;-</span> <span class="n">pyw</span><span class="o">$</span><span class="nf">ModelFitIntegration</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span>
 </span></pre></div></td></tr></table></div>
 </div>
-</div></div></div>
-<div class="section" id="setting-initial-fit-parameters">
-<h2>Setting initial fit parameters<a class="headerlink" href="#setting-initial-fit-parameters" title="Permalink to this headline"></a></h2>
+</div></div></section>
+<section id="setting-initial-fit-parameters">
+<h2>Setting initial fit parameters<a class="headerlink" href="#setting-initial-fit-parameters" title="Permalink to this heading"></a></h2>
 <p>With data samples with large number of confidence bins the fits can take a large
 number of iterations to converge (long run times). Sensible fit parameters can be be
 estimated from the data.</p>
@@ -921,9 +925,9 @@ R</li></ul><div class="tab codetab selected" data-id="0">
 </span><span class="nf">invisible</span><span class="p">(</span><span class="n">mpl</span><span class="o">$</span><span class="n">pyplot</span><span class="o">$</span><span class="nf">savefig</span><span class="p">(</span><span class="s">&quot;HvFA.png&quot;</span><span class="p">))</span>
 </pre></div></td></tr></table></div>
 </div>
-</div></div><div class="figure align-default">
+</div></div><figure class="align-default">
 <img alt="Hit rate vs. false alarm rate for test1.csv" src="_images/HvFA.png" />
-</div>
+</figure>
 <div class="tabs docutils container" data-tabgroup="">
 <ul class="tabbar">
 <li class="tabbutton selected" data-id="0" onclick="sphinx_code_tabs_onclick(this)">
@@ -982,9 +986,9 @@ R</li></ul><div class="tab codetab selected" data-id="0">
 <span class="n">mf</span><span class="o">$</span><span class="nf">printParameters</span><span class="p">()</span>
 </pre></div></td></tr></table></div>
 </div>
-</div></div></div>
-<div class="section" id="plotting-fit-and-models">
-<h2>Plotting fit and models<a class="headerlink" href="#plotting-fit-and-models" title="Permalink to this headline"></a></h2>
+</div></div></section>
+<section id="plotting-fit-and-models">
+<h2>Plotting fit and models<a class="headerlink" href="#plotting-fit-and-models" title="Permalink to this heading"></a></h2>
 <p>It is important to understand the performance of a given particular fit. The following plot compares
 the experimental data to the model fit.</p>
 <div class="tabs docutils container" data-tabgroup="">
@@ -1041,9 +1045,9 @@ R</li></ul><div class="tab codetab selected" data-id="0">
 <span class="n">mpl</span><span class="o">$</span><span class="n">pyplot</span><span class="o">$</span><span class="nf">show</span><span class="p">()</span>
 </pre></div>
 </div>
-</div></div><div class="figure align-default">
+</div></div><figure class="align-default">
 <img alt="Data-model ROC comparision for test1.csv" src="_images/test1ROCcomparisonBin.png" />
-</div>
+</figure>
 <img alt="ROC data and model fit plotted" src="http://mickeslab.com/wp-content/uploads/2022/03/tutorial1fitDataROCplot.gif" />
 <p>To compare a <em>CAC</em> plot between data and fit</p>
 <div class="tabs docutils container" data-tabgroup="">
@@ -1065,9 +1069,9 @@ R</li></ul><div class="tab codetab selected" data-id="0">
 <span class="n">mpl</span><span class="o">$</span><span class="n">pyplot</span><span class="o">$</span><span class="nf">legend</span><span class="p">()</span>
 </pre></div>
 </div>
-</div></div><div class="figure align-default">
+</div></div><figure class="align-default">
 <img alt="Data-model CAC comparision for test1.csv" src="_images/test1CACcomparisonBin.png" />
-</div>
+</figure>
 <p>To compare frequencies in each bin between data and fit</p>
 <div class="tabs docutils container" data-tabgroup="">
 <ul class="tabbar">
@@ -1081,9 +1085,9 @@ R</li></ul><div class="tab codetab selected" data-id="0">
 <div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="n">mf</span><span class="o">$</span><span class="nf">plotFit</span><span class="p">()</span>
 </pre></div>
 </div>
-</div></div><div class="figure align-default">
+</div></div><figure class="align-default">
 <img alt="Data-model comparision for test1.csv" src="_images/testPlotFit.png" />
-</div>
+</figure>
 <p>Once a fit has been performed, the model can be displayed as a function of memory strength and includes the lure and target distributions with means and standard deviations (top panel of plot below) and the associated criteria, c1 (low confidence), c2 (medium confidence), and c3 (high confidence) (bottom panel of plot below). This simple command belonging to a ModelFit object can be used to make the plot below.</p>
 <div class="tabs docutils container" data-tabgroup="">
 <ul class="tabbar">
@@ -1097,12 +1101,12 @@ R</li></ul><div class="tab codetab selected" data-id="0">
 <div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="n">mf</span><span class="o">$</span><span class="nf">plotModel</span><span class="p">()</span>
 </pre></div>
 </div>
-</div></div><div class="figure align-default">
+</div></div><figure class="align-default">
 <img alt="Independent Observation model fit" src="_images/testPlotModel.png" />
-</div>
-</div>
-<div class="section" id="d-prime-calculation">
-<h2>d-prime calculation<a class="headerlink" href="#d-prime-calculation" title="Permalink to this headline"></a></h2>
+</figure>
+</section>
+<section id="d-prime-calculation">
+<h2>d-prime calculation<a class="headerlink" href="#d-prime-calculation" title="Permalink to this heading"></a></h2>
 <p>The d-prime can be calculated by computing</p>
 <div class="math notranslate nohighlight">
 \[d^{\prime} = Z(R_{T,i}) - Z(R_{L,i})\]</div>
@@ -1152,9 +1156,9 @@ dataframe, so <code class="docutils literal notranslate"><span class="pre">dp.pr
 <span class="go">Out[X]: 1.7976601843420954</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="writing-results-to-file">
-<h2>Writing results to file<a class="headerlink" href="#writing-results-to-file" title="Permalink to this headline"></a></h2>
+</section>
+<section id="writing-results-to-file">
+<h2>Writing results to file<a class="headerlink" href="#writing-results-to-file" title="Permalink to this heading"></a></h2>
 <p>The internal dataframes can be written to either <code class="docutils literal notranslate"><span class="pre">csv</span></code> or <code class="docutils literal notranslate"><span class="pre">xlsx</span></code> file format for further analysis. There are four functions belonging to <code class="docutils literal notranslate"><span class="pre">DataProcessed</span></code>.</p>
 <blockquote>
 <div><ul class="simple">
@@ -1201,14 +1205,14 @@ R</li></ul><div class="tab codetab selected" data-id="0">
 </span><span class="hll"> <span class="n">dp</span><span class="o">$</span><span class="nf">writeRatesCsv</span><span class="p">(</span><span class="s">&quot;./test1_rates.csv&quot;</span><span class="p">)</span>
 </span></pre></div></td></tr></table></div>
 </div>
-</div></div><div class="figure align-default">
+</div></div><figure class="align-default">
 <img alt="_images/test1PivotExcel.png" src="_images/test1PivotExcel.png" />
-</div>
-<div class="figure align-default">
+</figure>
+<figure class="align-default">
 <img alt="_images/test1RatesExcel.png" src="_images/test1RatesExcel.png" />
-</div>
-</div>
-</div>
+</figure>
+</section>
+</section>
 
 
            </div>
@@ -1222,7 +1226,7 @@ R</li></ul><div class="tab codetab selected" data-id="0">
 
   <div role="contentinfo">
     <p>&#169; Copyright Royal Holloway, University of London 2020 and University of Bristol 2020.
-      <span class="lastupdated">Last updated on Sep 19, 2022.
+      <span class="lastupdated">Last updated on Dec 18, 2022.
       </span></p>
   </div>
 
