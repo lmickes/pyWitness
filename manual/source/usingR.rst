@@ -14,11 +14,18 @@ pyWitness is developed exclusively in Python 3, so to use it in R we need to ins
 
 Then it should be possible to import the python
 
+     * ``library("reticulate")``
      * ``pyw <- import("pyWitness")``
 
 If this causes an import error, you might need to point to your conda version of pytohn
 
      * ``use_python("USRHOME/opt/miniconda3/bin/python")``
+
+If you require to locate your python (required for the ``use_python`` command above)
+
+    * Power shell ``which.exe python.ext``
+    * Terminal ``which python``
+
 
 
 .. warning :: 
