@@ -23,7 +23,7 @@ If this causes an import error, you might need to point to your conda version of
 
 If you require to locate your python (required for the ``use_python`` command above)
 
-    * Power shell ``which.exe python.ext``
+    * Power shell ``which.exe python.exe``
     * Terminal ``which python``
 
 
