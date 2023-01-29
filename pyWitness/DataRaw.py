@@ -375,6 +375,18 @@ class DataRaw :
             self.data = self.data.loc[cut]
             return (cut*1).sum()
 
+    def isDesignateId(self) :
+        if (self.data['responseType'] == "designateId").any():
+            return True
+        else :
+            return False
+
+    def removeDesignates(self):
+        self.data['responseType'] = self.data['responseType'].map({'designateId':'fillerId',
+                                                                   'suspectId':'suspectId',
+                                                                   'fillerId':'fillerId',
+                                                                   'rejectId':'rejectId'})
+
     def process(self, column = '', condition = '', reverseConfidence = False, pAUCLiberal = 1.0, levels = None, option = "all", dependentVariable = "confidence") :
         '''
         Process the raw data and returns DataProcessed object
