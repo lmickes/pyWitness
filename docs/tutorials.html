@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Tutorials &mdash; pyWitness 1.1 documentation</title>
@@ -71,6 +71,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#plotting-fit-and-models">Plotting fit and models</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#d-prime-calculation">d-prime calculation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#writing-results-to-file">Writing results to file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#designated-innocent-suspect-in-target-absent-ta-lineups">Designated innocent suspect in target absent (TA) lineups</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials_adv.html">Advanced tutorials</a></li>
@@ -93,8 +94,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a></li>
-      <li class="breadcrumb-item active">Tutorials</li>
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Tutorials</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/tutorials.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -484,9 +485,11 @@ R</li></ul><div class="tab codetab selected" data-id="0">
 <span class="normal">3</span>
 <span class="normal">4</span>
 <span class="normal">5</span>
-<span class="normal">6</span></pre></div></td><td class="code"><div><pre><span></span><span class="n">pyw</span> <span class="o">&lt;-</span> <span class="nf">import</span><span class="p">(</span><span class="s">&quot;pyWitness&quot;</span><span class="p">)</span>
+<span class="normal">6</span>
+<span class="normal">7</span></pre></div></td><td class="code"><div><pre><span></span><span class="n">pyw</span> <span class="o">&lt;-</span> <span class="nf">import</span><span class="p">(</span><span class="s">&quot;pyWitness&quot;</span><span class="p">)</span>
 <span class="n">dr</span> <span class="o">&lt;-</span> <span class="n">pyw</span><span class="o">$</span><span class="nf">DataRaw</span><span class="p">(</span><span class="s">&quot;./test1.csv&quot;</span><span class="p">)</span>
-<span class="hll"><span class="n">dr</span><span class="o">$</span><span class="nf">collapseCategoricalData</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s">&#39;confidence&#39;</span><span class="p">,</span><span class="n">map</span><span class="o">=</span><span class="nf">list</span><span class="p">(</span><span class="s">&quot;0&quot;</span><span class="o">=</span><span class="m">30</span><span class="p">,</span> <span class="s">&quot;10&quot;</span><span class="o">=</span><span class="m">30</span><span class="p">,</span> <span class="s">&quot;20&quot;</span><span class="o">=</span><span class="m">30</span><span class="p">,</span> <span class="s">&quot;30&quot;</span><span class="o">=</span><span class="m">30</span><span class="p">,</span>               <span class="s">&quot;40&quot;</span><span class="o">=</span><span class="m">30</span><span class="p">,</span><span class="s">&quot;50&quot;</span><span class="o">=</span><span class="m">30</span><span class="p">,</span> <span class="s">&quot;60&quot;</span><span class="o">=</span><span class="m">30</span><span class="p">,</span><span class="s">&quot;70&quot;</span><span class="o">=</span><span class="m">75</span><span class="p">,</span> <span class="s">&quot;80&quot;</span><span class="o">=</span><span class="m">75</span><span class="p">,</span><span class="s">&quot;90&quot;</span><span class="o">=</span><span class="m">95</span><span class="p">,</span> <span class="s">&quot;100&quot;</span><span class="o">=</span><span class="m">95</span><span class="p">))</span>
+<span class="hll"><span class="n">dr</span><span class="o">$</span><span class="nf">collapseCategoricalData</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s">&#39;confidence&#39;</span><span class="p">,</span><span class="n">map</span><span class="o">=</span><span class="nf">list</span><span class="p">(</span><span class="s">&quot;0&quot;</span><span class="o">=</span><span class="m">30</span><span class="p">,</span> <span class="s">&quot;10&quot;</span><span class="o">=</span><span class="m">30</span><span class="p">,</span> <span class="s">&quot;20&quot;</span><span class="o">=</span><span class="m">30</span><span class="p">,</span> <span class="s">&quot;30&quot;</span><span class="o">=</span><span class="m">30</span><span class="p">,</span>
+</span><span class="hll">                                                        <span class="s">&quot;40&quot;</span><span class="o">=</span><span class="m">30</span><span class="p">,</span><span class="s">&quot;50&quot;</span><span class="o">=</span><span class="m">30</span><span class="p">,</span> <span class="s">&quot;60&quot;</span><span class="o">=</span><span class="m">30</span><span class="p">,</span><span class="s">&quot;70&quot;</span><span class="o">=</span><span class="m">75</span><span class="p">,</span> <span class="s">&quot;80&quot;</span><span class="o">=</span><span class="m">75</span><span class="p">,</span><span class="s">&quot;90&quot;</span><span class="o">=</span><span class="m">95</span><span class="p">,</span> <span class="s">&quot;100&quot;</span><span class="o">=</span><span class="m">95</span><span class="p">))</span>
 </span><span class="hll"><span class="n">dp</span> <span class="o">&lt;-</span> <span class="n">dr</span><span class="o">$</span><span class="nf">process</span><span class="p">()</span>
 </span><span class="hll"><span class="n">dp</span><span class="o">$</span><span class="nf">plotCAC</span><span class="p">()</span>
 </span><span class="hll"><span class="n">mpl</span><span class="o">$</span><span class="n">pyplot</span><span class="o">$</span><span class="nf">show</span><span class="p">()</span>
@@ -810,7 +813,7 @@ an appropriate start; line 12 yields</p>
 </pre></div>
 </div>
 <p>There many ways to control the model</p>
-<table class="colwidths-given docutils align-default" id="id2">
+<table class="docutils align-default" id="id2">
 <caption><span class="caption-text">Parameter control examples</span><a class="headerlink" href="#id2" title="Permalink to this table"></a></caption>
 <colgroup>
 <col style="width: 50%" />
@@ -1212,6 +1215,19 @@ R</li></ul><div class="tab codetab selected" data-id="0">
 <img alt="_images/test1RatesExcel.png" src="_images/test1RatesExcel.png" />
 </figure>
 </section>
+<section id="designated-innocent-suspect-in-target-absent-ta-lineups">
+<h2>Designated innocent suspect in target absent (TA) lineups<a class="headerlink" href="#designated-innocent-suspect-in-target-absent-ta-lineups" title="Permalink to this heading"></a></h2>
+<p>In TA lineups the suspect ID rate is estimated as the fillerID/lineupSize. In some
+experiments a <code class="docutils literal notranslate"><span class="pre">designated</span> <span class="pre">innocent</span> <span class="pre">suspect</span></code> is used. This is possible with pyWitness.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>The raw data in the <code class="docutils literal notranslate"><span class="pre">responseType</span></code> column will have an extra possible type called <code class="docutils literal notranslate"><span class="pre">designateId</span></code></p></li>
+<li><p>Then all of the analyses will proceed normally, but now the targetAbsent suspectId row will be populated with data from the designated innocent suspect</p></li>
+<li><p>Sometimes it is useful to check if raw data contains <code class="docutils literal notranslate"><span class="pre">designateId</span></code>, this is done by calling <code class="docutils literal notranslate"><span class="pre">dataRaw.isDesignateId</span></code></p></li>
+<li><p>To convert all <code class="docutils literal notranslate"><span class="pre">designateId</span></code> to <code class="docutils literal notranslate"><span class="pre">fillerIds</span></code> one must call <code class="docutils literal notranslate"><span class="pre">dataRaw.removeDesignates()</span></code></p></li>
+</ul>
+</div></blockquote>
+</section>
 </section>
 
 
@@ -1226,7 +1242,7 @@ R</li></ul><div class="tab codetab selected" data-id="0">
 
   <div role="contentinfo">
     <p>&#169; Copyright Royal Holloway, University of London 2020 and University of Bristol 2020.
-      <span class="lastupdated">Last updated on Dec 18, 2022.
+      <span class="lastupdated">Last updated on Jan 29, 2023.
       </span></p>
   </div>
 
