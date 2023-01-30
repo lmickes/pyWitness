@@ -67,6 +67,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials_dev.html">Developer tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="results.html">Results</a></li>
 <li class="toctree-l1"><a class="reference internal" href="moduledocs.html">Module Contents</a></li>
 <li class="toctree-l1"><a class="reference internal" href="support.html">Support</a></li>
 </ul>
@@ -831,7 +832,12 @@ R</li></ul><div class="tab codetab selected" data-id="0">
 </pre></div>
 </div>
 </div><div class="tab codetab" data-id="1">
-<div class="highlight-R notranslate"><div class="highlight"><pre><span></span>
+<div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="nf">for </span><span class="p">(</span><span class="n">nGen</span> <span class="n">in</span> <span class="nf">list</span><span class="p">(</span><span class="m">500</span><span class="p">,</span><span class="m">1000</span><span class="p">,</span><span class="m">1500</span><span class="p">))</span> <span class="p">{</span>
+    <span class="n">drSimulated</span> <span class="o">&lt;-</span> <span class="n">mf</span><span class="o">$</span><span class="nf">generateRawData</span><span class="p">(</span><span class="n">nGenParticipants</span> <span class="o">=</span> <span class="n">nGen</span><span class="p">)</span>
+    <span class="n">dpSimulated</span> <span class="o">&lt;-</span> <span class="n">drSimulated</span><span class="o">$</span><span class="nf">process</span><span class="p">()</span>
+    <span class="n">dpSimulated</span><span class="o">$</span><span class="nf">calculateConfidenceBootstrap</span><span class="p">(</span><span class="n">nBootstraps</span><span class="o">=</span><span class="nf">as.integer</span><span class="p">(</span><span class="m">2000</span><span class="p">))</span>
+    <span class="nf">print</span><span class="p">(</span><span class="n">nGen</span><span class="p">,</span> <span class="n">dpSimulated</span><span class="o">$</span><span class="n">liberalTargetAbsentSuspectId</span><span class="p">,</span><span class="n">dpSimulated</span><span class="o">$</span><span class="n">pAUC</span><span class="p">,</span> <span class="n">dpSimulated</span><span class="o">$</span><span class="n">pAUC_low</span><span class="p">,</span> <span class="n">dpSimulated</span><span class="o">$</span><span class="n">pAUC_high</span><span class="p">)</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 </div></div></div>
@@ -849,7 +855,7 @@ R</li></ul><div class="tab codetab selected" data-id="0">
 
   <div role="contentinfo">
     <p>&#169; Copyright Royal Holloway, University of London 2020 and University of Bristol 2020.
-      <span class="lastupdated">Last updated on Sep 19, 2022.
+      <span class="lastupdated">Last updated on Nov 01, 2022.
       </span></p>
   </div>
 
