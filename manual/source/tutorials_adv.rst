@@ -682,5 +682,11 @@ By having the ability to generate data from a model it is possible to vary the n
             print(nGen, dpSimulated.liberalTargetAbsentSuspectId,dpSimulated.pAUC, dpSimulated.pAUC_low, dpSimulated.pAUC_high)
             
     .. code-tab:: R
-    
+
+        for (nGen in list(500,1000,1500)) {
+            drSimulated <- mf$generateRawData(nGenParticipants = nGen)
+            dpSimulated <- drSimulated$process()
+            dpSimulated$calculateConfidenceBootstrap(nBootstraps=as.integer(2000))
+            print(nGen, dpSimulated$liberalTargetAbsentSuspectId,dpSimulated$pAUC, dpSimulated$pAUC_low, dpSimulated$pAUC_high)
+        }
     

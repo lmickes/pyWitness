@@ -2,7 +2,16 @@
 
 To do for new release/tag:
 1. update git tags
+	git tag v1.2
+	git push origin v1.2 
+	"check GitHub that the tag is there - pulldown menu 'tags'"
 2. create release
+	go to GitHub and login
+	releases on the righthand side
+	draft new release
+	choose a tag
+	name the release
+	check it
 3. edit pyWitness/conda/meta.yaml to point to new tag
 
 
@@ -10,7 +19,7 @@ To do the conda build:
 > cd pyWitness/conda
 > anaconda login
 > conda-build -c conda-forge .
-> cd ~/miniconda3/conda-bld/
+> cd ~/opt/miniconda3/conda-bld/
 > conda convert --platform all ./osx-arm64/pywitness-v1.0-0.tar.bz2
 > anaconda upload win-64/pywitness-v1.0-0.tar.bz2 
 
