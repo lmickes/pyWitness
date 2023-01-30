@@ -83,7 +83,12 @@ Internal data format
    * - 
      - 
      - "rejectId"
-     - 
+     -
+   * -
+     -
+     - "designateId"
+     -
+
 
 Minimal example data file for an experiment 
 

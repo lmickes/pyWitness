@@ -389,8 +389,7 @@ The dataset used in this tutorial has 11 confidence levels (0, 10, 20, 30, 40, 5
        
        pyw <- import("pyWitness")
        dr <- pyw$DataRaw("./test1.csv")
-       dr$collapseCategoricalData(column='confidence',map=list("0"=30, "10"=30, "20"=30, "30"=30,
-                                                               "40"=30,"50"=30, "60"=30,"70"=75, "80"=75,"90"=95, "100"=95))
+       dr$collapseCategoricalData(column='confidence',map=list("0"=30, "10"=30, "20"=30, "30"=30,               "40"=30,"50"=30, "60"=30,"70"=75, "80"=75,"90"=95, "100"=95))
        dp <- dr$process()
        dp$plotCAC()
        mpl$pyplot$show()
@@ -1035,16 +1034,3 @@ The string argument for the functions is the file name.
 .. figure:: images/test1PivotExcel.png
 
 .. figure:: images/test1RatesExcel.png
-
-
-Designated innocent suspect in target absent (TA) lineups
----------------------------------------------------------
-
-In TA lineups the suspect ID rate is estimated as the fillerID/lineupSize. In some
-experiments a ``designated innocent suspect`` is used. This is possible with pyWitness.
-
-   * The raw data in the ``responseType`` column will have an extra possible type called ``designateId``
-   * Then all of the analyses will proceed normally, but now the targetAbsent suspectId row will be populated with data from the designated innocent suspect
-   * Sometimes it is useful to check if raw data contains ``designateId``, this is done by calling ``dataRaw.isDesignateId``
-   * To convert all ``designateId`` to ``fillerIds`` one must call ``dataRaw.removeDesignates()``
-
