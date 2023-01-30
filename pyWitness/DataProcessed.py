@@ -185,12 +185,12 @@ class DataProcessed :
         try : 
             self.data_rates.loc['targetAbsent','suspectId']
         except :
-            if self.lineupSize != 1 and not self.dataRaw.isDesignateId():  # Only estimate if this is a lineup (fillers dont exist for showups)
+            if self.lineupSize != 1 and not self.isDesignateId():  # Only estimate if this is a lineup (fillers dont exist for showups)
                 suspectId = self.data_rates.loc['targetAbsent','fillerId']/self.lineupSize
                 suspectId.name = ("targetAbsent","suspectId")
                 self.data_rates = _pandas.concat([self.data_rates,_pandas.DataFrame(suspectId).transpose()])
                 self.data_rates = self.data_rates.sort_index()
-            elif self.lineupSize != 1 and self.dataRaw.isDesignateId():
+            elif self.lineupSize != 1 and self.isDesignateId():
                 suspectId = self.data_rates.loc['targetAbsent','designateId']
                 suspectId.name = ("targetAbsent","suspectId")
                 self.data_rates = _pandas.concat([self.data_rates,_pandas.DataFrame(suspectId).transpose()])
@@ -825,6 +825,13 @@ class DataProcessed :
         print('False ID rate',self.data_rates.loc[("targetAbsent", "suspectId")].max())
         print('dPrime',self.dPrime)
         print('pAUC',self.pAUC)
+
+    def isDesignateId(self):
+        try:
+            self.data_pivot.loc['targetAbsent', 'designateId']
+            return True
+        except KeyError:
+            return False
 
     @property
     def numberConditions(self) :
