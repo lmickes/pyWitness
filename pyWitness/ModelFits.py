@@ -508,8 +508,8 @@ class ModelFit(object) :
 
         dr = _DataRaw('')
 
-        confidence = self.processedData.data_rates.columns.get_level_values(self.processedData.dependentVariable,'central').values[-1::-1]
-
+        #confidence = self.processedData.data_rates.columns.get_level_values(self.processedData.dependentVariable,'central').values[-1::-1]
+        confidence = self.processedData.data_rates.columns.get_level_values(self.processedData.dependentVariable).values[-1::-1]
         # target absent
         for i in range(0,len(gen_tasid_array)) :
 
