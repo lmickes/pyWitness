@@ -110,6 +110,7 @@ class ModelFit(object):
         self.debugIoPadSize = 60
 
         self.fit_parameters = None
+        self.fit_parameters_bootstrap = []
 
         self.set_equal_variance = False
         self.set_unequal_variance = False
@@ -777,6 +778,7 @@ class ModelFit(object):
         chi2 = []
         c1 = []
 
+        # TODO bootstrapping with conditions
         for i in range(0, nBootstraps, 1):
             dr = self.processedData.dataRaw.resampleWithReplacement()
             dp = dr.process()
@@ -795,8 +797,13 @@ class ModelFit(object):
             self.fit()
             self.printParameters()
 
+            self.fit_parameters_bootstrap.append([getattr(self,n).value for n in self.parameterNames])
+
             chi2.append(self.chi2)
             c1.append(self.c1.value)
+
+        # TODO fix output
+        _pandas.DataFrame(self.fit_parameters_bootstrap).to_csv("geoff.csv")
 
         return [chi2, c1]
 
