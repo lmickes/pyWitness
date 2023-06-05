@@ -8,6 +8,7 @@ from .ModelFits import ModelFitIndependentObservation
 from .ModelFits import ModelFitEnsemble
 from .ModelFits import ModelFitBestRest
 from .ModelFits import ModelFitIntegration
+from .ModelFits import ModelFitComposite
 from .Tester    import Tester
 from .UnitTests import UnitTests
 
