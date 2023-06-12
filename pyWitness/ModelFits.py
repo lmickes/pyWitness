@@ -1064,10 +1064,10 @@ class ModelFit(object):
             rate_tpfid_array.append(pred_tpfid)
             rate_tpsid_array.append(pred_tpsid)
 
-        rate_tafid_array = _np.array(rate_tafid_array)
-        rate_tasid_array = _np.array(rate_tasid_array)
-        rate_tpfid_array = _np.array(rate_tpfid_array)
-        rate_tpsid_array = _np.array(rate_tpsid_array)
+        rate_tafid_array = _np.array(rate_tafid_array/self.numberTALineups)
+        rate_tasid_array = _np.array(rate_tasid_array/self.numberTALineups)
+        rate_tpfid_array = _np.array(rate_tpfid_array/self.numberTPLineups)
+        rate_tpsid_array = _np.array(rate_tpsid_array/self.numberTPLineups)
 
         cac = rate_tpsid_array / (rate_tpsid_array + rate_tasid_array)
 
@@ -1612,6 +1612,10 @@ class ModelFitDesignatedInnocent(ModelFit):
 
         return chi2
 
+    @property
+    def numberDataPoints(self):
+        return 4 * self.numberConditions
+
     def plotModel(self, xlow = -5, xhigh = 5):
         ModelFit.plotModel(self,xlow=xlow, xhigh=xhigh)
 
@@ -1624,10 +1628,6 @@ class ModelFitDesignatedInnocent(ModelFit):
         _plt.subplot(2, 1, 2)
         _plt.plot(x, innocent, label="Innocent")
         _plt.legend()
-
-    @property
-    def numberDataPoints(self):
-        return 4 * self.numberConditions
 
     def plotFit(self):
 
@@ -1745,6 +1745,63 @@ class ModelFitDesignatedInnocent(ModelFit):
                          labelbottom=False)  # labels along the bottom edge are off
 
         _plt.tight_layout()
+
+    def plotROC(self, criterion1=-10, criterion2=10, nsteps=100, label="Indep model", colorFromLabel=""):
+
+        rate_tafid_array = []
+        rate_tasid_array = []
+        rate_tpfid_array = []
+        rate_tpsid_array = []
+
+        for x in _np.linspace(criterion1, criterion2, nsteps):
+            [pred_tafid, pred_tasid, pred_tpsid, pred_tpfid] = self.calculateCumulativeFrequencyForCriterion(x)
+
+            rate_tafid_array.append(pred_tafid / self.numberTALineups)
+            rate_tasid_array.append(pred_tasid / self.numberTALineups)
+            rate_tpfid_array.append(pred_tpfid / self.numberTPLineups)
+            rate_tpsid_array.append(pred_tpsid / self.numberTPLineups)
+
+        if colorFromLabel == "":
+            _plt.plot(rate_tasid_array, rate_tpsid_array, linestyle='--', label=label)
+        else:
+            fc = _getColorofLabeledFromGca(colorFromLabel)
+            _plt.plot(rate_tasid_array, rate_tpsid_array, linestyle='--', label=label, color=fc)
+
+    def plotCAC(self, nsteps=50, label="Indep model", colorFromLabel=""):
+
+        # need to create look up between confidence and criterion
+        confidence = self.processedData.data_rates.loc[self.processedData.dependentVariable, 'central']
+
+        rate_tafid_array = []
+        rate_tasid_array = []
+        rate_tpfid_array = []
+        rate_tpsid_array = []
+
+        for i in range(0, len(self.thresholds), 1):
+            if i < len(self.thresholds) - 1:
+                [pred_tafid, pred_tasid, pred_tpsid, pred_tpfid] = self.calculateFrequencyForCriterion(self.thresholds[i + 1],
+                                                                                           self.thresholds[i])
+            else:
+                [pred_tafid, pred_tasid, pred_tpsid, pred_tpfid] = self.calculateCumulativeFrequencyForCriterion(self.thresholds[i])
+
+            rate_tafid_array.append(pred_tafid/self.numberTALineups)
+            rate_tasid_array.append(pred_tasid/self.numberTALineups)
+            rate_tpfid_array.append(pred_tpfid/self.numberTPLineups)
+            rate_tpsid_array.append(pred_tpsid/self.numberTPLineups)
+
+        rate_tafid_array = _np.array(rate_tafid_array)
+        rate_tasid_array = _np.array(rate_tasid_array)
+        rate_tpfid_array = _np.array(rate_tpfid_array)
+        rate_tpsid_array = _np.array(rate_tpsid_array)
+
+        cac = rate_tpsid_array / (rate_tpsid_array)
+
+        if colorFromLabel == "":
+            _plt.plot(confidence[-1::-1], cac, linestyle='--', label=label)
+        else:
+            fc = _getColorofLabeledFromGca(colorFromLabel)
+            _plt.plot(confidence[-1::-1], cac, linestyle='--', label=label, color=fc)
+
 
 class ModelFitDesignatedInnocentIndependentObservationSimple(ModelFitDesignatedInnocent):
     def __init__(self, processedData, debug=False, integrationSigma=8, chi2Var='expected'):
