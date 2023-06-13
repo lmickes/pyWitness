@@ -1794,7 +1794,7 @@ class ModelFitDesignatedInnocent(ModelFit):
         rate_tpfid_array = _np.array(rate_tpfid_array)
         rate_tpsid_array = _np.array(rate_tpsid_array)
 
-        cac = rate_tpsid_array / (rate_tpsid_array)
+        cac = rate_tpsid_array / (rate_tpsid_array+rate_tasid_array)
 
         if colorFromLabel == "":
             _plt.plot(confidence[-1::-1], cac, linestyle='--', label=label)

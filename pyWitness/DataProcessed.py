@@ -275,7 +275,7 @@ class DataProcessed :
 
         try :
             if self.lineupSize != 1 :                                                                       # SHOWUP
-                fid = self.data_pivot.loc['targetAbsent','suspectId']
+                fid = self.data_pivot.loc['targetAbsent','designateId']
             else :
                 fid = self.data_pivot.loc['targetAbsent', 'suspectId'] + self.data_pivot.loc['targetAbsent', 'rejectId']
         except KeyError :
