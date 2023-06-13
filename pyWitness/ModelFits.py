@@ -1064,10 +1064,10 @@ class ModelFit(object):
             rate_tpfid_array.append(pred_tpfid)
             rate_tpsid_array.append(pred_tpsid)
 
-        rate_tafid_array = _np.array(rate_tafid_array/self.numberTALineups)
-        rate_tasid_array = _np.array(rate_tasid_array/self.numberTALineups)
-        rate_tpfid_array = _np.array(rate_tpfid_array/self.numberTPLineups)
-        rate_tpsid_array = _np.array(rate_tpsid_array/self.numberTPLineups)
+        rate_tafid_array = _np.array(rate_tafid_array)
+        rate_tasid_array = _np.array(rate_tasid_array)
+        rate_tpfid_array = _np.array(rate_tpfid_array)
+        rate_tpsid_array = _np.array(rate_tpsid_array)
 
         cac = rate_tpsid_array / (rate_tpsid_array + rate_tasid_array)
 
@@ -1784,10 +1784,10 @@ class ModelFitDesignatedInnocent(ModelFit):
             else:
                 [pred_tafid, pred_tasid, pred_tpsid, pred_tpfid] = self.calculateCumulativeFrequencyForCriterion(self.thresholds[i])
 
-            rate_tafid_array.append(pred_tafid/self.numberTALineups)
-            rate_tasid_array.append(pred_tasid/self.numberTALineups)
-            rate_tpfid_array.append(pred_tpfid/self.numberTPLineups)
-            rate_tpsid_array.append(pred_tpsid/self.numberTPLineups)
+            rate_tafid_array.append(pred_tafid)
+            rate_tasid_array.append(pred_tasid)
+            rate_tpfid_array.append(pred_tpfid)
+            rate_tpsid_array.append(pred_tpsid)
 
         rate_tafid_array = _np.array(rate_tafid_array)
         rate_tasid_array = _np.array(rate_tasid_array)

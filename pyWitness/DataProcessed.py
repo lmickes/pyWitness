@@ -269,18 +269,17 @@ class DataProcessed :
         '''
 
         if self.lineupSize != 1 :                                                                           # SHOWUP
-            cid = self.data_rates.loc['targetPresent','suspectId']
+            cid = self.data_pivot.loc['targetPresent','suspectId']
         else :
-            #cid = self.data_pivot.loc['targetPresent', 'suspectId'] + self.data_pivot.loc['targetPresent', 'rejectId']
-            cid = self.data_rates.loc['targetPresent', 'suspectId'] + self.data_rates.loc['targetAbsent', 'rejectId']
+            cid = self.data_pivot.loc['targetPresent', 'suspectId'] + self.data_pivot.loc['targetPresent', 'rejectId']
+
         try :
             if self.lineupSize != 1 :                                                                       # SHOWUP
-                fid = self.data_rates.loc['targetAbsent','suspectId']
+                fid = self.data_pivot.loc['targetAbsent','suspectId']
             else :
-                # fid = self.data_pivot.loc['targetAbsent', 'suspectId'] + self.data_pivot.loc['targetAbsent', 'rejectId']
-                fid = self.data_rates.loc['targetPresent', 'rejectId'] + self.data_rates.loc['targetAbsent', 'suspectId']
+                fid = self.data_pivot.loc['targetAbsent', 'suspectId'] + self.data_pivot.loc['targetAbsent', 'rejectId']
         except KeyError :
-            fid = self.data_rates.loc['targetAbsent','fillerId']/self.lineupSize
+            fid = self.data_pivot.loc['targetAbsent','fillerId']/self.lineupSize
         
         cac = cid/(cid+fid)
         cac.name = ("cac","central")
