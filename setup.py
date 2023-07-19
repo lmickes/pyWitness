@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='pyWitness',
-    version='1.3',
+    version='1.4',
     packages=find_packages(exclude=["docs"]),
     # Not sure how strict these need to be...
     install_requires=["ipython",

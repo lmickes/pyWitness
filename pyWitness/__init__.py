@@ -11,6 +11,8 @@ from .ModelFits import ModelFitIntegration
 from .ModelFits import ModelFitComposite
 from .ModelFits import ModelFitDesignatedInnocent
 from .ModelFits import ModelFitDesignatedInnocentIndependentObservationSimple
+from .ModelFits import ModelFitDesignatedInnocentEnsemble
+
 
 from .Tester    import Tester
 from .UnitTests import UnitTests
