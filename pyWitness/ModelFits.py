@@ -989,7 +989,7 @@ class ModelFit(object):
          pred_tpfid_array] = self.calculateFrequenciesForAllCriteria()
 
         confidence = _np.flip(list(
-            self.processedData.data_rates.columns.get_level_values(self.processedData.dependentVariable, 'central')))
+            self.processedData.data_rates.columns.get_level_values(self.processedData.dependentVariable)))
 
         x = range(0, pred_tasid_array.size, 1)
 
