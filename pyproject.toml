@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=64", "setuptools_scm>=8"]
+requires = ["setuptools>=42", "setuptools_scm[toml]>=3.4"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools_scm]
@@ -18,7 +18,5 @@ dependencies = ["ipython",
 		"openpyxl",
 		"xlrd",
 		"pyreadstat"]
-
-#[tool.setuptools_scm]
-#version_file = "pyWitness/_version.py"
+requires-python=">=3.6.8"
 
