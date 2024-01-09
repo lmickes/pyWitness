@@ -1,3 +1,24 @@
 [build-system]
-requires = ["setuptools", "wheel"]
+requires = ["setuptools>=64", "setuptools_scm>=8"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools_scm]
+write_to = "src/pyWitness/_version.py"
+
+[project]
+name = "pyWitness"
+description="Python utilities for eyewitness research"
+authors = [{ name = "Laura Mickes", email = "laura.mickes@bristol.ac.uk"}]
+dynamic = ["version"]
+dependencies = ["ipython",
+                "matplotlib",
+		"numpy",
+		"scipy",
+		"pandas",
+		"openpyxl",
+		"xlrd",
+		"pyreadstat"]
+
+#[tool.setuptools_scm]
+#version_file = "pyWitness/_version.py"
 
