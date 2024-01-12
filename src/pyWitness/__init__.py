@@ -12,13 +12,13 @@ from .ModelFits import ModelFitComposite
 from .ModelFits import ModelFitDesignatedInnocent
 from .ModelFits import ModelFitDesignatedInnocentIndependentObservationSimple
 from .ModelFits import ModelFitDesignatedInnocentEnsemble
-
+from ._version import version
 
 from .Tester    import Tester
 from .UnitTests import UnitTests
 
 
-print("pyWitness v1.3 : Authorship - https://lmickes.github.io/pyWitness/authorship.html")
+print("pyWitness "+ version +" : Authorship - https://lmickes.github.io/pyWitness/authorship.html")
 
 import sys
 import warnings
