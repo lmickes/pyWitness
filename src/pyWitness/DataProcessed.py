@@ -712,7 +712,7 @@ class DataProcessed :
         # Tight layout for plot
         _plt.tight_layout()
 
-    def plotCAC(self, label = "CAC", relativeFrequencyScale = 800, errorType = 'bars', color = None) :
+    def plotCAC(self, label = "CAC", relativeFrequencyScale = 800, errorType = 'bars', color = None, oldLabels = None, newLabels = None) :
         '''
         Plot the confidence accuracy characteristic (CAC) for the data. The symbol size is proportional to 
         relative frequency. If confidence limits are calculated using calculateConfidenceBootstrap they
@@ -781,7 +781,10 @@ class DataProcessed :
              
             ax.set_xlim(xmin-xdif*0.1, xmax+xdif*0.1)
             ax.set_ylim(ymin-ydif*0.1, ymax+ydif*0.1)
-             
+        
+        if newLabels and oldLabels :
+            ax.set_xticks(oldLabels,labels=newLabels)
+        
         # Tight layout for plot
         _plt.tight_layout()
             
