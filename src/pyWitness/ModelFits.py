@@ -1069,13 +1069,25 @@ class ModelFit(object):
         rate_tpfid_array = _np.array(rate_tpfid_array)
         rate_tpsid_array = _np.array(rate_tpsid_array)
 
-        cac = rate_tpsid_array / (rate_tpsid_array + rate_tasid_array)
+        if self.processedData.lineupSize != 1 :
+            cac = rate_tpsid_array / (rate_tpsid_array + rate_tasid_array)
+            if colorFromLabel == "":
+                _plt.plot(confidence[-1::-1], cac, linestyle='--', label=label)
+            else:
+                fc = _getColorofLabeledFromGca(colorFromLabel)
+                _plt.plot(confidence[-1::-1], cac, linestyle='--', label=label, color=fc)
+        else :
+            cac1 = rate_tpsid_array / (rate_tpsid_array + rate_tasid_array)
+            cac2 = rate_tasid_array / (rate_tpsid_array + rate_tasid_array)
+            if colorFromLabel == "":
+                _plt.plot(confidence[-1::-1][confidence[-1::-1] >=0], cac1[confidence[-1::-1] >=0], linestyle='--', label=label, color='k')
+                _plt.plot(confidence[-1::-1][confidence[-1::-1] <=0], cac2[confidence[-1::-1] <=0], linestyle='--', label=label,
+                    color='k')
+            else:
+                fc = _getColorofLabeledFromGca(colorFromLabel)
+                _plt.plot(confidence[-1::-1][confidence[-1::-1] >=0], cac1[confidence[-1::-1] >=0], linestyle='--', label=label, color=fc)
+                _plt.plot(confidence[-1::-1][confidence[-1::-1] <=0], cac2[confidence[-1::-1] <=0], linestyle='--', label=label, color=fc)
 
-        if colorFromLabel == "":
-            _plt.plot(confidence[-1::-1], cac, linestyle='--', label=label)
-        else:
-            fc = _getColorofLabeledFromGca(colorFromLabel)
-            _plt.plot(confidence[-1::-1], cac, linestyle='--', label=label, color=fc)
 
     def plotChi2History(self):
 
