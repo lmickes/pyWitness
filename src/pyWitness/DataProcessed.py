@@ -715,7 +715,7 @@ class DataProcessed :
         # Tight layout for plot
         _plt.tight_layout()
 
-    def plotCAC(self, relativeFrequencyScale = 800, errorType = 'bars', color = None, label= "", oldLabels = None, newLabels = None) :
+    def plotCAC(self, relativeFrequencyScale = 800, errorType = 'bars', color = None, label= "", oldLabels = None, newLabels = None, alpha = 1) :
         '''
         Plot the confidence accuracy characteristic (CAC) for the data. The symbol size is proportional to 
         relative frequency. If confidence limits are calculated using calculateConfidenceBootstrap they
@@ -740,7 +740,7 @@ class DataProcessed :
             pass
 
         # Basic scatter plot
-        scatter = _plt.scatter(confidence,cac,s = rf*relativeFrequencyScale,label = label,color = color)
+        scatter = _plt.scatter(confidence,cac,s = rf*relativeFrequencyScale,label = label,color = color, alpha = alpha)
         
         # Plot errors if they have been calculated
         try : 
@@ -753,7 +753,8 @@ class DataProcessed :
                                            fmt='.',
                                            color  = scatter.get_facecolor()[0],
                                            ecolor = scatter.get_facecolor()[0],
-                                           capsize=5)
+                                           capsize=5,
+                                           alpha=alpha)
 
 
             elif errorType == 'band' : 
