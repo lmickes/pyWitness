@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Introduction &mdash; pyWitness 1.3 documentation</title>
+  <title>Introduction &mdash; pyWitness 1.4 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
@@ -15,11 +14,10 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="_static/jquery.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
         <script src="_static/code-tabs.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -33,19 +31,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-
-          
-          
-          <a href="index.html" class="icon icon-home">
-            pyWitness
-              <img src="_static/pyWitnessLogo200.jpg" class="logo" alt="Logo"/>
+            <a href="index.html" class="icon icon-home"> pyWitness
+            <img src="_static/pyWitnessLogo200.jpg" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.3
+                1.4
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -92,8 +86,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Introduction</li>
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Introduction</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/introduction.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -103,19 +97,19 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="introduction">
-<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading"></a></h1>
-<section id="eyewitness-identification-research">
-<h2>Eyewitness identification research<a class="headerlink" href="#eyewitness-identification-research" title="Permalink to this heading"></a></h2>
+  <div class="section" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline"></a></h1>
+<div class="section" id="eyewitness-identification-research">
+<h2>Eyewitness identification research<a class="headerlink" href="#eyewitness-identification-research" title="Permalink to this headline"></a></h2>
 <p>Eyewitnesses to crimes may try to identify the perpetrator from an identification procedure. One commonly used procedure is a lineup (identity parade in the UK). A lineup comprises the police suspect and fillers, as shown in the illustration below. A lineup with an innocent suspect is a target-absent lineup, and a lineup with a guilty suspect is a target-present lineup. The eyewitness can make a filler ID from either lineup, identify the innocent suspect (from a target-absent lineup) or guilty suspect (from a target-present lineup), or reject the lineup (declare that the perpetrator is not in the lineup).</p>
-<figure class="align-default">
+<div class="figure align-default">
 <img alt="_images/pyWitness_Lineup.png" src="_images/pyWitness_Lineup.png" />
-</figure>
+</div>
 <p>Receiver operating characteristic (ROC) analysis measures discriminability (the ability to distinguish innocent from guilty suspects), and confidence accuracy characteristic (CAC) and response-time accuracy characteristic (RAC) analysis measure positive predictive value (the likelihood the identified suspect is guilty). pyWitness allows researchers to run these analyses.</p>
 <p>Theories about eyewitness identification have so far been signal detection-based. pyWitness allows researchers to compare these types of model fits.</p>
-</section>
-<section id="receiver-operator-characteristic-roc">
-<h2>Receiver operator characteristic (ROC)<a class="headerlink" href="#receiver-operator-characteristic-roc" title="Permalink to this heading"></a></h2>
+</div>
+<div class="section" id="receiver-operator-characteristic-roc">
+<h2>Receiver operator characteristic (ROC)<a class="headerlink" href="#receiver-operator-characteristic-roc" title="Permalink to this headline"></a></h2>
 <p>There are pacakges in R and MATLAB that smooth ROCS and calculate and statistically compare pAUC values.</p>
 <blockquote>
 <div><ul class="simple">
@@ -123,17 +117,17 @@
 <li><p><a class="reference external" href="https://link.springer.com/article/10.3758/s13428-016-0796-z">The ROC Toolbox: A MATLAB toolbox for analyzing ROCs derived from confidence ratings</a></p></li>
 </ul>
 </div></blockquote>
-</section>
-<section id="signal-detection-theory">
-<h2>Signal Detection Theory<a class="headerlink" href="#signal-detection-theory" title="Permalink to this heading"></a></h2>
+</div>
+<div class="section" id="signal-detection-theory">
+<h2>Signal Detection Theory<a class="headerlink" href="#signal-detection-theory" title="Permalink to this headline"></a></h2>
 <blockquote>
 <div><ul class="simple">
 <li><p><a class="reference external" href="https://link.springer.com/article/10.3758/s13428-020-01402-7">sdtlu: an open-source package for R to run signal detection model fits on lineup data</a></p></li>
 </ul>
 </div></blockquote>
-</section>
-<section id="statistical-tests">
-<h2>Statistical tests<a class="headerlink" href="#statistical-tests" title="Permalink to this heading"></a></h2>
+</div>
+<div class="section" id="statistical-tests">
+<h2>Statistical tests<a class="headerlink" href="#statistical-tests" title="Permalink to this headline"></a></h2>
 <blockquote>
 <div><ul class="simple">
 <li><p>Uncertainties on ROCs and CACs</p></li>
@@ -142,9 +136,9 @@
 <li><p>Power analyses</p></li>
 </ul>
 </div></blockquote>
-</section>
-<section id="model-fits">
-<h2>Model fits<a class="headerlink" href="#model-fits" title="Permalink to this heading"></a></h2>
+</div>
+<div class="section" id="model-fits">
+<h2>Model fits<a class="headerlink" href="#model-fits" title="Permalink to this headline"></a></h2>
 <blockquote>
 <div><ul class="simple">
 <li><p>Independent observations</p></li>
@@ -153,9 +147,9 @@
 <li><p>BEST-REST</p></li>
 </ul>
 </div></blockquote>
-</section>
-<section id="goals-of-pywitness">
-<h2>Goals of pyWitness<a class="headerlink" href="#goals-of-pywitness" title="Permalink to this heading"></a></h2>
+</div>
+<div class="section" id="goals-of-pywitness">
+<h2>Goals of pyWitness<a class="headerlink" href="#goals-of-pywitness" title="Permalink to this headline"></a></h2>
 <blockquote>
 <div><ul class="simple">
 <li><p>Create a consistent set of analysis tools for any researchers to use for lineup data and other recognition memory data</p></li>
@@ -170,13 +164,13 @@
 <li><p>Create teaching aids to understand signal detection theory</p></li>
 </ul>
 </div></blockquote>
-</section>
-<section id="background-to-the-pywitness-and-the-code">
-<h2>Background to the pyWitness and the code<a class="headerlink" href="#background-to-the-pywitness-and-the-code" title="Permalink to this heading"></a></h2>
+</div>
+<div class="section" id="background-to-the-pywitness-and-the-code">
+<h2>Background to the pyWitness and the code<a class="headerlink" href="#background-to-the-pywitness-and-the-code" title="Permalink to this headline"></a></h2>
 <p>pyWitness has a flexible internal data format.</p>
-<section id="internal-data-format">
-<h3>Internal data format<a class="headerlink" href="#internal-data-format" title="Permalink to this heading"></a></h3>
-<table class="docutils align-default" id="id1">
+<div class="section" id="internal-data-format">
+<h3>Internal data format<a class="headerlink" href="#internal-data-format" title="Permalink to this headline"></a></h3>
+<table class="colwidths-given docutils align-default" id="id1">
 <caption><span class="caption-text">Data columns and allowed values</span><a class="headerlink" href="#id1" title="Permalink to this table"></a></caption>
 <colgroup>
 <col style="width: 25%" />
@@ -215,7 +209,7 @@
 </tbody>
 </table>
 <p>Minimal example data file for an experiment</p>
-<table class="docutils align-default" id="id2">
+<table class="colwidths-given docutils align-default" id="id2">
 <caption><span class="caption-text">Example data file</span><a class="headerlink" href="#id2" title="Permalink to this table"></a></caption>
 <colgroup>
 <col style="width: 20%" />
@@ -257,11 +251,11 @@
 <p class="admonition-title">Note</p>
 <p>Other columns can be in the data file (e.g., labels for other experimental conditions or data, demographic data, or personal differenes).</p>
 </div>
-</section>
-<section id="transforming-data-structures">
-<h3>Transforming data structures<a class="headerlink" href="#transforming-data-structures" title="Permalink to this heading"></a></h3>
+</div>
+<div class="section" id="transforming-data-structures">
+<h3>Transforming data structures<a class="headerlink" href="#transforming-data-structures" title="Permalink to this headline"></a></h3>
 <p>Transforming data into pyWitness format can be time consuming and error prone. An example of transforming a data file is in the table below. We use the same structure as sdtlu.</p>
-<table class="docutils align-default" id="id3">
+<table class="colwidths-given docutils align-default" id="id3">
 <caption><span class="caption-text">Example data file transformation (sdtlu)</span><a class="headerlink" href="#id3" title="Permalink to this table"></a></caption>
 <colgroup>
 <col style="width: 50%" />
@@ -302,9 +296,9 @@
 </tr>
 </tbody>
 </table>
-</section>
-<section id="data-for-showups">
-<h3>Data for showups<a class="headerlink" href="#data-for-showups" title="Permalink to this heading"></a></h3>
+</div>
+<div class="section" id="data-for-showups">
+<h3>Data for showups<a class="headerlink" href="#data-for-showups" title="Permalink to this headline"></a></h3>
 <p>To perform an analysis of showup data, the data need to be organised differently compared to lineup data.
 rejectId for both targetAbsent and targetPresent showups need to given new confidence names. For example, if
 the data are measured on a three point confidence scale (1, 2 and 3) for previously experienced (“old”)items and for not previously experienced (“new”) items. The subjectId for both targetPresent and
@@ -317,9 +311,9 @@ targetAbsent confidences need to be mapped to (4, 5, 6) and rejectId needs to be
 <p class="admonition-title">Note</p>
 <p>All plots and diagrams are made using pyWitness.</p>
 </div>
-</section>
-</section>
-</section>
+</div>
+</div>
+</div>
 
 
            </div>
@@ -333,7 +327,7 @@ targetAbsent confidences need to be mapped to (4, 5, 6) and rejectId needs to be
 
   <div role="contentinfo">
     <p>&#169; Copyright Royal Holloway, University of London 2020 and University of Bristol 2020.
-      <span class="lastupdated">Last updated on Jun 04, 2023.
+      <span class="lastupdated">Last updated on Apr 01, 2024.
       </span></p>
   </div>
 

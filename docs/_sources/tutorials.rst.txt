@@ -329,6 +329,9 @@ Plotting ROC curves
 .. note:: 
    The symbol size is the relative frequency and can be changed by setting ``dp.plotROC(relativeFrequencyScale = 400)``
 
+.. note:: 
+   The transparency of the plot can be changed by setting ``alpha`` in the plot command, so  ``dp.plotROC(alpha = 0.5)``
+
 The black dashed line in the plot represents chance performance.
 
 Plotting CAC curves 
@@ -361,6 +364,12 @@ Plotting CAC curves
 
 .. image:: http://mickeslab.com/wp-content/uploads/2022/03/tutorial1ROCcac.gif
    :alt: ROC and CAC plots 
+
+.. note:: 
+   The transparency of the plot can be changed by setting ``alpha`` in the plot command, so  ``dp.plotCAC(alpha = 0.5)``
+
+.. warning:: 
+   To plot CAC curves with different target-present base rates, the base rate needs to be given to the ``process`` function of ``DataRaw``, for example, ``dp = dr.process(baseRate=0.2)``
 
 Collapsing the categorical data
 -------------------------------

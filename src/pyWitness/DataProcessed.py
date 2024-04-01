@@ -22,7 +22,7 @@ class DataProcessed :
     
     '''
     
-    def __init__(self, dataRaw, reverseConfidence = False, lineupSize = 1, pAUCLiberal = 1.0, levels = None, option="all", dependentVariable = "confidence") :
+    def __init__(self, dataRaw, reverseConfidence = False, lineupSize = 1, pAUCLiberal = 1.0, levels = None, option="all", dependentVariable = "confidence", baseRate = 0.5) :
 
         self.debugIoPadSize = 35
 
@@ -70,6 +70,7 @@ class DataProcessed :
         self.numberTALineups   = self.data_pivot.loc['targetAbsent'].sum().sum()
 
         self.pAUCLiberal = pAUCLiberal
+        self.baseRate = baseRate
 
         self.calculateRates()
         self.calculateDPrime()
@@ -263,10 +264,11 @@ class DataProcessed :
         self.data_rates = self.data_rates.sort_index()
 
     def calculateCAC(self) :
-
         '''
         Calculate confidence accuracy characteristic from data_pivot. Result stored in data_rates['cac']
         '''
+
+        baseRate = self.baseRate
 
         if self.lineupSize != 1 :                                                                           # SHOWUP
             cid = self.data_pivot.loc['targetPresent','suspectId']
@@ -281,7 +283,7 @@ class DataProcessed :
         except KeyError :
             fid = self.data_pivot.loc['targetAbsent','fillerId']/self.lineupSize
         
-        cac = cid/(cid+fid)
+        cac = baseRate*cid/(baseRate*cid+(1-baseRate)*fid)
         cac.name = ("cac","central")
         self.data_rates = _pandas.concat([self.data_rates, _pandas.DataFrame(cac).transpose()])
         self.data_rates = self.data_rates.sort_index()
@@ -475,7 +477,8 @@ class DataProcessed :
                             self.dataRaw.processReverseConfidence,
                             self.dataRaw.pAUCLiberal,
                             self.confidenceLevels,
-                            dependentVariable=self.dataRaw.dependentVariable)
+                            dependentVariable=self.dataRaw.dependentVariable,
+                            baseRate=self.baseRate)
 
             cac.append(dp.data_rates.loc['cac','central'].values)
 
@@ -642,7 +645,7 @@ class DataProcessed :
 
         return [D,p]
 
-    def plotROC(self, label = "ROC", relativeFrequencyScale = 800, errorType = 'bars', color = None) :
+    def plotROC(self, label = "ROC", relativeFrequencyScale = 800, errorType = 'bars', color = None, alpha = 1) :
         '''
         Plot the receiver operating characteristic (ROC) for the data. The symbol size is proportional to 
         relative frequency. If confidence limits are calculated using calculateConfidenceBootstrap they
@@ -662,7 +665,7 @@ class DataProcessed :
         scatter = _plt.scatter(self.data_rates.loc['targetAbsent', 'suspectId'],
                                self.data_rates.loc['targetPresent','suspectId'],
                                s = self.data_rates.loc['rf','']*relativeFrequencyScale,
-                               label = label, color = color)
+                               label = label, color = color, alpha = alpha)
         
         # Plot errors if they have been calculated
         try : 
@@ -676,7 +679,7 @@ class DataProcessed :
                               fmt='.',
                               color=scatter.get_facecolor()[0],
                               ecolor=scatter.get_facecolor()[0],
-                              capsize=5)
+                              capsize=5, alpha = alpha)
             elif errorType == 'band' : 
                 _plt.fill_between(self.data_rates.loc['targetAbsent', 'suspectId'],
                                   self.data_rates.loc['targetPresent', 'suspectId_low'],
@@ -712,7 +715,7 @@ class DataProcessed :
         # Tight layout for plot
         _plt.tight_layout()
 
-    def plotCAC(self, label = "CAC", relativeFrequencyScale = 800, errorType = 'bars', color = None, oldLabels = None, newLabels = None) :
+    def plotCAC(self, relativeFrequencyScale = 800, errorType = 'bars', color = None, label= "", oldLabels = None, newLabels = None, alpha = 1) :
         '''
         Plot the confidence accuracy characteristic (CAC) for the data. The symbol size is proportional to 
         relative frequency. If confidence limits are calculated using calculateConfidenceBootstrap they
@@ -737,7 +740,7 @@ class DataProcessed :
             pass
 
         # Basic scatter plot
-        scatter = _plt.scatter(confidence,cac,s = rf*relativeFrequencyScale,label = label,color = color)
+        scatter = _plt.scatter(confidence,cac,s = rf*relativeFrequencyScale,label = label,color = color, alpha = alpha)
         
         # Plot errors if they have been calculated
         try : 
@@ -750,7 +753,8 @@ class DataProcessed :
                                            fmt='.',
                                            color  = scatter.get_facecolor()[0],
                                            ecolor = scatter.get_facecolor()[0],
-                                           capsize=5)
+                                           capsize=5,
+                                           alpha=alpha)
 
 
             elif errorType == 'band' : 

@@ -387,7 +387,8 @@ class DataRaw :
                                                                    'fillerId':'fillerId',
                                                                    'rejectId':'rejectId'})
 
-    def process(self, column = '', condition = '', reverseConfidence = False, pAUCLiberal = 1.0, levels = None, option = "all", dependentVariable = "confidence") :
+    def process(self, column = '', condition = '', reverseConfidence = False, pAUCLiberal = 1.0, levels = None, option = "all", dependentVariable = "confidence",
+                baseRate = 0.5) :
         '''
         Process the raw data and returns DataProcessed object
 
@@ -405,6 +406,7 @@ class DataRaw :
         self.processCondition = condition
         self.processReverseConfidence = reverseConfidence
         self.dependentVariable = dependentVariable
+        self.baseRate = baseRate
 
         if column != '' :
             self.dataSelected = self.data[self.data[column] == condition]
@@ -418,7 +420,8 @@ class DataRaw :
                                               lineupSize        = self.dataSelected.iloc[0]['lineupSize'],
                                               pAUCLiberal       = pAUCLiberal,
                                               levels            = levels,
-                                              option            = option)
+                                              option            = option,
+                                              baseRate          = self.baseRate)
         return self._data_processed
 
     def writeCsv(self, fileName):

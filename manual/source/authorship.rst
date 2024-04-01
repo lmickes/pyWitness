@@ -17,7 +17,7 @@ Citing pyWitness
 
 Any publications in which pyWitness was used should cite our preprint:
 
-	* `Mickes, L., Seale-Carlisle, T. M., Chen, X., & Boogert, S. (2022, March 9). pyWitness 1.0: A Python eyewitness identification analysis toolkit. doi.org/10.31234/osf.io/5ruks. <https://doi.org/10.31234/osf.io/5ruks>`_
+	* `Mickes, L., Seale-Carlisle, T. M., Chen, X., & Boogert, S. (2023). pyWitness 1.0: A Python eyewitness identification analysis toolkit. Behavior Research Methods doi.org/10.3758/s13428-023-02108-2. <https://doi.org/10.3758/s13428-023-02108-2>`_
 
 Citations show the code usage, allowing us to continue to develop and maintain pyWitness.
 
