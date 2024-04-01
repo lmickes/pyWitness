@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Developer tutorials &mdash; pyWitness 1.3 documentation</title>
+  <title>Developer tutorials &mdash; pyWitness 1.4 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
@@ -15,11 +14,10 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="_static/jquery.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
         <script src="_static/code-tabs.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -33,19 +31,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-
-          
-          
-          <a href="index.html" class="icon icon-home">
-            pyWitness
-              <img src="_static/pyWitnessLogo200.jpg" class="logo" alt="Logo"/>
+            <a href="index.html" class="icon icon-home"> pyWitness
+            <img src="_static/pyWitnessLogo200.jpg" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.3
+                1.4
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -87,8 +81,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Developer tutorials</li>
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Developer tutorials</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/tutorials_dev.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -98,10 +92,10 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="developer-tutorials">
-<h1>Developer tutorials<a class="headerlink" href="#developer-tutorials" title="Permalink to this heading"></a></h1>
-<section id="making-a-new-likelihood-model">
-<h2>Making a new likelihood  model<a class="headerlink" href="#making-a-new-likelihood-model" title="Permalink to this heading"></a></h2>
+  <div class="section" id="developer-tutorials">
+<h1>Developer tutorials<a class="headerlink" href="#developer-tutorials" title="Permalink to this headline"></a></h1>
+<div class="section" id="making-a-new-likelihood-model">
+<h2>Making a new likelihood  model<a class="headerlink" href="#making-a-new-likelihood-model" title="Permalink to this headline"></a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
 <span class="normal"> 2</span>
 <span class="normal"> 3</span>
@@ -233,32 +227,32 @@
          <span class="k">return</span> <span class="n">_np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">pred_tafid</span><span class="p">,</span> <span class="n">pred_tpsid</span><span class="p">,</span> <span class="n">pred_tpfid</span><span class="p">])</span>
 </pre></div></td></tr></table></div>
 </div>
-</section>
-<section id="making-a-new-monte-carlo-decision-rule">
-<h2>Making a new Monte Carlo decision rule<a class="headerlink" href="#making-a-new-monte-carlo-decision-rule" title="Permalink to this heading"></a></h2>
-</section>
-<section id="running-tests">
-<h2>Running tests<a class="headerlink" href="#running-tests" title="Permalink to this heading"></a></h2>
-</section>
-<section id="interfacing-r-code">
-<h2>Interfacing R code<a class="headerlink" href="#interfacing-r-code" title="Permalink to this heading"></a></h2>
-</section>
-<section id="interfacing-matlab-code">
-<h2>Interfacing Matlab code<a class="headerlink" href="#interfacing-matlab-code" title="Permalink to this heading"></a></h2>
-</section>
-<section id="running-the-test-suite">
-<h2>Running the test suite<a class="headerlink" href="#running-the-test-suite" title="Permalink to this heading"></a></h2>
-</section>
-<section id="making-the-logo">
-<h2>Making the logo<a class="headerlink" href="#making-the-logo" title="Permalink to this heading"></a></h2>
+</div>
+<div class="section" id="making-a-new-monte-carlo-decision-rule">
+<h2>Making a new Monte Carlo decision rule<a class="headerlink" href="#making-a-new-monte-carlo-decision-rule" title="Permalink to this headline"></a></h2>
+</div>
+<div class="section" id="running-tests">
+<h2>Running tests<a class="headerlink" href="#running-tests" title="Permalink to this headline"></a></h2>
+</div>
+<div class="section" id="interfacing-r-code">
+<h2>Interfacing R code<a class="headerlink" href="#interfacing-r-code" title="Permalink to this headline"></a></h2>
+</div>
+<div class="section" id="interfacing-matlab-code">
+<h2>Interfacing Matlab code<a class="headerlink" href="#interfacing-matlab-code" title="Permalink to this headline"></a></h2>
+</div>
+<div class="section" id="running-the-test-suite">
+<h2>Running the test suite<a class="headerlink" href="#running-the-test-suite" title="Permalink to this headline"></a></h2>
+</div>
+<div class="section" id="making-the-logo">
+<h2>Making the logo<a class="headerlink" href="#making-the-logo" title="Permalink to this headline"></a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyWitness</span>
 <span class="n">dr</span> <span class="o">=</span> <span class="n">pyWitness</span><span class="o">.</span><span class="n">DataRaw</span><span class="p">(</span><span class="s2">&quot;./test1.csv&quot;</span><span class="p">)</span>
 <span class="n">dp</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
 <span class="n">dp</span><span class="o">.</span><span class="n">calculateConfidenceBootstrap</span><span class="p">(</span><span class="n">nBootstraps</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span><span class="n">plotROC</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
-</section>
-</section>
+</div>
+</div>
 
 
            </div>
@@ -272,7 +266,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright Royal Holloway, University of London 2020 and University of Bristol 2020.
-      <span class="lastupdated">Last updated on Jun 04, 2023.
+      <span class="lastupdated">Last updated on Apr 01, 2024.
       </span></p>
   </div>
 
