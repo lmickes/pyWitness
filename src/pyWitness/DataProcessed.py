@@ -645,7 +645,7 @@ class DataProcessed :
 
         return [D,p]
 
-    def plotROC(self, label = "ROC", relativeFrequencyScale = 800, errorType = 'bars', color = None) :
+    def plotROC(self, label = "ROC", relativeFrequencyScale = 800, errorType = 'bars', color = None, alpha = 1) :
         '''
         Plot the receiver operating characteristic (ROC) for the data. The symbol size is proportional to 
         relative frequency. If confidence limits are calculated using calculateConfidenceBootstrap they
@@ -665,7 +665,7 @@ class DataProcessed :
         scatter = _plt.scatter(self.data_rates.loc['targetAbsent', 'suspectId'],
                                self.data_rates.loc['targetPresent','suspectId'],
                                s = self.data_rates.loc['rf','']*relativeFrequencyScale,
-                               label = label, color = color)
+                               label = label, color = color, alpha = alpha)
         
         # Plot errors if they have been calculated
         try : 
@@ -679,7 +679,7 @@ class DataProcessed :
                               fmt='.',
                               color=scatter.get_facecolor()[0],
                               ecolor=scatter.get_facecolor()[0],
-                              capsize=5)
+                              capsize=5, alpha = alpha)
             elif errorType == 'band' : 
                 _plt.fill_between(self.data_rates.loc['targetAbsent', 'suspectId'],
                                   self.data_rates.loc['targetPresent', 'suspectId_low'],
