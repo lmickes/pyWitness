@@ -873,6 +873,47 @@ class ModelFit(object):
         # Tight layout for plot
         _plt.tight_layout()
 
+    def plotShaded(self, distribution, clow, chigh, fill = True, linestyle = "-", color = "red", alpha = 1, hatch = "None"):
+        if clow > 0:    
+            xlow = self.thresholds[clow - 1].value
+        else:
+            xlow = -5
+
+        if chigh < len(self.thresholds):
+            xhigh = self.thresholds[chigh - 1].value
+        else:
+            xhigh = 5
+
+        x = _np.linspace(xlow, xhigh, 200)
+
+        if distribution == "target":
+            y = _norm.pdf(x, self.targetMean.value, self.targetSigma.value)
+        elif distribution == "lure":
+            y = _norm.pdf(x, self.lureMean.value, self.lureSigma.value)            
+        
+        if fill:
+            if hatch!="None":
+                _plt.fill_between(x, 0, y, color = color, alpha = alpha, hatch = hatch, edgecolor = "black")
+            else:
+                _plt.fill_between(x, 0, y, color = color, alpha = alpha)
+        else: 
+            _plt.plot(x, y, linestyle = linestyle, color = color, alpha = alpha)
+
+        _plt.xlabel("Memory strength")
+        _plt.ylabel("Probability density")
+
+    def plotCriteria(self, linestyle = "-", color = "black", alpha = 1):
+        x = _np.linspace(-5, 5, 200)
+        y = _norm.pdf(x, self.targetMean.value, self.targetSigma.value)
+        i = 1
+
+        for t in self.thresholds:
+            _plt.axvline(t.value, 0, 0.7, linestyle=linestyle, color=color)
+            xrange = _plt.gca().get_xlim()
+            tx = (t.value - xrange[0])/(xrange[1]-xrange[0])
+            _plt.text(tx, 0.8, "$c_{0}$".format(i), ha='center', transform = _plt.gca().transAxes)
+            i = i + 1
+
     def plotFit(self):
         if self.lineupSize != 1:
             self.plotFitLineup()
