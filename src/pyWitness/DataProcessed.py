@@ -356,6 +356,8 @@ class DataProcessed :
         self.yForIntegration = _np.array(yForIntegration)
 
         self.pAUC = _integrate.simps(self.yForIntegration,self.xForIntegration)
+        # self.pAUC = _integrate.simps(self.yForIntegration,self.xForIntegration, even="avg")
+        self.pAUC = _integrate.trapezoid(self.yForIntegration, self.xForIntegration)
 
         global bPAUCNanWarning
 
