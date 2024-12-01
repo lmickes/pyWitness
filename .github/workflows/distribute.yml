@@ -1,4 +1,4 @@
-name: distribute
+name: Conda upload
 
 on:
   workflow_dispatch:
