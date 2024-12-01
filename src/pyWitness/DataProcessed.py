@@ -423,6 +423,8 @@ class DataProcessed :
             lowConf = conf[0]
             self.dPrime = self.data_rates.loc['dprime', 'central'][self.dependentVariable][lowConf]
 
+        return dPrime
+
     def calculateConfidenceBootstrap(self, nBootstraps = 200, cl = 95, plotROC = False, plotCAC = False) :
         
         # if already bootstrapped delete DataFrame rows
