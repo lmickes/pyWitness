@@ -33,7 +33,7 @@ requirements:
     - scipy
     - matplotlib
     - ipython
-    - pyreadstat
+#    - pyreadstat
 
 test:
   imports:
