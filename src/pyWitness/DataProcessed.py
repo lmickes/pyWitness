@@ -355,7 +355,8 @@ class DataProcessed :
         self.xForIntegration = _np.array(xForIntegration)
         self.yForIntegration = _np.array(yForIntegration)
 
-        self.pAUC = _integrate.simps(self.yForIntegration,self.xForIntegration)
+        # self.pAUC = _integrate.simps(self.yForIntegration,self.xForIntegration, even="avg")
+        self.pAUC = _integrate.trapezoid(self.yForIntegration, self.xForIntegration)
 
         global bPAUCNanWarning
 
@@ -420,6 +421,8 @@ class DataProcessed :
             conf = _np.sort(c)
             lowConf = conf[0]
             self.dPrime = self.data_rates.loc['dprime', 'central'][self.dependentVariable][lowConf]
+
+        return dPrime
 
     def calculateConfidenceBootstrap(self, nBootstraps = 200, cl = 95, plotROC = False, plotCAC = False) :
         

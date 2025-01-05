@@ -17,7 +17,7 @@ To do for new release/tag:
 
 To do the conda build:
 > cd pyWitness/conda
-> anaconda login      (look in keychain) 
+> anaconda login
 > conda-build -c conda-forge .
 > cd ~/opt/miniconda3/conda-bld/
 > conda convert --platform all ./osx-arm64/pywitness-v1.0-0.tar.bz2

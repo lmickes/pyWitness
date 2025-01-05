@@ -1,10 +1,9 @@
 package: 
   name: pywitness
-  version: 1.4.1
+  version: {{ GIT_DESCRIBE_TAG }}
 
 source: 
-  git_url: https://github.com/lmickes/pyWitness
-  git_rev: v1.4.1
+  path: ../
 
 build: 
   preserve_egg_dir: True
@@ -23,7 +22,7 @@ requirements:
     - scipy
     - matplotlib
     - ipython
-    - pyreadstat
+#    - pyreadstat
 
   run:
     - pytz=2021.3
@@ -33,7 +32,7 @@ requirements:
     - scipy
     - matplotlib
     - ipython
-    - pyreadstat
+#    - pyreadstat
 
 test:
   imports:
