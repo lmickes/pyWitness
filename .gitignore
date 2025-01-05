@@ -9,3 +9,4 @@ papers
 *.xml
 .buildinfo
 .idea
+_version.py
