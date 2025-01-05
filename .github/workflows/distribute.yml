@@ -1,4 +1,4 @@
-name: distribute
+name: Conda upload
 
 on:
   workflow_dispatch:
@@ -6,20 +6,21 @@ on:
     types:
       - published
 
-jobs:
 
-  make_dist:
-    name: Make source and wheel dist
+jobs:
+  publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+      - name: checkout
+        uses: actions/checkout@v1
 
-      - name: Build source and wheel dist
-        run: pipx run build 
-
-      - uses: actions/upload-artifact@v3
+      - name: publish-to-conda
+        uses: crabisoft/publish-conda@v1.0.0
         with:
-          path: dist/*
+          sub-directory: 'conda'
+          build-channels: 'conda-forge'
+          upload-channel: 'lmickes'
+          platforms: 'win-64 osx-64 linux-64'
+          stable: true
+          token: ${{ secrets.ANACONDA_TOKEN }}
 
