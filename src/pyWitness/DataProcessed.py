@@ -74,6 +74,7 @@ class DataProcessed :
 
         self.calculateRates()
         self.calculateDPrime()
+        self.calculateCriterion()
         self.calculateConfidence()
         if option == "all" :
             self.calculateRelativeFrequency()
@@ -424,6 +425,19 @@ class DataProcessed :
 
         return dPrime
 
+    def calculateCriterion(self):
+        zT = _special.ndtri(self.data_rates.loc['targetPresent','suspectId'])
+        try :
+            zL = _special.ndtri(self.data_rates.loc['targetAbsent','suspectId'])
+        except : # only for TA showups and the participant never made a suspectId
+            zL = _special.ndtri(self.data_rates.loc['targetAbsent','rejectId'])
+
+        dCriterion = - (zT + zL)/2.0
+        dCriterion.name = ("criterion", "central")
+
+        self.data_rates = _pandas.concat([self.data_rates, _pandas.DataFrame(dCriterion).transpose()])
+        self.data_rates = self.data_rates.sort_index()
+
     def calculateConfidenceBootstrap(self, nBootstraps = 200, cl = 95, plotROC = False, plotCAC = False) :
         
         # if already bootstrapped delete DataFrame rows
@@ -448,6 +462,8 @@ class DataProcessed :
             self.data_rates.drop(("zT","high"),inplace = True)
             self.data_rates.drop(("dprime","low"),inplace = True)
             self.data_rates.drop(("dprime","high"),inplace = True)
+            self.data_rates.drop(("criterion","low"),inplace = True)
+            self.data_rates.drop(("criterion","high"),inplace = True)
 
             try:
                 self.data_rates.drop((self.dependentVariable,"low"), inplace=True)
@@ -470,6 +486,7 @@ class DataProcessed :
         zL                     = []
         zT                     = []
         dprime                 = []
+        criterion              = []
 
         pAUC = []
 
@@ -509,6 +526,7 @@ class DataProcessed :
             zL.append(dp.data_rates.loc['zL','central'].values)
             zT.append(dp.data_rates.loc['zT','central'].values)
             dprime.append(dp.data_rates.loc['dprime','central'].values)
+            criterion.append(dp.data_rates.loc['criterion','central'].values)
 
             pAUC.append(dp.pAUC)
             
@@ -571,6 +589,8 @@ class DataProcessed :
         zT_high                     = _np.percentile(zT,clHigh,axis=0)
         dprime_low                  = _np.percentile(dprime,clLow,axis=0)
         dprime_high                 = _np.percentile(dprime,clHigh,axis=0)
+        criterion_low               = _np.percentile(criterion,clLow,axis=0)
+        criterion_high              = _np.percentile(criterion,clHigh,axis=0)
 
         self.pAUC_low               = _np.percentile(pAUC[_np.logical_not(_np.isnan(pAUC))],clLow)
         self.pAUC_high              = _np.percentile(pAUC[_np.logical_not(_np.isnan(pAUC))],clHigh)
@@ -612,6 +632,9 @@ class DataProcessed :
 
         self.data_rates = _pandas.concat([self.data_rates, _pandas.DataFrame(_pandas.Series(dprime_low,  name = ('dprime','low'), index = template.index)).transpose()])
         self.data_rates = _pandas.concat([self.data_rates, _pandas.DataFrame(_pandas.Series(dprime_high, name = ('dprime','high'), index = template.index)).transpose()])
+
+        self.data_rates = _pandas.concat([self.data_rates, _pandas.DataFrame(_pandas.Series(criterion_low,  name = ('criterion','low'), index = template.index)).transpose()])
+        self.data_rates = _pandas.concat([self.data_rates, _pandas.DataFrame(_pandas.Series(criterion_high, name = ('criterion','high'), index = template.index)).transpose()])
 
         self.data_rates = self.data_rates.sort_index()
 
