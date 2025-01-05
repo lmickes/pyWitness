@@ -1083,7 +1083,7 @@ class ModelFit(object):
             fc = _getColorofLabeledFromGca(colorFromLabel)
             _plt.plot(rate_tafid_array, rate_tpsid_array, linestyle='--', label=label, color=fc)
 
-    def plotCAC(self, nsteps=50, label="Indep model", colorFromLabel=""):
+    def plotCAC(self, nsteps=50, label="Indep model", colorFromLabel="", baseRate = 0.5):
 
         # need to create look up between confidence and criterion
         confidence = self.processedData.data_rates.loc[self.processedData.dependentVariable, 'central']
@@ -1111,7 +1111,7 @@ class ModelFit(object):
         rate_tpsid_array = _np.array(rate_tpsid_array)
 
         if self.processedData.lineupSize != 1 :
-            cac = rate_tpsid_array / (rate_tpsid_array + rate_tasid_array)
+            cac = baseRate * rate_tpsid_array / (baseRate * rate_tpsid_array + (1-baseRate)*rate_tasid_array)
             if colorFromLabel == "":
                 _plt.plot(confidence[-1::-1], cac, linestyle='--', label=label)
             else:
