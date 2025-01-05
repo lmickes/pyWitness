@@ -23,7 +23,7 @@ requirements:
     - scipy
     - matplotlib
     - ipython
-    - pyreadstat
+#    - pyreadstat
 
   run:
     - pytz=2021.3
