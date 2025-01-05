@@ -1,1 +1,1 @@
-$PYTHON -m pip install
+$PYTHON -m pip install .
