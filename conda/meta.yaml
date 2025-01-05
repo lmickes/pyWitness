@@ -1,6 +1,6 @@
 package: 
   name: pywitness
-  version: 1.4.2
+  version: {{ GIT_DESCRIBE_TAG }}
 
 source: 
   path: ../
