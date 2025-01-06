@@ -12,3 +12,6 @@ def test_01_loading_test1_csv_column_values():
     dr = pyWitness.DataRaw("../data/tutorial/test1.csv")
     dr.columnValues("responseTime")
 
+def test_01_loading_test1_xlxs():
+    import pyWitness
+    dr = pyWitness.DataRaw("../data/tutorial/test1.xlsx", "test1")
