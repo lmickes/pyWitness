@@ -28,7 +28,7 @@ def test_05_fitting_test1_csv_ensemble():
     mf_en = pyWitness.ModelFitEnsemble(dp)
 
 def test_05_fitting_test1_csv_integration():
-    dr = pyWitness.DataRaw("test1.csv")
+    dr = pyWitness.DataRaw("../data/tutorial/test1.csv")
     dr.collapseContinuousData(column="confidence")
     dp = dr.process()
     mf_in = pyWitness.ModelFitIntegration(dp)
