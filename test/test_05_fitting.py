@@ -16,18 +16,21 @@ def test_05_fitting_test1_csv_indep_obs_uneqvar_print_parameters():
     mf.printParameters()
 
 def test_05_fitting_test1_csv_best_rest():
+    import pyWitness
     dr = pyWitness.DataRaw("../data/tutorial/test1.csv")
     dr.collapseContinuousData(column="confidence")
     dp = dr.process()
     mf_br = pyWitness.ModelFitBestRest(dp)
 
 def test_05_fitting_test1_csv_ensemble():
+    import pyWitness
     dr = pyWitness.DataRaw("../data/tutorial/test1.csv")
     dr.collapseContinuousData(column="confidence")
     dp = dr.process()
     mf_en = pyWitness.ModelFitEnsemble(dp)
 
 def test_05_fitting_test1_csv_integration():
+    import pyWitness
     dr = pyWitness.DataRaw("../data/tutorial/test1.csv")
     dr.collapseContinuousData(column="confidence")
     dp = dr.process()
