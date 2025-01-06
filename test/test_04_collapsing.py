@@ -7,3 +7,17 @@ def test_04_collapsing_categorical_data():
                                     90: 95, 100: 95})
     dp = dr.process()
     dp.plotCAC()
+
+def test_04_collapsing_continuous_data():
+    import pyWitness
+    dr = pyWitness.DataRaw("../data/tutorial/test1.csv")
+    dr.collapseContinuousData(column="confidence", bins=[-1, 60, 80, 100], labels=[1, 2, 3])
+    dp = dr.process()
+    dp.plotROC()
+
+def test_04_collapsing_continuous_data_pauc():
+    import pyWitness
+    dr = pyWitness.DataRaw("../data/tutorial/test1.csv")
+    dr.collapseContinuousData(column="confidence", bins=[-1, 60, 80, 100], labels=[1, 2, 3])
+    dp = dr.process()
+    print(dp.pAUC)
