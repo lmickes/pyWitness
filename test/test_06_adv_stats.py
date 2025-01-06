@@ -47,6 +47,7 @@ def test_adv_stats_test1_csv_generate_sdt_data():
 
 def test_adv_stats_test1_csv_power_analysis():
     import pyWitness
+    import numpy
     dr = pyWitness.DataRaw("../data/tutorial/test1.csv")
     dr.collapseContinuousData(column="confidence", bins=[-1, 60, 80, 100], labels=None)
     dp = dr.process()
