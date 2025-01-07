@@ -1,4 +1,4 @@
-pytest
+import pytest
 
 def test_adv_stats_test1_csv_bootstrap():
     import pyWitness

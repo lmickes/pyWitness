@@ -1,4 +1,4 @@
-improt pytest
+import pytest
 
 def test_03_plotting_test1_csv_plot_roc():
     import pyWitness
