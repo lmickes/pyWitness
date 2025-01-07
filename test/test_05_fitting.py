@@ -1,3 +1,5 @@
+import pytest
+
 def test_05_fitting_test1_csv_indep_obs_eqvar():
     import pyWitness
     dr = pyWitness.DataRaw("../data/tutorial/test1.csv")

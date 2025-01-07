@@ -1,3 +1,5 @@
+improt pytest
+
 def test_03_plotting_test1_csv_plot_roc():
     import pyWitness
     dr = pyWitness.DataRaw("../data/tutorial/test1.csv")

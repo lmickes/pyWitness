@@ -1,3 +1,5 @@
+import pytest
+
 def test_04_collapsing_categorical_data():
     import pyWitness
     dr = pyWitness.DataRaw("../data/tutorial/test1.csv")
