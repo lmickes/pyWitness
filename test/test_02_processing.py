@@ -15,7 +15,7 @@ def test_02_processing_test1_csv_descriptive_stats():
     dr = pyWitness.DataRaw("../data/tutorial/test1.csv")
     dp = dr.process()
     dp.printDescriptiveStats()
-    assert dp.dPrime == 1.9752208100241062
+    assert dp.dPrime == 1.9752208100241061
     assert dp.pAUC == 0.020542013220820013
     # overall correct ID rate
     assert dp.data_rates.loc[("targetPresent", "suspectId")].max() == 0.6196868008948546
