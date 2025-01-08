@@ -16,7 +16,8 @@ def test_05_fitting_test1_csv_indep_obs_eqvar():
     assert mf.targetMean.value == pytest.approx(1.7976601843420954, rel=1e-5)
     assert mf.targetSigma.value == pytest.approx(1.0, rel=1e-5)
     assert mf.lureBetweenSigma.value == pytest.approx(0.6046983921244553, rel=1e-5)
-    
+
+
 def test_05_fitting_test1_csv_indep_obs_uneqvar_print_parameters():
     import pyWitness
     dr = pyWitness.DataRaw("../data/tutorial/test1.csv")
@@ -24,6 +25,11 @@ def test_05_fitting_test1_csv_indep_obs_uneqvar_print_parameters():
     dp = dr.process()
     mf = pyWitness.ModelFitIndependentObservation(dp)
     mf.printParameters()
+
+    assert mf.lureBetweenSigma.value == pytest.approx(0.6046983921244553, rel=1e-5)
+    assert mf.c1.value == pytest.approx(1.4017022884785224, rel=1e-5)
+    assert mf.c2.value == pytest.approx(1.93548009449426, rel=1e-5)
+    assert mf.c3.value == pytest.approx(2.677475327674742, rel=1e-5)
 
 def test_05_fitting_test1_csv_best_rest():
     import pyWitness
