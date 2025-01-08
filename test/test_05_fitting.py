@@ -24,6 +24,7 @@ def test_05_fitting_test1_csv_indep_obs_uneqvar_print_parameters():
     dr.collapseContinuousData(column="confidence", bins=[-1, 60, 80, 100], labels=[1, 2, 3])
     dp = dr.process()
     mf = pyWitness.ModelFitIndependentObservation(dp)
+    mf.fit()
     mf.printParameters()
 
     assert mf.lureBetweenSigma.value == pytest.approx(0.6046983921244553, rel=1e-5)
