@@ -9,6 +9,15 @@ def test_05_fitting_test1_csv_indep_obs_eqvar():
     mf.setEqualVariance()
     mf.fit()
 
+assert mf.chi2 == pytest.approx(10.300411274463412, rel=1e-5)
+assert mf.pValue == pytest.approx(0.03566019782522267, rel=1e-5)
+assert mf.lureMean.value == pytest.approx(0.0, rel=1e-5)
+assert mf.lureSigma.value == pytest.approx(1.0, rel=1e-5)
+assert mf.targetMean.value == pytest.approx(1.7976601843420954, rel=1e-5)
+assert mf.targetSigma.value == pytest.approx(1.0, rel=1e-5)
+assert mf.lureBetweenSigma.value == pytest.approx(0.6046983921244553, rel=1e-5)
+
+
 def test_05_fitting_test1_csv_indep_obs_uneqvar_print_parameters():
     import pyWitness
     dr = pyWitness.DataRaw("../data/tutorial/test1.csv")
