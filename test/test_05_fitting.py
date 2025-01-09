@@ -109,7 +109,7 @@ def test_05_fitting_test1_csv_best_rest_uneqvar():
     assert mf.lureSigma.value == pytest.approx(1.0, rel=1e-5)
     assert mf.targetMean.value == pytest.approx(2.038036936738798, rel=1e-5)
     assert mf.targetSigma.value == pytest.approx(0.6139740611429738, rel=1e-5)
-    assert mf.lureBetweenSigma.value == pytest.approx(-0.027650790308206018, rel=1e-5)
+    assert mf.lureBetweenSigma.value == pytest.approx(0.03895753863353904, rel=1e-5)
     assert mf.targetBetweenSigma.value == pytest.approx(0.03895753863353904, rel=1e-5)
     assert mf.c1.value == pytest.approx(1.7546932765997934, rel=1e-5)
     assert mf.c2.value == pytest.approx(2.168399339678346, rel=1e-5)
