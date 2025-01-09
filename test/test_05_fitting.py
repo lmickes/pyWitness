@@ -170,7 +170,7 @@ def test_05_fitting_test1_csv_ensemble_uneqvar():
     mf.fit()
 
     assert mf.chi2 == pytest.approx(7.868684371812639, rel=1e-5)
-    assert mf.numberDegreesOfFreedom == 2
+    assert mf.numberDegreesOfFreedom == 3
     assert mf.chi2PerNDF == pytest.approx(2.6228947906042133, rel=1e-5)
     assert mf.pValue == pytest.approx(0.04880501181888286, rel=1e-5)
     assert mf.lureMean.value == pytest.approx(0.0, rel=1e-5)
