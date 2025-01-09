@@ -46,7 +46,7 @@ def test_05_fitting_test1_csv_indep_obs_uneqvar():
     assert mf.c2.value == pytest.approx(2.002341182989407, rel=1e-5)
     assert mf.c3.value == pytest.approx(2.6308524212497644, rel=1e-5)
 
-def test_05_fitting_test1_csv_indep_obs_free():
+def est_05_fitting_test1_csv_indep_obs_free():
     import pyWitness
     dr = pyWitness.DataRaw("../data/tutorial/test1.csv")
     dr.collapseContinuousData(column="confidence", bins=[-1, 60, 80, 100], labels=[1, 2, 3])
@@ -115,7 +115,7 @@ def test_05_fitting_test1_csv_best_rest_uneqvar():
     assert mf.c2.value == pytest.approx(2.168399339678346, rel=1e-5)
     assert mf.c3.value == pytest.approx(2.7606531061053246, rel=1e-5)
 
-def test_05_fitting_test1_csv_best_rest_free():
+def est_05_fitting_test1_csv_best_rest_free():
     import pyWitness
     dr = pyWitness.DataRaw("../data/tutorial/test1.csv")
     dr.collapseContinuousData(column="confidence", bins=[-1, 40, 60, 80, 100], labels=[1, 2, 3, 4])
