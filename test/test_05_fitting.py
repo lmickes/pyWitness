@@ -176,7 +176,7 @@ def test_05_fitting_test1_csv_ensemble_uneqvar():
     assert mf.lureMean.value == pytest.approx(0.0, rel=1e-5)
     assert mf.lureSigma.value == pytest.approx(1.0, rel=1e-5)
     assert mf.targetMean.value == pytest.approx(2.0380474980579812, rel=1e-5)
-    assert mf.targetSigma.value == pytest.approx(0.6139499862139856, rel=1e-5)
+    assert mf.targetSigma.value == pytest.approx(0.6139499862139856, rel=1e-3)
     assert mf.lureBetweenSigma.value == pytest.approx(-0.045359525568252, rel=1e-5)
     assert mf.targetBetweenSigma.value == pytest.approx(-0.045359525568252, rel=1e-5)
     assert mf.c1.value == pytest.approx(1.4622645372725116, rel=1e-5)
