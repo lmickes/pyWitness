@@ -32,19 +32,19 @@ def test_05_fitting_test1_csv_indep_obs_uneqvar():
     mf.setUnequalVariance()
     mf.fit()
 
-    assert mf.chi2 == pytest.approx(10.300411274463412, rel=1e-5)
-    assert mf.numberDegreesOfFreedom == 4
-    assert mf.chi2PerNDF == pytest.approx(2.575102818615853, rel=1e-5)
-    assert mf.pValue == pytest.approx(0.03566019782522267, rel=1e-5)
+    assert mf.chi2 == pytest.approx(4.534824840657988, rel=1e-5)
+    assert mf.numberDegreesOfFreedom == 3
+    assert mf.chi2PerNDF == pytest.approx(1.5116082802193294, rel=1e-5)
+    assert mf.pValue == pytest.approx(0.20920494600886963, rel=1e-5)
     assert mf.lureMean.value == pytest.approx(0.0, rel=1e-5)
     assert mf.lureSigma.value == pytest.approx(1.0, rel=1e-5)
-    assert mf.targetMean.value == pytest.approx(1.7976601843420954, rel=1e-5)
-    assert mf.targetSigma.value == pytest.approx(1.0, rel=1e-5)
-    assert mf.lureBetweenSigma.value == pytest.approx(0.6046983921244553, rel=1e-5)
-    assert mf.targetBetweenSigma.value == pytest.approx(0.6046983921244553, rel=1e-5)
-    assert mf.c1.value == pytest.approx(1.4017022884785224, rel=1e-5)
-    assert mf.c2.value == pytest.approx(1.93548009449426, rel=1e-5)
-    assert mf.c3.value == pytest.approx(2.677475327674742, rel=1e-5)
+    assert mf.targetMean.value == pytest.approx(1.8894645402811472, rel=1e-5)
+    assert mf.targetSigma.value == pytest.approx(0.7886365473806328, rel=1e-5)
+    assert mf.lureBetweenSigma.value == pytest.approx(0.4480311026689192, rel=1e-5)
+    assert mf.targetBetweenSigma.value == pytest.approx(0.4480311026689192, rel=1e-5)
+    assert mf.c1.value == pytest.approx(1.5351065745707397, rel=1e-5)
+    assert mf.c2.value == pytest.approx(2.002341182989407, rel=1e-5)
+    assert mf.c3.value == pytest.approx(2.6308524212497644, rel=1e-5)
 
 def test_05_fitting_test1_csv_best_rest():
     import pyWitness
