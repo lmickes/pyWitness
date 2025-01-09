@@ -69,12 +69,73 @@ def test_05_fitting_test1_csv_indep_obs_free():
     assert mf.c3.value == pytest.approx(1.5870619583040122, rel=1e-5)
     assert mf.c4.value == pytest.approx(2.033939924498857, rel=1e-5)
 
-def test_05_fitting_test1_csv_best_rest():
+def test_05_fitting_test1_csv_best_rest_eqvar():
     import pyWitness
     dr = pyWitness.DataRaw("../data/tutorial/test1.csv")
     dr.collapseContinuousData(column="confidence")
     dp = dr.process()
-    mf_br = pyWitness.ModelFitBestRest(dp)
+    mf = pyWitness.ModelFitBestRest(dp)
+    mf.setEqualVariance()
+    mf.fit()
+
+    assert mf.chi2 == pytest.approx(23.203557131914106, rel=1e-5)
+    assert mf.numberDegreesOfFreedom == 4
+    assert mf.chi2PerNDF == pytest.approx(5.800889282978527, rel=1e-5)
+    assert mf.pValue == pytest.approx(0.00011530375016544081, rel=1e-5)
+    assert mf.lureMean.value == pytest.approx(0.0, rel=1e-5)
+    assert mf.lureSigma.value == pytest.approx(1.0, rel=1e-5)
+    assert mf.targetMean.value == pytest.approx(2.03566192879208, rel=1e-5)
+    assert mf.targetSigma.value == pytest.approx(1.0, rel=1e-5)
+    assert mf.lureBetweenSigma.value == pytest.approx(-0.027650790308206018, rel=1e-5)
+    assert mf.targetBetweenSigma.value == pytest.approx(-0.027650790308206018, rel=1e-5)
+    assert mf.c1.value == pytest.approx(1.7353510716101122, rel=1e-5)
+    assert mf.c2.value == pytest.approx(2.212736570519106, rel=1e-5)
+    assert mf.c3.value == pytest.approx(2.9491721140631633, rel=1e-5)
+
+def test_05_fitting_test1_csv_best_rest_uneqvar():
+    import pyWitness
+    dr = pyWitness.DataRaw("../data/tutorial/test1.csv")
+    dr.collapseContinuousData(column="confidence")
+    dp = dr.process()
+    mf = pyWitness.ModelFitBestRest(dp)
+    mf.setUnequalVariance()
+    mf.fit()
+
+    assert mf.chi2 == pytest.approx(7.868684226378687, rel=1e-5)
+    assert mf.numberDegreesOfFreedom == 3
+    assert mf.chi2PerNDF == pytest.approx(2.622894742126229, rel=1e-5)
+    assert mf.pValue == pytest.approx(0.04880501500208234, rel=1e-5)
+    assert mf.lureMean.value == pytest.approx(0.0, rel=1e-5)
+    assert mf.lureSigma.value == pytest.approx(1.0, rel=1e-5)
+    assert mf.targetMean.value == pytest.approx(2.038036936738798, rel=1e-5)
+    assert mf.targetSigma.value == pytest.approx(0.6139740611429738, rel=1e-5)
+    assert mf.lureBetweenSigma.value == pytest.approx(-0.027650790308206018, rel=1e-5)
+    assert mf.targetBetweenSigma.value == pytest.approx(0.03895753863353904, rel=1e-5)
+    assert mf.c1.value == pytest.approx(1.7546932765997934, rel=1e-5)
+    assert mf.c2.value == pytest.approx(2.168399339678346, rel=1e-5)
+    assert mf.c3.value == pytest.approx(2.7606531061053246, rel=1e-5)
+
+def test_05_fitting_test1_csv_best_rest_free():
+    import pyWitness
+    dr = pyWitness.DataRaw("../data/tutorial/test1.csv")
+    dr.collapseContinuousData(column="confidence", bins=[-1, 40, 60, 80, 100], labels=[1, 2, 3, 4])
+    dp = dr.process()
+    mf = pyWitness.ModelFitBestRest(dp)
+    mf.fit()
+
+    assert mf.chi2 == pytest.approx(9.92916150379401, rel=1e-5)
+    assert mf.numberDegreesOfFreedom == 2
+    assert mf.chi2PerNDF == pytest.approx(4.964580751897005, rel=1e-5)
+    assert mf.pValue == pytest.approx(0.006980876815037118, rel=1e-5)
+    assert mf.lureMean.value == pytest.approx(0.0018987441970468675, rel=1e-5)
+    assert mf.lureSigma.value == pytest.approx(0.6861322853955167, rel=1e-5)
+    assert mf.targetMean.value == pytest.approx(1.4012317220792951, rel=1e-5)
+    assert mf.targetSigma.value == pytest.approx(0.4268722771827042, rel=1e-5)
+    assert mf.lureBetweenSigma.value == pytest.approx(0.00035201600917691706, rel=1e-5)
+    assert mf.targetBetweenSigma.value == pytest.approx(0.0008327066039283845, rel=1e-5)
+    assert mf.c1.value == pytest.approx(1.2028664376190874, rel=1e-5)
+    assert mf.c2.value == pytest.approx(1.29788822134375, rel=1e-5)
+    assert mf.c3.value == pytest.approx(1.4905841431052758, rel=1e-5)
 
 def test_05_fitting_test1_csv_ensemble():
     import pyWitness
