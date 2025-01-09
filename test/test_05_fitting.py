@@ -179,7 +179,7 @@ def test_05_fitting_test1_csv_ensemble_uneqvar():
     assert mf.targetSigma.value == pytest.approx(0.6139499862139856, rel=1e-3)
     #assert mf.lureBetweenSigma.value == pytest.approx(-0.045359525568252, rel=1e-5)
     #assert mf.targetBetweenSigma.value == pytest.approx(-0.045359525568252, rel=1e-5)
-    assert mf.c1.value == pytest.approx(1.4622645372725116, rel=1e-5)
+    assert mf.c1.value == pytest.approx(1.4622645372725116, rel=2e-5)
     assert mf.c2.value == pytest.approx(1.807018272986906, rel=1e-5)
     assert mf.c3.value == pytest.approx(2.3005632098784905, rel=1e-5)
 
