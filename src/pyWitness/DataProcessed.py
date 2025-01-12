@@ -486,9 +486,9 @@ class DataProcessed :
         zL                     = []
         zT                     = []
         dprime                 = []
+        pAUC                   = []
         criterion              = []
 
-        pAUC = []
 
         for i in range(0,nBootstraps,1) : 
             dr = self.dataRaw.resampleWithReplacement()
@@ -526,10 +526,9 @@ class DataProcessed :
             zL.append(dp.data_rates.loc['zL','central'].values)
             zT.append(dp.data_rates.loc['zT','central'].values)
             dprime.append(dp.data_rates.loc['dprime','central'].values)
-            criterion.append(dp.data_rates.loc['criterion','central'].values)
-
+            criterion.append(dp.data_rates.loc[('criterion','central')][-1])
             pAUC.append(dp.pAUC)
-            
+
             if plotROC :
                 _plt.figure(1)
                 dp.plotROC()
@@ -553,7 +552,7 @@ class DataProcessed :
         zL                     = _np.array(zL)
         zT                     = _np.array(zT)
         dprime                 = _np.array(dprime)
-
+        criterion              = _np.array(criterion)
         pAUC                   = _np.array(pAUC)
 
         clHigh = 100.-(100.-cl)/2.0
@@ -595,6 +594,7 @@ class DataProcessed :
         self.pAUC_low               = _np.percentile(pAUC[_np.logical_not(_np.isnan(pAUC))],clLow)
         self.pAUC_high              = _np.percentile(pAUC[_np.logical_not(_np.isnan(pAUC))],clHigh)
         self.pAUC_array             = pAUC
+        self.criterion_array        = criterion
 
         template = self.data_rates.loc['cac','central']
         self.data_rates = _pandas.concat([self.data_rates,_pandas.DataFrame(_pandas.Series(cac_low, name = ('cac','low'), index = template.index)).transpose()])
@@ -670,6 +670,38 @@ class DataProcessed :
         print('DataProcessed.comparePAUC> pooled sd',_np.sqrt(pAUC1_std**2 + pAUC2_std**2))
 
         return [D,p]
+
+    def compareCriterion(self, other):
+        '''
+        Statistical test compare two pAUCs
+
+        :param other: object to compare against
+        :type other: DataProcessed
+        :return:
+        '''
+
+        criterion1 = self.criterion_array
+        criterion2 = other.criterion_array
+
+        # strip nan (not right TODO regarind pAUC integrals)
+        criterion1 = criterion1[_np.logical_not(_np.isnan(criterion1))]
+        criterion2 = criterion2[_np.logical_not(_np.isnan(criterion2))]
+
+        criterion1_mean = criterion1.mean()
+        criterion1_std  = criterion1.std()
+        criterion2_mean = criterion2.mean()
+        criterion2_std  = criterion2.std()
+
+        D = _np.abs(criterion1 - criterion2)/_np.sqrt(criterion1_std**2 + criterion2_std**2)
+        p = (1-_special.ndtr(D))*2
+
+        print('DataProcessed.compareCriterion> criterion1'.ljust(self.debugIoPadSize,' ')+":",round(criterion1_mean,4), "+/-",round(criterion1_std,4))
+        print('DataProcessed.compareCriterion> criterion2'.ljust(self.debugIoPadSize,' ')+":",round(criterion2_mean,4),"+/-",round(criterion2_std,4))
+        print('DataProcessed.compareCriterion> Z, p'.ljust(self.debugIoPadSize,' ')+":",round(D,4),round(p,4))
+        print('DataProcessed.compareCriterion> pooled sd',_np.sqrt(criterion1_std**2 + criterion2_std**2))
+
+        return [D,p]
+
 
     def plotROC(self, label = "ROC", relativeFrequencyScale = 800, errorType = 'bars', color = None, alpha = 1) :
         '''
