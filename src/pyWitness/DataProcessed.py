@@ -692,7 +692,7 @@ class DataProcessed :
         criterion2_mean = criterion2.mean()
         criterion2_std  = criterion2.std()
 
-        D = _np.abs(criterion1 - criterion2)/_np.sqrt(criterion1_std**2 + criterion2_std**2)
+        D = _np.abs(criterion1_mean - criterion2_mean)/_np.sqrt(criterion1_std**2 + criterion2_std**2)
         p = (1-_special.ndtr(D))*2
 
         print('DataProcessed.compareCriterion> criterion1'.ljust(self.debugIoPadSize,' ')+":",round(criterion1_mean,4), "+/-",round(criterion1_std,4))
