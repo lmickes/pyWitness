@@ -8,11 +8,12 @@ from .ModelFits import ModelFitIndependentObservation
 from .ModelFits import ModelFitEnsemble
 from .ModelFits import ModelFitBestRest
 from .ModelFits import ModelFitIntegration
-from .ModelFitsMonteCarlo import ModelFitsMonteCarlo
 from .ModelFits import ModelFitComposite
 from .ModelFits import ModelFitDesignatedInnocent
 from .ModelFits import ModelFitDesignatedInnocentIndependentObservationSimple
 from .ModelFits import ModelFitDesignatedInnocentEnsemble
+from .ModelFitsMonteCarlo import ModelFitsMonteCarlo
+
 from ._version import version
 
 from .Tester    import Tester
