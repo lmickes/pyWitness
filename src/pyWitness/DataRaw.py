@@ -375,6 +375,25 @@ class DataRaw :
             self.data = self.data.loc[cut]
             return (cut*1).sum()
 
+    def makeFakeDesignateId(self):
+        lineupSize = _np.unique(self.data['lineupSize'])
+
+        to_replace = _np.arange(0,len(self.data))[(self.data['targetLineup'] == 'targetAbsent') & (self.data['responseType'] == 'fillerId')]
+        n_to_replace = len(to_replace)
+
+        n_designate_id = int(n_to_replace/lineupSize)
+
+        print(n_to_replace,n_designate_id)
+
+        for row, i in zip(to_replace, range(0,len(to_replace))):
+            if i < n_designate_id :
+                self.data.loc[row,'responseType'] = 'designateId'
+            else :
+                self.data.loc[row,'responseType'] = 'fillerId'
+
+
+        return to_replace
+
     def isDesignateId(self) :
         if (self.data['responseType'] == "designateId").any():
             return True
