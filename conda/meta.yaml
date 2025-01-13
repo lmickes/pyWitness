@@ -11,7 +11,7 @@ build:
 requirements: 
 
   build:
-    - python >=3.9,<=3.13
+    - python
     - setuptools
     - pip
     - cython
@@ -25,7 +25,7 @@ requirements:
 #    - pyreadstat
 
   run:
-    - python >=3.9,<=3.13
+    - python
     - pytz=2021.3
     - xlrd
     - openpyxl
