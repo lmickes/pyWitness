@@ -13,6 +13,7 @@ requirements:
   build:
     - python
     - setuptools
+    - setuptools_scm
     - pip
     - cython
     - pybind11
@@ -25,6 +26,7 @@ requirements:
 #    - pyreadstat
 
   run:
+    - python
     - pytz=2021.3
     - xlrd
     - openpyxl
