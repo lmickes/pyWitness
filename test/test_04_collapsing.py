@@ -1,3 +1,5 @@
+import pytest
+
 def test_04_collapsing_categorical_data():
     import pyWitness
     dr = pyWitness.DataRaw("../data/tutorial/test1.csv")
@@ -7,6 +9,8 @@ def test_04_collapsing_categorical_data():
                                     90: 95, 100: 95})
     dp = dr.process()
     dp.plotCAC()
+
+    assert dp.numberLineups == 890
 
 def test_04_collapsing_continuous_data():
     import pyWitness
