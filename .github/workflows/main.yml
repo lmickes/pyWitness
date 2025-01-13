@@ -2,11 +2,7 @@ name: Build & test
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - CICD
   pull_request:
-  release:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
