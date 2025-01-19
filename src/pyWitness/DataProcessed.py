@@ -486,8 +486,10 @@ class DataProcessed :
         zL                     = []
         zT                     = []
         dprime                 = []
+        dprime_overall         = []
         pAUC                   = []
         criterion              = []
+
 
 
         for i in range(0,nBootstraps,1) : 
@@ -526,6 +528,7 @@ class DataProcessed :
             zL.append(dp.data_rates.loc['zL','central'].values)
             zT.append(dp.data_rates.loc['zT','central'].values)
             dprime.append(dp.data_rates.loc['dprime','central'].values)
+            dprime_overall.append(dp.data_rates.loc[('dprime','central')][-1])
             criterion.append(dp.data_rates.loc[('criterion','central')][-1])
             pAUC.append(dp.pAUC)
 
@@ -552,6 +555,7 @@ class DataProcessed :
         zL                     = _np.array(zL)
         zT                     = _np.array(zT)
         dprime                 = _np.array(dprime)
+        dprime_overall         = _np.array(dprime_overall)
         criterion              = _np.array(criterion)
         pAUC                   = _np.array(pAUC)
 
@@ -595,6 +599,7 @@ class DataProcessed :
         self.pAUC_high              = _np.percentile(pAUC[_np.logical_not(_np.isnan(pAUC))],clHigh)
         self.pAUC_array             = pAUC
         self.criterion_array        = criterion
+        self.dprime_array           = dprime_overall
 
         template = self.data_rates.loc['cac','central']
         self.data_rates = _pandas.concat([self.data_rates,_pandas.DataFrame(_pandas.Series(cac_low, name = ('cac','low'), index = template.index)).transpose()])
@@ -673,7 +678,7 @@ class DataProcessed :
 
     def compareCriterion(self, other):
         '''
-        Statistical test compare two pAUCs
+        Statistical test compare two criteria
 
         :param other: object to compare against
         :type other: DataProcessed
@@ -702,6 +707,36 @@ class DataProcessed :
 
         return [D,p]
 
+    def compareDprime(self, other):
+        '''
+        Statistical test compare two Dprimes
+
+        :param other: object to compare against
+        :type other: DataProcessed
+        :return:
+        '''
+
+        dprime1 = self.dprime_array
+        dprime2 = other.dprime_array
+
+        # strip nan (not right TODO regarind pAUC integrals)
+        dprime1 = dprime1[_np.logical_not(_np.isnan(dprime1))]
+        dprime2 = dprime2[_np.logical_not(_np.isnan(dprime2))]
+
+        dprime1_mean = dprime1.mean()
+        dprime1_std  = dprime1.std()
+        dprime2_mean = dprime2.mean()
+        dprime2_std  = dprime2.std()
+
+        D = _np.abs(dprime1_mean - dprime2_mean)/_np.sqrt(dprime1_std**2 + dprime2_std**2)
+        p = (1-_special.ndtr(D))*2
+
+        print('DataProcessed.comparedprime> dprime1'.ljust(self.debugIoPadSize,' ')+":",round(dprime1_mean,4), "+/-",round(dprime1_std,4))
+        print('DataProcessed.comparedprime> dprime2'.ljust(self.debugIoPadSize,' ')+":",round(dprime2_mean,4),"+/-",round(dprime2_std,4))
+        print('DataProcessed.comparedprime> Z, p'.ljust(self.debugIoPadSize,' ')+":",round(D,4),round(p,4))
+        print('DataProcessed.comparedprime> pooled sd',_np.sqrt(dprime1_std**2 + dprime2_std**2))
+
+        return [D,p]
 
     def plotROC(self, label = "ROC", relativeFrequencyScale = 800, errorType = 'bars', color = None, alpha = 1) :
         '''
