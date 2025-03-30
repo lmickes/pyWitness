@@ -295,7 +295,7 @@ class DataRaw :
         '''
  
         data_copy = DataRaw('',self.excelSheet, self.dataMapping)        
-        data_copy.data = self.data.sample(n = self.data.shape[0],replace = True, random_state = self.random_state)
+        data_copy.data = self.data.sample(n = self.data.shape[0],replace = True)#, random_state = self.random_state)
         self.random_state = (self.random_state + 123456789) % 7
 
         if self.collapseContinuous :
