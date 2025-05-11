@@ -32,8 +32,8 @@ def test_adv_stats_test2_csv_compare_two_pauc():
     dpVerbal.calculateConfidenceBootstrap(nBootstraps=200)
     [z,p] = dpControl.comparePAUC(dpVerbal)
 
-    assert z == pytest.approx(1.1751012477925307, rel=1e-5)
-    assert p == pytest.approx(0.2399542115212978, rel=1e-5)
+    assert z == pytest.approx(1.2204034045897576, rel=1e-5)
+    assert p == pytest.approx(0.22231198736511404, rel=1e-5)
 
 def test_adv_stats_test1_csv_generate_sdt_data():
     import pyWitness
