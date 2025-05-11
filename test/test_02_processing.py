@@ -37,3 +37,8 @@ def test_02_processing_test3_csv_descriptive_stats():
     dr = pyWitness.DataRaw("../data/tutorial/test3.csv")
     dp = dr.process()
     dp.printDescriptiveStats()
+
+def test_02_processing_test1ds_csv():
+    import pyWitness
+    dr = pyWitness.DataRaw("../data/tutorial/test1ds.csv")
+    dp = dr.process()

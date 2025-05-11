@@ -25,3 +25,7 @@ def test_01_loading_test1_xlxs():
 def test_01_loading_test3_csv() :
     import pyWitness
     dr = pyWitness.DataRaw("../data/tutorial/test3.csv")
+
+def test_01_loading_test1ds_csv() :
+    import pyWitness
+    dr = pyWitness.DataRaw("../data/tutorial/test1ds.csv")
