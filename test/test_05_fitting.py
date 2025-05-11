@@ -336,3 +336,61 @@ def test_05_fitting_test1_csv_plot_fit_cac():
     mf.fit()
     dp.plotCAC(label="Data")
     mf.plotCAC(label="Indep. obs. fit")
+
+def test_05_fitting_test3_csv_indep_obs_eqvar() :
+    import pyWitness
+    dr = pyWitness.DataRaw("../data/tutorial/test3.csv")
+    dr.collapseContinuousData(column="confidence", bins=[-12, -9.5, -7.5, 0, 7.5, 9.5, 12.5], labels=[1, 2, 3, 4, 5, 6])
+
+    dp = dr.process()
+
+    mf = pyWitness.ModelFitIndependentObservation(dp, debug=False)
+    mf.setParameterEstimates()
+    mf.setEqualVariance()
+    mf.fit()
+
+    assert mf.chi2 == pytest.approx(6.23202615170196, rel=1e-5)
+    assert mf.numberDegreesOfFreedom == 5
+    assert mf.chi2PerNDF == pytest.approx(1.2464052303403919, rel=1e-5)
+    assert mf.pValue == pytest.approx(0.2842920239676301, rel=1e-5)
+    assert mf.lureMean.value == pytest.approx(0.0, rel=1e-5)
+    assert mf.lureSigma.value == pytest.approx(1.0, rel=1e-5)
+    assert mf.targetMean.value == pytest.approx(0.9265913547430601, rel=1e-5)
+    assert mf.targetSigma.value == pytest.approx(1.0, rel=1e-5)
+    assert mf.lureBetweenSigma.value == pytest.approx(0.27049445313722853, rel=1e-5)
+    assert mf.targetBetweenSigma.value == pytest.approx(0.27049445313722853, rel=1e-5)
+    assert mf.c1.value == pytest.approx(-10.0, rel=1e-5)
+    assert mf.c2.value == pytest.approx(-0.49984935445356177, rel=1e-5)
+    assert mf.c3.value == pytest.approx(0.1573676648728698, rel=1e-5)
+    assert mf.c4.value == pytest.approx(0.6775665751531148, rel=1e-5)
+    assert mf.c5.value == pytest.approx(1.0251682838468397, rel=1e-5)
+    assert mf.c6.value == pytest.approx(1.82886097851483, rel=1e-5)
+
+def test_05_fitting_test3_csv_indep_obs_uneqvar() :
+    import pyWitness
+    dr = pyWitness.DataRaw("../data/tutorial/test3.csv")
+    dr.collapseContinuousData(column="confidence", bins=[-12, -9.5, -7.5, 0, 7.5, 9.5, 12.5], labels=[1, 2, 3, 4, 5, 6])
+
+    dp = dr.process()
+
+    mf = pyWitness.ModelFitIndependentObservation(dp, debug=False)
+    mf.setParameterEstimates()
+    mf.setUnequalVariance()
+    mf.fit()
+
+    assert mf.chi2 == pytest.approx(5.806361946665044, rel=1e-5)
+    assert mf.numberDegreesOfFreedom == 4
+    assert mf.chi2PerNDF == pytest.approx(1.451590486666261, rel=1e-5)
+    assert mf.pValue == pytest.approx(0.21408350742647464, rel=1e-5)
+    assert mf.lureMean.value == pytest.approx(0.0, rel=1e-5)
+    assert mf.lureSigma.value == pytest.approx(1.0, rel=1e-5)
+    assert mf.targetMean.value == pytest.approx(0.9133315407094696, rel=1e-5)
+    assert mf.targetSigma.value == pytest.approx(0.965437881652407, rel=1e-5)
+    assert mf.lureBetweenSigma.value == pytest.approx(0.31649901012369414, rel=1e-5)
+    assert mf.targetBetweenSigma.value == pytest.approx(0.31649901012369414, rel=1e-5)
+    assert mf.c1.value == pytest.approx(-10.0, rel=1e-5)
+    assert mf.c2.value == pytest.approx(-0.4875453897532963, rel=1e-5)
+    assert mf.c3.value == pytest.approx(0.16227837347944246, rel=1e-5)
+    assert mf.c4.value == pytest.approx(0.6739989618052868, rel=1e-5)
+    assert mf.c5.value == pytest.approx(1.0140686368186151, rel=1e-5)
+    assert mf.c6.value == pytest.approx(1.798517051043007, rel=1e-5)

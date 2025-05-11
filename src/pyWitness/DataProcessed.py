@@ -434,7 +434,6 @@ class DataProcessed :
 
         dCriterion = - (zT + zL)/2.0
         dCriterion.name = ("criterion", "central")
-
         self.data_rates = _pandas.concat([self.data_rates, _pandas.DataFrame(dCriterion).transpose()])
         self.data_rates = self.data_rates.sort_index()
 
@@ -528,8 +527,8 @@ class DataProcessed :
             zL.append(dp.data_rates.loc['zL','central'].values)
             zT.append(dp.data_rates.loc['zT','central'].values)
             dprime.append(dp.data_rates.loc['dprime','central'].values)
-            dprime_overall.append(dp.data_rates.loc[('dprime','central')][-1])
-            criterion.append(dp.data_rates.loc[('criterion','central')][-1])
+            dprime_overall.append(dp.data_rates.loc[('dprime','central')].values)
+            criterion.append(dp.data_rates.loc[('criterion','central')].values)
             pAUC.append(dp.pAUC)
 
             if plotROC :

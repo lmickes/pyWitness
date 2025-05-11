@@ -13,4 +13,5 @@ pyWitness team
 
 ## TODO
 
+* ~~Look at criterion for show up (test3) after bootstrap~~
 * 

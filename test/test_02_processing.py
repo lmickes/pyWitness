@@ -31,3 +31,9 @@ def test_02_processing_test1_csv_response_time():
                                  bins=[0, 5000, 10000, 15000, 20000, 99999],
                                  labels=[1, 2, 3, 4, 5])
     dpRAC = drRAC.process(reverseConfidence=True, dependentVariable="responseTime")
+
+def test_02_processing_test3_csv_descriptive_stats():
+    import pyWitness
+    dr = pyWitness.DataRaw("../data/tutorial/test3.csv")
+    dp = dr.process()
+    dp.printDescriptiveStats()
