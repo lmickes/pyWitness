@@ -11,3 +11,12 @@ If you use pyWitness please cite [Mickes, L., Seale-Carlisle, T.M., Chen, X. et 
 
 pyWitness team
 
+## TODO
+
+* ~~Look at criterion for show up (test3) after bootstrap~~
+* ~~Add showup to manual.ipynb~~
+* Designated innocent suspect bootstrap problem?
+* ~~Add test1ds to pytests~~ 
+* ~~Add test1ds to manual.ipynb~~
+* Add test1ds example to web manual
+* Add independent observation (not simple) and integration models for designated suspect

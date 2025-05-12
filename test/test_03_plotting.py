@@ -20,3 +20,15 @@ def test_03_plotting_test1_csv_plot_rac():
                                  labels=[1, 2, 3, 4, 5])
     dpRAC = drRAC.process(reverseConfidence=True, dependentVariable="responseTime")
     dpRAC.plotCAC()
+
+def test_03_plotting_test3_csv_plot_roc():
+    import pyWitness
+    dr = pyWitness.DataRaw("../data/tutorial/test3.csv")
+    dp = dr.process()
+    dp.plotROC()
+
+def test_03_plotting_test3_csv_plot_cac():
+    import pyWitness
+    dr = pyWitness.DataRaw("../data/tutorial/test3.csv")
+    dp = dr.process()
+    dp.plotCAC()

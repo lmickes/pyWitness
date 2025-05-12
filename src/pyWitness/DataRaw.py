@@ -61,6 +61,7 @@ class DataRaw :
 
         self.collapseContinuous = False
         self.random_state = 987654321
+        self.iRandCount = 0
 
     def loadData(self) :
         '''
@@ -295,8 +296,9 @@ class DataRaw :
         '''
  
         data_copy = DataRaw('',self.excelSheet, self.dataMapping)        
-        data_copy.data = self.data.sample(n = self.data.shape[0],replace = True)#, random_state = self.random_state)
-        self.random_state = (self.random_state + 123456789) % 7
+        data_copy.data = self.data.sample(n = self.data.shape[0],replace = True, random_state = self.random_state)
+        #self.random_state = (self.random_state + 123456789) % 7
+        self.random_state += 1
 
         if self.collapseContinuous :
             data_copy.collapseContinuous       = self.collapseContinuous
