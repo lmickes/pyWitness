@@ -308,6 +308,22 @@ class DataRaw :
 
         return data_copy
 
+    def resampleOnKeyWithReplacement(self, pairs, key = "participantId") :
+        data_copy = DataRaw('',self.excelSheet, self.dataMapping)
+        data_copy.data = self.data.copy()[0:0]
+
+        for p in pairs :
+            fc_p = self.data[self.data[key] == p].sample(n=1)
+            data_copy.data = _pandas.concat([data_copy.data, fc_p])
+
+        if self.collapseContinuous :
+            data_copy.collapseContinuous       = self.collapseContinuous
+            data_copy.collapseContinuousColumn = self.collapseContinuousColumn
+            data_copy.collapseContinuousBins   = self.collapseContinuousBins
+            data_copy.collapseContinuousLabels = self.collapseContinuousLabels
+
+        return data_copy
+
     def shuffle(self):
         self.data = self.data.sample(frac=1).reset_index(drop=True)
 

@@ -437,7 +437,7 @@ class DataProcessed :
         self.data_rates = _pandas.concat([self.data_rates, _pandas.DataFrame(dCriterion).transpose()])
         self.data_rates = self.data_rates.sort_index()
 
-    def calculateConfidenceBootstrap(self, nBootstraps = 200, cl = 95, plotROC = False, plotCAC = False) :
+    def calculateConfidenceBootstrap(self, nBootstraps = 200, cl = 95, plotROC = False, plotCAC = False, pairKey = "participantId", pairs = None) :
         
         # if already bootstrapped delete DataFrame rows
         if self.bootstrapped :
@@ -489,10 +489,23 @@ class DataProcessed :
         pAUC                   = []
         criterion              = []
 
+        if not _np.any(pairs) :
+            self.bootstrapPairs = []
+        else :
+            if nBootstraps > len(pairs) :
+                print("only "+str(len(pairs))+" in pairs setting nBootstraps to "+str(len(pairs)))
+                nBootstraps = len(pairs)
 
+        for i in range(0,nBootstraps,1) :
+            if not _np.any(pairs):
+                dr = self.dataRaw.resampleWithReplacement()
+                self.bootstrapPairs.append(_np.array(dr.data[pairKey]))
+            else :
+                dr = self.dataRaw.resampleOnKeyWithReplacement(pairs[i], pairKey)
 
-        for i in range(0,nBootstraps,1) : 
-            dr = self.dataRaw.resampleWithReplacement()
+            # keep hold of last boot strap for debugging
+            self.lastbs_dr = dr
+
             dp = dr.process(self.dataRaw.processColumn,
                             self.dataRaw.processCondition,
                             self.dataRaw.processReverseConfidence,
@@ -644,7 +657,10 @@ class DataProcessed :
 
         self.bootstrapped = True
 
-    def comparePAUC(self, other):
+        if not _np.any(pairs) :
+            self.bootstrapPairs = _np.array(self.bootstrapPairs)
+
+    def comparePAUC(self, other, useCovariance=False):
         '''
         Statistical test compare two pAUCs
 
@@ -665,7 +681,12 @@ class DataProcessed :
         pAUC2_mean = pAUC2.mean()
         pAUC2_std  = pAUC2.std()
 
-        D = _np.abs(self.pAUC - other.pAUC)/_np.sqrt(pAUC1_std**2 + pAUC2_std**2)
+        if useCovariance:
+            cov = np.cov(pAUC1, pAUC2)[0,1]
+        else :
+            cov = 0
+
+        D = _np.abs(self.pAUC - other.pAUC)/_np.sqrt(pAUC1_std**2 + pAUC2_std**2 - 2*cov)
         p = (1-_special.ndtr(D))*2
 
         print('DataProcessed.comparePAUC> pAUC1'.ljust(self.debugIoPadSize,' ')+":",round(self.pAUC,4), "+/-",round(pAUC1_std,4))
