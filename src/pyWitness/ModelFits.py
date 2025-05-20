@@ -815,10 +815,12 @@ class ModelFit(object):
         self.d = (self.targetMean.value - self.lureMean.value) / _np.sqrt(
             (self.targetSigma.value ** 2 + self.lureSigma.value ** 2) / 2.0)
 
-    def plotModel(self, xlow=-5, xhigh=5):
+    def plotModel(self, xlow=-5, xhigh=5, baseRate = 0.5):
         x = _np.linspace(xlow, xhigh, 200)
         target = _norm.pdf(x, self.targetMean.value, self.targetSigma.value)
-        lure = _norm.pdf(x, self.lureMean.value, self.lureSigma.value)
+        lure = _norm.pdf(x, self.lureMean.value, self.lureSigma.value)*(1/baseRate-1)
+        ratio = _np.trapz(target,x)/(_np.trapz(target,x)+_np.trapz(lure,x))
+
 
         _plt.subplot(2, 1, 1)
         _plt.plot(x, target, label="Target")
@@ -873,7 +875,10 @@ class ModelFit(object):
         # Tight layout for plot
         _plt.tight_layout()
 
-    def plotShaded(self, distribution, clow, chigh, fill=True, linestyle="-", color="red", alpha=1, hatch="None"):
+        print(f"baseRate: {baseRate}")
+        print(f"area ratio: {ratio}")
+
+    def plotShaded(self, distribution, clow, chigh, baseRate=0.50, fill=True, linestyle="-", color="red", alpha=1, hatch="None"):
         if clow > 0:
             xlow = self.thresholds[clow - 1].value
         else:
@@ -889,7 +894,7 @@ class ModelFit(object):
         if distribution == "target":
             y = _norm.pdf(x, self.targetMean.value, self.targetSigma.value)
         elif distribution == "lure":
-            y = _norm.pdf(x, self.lureMean.value, self.lureSigma.value)
+            y = _norm.pdf(x, self.lureMean.value, self.lureSigma.value)*(1/baseRate-1)
 
         if fill:
             if hatch != "None":
