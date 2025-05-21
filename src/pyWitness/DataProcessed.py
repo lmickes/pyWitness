@@ -672,7 +672,7 @@ class DataProcessed :
         pAUC1 = self.pAUC_array
         pAUC2 = other.pAUC_array
 
-        # strip nan (not right TODO regarind pAUC integrals)
+        # strip nan (not right TODO regarding pAUC integrals, also and of NaNs for pairs)
         pAUC1 = pAUC1[_np.logical_not(_np.isnan(pAUC1))]
         pAUC2 = pAUC2[_np.logical_not(_np.isnan(pAUC2))]
 
@@ -682,18 +682,21 @@ class DataProcessed :
         pAUC2_std  = pAUC2.std()
 
         if useCovariance:
-            cov = np.cov(pAUC1, pAUC2)[0,1]
+            cov = _np.cov(pAUC1, pAUC2)[0,1]
+            print(cov)
         else :
             cov = 0
+            print(cov)
 
-        D = _np.abs(self.pAUC - other.pAUC)/_np.sqrt(pAUC1_std**2 + pAUC2_std**2 - 2*cov)
+        denom = _np.sqrt(pAUC1_std**2 + pAUC2_std**2 - 2*cov)
+        D = _np.abs(self.pAUC - other.pAUC)/denom
         p = (1-_special.ndtr(D))*2
 
         print('DataProcessed.comparePAUC> pAUC1'.ljust(self.debugIoPadSize,' ')+":",round(self.pAUC,4), "+/-",round(pAUC1_std,4))
         print('DataProcessed.comparePAUC> pAUC2'.ljust(self.debugIoPadSize,' ')+":",round(other.pAUC,4),"+/-",round(pAUC2_std,4))
+        print('DataProcessed.comparePAUC> covariance'.ljust(self.debugIoPadSize,' ')+":",cov)
         print('DataProcessed.comparePAUC> Z, p'.ljust(self.debugIoPadSize,' ')+":",round(D,4),round(p,4))
-        print('DataProcessed.comparePAUC> pooled sd',_np.sqrt(pAUC1_std**2 + pAUC2_std**2))
-
+        print('DataProcessed.comparePAUC> pooled sd'.ljust(self.debugIoPadSize,' ')+":",denom)
         return [D,p]
 
     def compareCriterion(self, other):
