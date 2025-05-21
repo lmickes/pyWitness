@@ -2020,6 +2020,13 @@ class ModelFitDesignatedInnocentEnsemble(ModelFitDesignatedInnocent):
 
         return _np.array([pred_tafid, pred_tasid, pred_tpsid, pred_tpfid])
 
+class ModelFitLureTargetPresent :
+    def __init__(self):
+        # parameters
+        self.lureTPMean = self.addParameter("lureTPMean", 1.0)
+        self.lureTPSigma = self.addParameter("lureTPSigma", 1.0)
+
+
 
 class ModelFitComposite:
     def __init__(self):
