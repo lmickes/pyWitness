@@ -12,6 +12,8 @@ from .ModelFits import ModelFitComposite
 from .ModelFits import ModelFitDesignatedInnocent
 from .ModelFits import ModelFitDesignatedInnocentIndependentObservationSimple
 from .ModelFits import ModelFitDesignatedInnocentEnsemble
+from .ModelFits import ModelFitLureTargetPresent
+from .ModelFits import ModelFitLureTargetPresentEnsemble
 from ._version import version
 
 from .Tester    import Tester
