@@ -79,6 +79,7 @@ class DataProcessed :
         if option == "all" :
             self.calculateRelativeFrequency()
             self.calculateCAC()
+            self.calculateCARC()
             self.calculatePAUC(pAUCLiberal)
             self.calculateNormalisedAUC()
             
@@ -289,6 +290,34 @@ class DataProcessed :
         self.data_rates = _pandas.concat([self.data_rates, _pandas.DataFrame(cac).transpose()])
         self.data_rates = self.data_rates.sort_index()
 
+    def calculateCARC(self):
+        '''
+        Calculate Confidence Against Rejection Accuracy
+        CARC depicts the proportion of correct rejections (i.e., target absent lineups where the witness correctly rejects the lineup)
+        among all rejections (both correct rejections and false rejections, i.e., target present lineups where the witness incorrectly rejects the lineup) at each confidence level.
+        Results stored in data_rates['carc'] (index ('carc','central')).
+        '''
+
+        baseRate = self.baseRate
+
+        try:
+            r_ta = self.data_pivot.loc['targetAbsent', 'rejectId'].astype(float)
+        except KeyError:
+            r_ta = _pandas.Series(0.0, index=self.data_pivot.columns)
+
+        try:
+            r_tp = self.data_pivot.loc['targetPresent', 'rejectId'].astype(float)
+        except KeyError:
+            r_tp = _pandas.Series(0.0, index=self.data_pivot.columns)
+
+        numerator = (1.0 - baseRate) * r_ta
+        denominator = numerator + baseRate * r_tp
+        carc = numerator / denominator
+
+        carc.name = ('carc', 'central')
+        self.data_rates = _pandas.concat([self.data_rates, _pandas.DataFrame(carc).transpose()])
+        self.data_rates = self.data_rates.sort_index()
+
     def calculatePAUC(self, xmax = 1.0) :
         '''         
         Calculate partial area under the curve from (0,0) to (xmax, y(xmax))
@@ -437,12 +466,14 @@ class DataProcessed :
         self.data_rates = _pandas.concat([self.data_rates, _pandas.DataFrame(dCriterion).transpose()])
         self.data_rates = self.data_rates.sort_index()
 
-    def calculateConfidenceBootstrap(self, nBootstraps = 200, cl = 95, plotROC = False, plotCAC = False, pairKey = "participantId", pairs = None) :
+    def calculateConfidenceBootstrap(self, nBootstraps = 200, cl = 95, plotROC = False, plotCAC = False, plotCARC = False, pairKey = "participantId", pairs = None) :
         
         # if already bootstrapped delete DataFrame rows
         if self.bootstrapped :
             self.data_rates.drop(("cac","low"),inplace = True)
             self.data_rates.drop(("cac","high"),inplace = True)
+            self.data_rates.drop(('cac','low'),inplace = True)
+            self.data_rates.drop(('cac','high'),inplace = True)
             self.data_rates.drop(("targetAbsent","fillerId_high"),inplace = True)
             self.data_rates.drop(("targetAbsent","fillerId_low"),inplace = True)
             self.data_rates.drop(("targetAbsent","rejectId_high"),inplace = True)
@@ -470,8 +501,15 @@ class DataProcessed :
             except :
                 pass
 
+            try:
+                self.data_rates.drop(("carc","low"),  inplace=True)
+                self.data_rates.drop(("carc","high"), inplace=True)
+            except:
+                pass
+
 
         cac = []
+        carc = []
         confidence = []
 
         targetAbsentFillerId   = []
@@ -544,6 +582,8 @@ class DataProcessed :
             criterion.append(dp.data_rates.loc[('criterion','central')].values)
             pAUC.append(dp.pAUC)
 
+            carc.append(dp.data_rates.loc['carc', 'central'].values)
+
             if plotROC :
                 _plt.figure(1)
                 dp.plotROC()
@@ -552,7 +592,13 @@ class DataProcessed :
                 _plt.figure(2)
                 dp.plotCAC()
 
+            if plotCARC:
+                _plt.figure(3)
+                dp.plotCARC()
+
         cac                    = _np.array(cac)
+
+        carc                   = _np.array(carc)
 
         confidence             = _np.array(confidence)
 
@@ -576,6 +622,9 @@ class DataProcessed :
 
         cac_low                     = _np.percentile(cac,clLow,axis=0)
         cac_high                    = _np.percentile(cac,clHigh,axis=0)
+
+        carc_low = _np.percentile(carc, clLow, axis=0)
+        carc_high = _np.percentile(carc, clHigh, axis=0)
 
         confidence_low              = _np.percentile(confidence,clLow,axis=0)
         confidence_high             = _np.percentile(confidence,clHigh,axis=0)
@@ -616,6 +665,14 @@ class DataProcessed :
         template = self.data_rates.loc['cac','central']
         self.data_rates = _pandas.concat([self.data_rates,_pandas.DataFrame(_pandas.Series(cac_low, name = ('cac','low'), index = template.index)).transpose()])
         self.data_rates = _pandas.concat([self.data_rates,_pandas.DataFrame(_pandas.Series(cac_high, name = ('cac','high'), index = template.index)).transpose()])
+
+        self.data_rates = _pandas.concat([
+            self.data_rates,
+            _pandas.DataFrame([carc_low], index=[('carc', 'low')],
+                              columns=self.data_rates.loc['carc', 'central'].index),
+            _pandas.DataFrame([carc_high], index=[('carc', 'high')],
+                              columns=self.data_rates.loc['carc', 'central'].index),
+        ])
 
         try :
             self.data_rates = _pandas.concat([self.data_rates, _pandas.DataFrame(_pandas.Series(confidence_low, name = (self.dependentVariable,'low'), index = template.index)).transpose()])
@@ -907,8 +964,82 @@ class DataProcessed :
         
         # Tight layout for plot
         _plt.tight_layout()
-            
-    def plotRAC(self) : 
+
+    def plotCARC(self, relativeFrequencyScale=800, errorType='bars', label="", oldLabels=None, newLabels=None, alpha=1):
+        """
+        pLOT Confidence–Accuracy Characteristic for lineup rejections (CARC)
+        The symbol size is proportional to relative frequency of all rejections (TA+TP).
+        If calculateConfidenceBootstrap has been run, error bars/bands are also plotted.
+
+        Parameters
+        ----------
+        relativeFrequencyScale : float
+        errorType : {'bars', 'band', None}
+        label : str
+        oldLabels, newLabels : list[str] or None (If provided, replace x-axis tick labels from oldLabels to newLabels.)
+        alpha : float
+        """
+        # x: confidence levels
+        confidence_levels = self.data_rates.columns.get_level_values(self.dependentVariable)
+        carc_central = self.data_rates.loc['carc', 'central']
+
+        try:
+            r_ta = self.data_pivot.loc['targetAbsent', 'rejectId'].astype(float)
+        except KeyError:
+            r_ta = _pandas.Series(0.0, index=self.data_pivot.columns)
+
+        try:
+            r_tp = self.data_pivot.loc['targetPresent', 'rejectId'].astype(float)
+        except KeyError:
+            r_tp = _pandas.Series(0.0, index=self.data_pivot.columns)
+
+        counts_reject = r_ta.add(r_tp, fill_value=0.0)
+        total_rejects = counts_reject.sum()
+        if total_rejects > 0:
+            rf_reject = counts_reject / total_rejects
+        else:
+            rf_reject = counts_reject * 0.0
+
+        sizes = rf_reject.values * relativeFrequencyScale
+
+        # If oldLabels and newLabels provided, map old to new
+        x_ticks = _np.arange(len(confidence_levels))
+        x_labels = list(confidence_levels)
+        if oldLabels is not None and newLabels is not None:
+            mapping = {o: n for o, n in zip(oldLabels, newLabels)}
+            x_labels = [mapping.get(lbl, lbl) for lbl in x_labels]
+
+        # Plot scatter
+        scatter = _plt.scatter(x_ticks, carc_central.values, s=sizes,
+                               label=("CARC " + label).strip(),
+                               alpha=alpha)
+
+        # Plot errors if have been calculated
+        has_low_high = ('carc', 'low') in self.data_rates.index and ('carc', 'high') in self.data_rates.index
+        if has_low_high and errorType is not None:
+            y_low = self.data_rates.loc['carc', 'low'].values
+            y_high = self.data_rates.loc['carc', 'high'].values
+            if errorType == 'bars':
+                _plt.errorbar(x_ticks, carc_central.values,
+                              yerr=[carc_central.values - y_low,
+                                    y_high - carc_central.values],
+                              fmt='.',
+                              color=scatter.get_facecolor()[0],
+                              ecolor=scatter.get_facecolor()[0],
+                              capsize=5,
+                              alpha=alpha)
+            elif errorType == 'band':
+                _plt.fill_between(x_ticks, y_low, y_high, alpha=0.25)
+
+        # 轴、网格与外观
+        _plt.xticks(x_ticks, x_labels, rotation=0)
+        _plt.ylim(0, 1)
+        _plt.ylabel("Proportion of correct rejections")
+        _plt.xlabel(self.dependentVariable if isinstance(self.dependentVariable, str) else "confidence")
+        _plt.legend()
+        _plt.tight_layout()
+
+    def plotRAC(self) :
         pass
 
     def plotHitVsFalseAlarmRate(self):
