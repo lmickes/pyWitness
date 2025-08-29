@@ -1031,7 +1031,6 @@ class DataProcessed :
             elif errorType == 'band':
                 _plt.fill_between(x_ticks, y_low, y_high, alpha=0.25)
 
-        # 轴、网格与外观
         _plt.xticks(x_ticks, x_labels, rotation=0)
         _plt.ylim(0, 1)
         _plt.ylabel("Proportion of correct rejections")
