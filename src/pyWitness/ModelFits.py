@@ -2251,10 +2251,19 @@ class ModelFitComposite:
                 if not p.fixed:
                     freeParams.append(p)
 
-        return freeParams
+        unique = []
+        unique_id = []
+        for x in freeParams:
+            if id(x) not in unique_id:
+                unique.append(x)
+                unique_id.append(id(x))
+
+
+        return unique
 
     @property
     def chi2(self):
+        print("chi2>")
 
         debug = self.debug
         self.debug = False
@@ -2265,10 +2274,22 @@ class ModelFitComposite:
             p0.append(p.value)
         chi2 = self.calculateChi2(p0)
 
+        print("chi2>",chi2)
+
         self.debug = debug
         return chi2
 
+    @property
+    def numberFreeParameters(self):
+        iFreeParams = 0
+        freeParams = self.freeParameterList()
+        for p in freeParams:
+            iFreeParams = iFreeParams + 1
+
+        return iFreeParams
+
     def calculateChi2(self, params):
+        print("calculateChi2>")
 
         freeParams = self.freeParameterList()
 
@@ -2280,13 +2301,17 @@ class ModelFitComposite:
         for mf in self.model_fits:
             chi2Sum += mf.chi2
 
+        print("calculateChi2>", chi2Sum)
+
         return chi2Sum
 
     @property
     def numberDegreesOfFreedom(self):
         ndf = 0
         for m in self.model_fits:
-            ndf += m.numberDataPoints - m.numberFreeParameters
+            ndf += m.numberDataPoints
+
+        ndf -= self.numberFreeParameters
 
         return ndf
 
