@@ -2196,6 +2196,7 @@ class ModelFitComposite:
         self.model_fits = []
         self.debug = False
         self.debugIoPadSize = 60
+        self.iteraction = 0
 
     def addFit(self, fit):
         self.model_fits.append(fit)
@@ -2263,7 +2264,6 @@ class ModelFitComposite:
 
     @property
     def chi2(self):
-        print("chi2>")
 
         debug = self.debug
         self.debug = False
@@ -2289,7 +2289,6 @@ class ModelFitComposite:
         return iFreeParams
 
     def calculateChi2(self, params):
-        print("calculateChi2>")
 
         freeParams = self.freeParameterList()
 
@@ -2301,7 +2300,14 @@ class ModelFitComposite:
         for mf in self.model_fits:
             chi2Sum += mf.chi2
 
-        print("calculateChi2>", chi2Sum)
+        if self.debug:
+            print('------------------------------------------------------------------------------')
+            print('ModelFit.calculateChi2> chi2 valuation number'.ljust(self.debugIoPadSize, ' ') + ":", self.iteration)
+            print('ModelFit.calculateChi2> params               '.ljust(self.debugIoPadSize, ' ') + ":", params)
+            print('ModelFit.calculateChi2> chi2                 '.ljust(self.debugIoPadSize, ' ') + ":", chi2Sum)
+
+
+        self.iteration += 1
 
         return chi2Sum
 
