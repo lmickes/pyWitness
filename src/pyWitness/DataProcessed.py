@@ -1036,6 +1036,7 @@ class DataProcessed :
         _plt.ylim(0, 1)
         _plt.ylabel("Proportion of correct rejections")
         _plt.xlabel(self.dependentVariable if isinstance(self.dependentVariable, str) else "confidence")
+        _plt.gca().invert_xaxis()
         _plt.legend()
         _plt.tight_layout()
 
