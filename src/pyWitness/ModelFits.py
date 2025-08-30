@@ -2196,7 +2196,7 @@ class ModelFitComposite:
         self.model_fits = []
         self.debug = False
         self.debugIoPadSize = 60
-        self.iteraction = 0
+        self.iteration = 0
 
     def addFit(self, fit):
         self.model_fits.append(fit)
