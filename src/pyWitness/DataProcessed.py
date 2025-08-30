@@ -472,8 +472,8 @@ class DataProcessed :
         if self.bootstrapped :
             self.data_rates.drop(("cac","low"),inplace = True)
             self.data_rates.drop(("cac","high"),inplace = True)
-            self.data_rates.drop(('cac','low'),inplace = True)
-            self.data_rates.drop(('cac','high'),inplace = True)
+            self.data_rates.drop(('carc','low'),inplace = True)
+            self.data_rates.drop(('carc','high'),inplace = True)
             self.data_rates.drop(("targetAbsent","fillerId_high"),inplace = True)
             self.data_rates.drop(("targetAbsent","fillerId_low"),inplace = True)
             self.data_rates.drop(("targetAbsent","rejectId_high"),inplace = True)
