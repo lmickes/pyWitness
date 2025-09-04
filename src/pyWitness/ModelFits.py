@@ -2196,6 +2196,7 @@ class ModelFitComposite:
         self.model_fits = []
         self.debug = False
         self.debugIoPadSize = 60
+        self.iteration = 0
 
     def addFit(self, fit):
         self.model_fits.append(fit)
@@ -2251,7 +2252,15 @@ class ModelFitComposite:
                 if not p.fixed:
                     freeParams.append(p)
 
-        return freeParams
+        unique = []
+        unique_id = []
+        for x in freeParams:
+            if id(x) not in unique_id:
+                unique.append(x)
+                unique_id.append(id(x))
+
+
+        return unique
 
     @property
     def chi2(self):
@@ -2265,8 +2274,19 @@ class ModelFitComposite:
             p0.append(p.value)
         chi2 = self.calculateChi2(p0)
 
+        print("chi2>",chi2)
+
         self.debug = debug
         return chi2
+
+    @property
+    def numberFreeParameters(self):
+        iFreeParams = 0
+        freeParams = self.freeParameterList()
+        for p in freeParams:
+            iFreeParams = iFreeParams + 1
+
+        return iFreeParams
 
     def calculateChi2(self, params):
 
@@ -2280,13 +2300,24 @@ class ModelFitComposite:
         for mf in self.model_fits:
             chi2Sum += mf.chi2
 
+        if self.debug:
+            print('------------------------------------------------------------------------------')
+            print('ModelFit.calculateChi2> chi2 valuation number'.ljust(self.debugIoPadSize, ' ') + ":", self.iteration)
+            print('ModelFit.calculateChi2> params               '.ljust(self.debugIoPadSize, ' ') + ":", params)
+            print('ModelFit.calculateChi2> chi2                 '.ljust(self.debugIoPadSize, ' ') + ":", chi2Sum)
+
+
+        self.iteration += 1
+
         return chi2Sum
 
     @property
     def numberDegreesOfFreedom(self):
         ndf = 0
         for m in self.model_fits:
-            ndf += m.numberDataPoints - m.numberFreeParameters
+            ndf += m.numberDataPoints
+
+        ndf -= self.numberFreeParameters
 
         return ndf
 
