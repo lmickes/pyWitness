@@ -1018,29 +1018,11 @@ class DataProcessed :
         except Exception:
             confidence = self.data_rates.columns.get_level_values(self.dependentVariable)
 
-        carc = self.data_rates.loc['carc', 'central']
-
-        try:
-            r_ta = self.data_pivot.loc['targetAbsent', 'rejectId'].astype(float)
-        except KeyError:
-            r_ta = _pandas.Series(0.0, index=self.data_pivot.columns)
-
-        try:
-            r_tp = self.data_pivot.loc['targetPresent', 'rejectId'].astype(float)
-        except KeyError:
-            r_tp = _pandas.Series(0.0, index=self.data_pivot.columns)
-
-        counts_reject = r_ta.add(r_tp, fill_value=0.0).reindex(carc.index, fill_value=0.0)
-        total_rejects = counts_reject.sum()
-        if total_rejects > 0:
-            rf_reject = counts_reject / total_rejects
-        else:
-            rf_reject = counts_reject * 0.0
-
-        sizes = rf_reject.values * relativeFrequencyScale
+        carc        = self.data_rates.loc['carc', 'central']
+        rf_reject   = self.data_rates.loc['rf_reject', '']
 
         # Plot scatter
-        scatter = _plt.scatter(confidence, carc, s=sizes, label=label, color=color, alpha=alpha)
+        scatter = _plt.scatter(confidence, carc, s=rf_reject.values * relativeFrequencyScale, label=label, color=color, alpha=alpha)
 
         # Plot errors if have been calculated
         try:
