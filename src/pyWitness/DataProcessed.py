@@ -77,6 +77,7 @@ class DataProcessed :
         self.calculateCriterion()
         self.calculateConfidence()
         if option == "all" :
+            self.calculateRejectionRelativeFrequency()
             self.calculateRelativeFrequency()
             self.calculateCAC()
             self.calculateCARC()
