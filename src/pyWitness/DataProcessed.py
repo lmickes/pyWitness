@@ -265,6 +265,35 @@ class DataProcessed :
         self.data_rates = _pandas.concat([self.data_rates, _pandas.DataFrame(rf).transpose()])
         self.data_rates = self.data_rates.sort_index()
 
+    def calculateRejectionRelativeFrequency(self,):
+        '''
+        Calculate relative frequency from data_pivot. Result stored in data_rates['rf_reject']
+        '''
+        if self.lineupSize != 1:                                                                           # LINEUP
+            r_tp = self.data_pivot.loc['targetPresent','rejectId']
+        else:
+            try:
+                r_tp = self.data_pivot.loc['targetPresent','rejectId'] + self.data_pivot.loc['targetPresent','suspectId']
+            except:
+                r_tp = self.data_pivot.loc['targetPresent','rejectId']
+
+        try:
+            if self.lineupSize != 1:                                                                        # LINEUP
+                r_ta = self.data_pivot.loc['targetAbsent','suspectId']
+            else:
+                try:
+                    r_ta = self.data_pivot.loc['targetAbsent','rejectId'] + self.data_pivot.loc['targetAbsent','suspectId']
+                except:
+                    r_ta = self.data_pivot.loc['targetAbsent','rejectId']
+
+        except KeyError:
+            r_ta = self.data_pivot.loc['targetAbsent','rejectId']
+
+        rf_reject = (r_tp + r_ta) / (r_tp.sum() + r_ta.sum())
+        rf_reject.name = ("rf_reject", "")
+        self.data_rates = _pandas.concat([self.data_rates, _pandas.DataFrame(rf_reject).transpose()])
+        self.data_rates = self.data_rates.sort_index()
+
     def calculateCAC(self) :
         '''
         Calculate confidence accuracy characteristic from data_pivot. Result stored in data_rates['cac']
