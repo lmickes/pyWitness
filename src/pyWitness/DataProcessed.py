@@ -275,13 +275,13 @@ class DataProcessed :
         if self.lineupSize != 1 :                                                                           # LINEUP
             cid = self.data_pivot.loc['targetPresent','suspectId'] * baseRate
         else :
-            cid = self.data_pivot.loc['targetPresent', 'suspectId'] * (baseRate) + self.data_pivot.loc['targetAbsent', 'rejectId'] * (1 - baseRate)
+            cid = self.data_pivot.loc['targetPresent', 'suspectId'] * baseRate + self.data_pivot.loc['targetAbsent', 'rejectId'] * (1 - baseRate)
 
         try :
             if self.lineupSize != 1 :                                                                       # LINEUP
                 fid = self.data_pivot.loc['targetAbsent','designateId'] * (1 - baseRate)
             else :
-                fid = self.data_pivot.loc['targetPresent', 'rejectId'] * (baseRate) + self.data_pivot.loc['targetAbsent', 'suspectId'] * (1 - baseRate)
+                fid = self.data_pivot.loc['targetPresent', 'rejectId'] * baseRate + self.data_pivot.loc['targetAbsent', 'suspectId'] * (1 - baseRate)
         except KeyError :
             fid = self.data_pivot.loc['targetAbsent','fillerId']/self.lineupSize * (1 - baseRate)
 
