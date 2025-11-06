@@ -1,7 +1,7 @@
 import pandas as _pandas
 import numpy as _np
 import copy as _copy
-from .Utils import find_bins as _find_bins
+from .Utils import quantile_bin_edges as _find_bins
 
 from .DataProcessed import DataProcessed as _DataProcessed
 
