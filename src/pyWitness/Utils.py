@@ -15,7 +15,7 @@ def getColorOfLabeledFromGca(label) :
 
             #print(fc)
 
-def find_bins(val, bin_points, outliner_val=50, dropna=True):
+def quantile_bin_edges(val, bin_points, outlier_threshold=50, dropna=True):
     '''
     Compute bin edges by cumulative probability, after removing outliers.
 
@@ -31,7 +31,7 @@ def find_bins(val, bin_points, outliner_val=50, dropna=True):
         s = s.dropna()
 
     # Remove outliers
-    s = s[s < outliner_val]
+    s = s[s < outlier_threshold]
 
     s= s.replace([_np.inf, -_np.inf], _np.nan).dropna()
     if len(s) == 0 :
