@@ -272,20 +272,20 @@ class DataProcessed :
 
         baseRate = self.baseRate
 
-        if self.lineupSize != 1 :                                                                           # SHOWUP
-            cid = self.data_pivot.loc['targetPresent','suspectId']
+        if self.lineupSize != 1 :                                                                           # LINEUP
+            cid = self.data_pivot.loc['targetPresent','suspectId'] * baseRate
         else :
-            cid = self.data_pivot.loc['targetPresent', 'suspectId'] + self.data_pivot.loc['targetAbsent', 'rejectId']
+            cid = self.data_pivot.loc['targetPresent', 'suspectId'] * (baseRate) + self.data_pivot.loc['targetAbsent', 'rejectId'] * (1 - baseRate)
 
         try :
-            if self.lineupSize != 1 :                                                                       # SHOWUP
-                fid = self.data_pivot.loc['targetAbsent','designateId']
+            if self.lineupSize != 1 :                                                                       # LINEUP
+                fid = self.data_pivot.loc['targetAbsent','designateId'] * (1 - baseRate)
             else :
-                fid = self.data_pivot.loc['targetPresent', 'rejectId'] + self.data_pivot.loc['targetAbsent', 'suspectId']
+                fid = self.data_pivot.loc['targetPresent', 'rejectId'] * (baseRate) + self.data_pivot.loc['targetAbsent', 'suspectId'] * (1 - baseRate)
         except KeyError :
-            fid = self.data_pivot.loc['targetAbsent','fillerId']/self.lineupSize
-        
-        cac = baseRate*cid/(baseRate*cid+(1-baseRate)*fid)
+            fid = self.data_pivot.loc['targetAbsent','fillerId']/self.lineupSize * (1 - baseRate)
+
+        cac = cid/(cid+fid)
         cac.name = ("cac","central")
         self.data_rates = _pandas.concat([self.data_rates, _pandas.DataFrame(cac).transpose()])
         self.data_rates = self.data_rates.sort_index()
