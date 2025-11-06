@@ -1,6 +1,7 @@
 import pandas as _pandas
 import numpy as _np
 import copy as _copy
+from Utils import find_bins as _find_bins
 
 from .DataProcessed import DataProcessed as _DataProcessed
 
@@ -253,7 +254,7 @@ class DataRaw :
         self.data[column] = self.data[column].map(map)
 
 
-    def collapseContinuousData(self, 
+    def collapseContinuousData(self,
                                column = "confidence",
                                bins = [-1,60,80,100],
                                labels= [1,2,3]
@@ -286,6 +287,19 @@ class DataRaw :
         self.data.rename(columns = {column:column_original}, inplace= True)
 
         dataToBin = self.data[column_original]
+
+        if isinstance(bins, str) and bins == "auto":
+            auto_bins, auto_labels = _find_bins(dataToBin)
+            if auto_bins is None or len(auto_bins) == 0 :
+                raise Exception("Could not compute bins automatically")
+            bins = auto_bins
+            labels = auto_labels
+
+            self.collapseContinuousBins = bins
+            self.collapseContinuousLabels = labels
+
+        if labels == None :
+            labels = range(1,len(bins))
 
         dataBinned = _pandas.cut(dataToBin,bins,labels = labels)
         self.data.insert(self.data.columns.get_loc(column_original)+1, column, dataBinned)
