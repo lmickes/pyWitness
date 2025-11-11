@@ -42,3 +42,12 @@ def test_02_processing_test1ds_csv():
     import pyWitness
     dr = pyWitness.DataRaw("../data/tutorial/test1ds.csv")
     dp = dr.process()
+
+def test_02_processing_test1_csv_data_rates():
+    import pyWitness
+    dr = pyWitness.DataRaw("../data/tutorial/test1.csv")
+    dp = dr.process()
+    assert dp.data_rates.loc[("rf", "")].max() == pytest.approx(0.239374, rel=1e-5)
+    assert dp.data_rates.loc[("rf_reject", "")].max() == pytest.approx(0.204494, rel=1e-5)
+    assert dp.data_rates.loc[("cac", "central")].max() == pytest.approx(0.976190, rel=1e-5)
+    assert dp.data_rates.loc[("carc", "central")].max() == pytest.approx(1.000000, rel=1e-5)
