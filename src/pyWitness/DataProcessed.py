@@ -273,19 +273,23 @@ class DataProcessed :
         baseRate = self.baseRate
 
         if self.lineupSize != 1 :                                                                           # LINEUP
-            cid = self.data_pivot.loc['targetPresent','suspectId'] * baseRate
-        else :
-            cid = self.data_pivot.loc['targetPresent', 'suspectId'] * baseRate + self.data_pivot.loc['targetAbsent', 'rejectId'] * (1 - baseRate)
+            cid = self.data_pivot.loc['targetPresent','suspectId']
 
-        try :
-            if self.lineupSize != 1 :                                                                       # LINEUP
-                fid = self.data_pivot.loc['targetAbsent','designateId'] * (1 - baseRate)
-            else :
-                fid = self.data_pivot.loc['targetPresent', 'rejectId'] * baseRate + self.data_pivot.loc['targetAbsent', 'suspectId'] * (1 - baseRate)
-        except KeyError :
-            fid = self.data_pivot.loc['targetAbsent','fillerId']/self.lineupSize * (1 - baseRate)
+            try:
+                fid = self.data_pivot.loc['targetAbsent','designateId']
+            except KeyError:
+                fid = self.data_pivot.loc['targetAbsent', 'fillerId'] / self.lineupSize
 
-        cac = cid/(cid+fid)
+            cac = baseRate * cid / (baseRate * cid + (1 - baseRate) * fid)
+
+        else :                                                                                              # SHOWUP
+            cid_baseRate_mod = self.data_pivot.loc['targetPresent', 'suspectId'] * baseRate + self.data_pivot.loc[
+                'targetAbsent', 'rejectId'] * (1 - baseRate)
+            fid_baseRate_mod = self.data_pivot.loc['targetPresent', 'rejectId'] * baseRate + self.data_pivot.loc[
+                'targetAbsent', 'suspectId'] * (1 - baseRate)
+
+            cac = cid_baseRate_mod / (cid_baseRate_mod + fid_baseRate_mod)
+
         cac.name = ("cac","central")
         self.data_rates = _pandas.concat([self.data_rates, _pandas.DataFrame(cac).transpose()])
         self.data_rates = self.data_rates.sort_index()
