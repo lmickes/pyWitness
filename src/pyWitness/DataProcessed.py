@@ -19,7 +19,8 @@ class DataProcessed :
     :type reverseConfidence: bool
     :param lineupSize: Number of people in the lineup
     :type lineupSize: int 
-    
+
+    Hello this is a test
     '''
     
     def __init__(self, dataRaw, reverseConfidence = False, lineupSize = 1, pAUCLiberal = 1.0, levels = None, option="all", dependentVariable = "confidence", baseRate = 0.5) :
