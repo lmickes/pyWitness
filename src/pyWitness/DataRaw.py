@@ -1,7 +1,7 @@
 import pandas as _pandas
 import numpy as _np
 import copy as _copy
-from .Utils import quantile_bin_edges as _find_bins
+from .Utils import quantile_bin_edges as _quantile_bin_edges
 
 from .DataProcessed import DataProcessed as _DataProcessed
 
@@ -294,7 +294,7 @@ class DataRaw :
             else :
                 raise ValueError("autoBin must be bool or int")
 
-            auto_bins = _find_bins(dataToBin, bin_points)
+            auto_bins = _quantile_bin_edges(dataToBin, bin_points)
             if auto_bins is None or len(auto_bins) == 0 :
                 raise ValueError("Could not compute automatic bins")
 
