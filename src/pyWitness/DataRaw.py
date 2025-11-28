@@ -258,7 +258,7 @@ class DataRaw :
                                column = "confidence",
                                bins = [-1,60,80,100],
                                labels= [1,2,3],
-                               autoBin = False
+                               autoBinNBins: int = 0,
                                ) :
         '''
         Take values of column and rebin to new keys in bins
@@ -269,8 +269,7 @@ class DataRaw :
         :type bins: map
         :param labels: Labels for the bins
         :type labels: list
-        :param autoBin: Flag to compute bins automatically
-        :type autoBin: bool
+        :param autoBinNBins: if > 0, compute quantile-based bins with this number of bins
 
         :rtype:None 
         '''
@@ -284,25 +283,20 @@ class DataRaw :
 
         dataToBin = self.data[column_original]
 
-        if autoBin is not False :
-            if autoBin == True :
-                bin_points = 4
-            elif isinstance(autoBin, (_np.integer, int)) :
-                bin_points = int(autoBin)
-                if bin_points < 2 :
-                    raise ValueError("autoBin must be >= 2")
-            else :
-                raise ValueError("autoBin must be bool or int")
+        if autoBinNBins is not None and int(autoBinNBins) > 0:
+            bin_points = int(autoBinNBins)
+            if bin_points < 2:
+                raise ValueError("autoBinNBins must be >= 2")
 
             auto_bins = _quantile_bin_edges(dataToBin, bin_points)
-            if auto_bins is None or len(auto_bins) == 0 :
+            if auto_bins is None or len(auto_bins) == 0:
                 raise ValueError("Could not compute automatic bins")
 
             bins = auto_bins
             labels = range(1,len(bins))
 
         # If there are no labels generate them
-        if labels == None :
+        if labels is None:
             labels = range(1,len(bins))
 
         self.collapseContinuous       = True
