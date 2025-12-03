@@ -277,18 +277,14 @@ class DataRaw :
         if self.collapseContinuous :
             raise Exception("Already binned confidence")
 
-        column_original = column+"_original"
-
-        self.data.rename(columns = {column:column_original}, inplace= True)
-
-        dataToBin = self.data[column_original]
-
         if autoBinNBins is not None and int(autoBinNBins) > 0:
             bin_points = int(autoBinNBins)
             if bin_points < 2:
                 raise ValueError("autoBinNBins must be >= 2")
 
-            auto_bins = _quantile_bin_edges(dataToBin, bin_points)
+            data_for_binning = self.data[column]
+
+            auto_bins = _quantile_bin_edges(data_for_binning, bin_points)
             if auto_bins is None or len(auto_bins) == 0:
                 raise ValueError("Could not compute automatic bins")
 
@@ -303,6 +299,12 @@ class DataRaw :
         self.collapseContinuousColumn = column
         self.collapseContinuousBins   = bins
         self.collapseContinuousLabels = labels
+
+        column_original = column + "_original"
+
+        self.data.rename(columns={column: column_original}, inplace=True)
+
+        dataToBin = self.data[column_original]
 
         dataBinned = _pandas.cut(dataToBin,bins,labels = labels)
         self.data.insert(self.data.columns.get_loc(column_original)+1, column, dataBinned)
