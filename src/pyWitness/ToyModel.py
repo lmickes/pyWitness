@@ -14,7 +14,7 @@ class GaussianSDTModel:
         mu_signal = dprime, sigma_signal = 1
 
     Methods provide:
-    - hit_false_alarm(criterion)
+    - hit_far_rate(criterion)
     - roc_curve()
     - dprime_from_rates(HR, FAR)
     - dprime_curve(criterion_grid)
@@ -31,63 +31,63 @@ class GaussianSDTModel:
         self.sigma_noise = sigma_noise
         self.sigma_signal = sigma_signal
 
-        @property
-        def dprime_analytic(self) -> float:
-            """
-            Analytic d' for equal-variance SDT:
-                d' = (mu_signal - mu_noise) / sigma_noise
-            If variances differ, this is still a useful 'effective' separation.
-            """
-            return (self.mu_signal - self.mu_noise) / self.sigma_signal
+    @property
+    def dprime_analytic(self) -> float:
+        """
+        Analytic d' for equal-variance SDT:
+            d' = (mu_signal - mu_noise) / sigma_noise
+        If variances differ, this is still a useful 'effective' separation.
+        """
+        return (self.mu_signal - self.mu_noise) / self.sigma_signal
 
-        def hit_far_rate(self, criterion: float):
-            """
-            Compute hit rate and false alarm rate for a given decision criterion.
-                HR = P(x_signal > criterion)
-                FAR = P(x_noise > criterion)
-            """
-            hit_rate = 1 - norm.cdf(criterion, loc=self.mu_signal, scale=self.sigma_signal)
-            far_rate = 1 - norm.cdf(criterion, loc=self.mu_noise, scale=self.sigma_noise)
-            return hit_rate, far_rate
+    def hit_far_rate(self, criterion: float):
+        """
+        Compute hit rate and false alarm rate for a given decision criterion.
+            HR = P(x_signal > criterion)
+            FAR = P(x_noise > criterion)
+        """
+        hit_rate = 1 - norm.cdf(criterion, loc=self.mu_signal, scale=self.sigma_signal)
+        far_rate = 1 - norm.cdf(criterion, loc=self.mu_noise, scale=self.sigma_noise)
+        return hit_rate, far_rate
 
-        def roc_curve(self, n_points: int = 200, span: float = 1.0):
-            """
-            Construct ROC curve by sweeping criterion across the distributions.
-            n_points: number of points to compute on the ROC curve.
-            span: fraction of the way from mu_noise to mu_signal to cover with criteria.
-            """
-            # Cover a range that comfortably includes both distributions
-            lower = min(self.mu_noise, self.mu_signal) - span * max(self.sigma_noise, self.sigma_signal)
-            upper = max(self.mu_noise, self.mu_signal) + span * max(self.sigma_noise, self.sigma_signal)
-            criteria = _np.linspace(lower, upper, n_points)
+    def roc_curve(self, n_points: int = 200, span: float = 1.0):
+        """
+        Construct ROC curve by sweeping criterion across the distributions.
+        n_points: number of points to compute on the ROC curve.
+        span: fraction of the way from mu_noise to mu_signal to cover with criteria.
+        """
+        # Cover a range that comfortably includes both distributions
+        lower = min(self.mu_noise, self.mu_signal) - span * max(self.sigma_noise, self.sigma_signal)
+        upper = max(self.mu_noise, self.mu_signal) + span * max(self.sigma_noise, self.sigma_signal)
+        criteria = _np.linspace(lower, upper, n_points)
 
-            HRs, FARs = [], []
-            for c in criteria:
-                hr, fa = self.hit_false_alarm(c)
-                HRs.append(hr)
-                FARs.append(fa)
-            HRs = _np.array(HRs)
-            FARs =_np.array(FARs)
+        HRs, FARs = [], []
+        for c in criteria:
+            hr, fa = self.hit_far_rate(c)
+            HRs.append(hr)
+            FARs.append(fa)
+        HRs = _np.array(HRs)
+        FARs =_np.array(FARs)
 
-            # Sort by FAR (0 -> 1) just to be safe
-            order = _np.argsort(FARs)
-            return FARs[order], HRs[order], criteria[order]
+        # Sort by FAR (0 -> 1) just to be safe
+        order = _np.argsort(FARs)
+        return FARs[order], HRs[order], criteria[order]
 
-        @staticmethod
-        def dprime_from_rates(HR: float, FAR: float):
-            """
-            Classic SDT definition: d' = z(HR) - z(FAR)
-            Handles edge cases by clipping probabilities.
-            """
-            eps = 1e-6
-            HR = _np.clip(HR, eps, 1 - eps)
-            FAR = _np.clip(FAR, eps, 1 - eps)
-            zHR = norm.ppf(HR)
-            zFAR = norm.ppf(FAR)
-            return zHR - zFAR
+    @staticmethod
+    def dprime_from_rates(HR: float, FAR: float):
+        """
+        Classic SDT definition: d' = z(HR) - z(FAR)
+        Handles edge cases by clipping probabilities.
+        """
+        eps = 1e-6
+        HR = _np.clip(HR, eps, 1 - eps)
+        FAR = _np.clip(FAR, eps, 1 - eps)
+        zHR = norm.ppf(HR)
+        zFAR = norm.ppf(FAR)
+        return zHR - zFAR
 
     def dprime_from_criterion(self, criterion: float) -> float:
-        HR, FAR = self.hit_false_alarm(criterion)
+        HR, FAR = self.hit_far_rate(criterion)
         return self.dprime_from_rates(HR, FAR)
 
     def dprime_curve(self, criteria: _np.ndarray) -> _np.ndarray:
@@ -112,7 +112,7 @@ class GaussianSDTModel:
         far = float(_np.clip(far, eps, 1 - eps))
         z = norm.ppf(1.0 - far)
         c = self.mu_noise + self.sigma_noise * z
-        HR, _ = self.hit_false_alarm(c)
+        HR, _ = self.hit_far_rate(c)
         return HR
 
     def pauc(self, xmax: float) -> float:
@@ -135,8 +135,9 @@ class GaussianSDTModel:
             pAUC(criterion) = ∫_0^{FAR(c)} ROC(far) dfar
         This matches how your pyWitness pAUC integrates from 0 to some xmax.
         """
-        _, FAR = self.hit_false_alarm(criterion)
+        _, FAR = self.hit_far_rate(criterion)
         return self.pauc(FAR)
+
 
 def plot_gaussians_with_criterion(model: GaussianSDTModel, criterion: float, ax=None):
     if ax is None:
@@ -169,7 +170,6 @@ def plot_gaussians_with_criterion(model: GaussianSDTModel, criterion: float, ax=
     ax.legend()
     ax.grid(False)
 
-
 def plot_roc(model: GaussianSDTModel, criterion: float, ax=None, shade_pauc=True):
     if ax is None:
         ax = _plt.gca()
@@ -177,7 +177,7 @@ def plot_roc(model: GaussianSDTModel, criterion: float, ax=None, shade_pauc=True
     FARs, HRs, criteria = model.roc_curve(n_points=400)
     ax.plot(FARs, HRs, label="ROC", color="C0")
 
-    HR_c, FAR_c = model.hit_false_alarm(criterion)
+    HR_c, FAR_c = model.hit_far_rate(criterion)
     ax.scatter([FAR_c], [HR_c], color="red", zorder=3,
                label="Current c")
 
@@ -194,7 +194,7 @@ def plot_roc(model: GaussianSDTModel, criterion: float, ax=None, shade_pauc=True
                         color="C0", label="pAUC region")
 
     ax.text(
-        0.98, 0.25,
+        0.98, 0.26,
         f"FAR(c) = {FAR_c:.2f}\nHR(c)  = {HR_c:.2f}",
         transform=ax.transAxes,
         ha="right", va="bottom", fontsize=10
@@ -253,3 +253,66 @@ def plot_dprime_and_pauc(model: GaussianSDTModel, ax1=None, ax2=None, current_c=
 
     _plt.tight_layout()
 
+
+try:
+    from ipywidgets import interact, FloatSlider
+except ImportError:
+    interact = None
+    FloatSlider = None
+
+def interactive_sdt_demo(model,
+                         c_init=0.5,
+                         c_min=-4.0,
+                         c_max=4.0,
+                         c_step=0.1):
+    """
+    Launch an interactive SDT demo for a given model.
+
+    Parameters
+    ----------
+    model : GaussianSDTModel
+    c_init, c_min, c_max, c_step : float
+        Slider settings for the decision criterion c.
+    """
+    if interact is None or FloatSlider is None:
+        raise ImportError(
+            "ipywidgets is required for interactive_sdt_demo. "
+            "Install with `pip install ipywidgets` and enable it in Jupyter."
+        )
+
+    def _update(c):
+        # robustly convert c to float
+        if hasattr(c, "value"):
+            c_val = float(c.value)
+        else:
+            c_val = float(c)
+
+        fig, axes = _plt.subplots(1, 3, figsize=(14, 4))
+
+        plot_gaussians_with_criterion(model, c_val, ax=axes[0])
+        plot_roc(model, c_val, ax=axes[1])
+
+        d_val = model.dprime_from_criterion(c_val)
+        pauc_val = model.pauc_at_criterion(c_val)
+
+        axes[2].axis("off")
+        text = (
+            f"Criterion c = {c_val:.2f}\n"
+            f"d'(c)      = {d_val:.3f}\n"
+            f"Analytic d' = {model.dprime_analytic:.3f}\n\n"
+            # f"The point on ROC is defined by a set of FAR(c) and HR(c).\n"
+            # f"pAUC(c) is Calculated by integrating ROC from FAR=0 to FAR(c).\n"
+            f"pAUC(c) = {pauc_val:.3f}"
+        )
+        axes[2].text(0.01, 0.01, text, va="bottom", ha="left", fontsize=11)
+        _plt.tight_layout()
+
+    slider = FloatSlider(
+        value=c_init,
+        min=c_min,
+        max=c_max,
+        step=c_step,
+        description="Criterion c"
+    )
+
+    return interact(_update, c=slider)
