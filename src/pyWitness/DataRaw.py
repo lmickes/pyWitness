@@ -1,6 +1,7 @@
 import pandas as _pandas
 import numpy as _np
 import copy as _copy
+from .Utils import quantile_bin_edges as _quantile_bin_edges
 
 from .DataProcessed import DataProcessed as _DataProcessed
 
@@ -253,10 +254,11 @@ class DataRaw :
         self.data[column] = self.data[column].map(map)
 
 
-    def collapseContinuousData(self, 
+    def collapseContinuousData(self,
                                column = "confidence",
                                bins = [-1,60,80,100],
-                               labels= [1,2,3]
+                               labels= [1,2,3],
+                               autoBinNBins: int = 0,
                                ) :
         '''
         Take values of column and rebin to new keys in bins
@@ -265,6 +267,9 @@ class DataRaw :
         :type column: str
         :param bins: Map of categories and bins  
         :type bins: map
+        :param labels: Labels for the bins
+        :type labels: list
+        :param autoBinNBins: if > 0, compute quantile-based bins with this number of bins
 
         :rtype:None 
         '''
@@ -272,8 +277,22 @@ class DataRaw :
         if self.collapseContinuous :
             raise Exception("Already binned confidence")
 
+        if autoBinNBins is not None and int(autoBinNBins) > 0:
+            bin_points = int(autoBinNBins)
+            if bin_points < 2:
+                raise ValueError("autoBinNBins must be >= 2")
+
+            data_for_binning = self.data[column]
+
+            auto_bins = _quantile_bin_edges(data_for_binning, bin_points)
+            if auto_bins is None or len(auto_bins) == 0:
+                raise ValueError("Could not compute automatic bins")
+
+            bins = auto_bins
+            labels = range(1,len(bins))
+
         # If there are no labels generate them
-        if labels == None :
+        if labels is None:
             labels = range(1,len(bins))
 
         self.collapseContinuous       = True
@@ -281,9 +300,9 @@ class DataRaw :
         self.collapseContinuousBins   = bins
         self.collapseContinuousLabels = labels
 
-        column_original = column+"_original"
+        column_original = column + "_original"
 
-        self.data.rename(columns = {column:column_original}, inplace= True)
+        self.data.rename(columns={column: column_original}, inplace=True)
 
         dataToBin = self.data[column_original]
 
