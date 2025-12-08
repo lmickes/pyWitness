@@ -31,3 +31,15 @@ def test_04_collapsing_test3_csv_continuous_data() :
     dr = pyWitness.DataRaw("../data/tutorial/test3.csv")
     dr.collapseContinuousData(column="confidence", bins=[-12, -9.5, -7.5, -5.5, 0, 5.5, 7.5, 9.5, 12.5],
                               labels=[1, 2, 3, 4, 5, 6, 7, 8])
+
+def test_04_auto_binning_test1_csv_continuous_data():
+    import pyWitness
+    dr = pyWitness.DataRaw("../data/tutorial/test1.csv")
+    dr.collapseContinuousData(column="confidence", autoBinNBins=5)
+    dp = dr.process()
+    dp.plotROC()
+
+def test_04_auto_binning_test3_csv_continuous_data() :
+    import pyWitness
+    dr = pyWitness.DataRaw("../data/tutorial/test3.csv")
+    dr.collapseContinuousData(column="confidence", autoBinNBins=10)
