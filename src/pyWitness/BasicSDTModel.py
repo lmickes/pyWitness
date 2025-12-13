@@ -3,7 +3,7 @@ import matplotlib.pyplot as _plt
 from scipy.stats import norm
 from scipy import integrate
 
-class GaussianSDTModel:
+class BasicSDTModel:
     """
     Simple SDT with two Gaussians:
     - Noise: X_N ~ N(mu_noise, sigma_noise)
@@ -139,7 +139,7 @@ class GaussianSDTModel:
         return self.pauc(FAR)
 
 
-def plot_gaussians_with_criterion(model: GaussianSDTModel, criterion: float, ax=None):
+def plot_gaussians_with_criterion(model: BasicSDTModel, criterion: float, ax=None):
     if ax is None:
         ax = _plt.gca()
 
@@ -170,7 +170,7 @@ def plot_gaussians_with_criterion(model: GaussianSDTModel, criterion: float, ax=
     ax.legend()
     ax.grid(False)
 
-def plot_roc(model: GaussianSDTModel, criterion: float, ax=None, shade_pauc=True):
+def plot_roc(model: BasicSDTModel, criterion: float, ax=None, shade_pauc=True):
     if ax is None:
         ax = _plt.gca()
 
@@ -210,7 +210,7 @@ def plot_roc(model: GaussianSDTModel, criterion: float, ax=None, shade_pauc=True
     ax.set_ylim(-0.01, 1.01)
     ax.set_aspect("equal", adjustable="box")
 
-def plot_dprime_and_pauc(model: GaussianSDTModel, ax1=None, ax2=None, current_c=None):
+def plot_dprime_and_pauc(model: BasicSDTModel, ax1=None, ax2=None, current_c=None):
     """
     Plot d'(c) and pAUC(c) as functions of criterion.
     If current_c is not None, mark that position with a vertical line + marker.
@@ -270,7 +270,7 @@ def interactive_sdt_demo(model,
 
     Parameters
     ----------
-    model : GaussianSDTModel
+    model : BasicSDTModel
     c_init, c_min, c_max, c_step : float
         Slider settings for the decision criterion c.
     """
