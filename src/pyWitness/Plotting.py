@@ -134,19 +134,25 @@ def plotIdRatesBarChart(dataProcesseds,
         axs[1].set_ylabel('Identification Rate')
 
         if annotate :
-            for b, v in zip(bars1, correctRates) :
-                axs[0].text(b.get_x()+b.get_width()/2.0, b.get_height(), f"{v:.3f}",
+            for i, (b, v) in enumerate(zip(bars1, correctRates)) :
+                y = v
+                if errorBars :
+                    y += correctUpperErrors[i]
+                axs[0].text(b.get_x()+b.get_width()/2.0, y + 0.01, f"{v:.3f}",
                             ha="center", va="bottom")
-            for b, v in zip(bars2, falseRates) :
-                axs[1].text(b.get_x()+b.get_width()/2.0, b.get_height(), f"{v:.3f}",
+            for i, (b, v) in enumerate(zip(bars2, falseRates)) :
+                y = v
+                if errorBars :
+                    y += falseUpperErrors[i]
+                axs[1].text(b.get_x()+b.get_width()/2.0, y + 0.05, f"{v:.3f}",
                             ha="center", va="bottom")
 
     elif plotStyle == "grouped" :
         fig, ax = _plt.subplots(1, 1, figsize=(8, 6))
 
         width = 0.35
-        bars1 = ax.bar(x - width/2, correctRates, width, yerr=correctErrorBars, capsize=5, color='skyblue', label='Correct ID Rate')
-        bars2 = ax.bar(x + width/2, falseRates, width, yerr=falseErrorBars, capsize=5, color='salmon', label='False ID Rate')
+        bars1 = ax.bar(x - width/2, correctRates, width, yerr=correctErrorBars, capsize=5, color='tab:blue', label='Correct ID Rate')
+        bars2 = ax.bar(x + width/2, falseRates, width, yerr=falseErrorBars, capsize=5, color='tab:orange', label='False ID Rate')
 
         ax.set_title('Identification Rates')
         ax.set_xticks(x)
@@ -156,11 +162,15 @@ def plotIdRatesBarChart(dataProcesseds,
         ax.legend()
 
         if annotate :
-            for b, v in zip(bars1, correctRates) :
-                ax.text(b.get_x()+b.get_width()/2.0, b.get_height(), f"{v:.3f}",
+            for i,  (b, v) in enumerate(zip(bars1, correctRates)) :
+                if errorBars :
+                    y = v + correctUpperErrors[i]
+                ax.text(b.get_x()+b.get_width()/2.0, y + 0.01, f"{v:.3f}",
                         ha="center", va="bottom")
-            for b, v in zip(bars2, falseRates) :
-                ax.text(b.get_x()+b.get_width()/2.0, b.get_height(), f"{v:.3f}",
+            for i, (b, v) in enumerate(zip(bars2, falseRates)) :
+                if errorBars :
+                    y = v + falseUpperErrors[i]
+                ax.text(b.get_x()+b.get_width()/2.0, y + 0.01, f"{v:.3f}",
                         ha="center", va="bottom")
 
     else :
