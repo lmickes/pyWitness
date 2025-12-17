@@ -510,13 +510,8 @@ class DataRaw :
     def plotIdRatesBarChart(self,
                             column=None,
                             conditions=None,
-                            plotStyle="separate",
                             conditionOder=None,
-                            title=None,
-                            ylim=[0.0, 1.0],
-                            annotate=True,
-                            errorBars=True,
-                            ci=0.95):
+                            **kwargs):
         """
         Convenience wrapper:
         Build multiple DataProcessed objects via DataRaw.process(column=..., condition=...)
@@ -532,20 +527,10 @@ class DataRaw :
         # avoid circular imports: import locally
         from .Plotting import plotIdRatesBarChart
 
-        # -------- Basic (no conditions): overall rates only --------
+        # No conditions: overall rates only
         if column is None or conditions is None:
             dp = self.process()
-            dps = {"All": dp}
-            return plotIdRatesBarChart(
-                dps,
-                plotStyle=plotStyle,
-                conditionOder=["All"] if conditionOder is None else conditionOder,
-                title=title,
-                ylim=ylim,
-                annotate=annotate,
-                errorBars=errorBars,
-                ci=ci,
-            )
+            return plotIdRatesBarChart(dp,**kwargs)
 
         # parse conditions
         if isinstance(conditions, str):
@@ -562,14 +547,4 @@ class DataRaw :
         if conditionOder is None:
             conditionOder = condList
 
-
-        return plotIdRatesBarChart(
-            dps,
-            plotStyle=plotStyle,
-            conditionOder=conditionOder,
-            title=title,
-            ylim=ylim,
-            annotate=annotate,
-            errorBars=errorBars,
-            ci=ci,
-        )
+        return plotIdRatesBarChart(dps, conditionOder=conditionOder, **kwargs)
