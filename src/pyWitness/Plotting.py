@@ -163,11 +163,13 @@ def plotIdRatesBarChart(dataProcesseds,
 
         if annotate :
             for i,  (b, v) in enumerate(zip(bars1, correctRates)) :
+                y = v
                 if errorBars :
                     y = v + correctUpperErrors[i]
                 ax.text(b.get_x()+b.get_width()/2.0, y + 0.01, f"{v:.3f}",
                         ha="center", va="bottom")
             for i, (b, v) in enumerate(zip(bars2, falseRates)) :
+                y = v
                 if errorBars :
                     y = v + falseUpperErrors[i]
                 ax.text(b.get_x()+b.get_width()/2.0, y + 0.01, f"{v:.3f}",
