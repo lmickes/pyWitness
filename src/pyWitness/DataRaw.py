@@ -506,3 +506,54 @@ class DataRaw :
         '''
 
         self.data.to_excel(fileName, engine = engine)
+
+    def plotIdRatesBarChart(self,
+                            column,
+                            conditions,
+                            plotStyle="separate",
+                            conditionOder=None,
+                            title=None,
+                            ylim=[0.0, 1.0],
+                            annotate=True,
+                            errorBars=True,
+                            ci=0.95):
+        """
+        Convenience wrapper:
+        Build multiple DataProcessed objects via DataRaw.process(column=..., condition=...)
+        then call pyWitness.Plotting.plotIdRatesBarChart(dataProcesseds,...)
+
+        :param column: the column name to split conditions on (e.g., "gender")
+        :type column: str
+        :param conditions: list ["male","female"] or string "male/female"
+        :type conditions: list or str
+        :rtype: None
+        """
+
+        # parse conditions
+        if isinstance(conditions, str):
+            condList = [c.strip() for c in conditions.split("/") if c.strip() != ""]
+        else:
+            condList = list(conditions)
+
+        # build DataProcessed mapping
+        dps = {}
+        for c in condList:
+            dps[c] = self.process(column=column, condition=c)
+
+        # default order
+        if conditionOder is None:
+            conditionOder = condList
+
+        # avoid circular imports: import locally
+        from .Plotting import plotIdRatesBarChart
+
+        return plotIdRatesBarChart(
+            dps,
+            plotStyle=plotStyle,
+            conditionOder=conditionOder,
+            title=title,
+            ylim=ylim,
+            annotate=annotate,
+            errorBars=errorBars,
+            ci=ci,
+        )
