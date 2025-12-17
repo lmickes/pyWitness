@@ -20,6 +20,15 @@ def _errorBar(k, n, ci) :
     high = centre + half
     return (low, high)
 
+def _annotateBars(ax, bars, values, upperErrors=None, pad=0.01) :
+    for i, (b, v) in enumerate(zip(bars, values)) :
+        y = v
+        if upperErrors is not None :
+            y = v + upperErrors[i]
+        ax.text(b.get_x() + b.get_width()/2.0, y + pad, f"{v:.3f}",
+                ha="center", va="bottom")
+
+
 def plotIdRatesBarChart(dataProcesseds,
                        plotStyle = "separate",
                        conditionOder = None,
@@ -29,7 +38,29 @@ def plotIdRatesBarChart(dataProcesseds,
                        errorBars = True,
                        ci = 0.95,) :
     """
-    Plot identification rate bar chart for one or more DataProcessed objects.
+    Plot Correct ID rate and False Alarm rate across conditions.
+
+    Correct ID rate (TP suspectId):
+        k = sum(data_pivot.loc[("targetPresent","suspectId"), :])
+        n = targetPresentSum
+
+    False Alarm rate is computed in a way consistent with DataProcessed.calculateRates():
+        lineupSize > 1:
+            if designateId exists: use ("targetAbsent","designateId") as suspectId
+            else: suspectId = fillerId / lineupSize.
+        lineupSize == 1 (showup):
+            suspectId = 1 - rejectId  (i.e., any "choice" in TA showup)
+
+    For the filler/lineupSize case, CI is scaled by 1/lineupSize.
+
+    :param dataProcesseds: mapping of condition label -> DataProcessed
+    :type dataProcesseds: dict
+    :param plotStyle: "separate"/"grouped" (also accepts "separate")
+    :type plotStyle: str
+    :param conditionOder: list of condition labels in desired order
+    :type conditionOder: list
+
+    :rtype: None
     """
 
     if dataProcesseds is None or len(dataProcesseds) == 0 :
@@ -56,13 +87,13 @@ def plotIdRatesBarChart(dataProcesseds,
         p = k / nTP
         correctRates.append(p)
 
-        #  False Alarm Rate Calculation
-        nTA = int(dp.targetAbsentSum)
-
         if errorBars :
             low, high = _errorBar(k, nTP, ci)
             correctLowerErrors.append(low)
             correctUpperErrors.append(high)
+
+        #  False Alarm Rate Calculation
+        nTA = int(dp.targetAbsentSum)
 
         if dp.lineupSize == 1 :
             kReject = int(dp.data_pivot.loc[("targetAbsent","rejectId")].sum())
@@ -113,6 +144,8 @@ def plotIdRatesBarChart(dataProcesseds,
     else :
         correctErrorBars = None
         falseErrorBars = None
+        correctUpperErrors = None
+        falseUpperErrors = None
 
     x = _np.arange(len(conditionOder))
 
@@ -133,19 +166,9 @@ def plotIdRatesBarChart(dataProcesseds,
         axs[1].set_ylim(ylim)
         axs[1].set_ylabel('Identification Rate')
 
-        if annotate :
-            for i, (b, v) in enumerate(zip(bars1, correctRates)) :
-                y = v
-                if errorBars :
-                    y += correctUpperErrors[i]
-                axs[0].text(b.get_x()+b.get_width()/2.0, y + 0.01, f"{v:.3f}",
-                            ha="center", va="bottom")
-            for i, (b, v) in enumerate(zip(bars2, falseRates)) :
-                y = v
-                if errorBars :
-                    y += falseUpperErrors[i]
-                axs[1].text(b.get_x()+b.get_width()/2.0, y + 0.01, f"{v:.3f}",
-                            ha="center", va="bottom")
+        if annotate:
+            _annotateBars(axs[0], bars1, correctRates, correctUpperErrors, pad=0.01)
+            _annotateBars(axs[1], bars2, falseRates, falseUpperErrors, pad=0.01)
 
     elif plotStyle == "grouped" :
         fig, ax = _plt.subplots(1, 1, figsize=(8, 6))
@@ -161,19 +184,9 @@ def plotIdRatesBarChart(dataProcesseds,
         ax.set_ylabel('Identification Rate')
         ax.legend()
 
-        if annotate :
-            for i,  (b, v) in enumerate(zip(bars1, correctRates)) :
-                y = v
-                if errorBars :
-                    y = v + correctUpperErrors[i]
-                ax.text(b.get_x()+b.get_width()/2.0, y + 0.01, f"{v:.3f}",
-                        ha="center", va="bottom")
-            for i, (b, v) in enumerate(zip(bars2, falseRates)) :
-                y = v
-                if errorBars :
-                    y = v + falseUpperErrors[i]
-                ax.text(b.get_x()+b.get_width()/2.0, y + 0.01, f"{v:.3f}",
-                        ha="center", va="bottom")
+        if annotate:
+            _annotateBars(ax, bars1, correctRates, correctUpperErrors, pad=0.01)
+            _annotateBars(ax, bars2, falseRates, falseUpperErrors, pad=0.01)
 
     else :
         raise ValueError(f"Invalid plotStyle '{plotStyle}'. Use 'separate' or 'grouped'.")
@@ -182,20 +195,3 @@ def plotIdRatesBarChart(dataProcesseds,
         fig.suptitle(title)
 
     _plt.show()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
