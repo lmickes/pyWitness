@@ -144,7 +144,7 @@ def plotIdRatesBarChart(dataProcesseds,
                 y = v
                 if errorBars :
                     y += falseUpperErrors[i]
-                axs[1].text(b.get_x()+b.get_width()/2.0, y + 0.05, f"{v:.3f}",
+                axs[1].text(b.get_x()+b.get_width()/2.0, y + 0.01, f"{v:.3f}",
                             ha="center", va="bottom")
 
     elif plotStyle == "grouped" :
