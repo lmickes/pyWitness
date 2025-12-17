@@ -508,8 +508,8 @@ class DataRaw :
         self.data.to_excel(fileName, engine = engine)
 
     def plotIdRatesBarChart(self,
-                            column,
-                            conditions,
+                            column=None,
+                            conditions=None,
                             plotStyle="separate",
                             conditionOder=None,
                             title=None,
@@ -529,6 +529,24 @@ class DataRaw :
         :rtype: None
         """
 
+        # avoid circular imports: import locally
+        from .Plotting import plotIdRatesBarChart
+
+        # -------- Basic (no conditions): overall rates only --------
+        if column is None or conditions is None:
+            dp = self.process()
+            dps = {"All": dp}
+            return plotIdRatesBarChart(
+                dps,
+                plotStyle=plotStyle,
+                conditionOder=["All"] if conditionOder is None else conditionOder,
+                title=title,
+                ylim=ylim,
+                annotate=annotate,
+                errorBars=errorBars,
+                ci=ci,
+            )
+
         # parse conditions
         if isinstance(conditions, str):
             condList = [c.strip() for c in conditions.split("/") if c.strip() != ""]
@@ -544,8 +562,6 @@ class DataRaw :
         if conditionOder is None:
             conditionOder = condList
 
-        # avoid circular imports: import locally
-        from .Plotting import plotIdRatesBarChart
 
         return plotIdRatesBarChart(
             dps,

@@ -63,6 +63,17 @@ def plotIdRatesBarChart(dataProcesseds,
     :rtype: None
     """
 
+    # --- Accept a single DataProcessed for convenience ---
+    if not isinstance(dataProcesseds, dict) :
+        # Duck-typing: DataProcessed has .data_pivot and .targetPresentSum/.targetAbsentSum
+        if hasattr(dataProcesseds, "data_pivot") and hasattr(dataProcesseds, "targetPresentSum") :
+            dataProcesseds = {"All": dataProcesseds}
+        else :
+            raise TypeError(
+                "plotIdRatesBarChart expects a dict {label: DataProcessed} "
+                "or a single DataProcessed object."
+            )
+
     if dataProcesseds is None or len(dataProcesseds) == 0 :
         raise ValueError("No DataProcessed objects provided for plotting.")
 
