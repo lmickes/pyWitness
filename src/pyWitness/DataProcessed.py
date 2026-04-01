@@ -491,8 +491,8 @@ class DataProcessed :
     def calculateCriterion(self):
         # Add epsilon correction to prevent infinite z-scores
         epsilon = 0.5 / len(self.dataRaw.data)  # Laplace correction
-        hit_rate = self.data_rates.loc['targetPresent', 'suspectId'].values
-        fa_rate = self.data_rates.loc['targetAbsent', 'suspectId'].values
+        hit_rate = self.data_rates.loc['targetPresent','suspectId'].values
+        fa_rate = self.data_rates.loc['targetAbsent','suspectId'].values
 
         # Clip rates to avoid 0.0 and 1.0
         hit_rate = _np.clip(hit_rate, epsilon, 1 - epsilon)
@@ -501,11 +501,12 @@ class DataProcessed :
         zT = _special.ndtri(hit_rate)
         try:
             zL = _special.ndtri(fa_rate)
-        except:  # only for TA showups and the participant never made a suspectId
-            zL = _special.ndtri(self.data_rates.loc['targetAbsent', 'rejectId'])
+        except : # only for TA showups and the participant never made a suspectId
+            zL = _special.ndtri(self.data_rates.loc['targetAbsent','rejectId'])
 
-        dCriterion = - (zT + zL) / 2.0
-        dCriterion.name = ("criterion", "central")
+        dCriterion = - (zT + zL)/2.0
+        template = self.data_rates.loc['dprime', 'central']  # Use existing row as template
+        dCriterion = _pandas.Series(dCriterion, name=("criterion", "central"), index=template.index)
         self.data_rates = _pandas.concat([self.data_rates, _pandas.DataFrame(dCriterion).transpose()])
         self.data_rates = self.data_rates.sort_index()
 
