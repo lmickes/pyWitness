@@ -14,7 +14,8 @@ dependencies = ["ipython",
                 "matplotlib",
 		"numpy",
 		"scipy",
-		"pandas",
+        "pandas>=1.5,<2.0; python_version < '3.9'",
+        "pandas==2.3.3; python_version >= '3.9'",
 		"openpyxl",
 		"xlrd"]
 # 		"pyreadstat"]
