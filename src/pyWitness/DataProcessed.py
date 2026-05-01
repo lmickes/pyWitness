@@ -489,11 +489,18 @@ class DataProcessed :
         return dPrime
 
     def calculateCriterion(self):
-        zT = _special.ndtri(self.data_rates.loc['targetPresent','suspectId'])
+        epsilon = 0.5 / len(self.dataRaw.data)
+        hit_rate = self.data_rates.loc['targetPresent','suspectId'].copy()
+
         try :
-            zL = _special.ndtri(self.data_rates.loc['targetAbsent','suspectId'])
-        except : # only for TA showups and the participant never made a suspectId
-            zL = _special.ndtri(self.data_rates.loc['targetAbsent','rejectId'])
+            fa_rate = self.data_rates.loc['targetAbsent','suspectId'].copy()
+        except KeyError:
+            fa_rate = self.data_rates.loc['targetAbsent','rejectId'].copy()
+
+        hit_rate = hit_rate.clip(lower=epsilon, upper=1 - epsilon)
+        fa_rate = fa_rate.clip(lower=epsilon, upper=1 - epsilon)
+        zT = _special.ndtri(hit_rate)
+        zL = _special.ndtri(fa_rate)
 
         dCriterion = - (zT + zL)/2.0
         dCriterion.name = ("criterion", "central")
