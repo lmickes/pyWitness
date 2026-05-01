@@ -32,3 +32,18 @@ def test_03_plotting_test3_csv_plot_cac():
     dr = pyWitness.DataRaw("../data/tutorial/test3.csv")
     dp = dr.process()
     dp.plotCAC()
+
+def test_03_plotting_test1_csv_plot_id_rates_bar_chart():
+    import pyWitness
+    dr = pyWitness.DataRaw("../data/tutorial/test1.csv")
+    dr.plotIdRatesBarChart()
+
+def test_03_plotting_test2_csv_plot_id_rates_bar_chart():
+    import pyWitness
+    dr = pyWitness.DataRaw("../data/tutorial/test2.csv")
+    dr.plotIdRatesBarChart(column="gender", conditions="Male/Female", plotStyle="separate")
+
+def test_03_plotting_test3_csv_plot_id_rates_bar_chart():
+    import pyWitness
+    dr = pyWitness.DataRaw("../data/tutorial/test3.csv")
+    dr.plotIdRatesBarChart()

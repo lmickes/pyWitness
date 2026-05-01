@@ -19,6 +19,8 @@ from ._version import version
 from .Tester    import Tester
 from .UnitTests import UnitTests
 
+from .Plotting import plotIdRatesBarChart
+
 
 print("pyWitness "+ version +" : Authorship - https://lmickes.github.io/pyWitness/authorship.html")
 
