@@ -658,8 +658,8 @@ class DataProcessed :
         criterion              = _np.array(criterion)
         pAUC                   = _np.array(pAUC)
 
-        clHigh = 100.-(100.-cl)/2.0
-        clLow  = 100.-clHigh
+        clHigh = 50.+cl/2.0
+        clLow  = 50.-cl/2.0
 
         cac_low                     = _np.percentile(cac,clLow,axis=0)
         cac_high                    = _np.percentile(cac,clHigh,axis=0)
