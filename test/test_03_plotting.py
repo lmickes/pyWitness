@@ -32,3 +32,21 @@ def test_03_plotting_test3_csv_plot_cac():
     dr = pyWitness.DataRaw("../data/tutorial/test3.csv")
     dp = dr.process()
     dp.plotCAC()
+
+def test_03_plotting_bar_chart():
+    import pyWitness
+    dr = pyWitness.DataRaw("../data/tutorial/test3.csv")
+    dp = dr.process()
+    dp.plotBarChart_Idrates()
+
+def test_03_plotting_bar_chart_statistics_single():
+    import pyWitness
+    dr = pyWitness.DataRaw("../data/tutorial/test3.csv")
+    dp = dr.process()
+    dp.plotBarChart(bar1data="dPrime")
+
+def test_03_plotting_bar_chart_statistics_couple():
+    import pyWitness
+    dr = pyWitness.DataRaw("../data/tutorial/test3.csv")
+    dp = dr.process()
+    dp.plotBarChart(bar1data="correctId", bar2data="falseId", chart1title="Correct Id", chart2title="False Id")
