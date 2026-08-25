@@ -66,6 +66,8 @@ class DataProcessed :
                 self.data_pivot = self.data_pivot.reindex(columns=levels, fill_value=0)
             self.confidenceLevels =  self.data_pivot.columns # _np.sort(self.dataRaw.data['confidence'].unique())
 
+        self.processCondition = getattr(dataRaw, "processCondition", "")
+
         self.numberTPLineups   = self.data_pivot.loc['targetPresent'].sum().sum()
         self.numberTALineups   = self.data_pivot.loc['targetAbsent'].sum().sum()
 
@@ -858,6 +860,263 @@ class DataProcessed :
         print('DataProcessed.comparedprime> pooled sd',_np.sqrt(dprime1_std**2 + dprime2_std**2))
 
         return [D,p]
+
+    def plotBarChart_Idrates(self,
+                             plotStyle = None,
+                             title = None,
+                             ylim = None,
+                             annotate = True,
+                             errorBars = True,
+                             fontSize = 16,
+                             label = None) :
+        '''
+        Plot overall hit and false-alarm rates.
+        '''
+
+        return self._plotBarChart(("correctId", "falseId"),
+                                  ("Correct Identification Rates",
+                                   "Innocent Suspect Identification Rates"),
+                                  plotStyle = plotStyle,
+                                  title = title,
+                                  ylim = ylim,
+                                  defaultYlim = (0.0, 1.0),
+                                  annotate = annotate,
+                                  errorBars = errorBars,
+                                  fontSize = fontSize,
+                                  label = label,
+                                  ylabel = "Rate",
+                                  sharey = True,
+                                  groupedTitle = "Identification Rates")
+
+    plotIdRatesBarChart = plotBarChart_Idrates
+
+    def plotBarChart(self,
+                     bar1data = "",
+                     bar2data = "",
+                     chart1title = "",
+                     chart2title = "",
+                     plotStyle = None,
+                     annotate = None,
+                     fontSize = None) :
+        '''
+        Plot one or two processed scalar statistics. Repeated calls append conditions to the current chart.
+
+        "correctId" and ""falseId" select the overall identification rates. Other data can be selected include:
+        "dPrime", "pAUC", "numberLineups", "numberTPLineups", "numberTALineups", "numberConditions",
+        "liberalTargetAbsentSuspectId", "liberalTargetAbsentFillerId". "lineupSize, baseRate, pAUCLiberal, pAUC_xmax,
+        targetPresentSum, targetAbsentSum, sigma_pred, and mu_pred" can also be selected.
+        '''
+
+        return self._plotBarChart((bar1data, bar2data),
+                                  (chart1title, chart2title),
+                                  plotStyle = plotStyle,
+                                  annotate = annotate,
+                                  fontSize = fontSize)
+
+    def _plotBarChart(self,
+                      dataNames,
+                      chartTitles,
+                      plotStyle = None,
+                      title = None,
+                      ylim = None,
+                      defaultYlim = None,
+                      annotate = None,
+                      errorBars = True,
+                      fontSize = None,
+                      label = None,
+                      ylabel = "Value",
+                      sharey = False,
+                      groupedTitle = None) :
+
+        fig = _plt.gcf() if len(_plt.get_fignums()) > 0 else None
+        state = getattr(fig, "_pyWitnessBarChart", None) if fig is not None else None
+        if state is not None :
+            axes = state["axes"]
+            expectedBars = (len(state["labels"]) if state["plotStyle"] == "separate"
+                            else len(state["dataNames"])*len(state["labels"]))
+            validState = (all(ax in fig.axes for ax in axes) and
+                          all(len(ax.patches) >= expectedBars for ax in axes))
+            if not validState :
+                delattr(fig, "_pyWitnessBarChart")
+                state = None
+
+        if all(name in (None, "") for name in dataNames) :
+            if state is None :
+                raise ValueError("bar1data is required for a new bar chart")
+            dataNames = state["dataNames"]
+        elif dataNames[0] in (None, "") :
+            raise ValueError("bar1data is required when bar2data is provided")
+        else :
+            dataNames = tuple(name for name in dataNames if name not in (None, ""))
+
+        chartType = (ylabel, sharey, groupedTitle)
+        reuseState = (state is not None and dataNames == state["dataNames"] and
+                      chartType == state["chartType"])
+        if (reuseState and
+                all(value in (None, "") for value in chartTitles)) :
+            chartTitles = state["chartTitles"]
+        else :
+            chartTitles = tuple(name if value in (None, "") else value
+                                for name, value in zip(dataNames,
+                                                       chartTitles[:len(dataNames)]))
+
+        plotStyle = (state["plotStyle"] if reuseState and plotStyle is None
+                     else "separate" if plotStyle is None else plotStyle)
+        if plotStyle not in ("separate", "grouped") :
+            raise ValueError(f"Invalid plotStyle '{plotStyle}'. Use 'separate' or 'grouped'.")
+
+        annotate = (state["annotate"] if reuseState and annotate is None
+                    else True if annotate is None else annotate)
+        fontSize = (state["fontSize"] if reuseState and fontSize is None
+                    else 16 if fontSize is None else fontSize)
+        key = (dataNames, chartTitles, plotStyle, ylabel, sharey, groupedTitle)
+        if state is not None and key != state["key"] :
+            fig = None
+            state = None
+
+        selectedData = [self._getBarChartData(dataName, errorBars)
+                        for dataName in dataNames]
+
+        if state is None :
+            if fig is None or len(fig.axes) > 0 :
+                fig = _plt.figure()
+            if plotStyle == "separate" :
+                axes = fig.subplots(1, len(dataNames), sharey = sharey)
+                axes = [axes] if len(dataNames) == 1 else list(axes)
+            else :
+                axes = [fig.subplots(1, 1)]
+            figureWidth = 6*len(dataNames) if plotStyle == "separate" else 8
+            fig.set_size_inches(figureWidth, 6, forward = True)
+            state = {"axes": axes, "dataNames": dataNames, "chartTitles": chartTitles,
+                     "plotStyle": plotStyle, "annotate": annotate, "fontSize": fontSize,
+                     "key": key, "labels": [], "title": title,
+                     "groupedTitle": groupedTitle, "chartType": chartType,
+                     "ylim": defaultYlim if ylim is None else ylim}
+            setattr(fig, "_pyWitnessBarChart", state)
+        else :
+            if title is not None : state["title"] = title
+            if ylim is not None : state["ylim"] = ylim
+
+        if label is None :
+            label = self.processCondition if self.processCondition not in (None, "") else "All"
+        position = len(state["labels"])
+        axes = state["axes"]
+        width = 0.8 if plotStyle == "separate" or len(dataNames) == 1 else 0.35
+        if plotStyle == "separate" :
+            locations = tuple((ax, position) for ax in axes)
+        else :
+            offsets = (_np.arange(len(dataNames))-(len(dataNames)-1)/2.0)*width
+            locations = tuple((axes[0], position+offset) for offset in offsets)
+
+        for i, ((ax, x), (value, limits)) in enumerate(zip(locations, selectedData)) :
+            legend = chartTitles[i] if plotStyle == "grouped" and position == 0 else "_nolegend_"
+            ax.bar([x], [value], width = width, color = ("tab:blue", "tab:orange")[i], label = legend)
+            if errorBars and limits is not None :
+                middle = sum(limits)/2.0
+                ax.errorbar([x], [middle], yerr = [[middle-limits[0]], [limits[1]-middle]],
+                            fmt = "none", ecolor = "black", capsize = 5)
+                ax.update_datalim([(x, limits[0]), (x, limits[1])])
+            if annotate :
+                shownLimits = limits if errorBars else None
+                y = value if shownLimits is None else (min(value, shownLimits[0]) if value < 0
+                                                       else max(value, shownLimits[1]))
+                ax.annotate(f"{value:.3f}", (x, y), xytext = (0, -3 if value < 0 else 3),
+                            textcoords = "offset points", ha = "center",
+                            va = "top" if value < 0 else "bottom", fontsize = fontSize)
+
+        state["labels"].append(str(label))
+        ticks = _np.arange(len(state["labels"]))
+        for ax in axes :
+            ax.set_xticks(ticks)
+            ax.set_xticklabels(state["labels"], fontsize = fontSize)
+            ax.tick_params(axis = "y", labelsize = fontSize)
+            ax.set_xlim(-0.5, max(0.5, len(state["labels"])-0.5))
+            ax.set_ylabel(ylabel, fontsize = fontSize)
+            ax.autoscale_view(scalex = False, scaley = True) if state["ylim"] is None else ax.set_ylim(state["ylim"])
+
+        if plotStyle == "separate" :
+            for ax, chartTitle in zip(axes, chartTitles) :
+                ax.set_title(chartTitle, fontsize = fontSize)
+            if state["title"] is not None : fig.suptitle(state["title"], fontsize = fontSize)
+        else :
+            chartTitle = state["title"] if state["title"] is not None else state["groupedTitle"]
+            if chartTitle is not None : axes[0].set_title(chartTitle, fontsize = fontSize)
+            axes[0].legend(fontsize = fontSize)
+        fig.tight_layout()
+
+    def _getBarChartData(self, dataName, errorBars) :
+        '''Read one scalar and any confidence limits already calculated for it.'''
+
+        if not isinstance(dataName, str) or dataName.startswith("_") :
+            raise ValueError(f"Bar data '{dataName}' must be a public numeric scalar")
+
+        missing = object()
+        low = high = missing
+        if dataName in ("correctId", "falseId") :
+            targetLineup = ("targetPresent" if dataName == "correctId"
+                            else "targetAbsent")
+            responseType = ("rejectId" if self.lineupSize == 1 and dataName == "falseId"
+                            else "suspectId")
+            central = self.data_rates.loc[targetLineup, responseType]
+            complement = self.lineupSize == 1 and (dataName == "falseId" or
+                                                    self.reverseConfidence)
+            if dataName == "correctId" :
+                value = self.data_pivot.loc['targetPresent', 'suspectId'].sum()
+                value = value/self.targetPresentSum
+                target = 1.0-value if complement else value
+                column = (central-target).abs().idxmin()
+            else :
+                column = central.idxmax()
+                value = central.loc[column]
+                if complement : value = 1.0-value
+            if errorBars :
+                try :
+                    low = self.data_rates.loc[targetLineup, responseType+"_low"].loc[column]
+                    high = self.data_rates.loc[targetLineup, responseType+"_high"].loc[column]
+                except KeyError :
+                    low = high = missing
+            if complement and low is not missing and high is not missing :
+                low, high = 1.0-high, 1.0-low
+        else :
+            value = getattr(self, dataName, missing)
+            if errorBars :
+                low = getattr(self, dataName+"_low", missing)
+                high = getattr(self, dataName+"_high", missing)
+
+                if dataName == "dPrime" and low is missing and high is missing :
+                    confidence = _np.array(
+                        self.data_rates.columns.get_level_values(self.dependentVariable))
+                    confidence = (_np.sort(confidence[confidence > 0])[0]
+                                  if self.lineupSize == 1 else _np.sort(confidence)[0])
+                    column = (self.dependentVariable, confidence)
+                    try :
+                        low = self.data_rates.loc[('dprime', 'low'), column]
+                        high = self.data_rates.loc[('dprime', 'high'), column]
+                    except KeyError :
+                        low = high = missing
+
+        if (value is missing or isinstance(value, (str, bytes, bool, _np.bool_)) or
+                not _np.isscalar(value)) :
+            raise ValueError(f"Bar data '{dataName}' must be a public numeric scalar")
+        try :
+            value = float(value)
+        except (TypeError, ValueError) :
+            raise ValueError(f"Bar data '{dataName}' must be a public numeric scalar") from None
+        if not _np.isfinite(value) :
+            raise ValueError(f"Bar data '{dataName}' must be finite")
+
+        if low is missing and high is missing :
+            limits = None
+        elif low is missing or high is missing :
+            raise ValueError(f"Bar data '{dataName}' must provide both low and high limits")
+        else :
+            try :
+                limits = (float(low), float(high))
+            except (TypeError, ValueError) :
+                raise ValueError(f"Confidence limits for '{dataName}' must be numeric") from None
+            if not all(_np.isfinite(limits)) or limits[0] > limits[1] :
+                raise ValueError(f"Confidence limits for '{dataName}' are invalid")
+        return value, limits
 
     def plotROC(self, label = "ROC", relativeFrequencyScale = 800, errorType = 'bars', color = None, alpha = 1, edgecolor = None) :
         '''
