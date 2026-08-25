@@ -870,8 +870,7 @@ class DataProcessed :
                              fontSize = 16,
                              label = None) :
         '''
-        Plot overall hit and false-alarm rates. Repeated calls append conditions to the current chart.
-        Existing bootstrap confidence limits are included; this method does not calculate them.
+        Plot overall hit and false-alarm rates.
         '''
 
         return self._plotBarChart(("correctId", "falseId"),
@@ -900,10 +899,12 @@ class DataProcessed :
                      annotate = None,
                      fontSize = None) :
         '''
-        Plot two processed scalar statistics. Repeated calls append conditions to the current chart.
+        Plot one or two processed scalar statistics. Repeated calls append conditions to the current chart.
 
-        ``correctId`` and ``falseId`` select the overall identification rates. Existing bootstrap
-        confidence limits are drawn automatically; this method does not calculate them.
+        "correctId" and ""falseId" select the overall identification rates. Other data can be selected include:
+        "dPrime", "pAUC", "numberLineups", "numberTPLineups", "numberTALineups", "numberConditions",
+        "liberalTargetAbsentSuspectId", "liberalTargetAbsentFillerId". "lineupSize, baseRate, pAUCLiberal, pAUC_xmax,
+        targetPresentSum, targetAbsentSum, sigma_pred, and mu_pred" can also be selected.
         '''
 
         return self._plotBarChart((bar1data, bar2data),
@@ -932,7 +933,7 @@ class DataProcessed :
         if state is not None :
             axes = state["axes"]
             expectedBars = (len(state["labels"]) if state["plotStyle"] == "separate"
-                            else 2*len(state["labels"]))
+                            else len(state["dataNames"])*len(state["labels"]))
             validState = (all(ax in fig.axes for ax in axes) and
                           all(len(ax.patches) >= expectedBars for ax in axes))
             if not validState :
@@ -941,12 +942,12 @@ class DataProcessed :
 
         if all(name in (None, "") for name in dataNames) :
             if state is None :
-                raise ValueError("bar1data and bar2data are required for a new bar chart")
+                raise ValueError("bar1data is required for a new bar chart")
             dataNames = state["dataNames"]
-        elif any(name in (None, "") for name in dataNames) :
-            raise ValueError("bar1data and bar2data must be provided together")
+        elif dataNames[0] in (None, "") :
+            raise ValueError("bar1data is required when bar2data is provided")
         else :
-            dataNames = tuple(dataNames)
+            dataNames = tuple(name for name in dataNames if name not in (None, ""))
 
         chartType = (ylabel, sharey, groupedTitle)
         reuseState = (state is not None and dataNames == state["dataNames"] and
@@ -956,7 +957,8 @@ class DataProcessed :
             chartTitles = state["chartTitles"]
         else :
             chartTitles = tuple(name if value in (None, "") else value
-                                for name, value in zip(dataNames, chartTitles))
+                                for name, value in zip(dataNames,
+                                                       chartTitles[:len(dataNames)]))
 
         plotStyle = (state["plotStyle"] if reuseState and plotStyle is None
                      else "separate" if plotStyle is None else plotStyle)
@@ -978,9 +980,13 @@ class DataProcessed :
         if state is None :
             if fig is None or len(fig.axes) > 0 :
                 fig = _plt.figure()
-            axes = (list(fig.subplots(1, 2, sharey = sharey)) if plotStyle == "separate"
-                    else [fig.subplots(1, 1)])
-            fig.set_size_inches(12 if plotStyle == "separate" else 8, 6, forward = True)
+            if plotStyle == "separate" :
+                axes = fig.subplots(1, len(dataNames), sharey = sharey)
+                axes = [axes] if len(dataNames) == 1 else list(axes)
+            else :
+                axes = [fig.subplots(1, 1)]
+            figureWidth = 6*len(dataNames) if plotStyle == "separate" else 8
+            fig.set_size_inches(figureWidth, 6, forward = True)
             state = {"axes": axes, "dataNames": dataNames, "chartTitles": chartTitles,
                      "plotStyle": plotStyle, "annotate": annotate, "fontSize": fontSize,
                      "key": key, "labels": [], "title": title,
@@ -995,9 +1001,12 @@ class DataProcessed :
             label = self.processCondition if self.processCondition not in (None, "") else "All"
         position = len(state["labels"])
         axes = state["axes"]
-        width = 0.8 if plotStyle == "separate" else 0.35
-        locations = ((axes[0], position), (axes[1], position)) if plotStyle == "separate" else (
-                    (axes[0], position-width/2.0), (axes[0], position+width/2.0))
+        width = 0.8 if plotStyle == "separate" or len(dataNames) == 1 else 0.35
+        if plotStyle == "separate" :
+            locations = tuple((ax, position) for ax in axes)
+        else :
+            offsets = (_np.arange(len(dataNames))-(len(dataNames)-1)/2.0)*width
+            locations = tuple((axes[0], position+offset) for offset in offsets)
 
         for i, ((ax, x), (value, limits)) in enumerate(zip(locations, selectedData)) :
             legend = chartTitles[i] if plotStyle == "grouped" and position == 0 else "_nolegend_"
@@ -1026,8 +1035,8 @@ class DataProcessed :
             ax.autoscale_view(scalex = False, scaley = True) if state["ylim"] is None else ax.set_ylim(state["ylim"])
 
         if plotStyle == "separate" :
-            axes[0].set_title(chartTitles[0], fontsize = fontSize)
-            axes[1].set_title(chartTitles[1], fontsize = fontSize)
+            for ax, chartTitle in zip(axes, chartTitles) :
+                ax.set_title(chartTitle, fontsize = fontSize)
             if state["title"] is not None : fig.suptitle(state["title"], fontsize = fontSize)
         else :
             chartTitle = state["title"] if state["title"] is not None else state["groupedTitle"]
